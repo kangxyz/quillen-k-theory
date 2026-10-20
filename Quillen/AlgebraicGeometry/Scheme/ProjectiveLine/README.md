@@ -158,8 +158,11 @@ the third vertex with the degree-zero single of `E ⊗ Q`. The first two
 vertices remain actual derived-image objects. `DiagonalGenerationEndpoints`
 and `DiagonalGenerationNaturality` give the natural vector-bundle endpoint
 identifications. `DiagonalLineRotation` applies the exact original line tensor
-and rotation, retaining the standard negative shifted incidence; nested line
-contraction and corrected derived roof representatives remain separate.
+and rotation, retaining the standard negative shifted incidence.
+[OriginalLineContraction](OriginalLineContraction.lean) and
+[DiagonalPerfectGenerationRotation](DiagonalPerfectGenerationRotation.lean)
+supply the nested line contractions and derived-roof-compatible rotated
+identifications for the intrinsic-perfect extension below.
 
 [`DiagonalRestrictedStalkExactness`](DiagonalRestrictedStalkExactness.lean)
 proves that the original incidence sequence, stalked along the diagonal and

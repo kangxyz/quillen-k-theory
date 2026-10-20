@@ -1,0 +1,59 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerInitialCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerUpperSpan
+/-!
+The whole selected plus face meets its actual outer polynomial source projection.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+
+local notation "C" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+
+/-- The whole selected plus face meets its actual outer polynomial source projection. -/
+theorem selectedPlus_zero (r s : I) :
+    selectedPlus f g c ((r, s), 0) =
+      outerPlusConeMap f g c
+        (CommonReferenceNerve.CutOpenPrecomp.map C P
+          (InputCompositionPolynomialScalar.chart (X := X) plus)
+          (InputCompositionPolynomialScalar.laurentReference f g plus)
+          (InputCompositionPolynomialScalar.anchor f g plus)
+          (InputCompositionPolynomialScalar.anchor f g plus)
+          ((InputCompositionPolynomialScalar.correctedSquare f g plus).parameter (r, s))) := by
+  have h := initial_plus_carrier f g c
+    ((InputCompositionPolynomialScalar.correctedSquare f g plus).parameter (r, s))
+  simpa only [selectedPlus, selectedPolynomial, ContinuousMap.comp_apply,
+    ContinuousMap.coe_mk, Path.source] using h
+
+/-- The whole selected minus face meets its actual outer polynomial source projection. -/
+theorem selectedMinus_zero (r s : I) :
+    selectedMinus f g c ((r, s), 0) =
+      outerMinusConeMap f g c
+        (CommonReferenceNerve.CutOpenPrecomp.map C P
+          (InputCompositionPolynomialScalar.chart (X := X) minus)
+          (InputCompositionPolynomialScalar.laurentReference f g minus)
+          (InputCompositionPolynomialScalar.anchor f g minus)
+          (InputCompositionPolynomialScalar.anchor f g minus)
+          ((InputCompositionPolynomialScalar.correctedSquare f g minus).parameter (r, s))) := by
+  have h := initial_minus_carrier f g c
+    ((InputCompositionPolynomialScalar.correctedSquare f g minus).parameter (r, s))
+  simpa only [selectedMinus, selectedPolynomial, ContinuousMap.comp_apply,
+    ContinuousMap.coe_mk, Path.source] using h
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

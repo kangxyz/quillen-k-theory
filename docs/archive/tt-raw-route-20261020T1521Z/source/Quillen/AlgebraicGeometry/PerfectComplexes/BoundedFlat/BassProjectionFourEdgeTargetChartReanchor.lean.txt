@@ -1,0 +1,129 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetCharts
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetOverlapReanchor
+
+/-!
+# Reanchoring both whole polynomial target sectors
+
+Naturality of the original projection anchor identifies complete product nodes, including
+arbitrary polynomial-source nodes. The finite-parameter realization then retains every
+original chart value and its comparison time, also for arbitrary external parameter families.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u v
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.Target
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct
+
+private theorem product_anchor_reanchor {A B C D : Model.{u}} {E E' : A ⟶ B}
+    (δ : E'.functor ≅ E.functor) (J : B ⟶ C) (H : C ⟶ D) (K : B ⟶ D)
+    (θ : K.functor ≅ (J ≫ H).functor) (M : CommonReferenceNerve.Node (E ≫ J))
+    (N : CommonReferenceNerve.Node H) :
+    node (E' ≫ K) (E' ≫ J) H (isoWhiskerLeft E'.functor θ)
+        (reanchor (isoWhiskerRight δ J.functor) M) N =
+      reanchor (isoWhiskerRight δ K.functor)
+        (node (E ≫ K) (E ≫ J) H (isoWhiskerLeft E.functor θ) M N) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext X
+  change θ.hom.app (E'.functor.obj X) ≫
+      (H.functor.map (J.functor.map (δ.hom.app X) ≫ M.2.hom.app X) ≫
+        N.2.hom.app (M.1.functor.obj X)) =
+    K.functor.map (δ.hom.app X) ≫
+      (θ.hom.app (E.functor.obj X) ≫
+        (H.functor.map (M.2.hom.app X) ≫ N.2.hom.app (M.1.functor.obj X)))
+  have h := θ.hom.naturality (δ.hom.app X)
+  change K.functor.map (δ.hom.app X) ≫ θ.hom.app (E.functor.obj X) =
+    θ.hom.app (E'.functor.obj X) ≫ H.functor.map (J.functor.map (δ.hom.app X)) at h
+  simpa only [Functor.map_comp, Category.assoc] using
+    congrArg (fun g ↦ g ≫ H.functor.map (M.2.hom.app X) ≫
+      N.2.hom.app (M.1.functor.obj X)) h.symm
+
+private theorem parameter_anchor_reanchor {A B C : Model.{u}} {E E' : A ⟶ B}
+    {F F' : A ⟶ C} (δ : E'.functor ≅ E.functor) (ε : F'.functor ≅ F.functor)
+    {q : ℕ} (g : CommonReferenceNerve.Node E → Fin (q + 1) → CommonReferenceNerve.Node F)
+    (g' : CommonReferenceNerve.Node E' → Fin (q + 1) → CommonReferenceNerve.Node F')
+    (h : ∀ e j, g' (reanchor δ e) j = reanchor ε (g e j))
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|)
+    (w : Convexity.StdSimplex ℝ (Fin (q + 1))) :
+    mapParameter (reanchor ε) (FiniteParameter.parameter E F g (y, w)) =
+      FiniteParameter.parameter E' F' g' (mapParameter (reanchor δ) y, w) :=
+  FiniteParameter.parameter_naturality (reanchor δ) (reanchor ε) g g'
+    (fun e j ↦ (h e j).symm) y w
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+  (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
+  (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
+
+/-- Both complete product factors retain the original chart anchor under input reanchoring. -/
+theorem chartNodes_reanchor (M : CommonReferenceNerve.Node (polynomialReference P a E))
+    (j : Fin 5) :
+    chartNodes P f E' α ha
+        (reanchor (isoWhiskerRight δ (normalizedMap (polynomialProjection P a)).functor) M) j =
+      reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor)
+        (chartNodes P f E α ha M j) :=
+  product_anchor_reanchor δ (normalizedMap (polynomialProjection P a))
+    (BassH0ChartBoundaryRows.squareSource P f α) (BassH0Diagram.reference P f)
+    (BassH0ChartBoundaryRows.canonicalAnchor P f α ha) M
+    (BassH0ChartBoundaryRows.squareNodes P f α j)
+
+/-- Reanchoring preserves every genuine polynomial-source chart value at its old time. -/
+theorem chart_reanchor
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference P a E)))|)
+    (s : I) :
+    mapParameter (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor))
+        (chart P f E α ha (y, s)) =
+      chart P f E' α ha
+        (mapParameter
+          (reanchor (isoWhiskerRight δ (normalizedMap (polynomialProjection P a)).functor)) y,
+          s) := by
+  change mapParameter
+      (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor))
+      (FiniteParameter.parameter (polynomialReference P a E) (reference P f E)
+        (chartNodes P f E α ha) (y, NativeSquareFiveSimplex.parameter s)) =
+    FiniteParameter.parameter (polynomialReference P a E') (reference P f E')
+      (chartNodes P f E' α ha)
+      (mapParameter
+        (reanchor (isoWhiskerRight δ (normalizedMap (polynomialProjection P a)).functor)) y,
+        NativeSquareFiveSimplex.parameter s)
+  exact parameter_anchor_reanchor
+    (E := polynomialReference P a E) (E' := polynomialReference P a E')
+    (F := reference P f E) (F' := reference P f E') (q := 4)
+    (isoWhiskerRight δ (normalizedMap (polynomialProjection P a)).functor)
+    (isoWhiskerRight δ (BassH0Diagram.reference P f).functor)
+    (chartNodes P f E α ha) (chartNodes P f E' α ha)
+    (chartNodes_reanchor P f E E' δ α ha) y (NativeSquareFiveSimplex.parameter s)
+
+/-- Any external family retains its own parameter and the original chart comparison time. -/
+theorem chart_reanchor_family {S : Type v} [TopologicalSpace S]
+    (p : C(S, |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference P a E)))|)) :
+    (mapParameter (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor))).comp
+        ((chart P f E α ha).comp (p.prodMap (ContinuousMap.id I))) =
+      (chart P f E' α ha).comp
+        (((mapParameter
+          (reanchor (isoWhiskerRight δ (normalizedMap (polynomialProjection P a)).functor))).comp
+            p).prodMap (ContinuousMap.id I)) := by
+  ext ⟨z, s⟩
+  exact chart_reanchor P f E E' δ α ha (p z) s
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.Target

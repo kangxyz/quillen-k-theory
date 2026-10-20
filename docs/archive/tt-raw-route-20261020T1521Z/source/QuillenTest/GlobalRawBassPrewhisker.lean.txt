@@ -1,0 +1,47 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerFamily
+/-! Exact original prewhiskering cell recovery and full scalar attachment regressions. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.LoopPrespectrum
+open scoped unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassPrewhisker
+open InputCompositionPrewhisker
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+/-- The complete positive source edge agrees before any native evaluation. -/
+theorem whole_positive_source (r s : I) :
+    outerPlusConeMap f g c (polynomialPrewhisker f g c plus (r, s)) =
+      overlapPrewhisker f g c ((r, s), 0) := source_plus f g c r s
+
+/-- The separate negative source edge retains the same independent parameters. -/
+theorem whole_negative_source (r s : I) :
+    outerMinusConeMap f g c (polynomialPrewhisker f g c minus (r, s)) =
+      overlapPrewhisker f g c ((r, s), 1) := source_minus f g c r s
+
+/-- All original cone inputs recover the original chosen raw prewhiskering. -/
+theorem original_whole_cone (n : ℕ) (r : I) (x : (mappingCone (comparison W)).space n) :
+    (rawPreFamily f g c).desc n (r, x) =
+      (InputComposition.coneHomotopy f g).level n (r, (coneMap c).map n x) :=
+  rawPreFamily_desc f g c n r x
+
+/-- The full overlap cell recovers the literal original homotopy at independent height and time. -/
+theorem original_whole_overlap (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    ProjectionReference.FourEdge.coneEval X
+      (BassH0Merge.normalizedMap c ≫
+        InputCompositionTopPieces.baseSource f g) n
+      (overlapPrewhisker f g c ((r, s), t)) x =
+        (rawPreFamily f g c).overlap n (r, (s, (t, x))) :=
+  rawPreFamily_overlap f g c n r s t x
+end QuillenTest.GlobalRawBassPrewhisker

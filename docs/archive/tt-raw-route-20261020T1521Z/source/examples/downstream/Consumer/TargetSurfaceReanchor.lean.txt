@@ -1,0 +1,53 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSurfaceReanchor
+
+/-! # Successive reanchoring of a whole surface with independent external and loop parameters -/
+
+@[expose] public noncomputable section
+
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge
+open scoped Simplicial Topology unitInterval
+
+universe u
+namespace Consumer.TargetSurfaceReanchor
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct
+
+/-- Neither the external cube nor the old output parameter is identified with comparison time. -/
+theorem successive_surface_references {R : CommRingCat.{u}} (P : Over (Spec R))
+    {a b : Under R} (f : a ⟶ b) {V : Model.{u + 1}}
+    (E E' E'' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+    (δ : E'.functor ≅ E.functor) (ε : E''.functor ≅ E'.functor)
+    (d : ℕ) (p : C((Fin d → I) × I,
+      FourEdgeTree.space E (normalizedMap (polynomialProjection P a))))
+    (z : Fin d → I) (v s : I) :
+    mapParameter (reanchor
+      (F₀ := BassProjectionPath.WholeReference.reference P b
+        (E'' ≫ normalizedMap (coefficientMap P f)))
+      (F₁ := BassProjectionPath.WholeReference.reference P b
+        (E' ≫ normalizedMap (coefficientMap P f)))
+      (isoWhiskerRight (isoWhiskerRight ε (normalizedMap (coefficientMap P f)).functor)
+        (BassProjectionPath.source P b).functor))
+      (mapParameter (reanchor
+        (F₀ := BassProjectionPath.WholeReference.reference P b
+          (E' ≫ normalizedMap (coefficientMap P f)))
+        (F₁ := BassProjectionPath.WholeReference.reference P b
+          (E ≫ normalizedMap (coefficientMap P f)))
+        (isoWhiskerRight (isoWhiskerRight δ (normalizedMap (coefficientMap P f)).functor)
+          (BassProjectionPath.source P b).functor))
+        (TargetCone.surface P f E (p (z, v), s))) =
+      TargetCone.surface P f E''
+        (Reanchor.tree P a E' E'' ε (Reanchor.tree P a E E' δ (p (z, v))), s) := by
+  rw [TargetCone.surface_reanchor P f E E' δ, TargetCone.surface_reanchor P f E' E'' ε]
+
+end Consumer.TargetSurfaceReanchor

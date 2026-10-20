@@ -1,0 +1,190 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedConjugation
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionShiftedRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitProductSides
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitProductJoins
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionRailEndpoints
+/-! Actual source and target seed rails with the original conjugate word and clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionRails
+open CommonReferenceNerve InputIdentitySeedCarrier Quillen.ScalarRectangle
+open InputCompositionUnitProductSides
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- Actual original unit times Laurent composition. -/
+def sourceUnit := (CutOpenCarrier.laurentInclusion F J G ε ε').comp
+  (InputCompositionUnitProducts.sourceSurface f g)
+/-- Actual original unit after base composition. -/
+def targetUnit := (CutOpenCarrier.laurentInclusion F J G ε ε').comp
+  (InputCompositionUnitProducts.targetSurface f g)
+
+/-- The ordinary source null meets the original source unit along the entire rail. -/
+theorem sourceUnit_zero (r : I) : sourceUnit f g (r,0) =
+    InputNullCompositionPolynomialCarrier.sourceRail f g (r,0) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.sourceSurface f g (r,0)) = _
+  rw [source_lower_side]
+  exact InputNullCompositionLaurentCarrier.face_left f g r
+
+/-- The ordinary target null meets the original target unit along the entire rail. -/
+theorem targetUnit_zero (r : I) : targetUnit f g (r,0) =
+    InputNullCompositionPolynomialCarrier.targetRail f g (r,0) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.targetSurface f g (r,0)) = _
+  rw [target_lower_side]
+  exact InputNullCompositionLaurentCarrier.face_right f g r
+
+/-- The shifted source null meets the other end of the original source unit. -/
+theorem sourceUnit_one (r : I) : sourceUnit f g (r,1) =
+    InputNullCompositionShiftedRails.shiftedSourceRail f g (r,0) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.sourceSurface f g (r,1)) =
+    SeedShiftedSheet.inclusion (f ≫ g) (InputNullCompositionOrdinaryRails.sourceRail f g (r,0))
+  rw [source_upper_side, InputNullCompositionOrdinaryRails.sourceRail, concatSecond_zero]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+      (InputNullCompositionLaurentCarrier.surface f g (r,0))) =
+    SeedShiftedSheet.inclusion (f ≫ g)
+      (SeedOrdinarySheet.laurent (f ≫ g)
+        (InputNullCompositionPolynomialCarrier.sourcePositive f g (r,0)))
+  rw [SeedShiftedSheet.inclusion_laurent, InputNullCompositionLaurentCarrier.surface_left]
+  rfl
+
+/-- The shifted target null meets the other end of the original target unit. -/
+theorem targetUnit_one (r : I) : targetUnit f g (r,1) =
+    InputNullCompositionShiftedRails.shiftedTargetRail f g (r,0) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.targetSurface f g (r,1)) =
+    SeedShiftedSheet.inclusion (f ≫ g) (InputNullCompositionOrdinaryRails.targetRail f g (r,0))
+  rw [target_upper_side, InputNullCompositionOrdinaryRails.targetRail, concatSecond_zero]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+      (InputNullCompositionLaurentCarrier.surface f g (r,1))) =
+    SeedShiftedSheet.inclusion (f ≫ g)
+      (SeedOrdinarySheet.laurent (f ≫ g)
+        (InputNullCompositionPolynomialCarrier.targetPositive f g (r,0)))
+  rw [SeedShiftedSheet.inclusion_laurent, InputNullCompositionLaurentCarrier.surface_right]
+  rfl
+
+/-- The original right-associated unit and shifted source-null word. -/
+def sourceTail := concatSecond (sourceUnit f g)
+  (InputNullCompositionShiftedRails.shiftedSourceRail f g) (sourceUnit_one f g)
+/-- The original right-associated unit and shifted target-null word. -/
+def targetTail := concatSecond (targetUnit f g)
+  (InputNullCompositionShiftedRails.shiftedTargetRail f g) (targetUnit_one f g)
+
+/-- Reverse only the original output-loop coordinate on the source null. -/
+def sourceReverse : C(I × I, Carrier (f ≫ g)) :=
+  ⟨fun z ↦ InputNullCompositionPolynomialCarrier.sourceRail f g (z.1,unitInterval.symm z.2),
+    by fun_prop⟩
+/-- Reverse only the original output-loop coordinate on the target null. -/
+def targetReverse : C(I × I, Carrier (f ≫ g)) :=
+  ⟨fun z ↦ InputNullCompositionPolynomialCarrier.targetRail f g (z.1,unitInterval.symm z.2),
+    by fun_prop⟩
+
+/-- The reversed source null ends at the actual starting point of the source unit. -/
+theorem source_seam (r : I) : sourceReverse f g (r,1) = sourceTail f g (r,0) := by
+  rw [sourceTail, concatSecond_zero]
+  change InputNullCompositionPolynomialCarrier.sourceRail f g (r,unitInterval.symm 1) = _
+  rw [unitInterval.symm_one]
+  exact (sourceUnit_zero f g r).symm
+
+/-- The reversed target null ends at the actual starting point of the target unit. -/
+theorem target_seam (r : I) : targetReverse f g (r,1) = targetTail f g (r,0) := by
+  rw [targetTail, concatSecond_zero]
+  change InputNullCompositionPolynomialCarrier.targetRail f g (r,unitInterval.symm 1) = _
+  rw [unitInterval.symm_one]
+  exact (targetUnit_zero f g r).symm
+
+/-- Entire original source conjugate, with its unchanged nested binary path clocks. -/
+def sourceRail := concatSecond (sourceReverse f g) (sourceTail f g) (source_seam f g)
+/-- Entire original target conjugate, with its unchanged nested binary path clocks. -/
+def targetRail := concatSecond (targetReverse f g) (targetTail f g) (target_seam f g)
+
+/-- The ordinary tip is fixed along the whole source seed rail. -/
+theorem source_zero (r : I) : sourceRail f g (r,0) = CutOpenCarrier.tipMinus F J G ε ε' := by
+  rw [sourceRail, concatSecond_zero]
+  change InputNullCompositionPolynomialCarrier.sourceRail f g (r,unitInterval.symm 0) = _
+  rw [unitInterval.symm_zero]
+  exact InputNullCompositionRailEndpoints.sourceRail_tip f g r
+/-- The shifted tip is fixed along the whole source seed rail. -/
+theorem source_one (r : I) : sourceRail f g (r,1) = CutOpenCarrier.tipPlus F J G ε ε' := by
+  rw [sourceRail, concatSecond_one, sourceTail, concatSecond_one]
+  exact InputNullCompositionShiftedRails.sourceRail_tip f g r
+/-- The ordinary tip is fixed along the whole target seed rail. -/
+theorem target_zero (r : I) : targetRail f g (r,0) = CutOpenCarrier.tipMinus F J G ε ε' := by
+  rw [targetRail, concatSecond_zero]
+  change InputNullCompositionPolynomialCarrier.targetRail f g (r,unitInterval.symm 0) = _
+  rw [unitInterval.symm_zero]
+  exact InputNullCompositionRailEndpoints.targetRail_tip f g r
+/-- The shifted tip is fixed along the whole target seed rail. -/
+theorem target_one (r : I) : targetRail f g (r,1) = CutOpenCarrier.tipPlus F J G ε ε' := by
+  rw [targetRail, concatSecond_one, targetTail, concatSecond_one]
+  exact InputNullCompositionShiftedRails.targetRail_tip f g r
+
+/-- The direct source-unit path is exactly the originally selected path. -/
+theorem sourceUnit_start (s : I) : sourceUnit f g (0,s) =
+    InputIdentitySeedConjugation.oldUnit (f ≫ g) s := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.sourceSurface f g (0,s)) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (parameter G (InputIdentitySeedUnitNodes.nodes (f ≫ g)) (InputIdentitySeedUnitNodes.V s))
+  rw [InputCompositionUnitProductJoins.source_zero_path]
+
+/-- The direct target-unit path is exactly the originally selected path. -/
+theorem targetUnit_start (s : I) : targetUnit f g (0,s) =
+    InputIdentitySeedConjugation.newUnit (f ≫ g) s := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.targetSurface f g (0,s)) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (parameter G (InputIdentitySeedUnitNodes.nodes (f ≫ g)) (InputIdentitySeedUnitNodes.W s))
+  rw [InputCompositionUnitProductJoins.target_zero_path]
+
+/-- The whole source seed at the direct edge is unchanged, including both subdivisions. -/
+theorem source_start (s : I) : sourceRail f g (0,s) =
+    InputIdentitySeedConjugation.sourceWord (f ≫ g) s := by
+  rcases Quillen.NativePathCells.cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [sourceRail, concatSecond_lower, InputIdentitySeedConjugation.sourceWord,
+      Quillen.NativePathCells.path_lower]
+    exact InputNullCompositionRailEndpoints.sourceRail_zero f g (unitInterval.symm t)
+  · rw [sourceRail, concatSecond_upper, InputIdentitySeedConjugation.sourceWord,
+      Quillen.NativePathCells.path_upper]
+    rcases Quillen.NativePathCells.cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [sourceTail, concatSecond_lower, Quillen.NativePathCells.path_lower]
+      exact sourceUnit_start f g v
+    · rw [sourceTail, concatSecond_upper, Quillen.NativePathCells.path_upper]
+      exact InputNullCompositionShiftedRails.sourceRail_zero f g v
+
+/-- The whole target seed at the direct edge is unchanged, including both subdivisions. -/
+theorem target_start (s : I) : targetRail f g (0,s) =
+    InputIdentitySeedConjugation.targetWord (f ≫ g) s := by
+  rcases Quillen.NativePathCells.cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [targetRail, concatSecond_lower, InputIdentitySeedConjugation.targetWord,
+      Quillen.NativePathCells.path_lower]
+    exact InputNullCompositionRailEndpoints.targetRail_zero f g (unitInterval.symm t)
+  · rw [targetRail, concatSecond_upper, InputIdentitySeedConjugation.targetWord,
+      Quillen.NativePathCells.path_upper]
+    rcases Quillen.NativePathCells.cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [targetTail, concatSecond_lower, Quillen.NativePathCells.path_lower]
+      exact targetUnit_start f g v
+    · rw [targetTail, concatSecond_upper, Quillen.NativePathCells.path_upper]
+      exact InputNullCompositionShiftedRails.targetRail_zero f g v
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionRails

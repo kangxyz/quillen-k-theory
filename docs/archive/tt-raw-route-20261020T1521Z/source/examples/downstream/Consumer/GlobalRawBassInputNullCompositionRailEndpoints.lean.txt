@@ -1,0 +1,44 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionRailEndpoints
+
+/-! Independent clients retain all four whole scalar rail endpoints and their original clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry
+open Quillen.PerfectComplexes.GlobalRawBass
+open scoped unitInterval
+universe u
+namespace Consumer.GlobalRawBassInputNullCompositionRailEndpoints
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The source rail starts at the original old null. -/
+theorem source_zero (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.sourceRail f g (0,s) =
+      InputIdentitySeedNull.oldNull (f ≫ g) false s :=
+  InputNullCompositionRailEndpoints.sourceRail_zero f g s
+
+/-- The source rail ends at the transported old null. -/
+theorem source_one (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.sourceRail f g (1,s) =
+      SeedSurfaceTransport.oldNull f g s :=
+  InputNullCompositionRailEndpoints.sourceRail_one f g s
+
+/-- The target rail starts at the original new null. -/
+theorem target_zero (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.targetRail f g (0,s) =
+      InputIdentitySeedNull.newNull (f ≫ g) false s :=
+  InputNullCompositionRailEndpoints.targetRail_zero f g s
+
+/-- The target rail ends at the composed new null. -/
+theorem target_one (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.targetRail f g (1,s) =
+      InputNullCompositionPrecomp.newNull f g s :=
+  InputNullCompositionRailEndpoints.targetRail_one f g s
+
+end Consumer.GlobalRawBassInputNullCompositionRailEndpoints

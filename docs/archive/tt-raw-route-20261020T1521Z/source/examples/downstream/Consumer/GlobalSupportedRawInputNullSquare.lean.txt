@@ -1,0 +1,44 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputNullSquare
+
+/-! Independent use of the actual geometric localization weak-null square. -/
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes.GlobalSupportedRawBass
+open AlgebraicGeometry.Scheme.Products
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalSupportedRawInputNullSquare
+variable {U X S : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+  (p : S ⟶ integerBase) [QuasiCompact p]
+
+/-- The original translated null is recovered at all old times and levels. -/
+theorem translated_null (n : ℕ) (s : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Localization.Parameter.Projection.square j T p).level n (0, (s, x)) =
+      (Localization.Parameter.rawNull j T p).level n
+        (s, (rawMap (Localization.Parameter.Projection.sourceMap j T p)).map n x) :=
+  (Localization.Parameter.Projection.square j T p).at_zero n s x
+
+/-- The full moving edge is the original pair of raw input squares. -/
+theorem row_word (n : ℕ) (r : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Localization.Parameter.Projection.square j T p).level n (r, (0, x)) =
+      (Localization.Parameter.Projection.word j T p).level n (r, x) :=
+  (Localization.Parameter.Projection.square j T p).left n r x
+
+/-- The old structure coordinate remains independent of the two square times. -/
+theorem structure_time (n : ℕ) (r s t : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Localization.Parameter.Projection.square j T p).level (n + 1)
+      (r, (s, (prespectrum (Localization.sourceModel j T)).structureMap n x t)) =
+      (prespectrum (Localization.Parameter.targetModel j T p)).structureMap n
+        ((Localization.Parameter.Projection.square j T p).level n (r, (s, x))) t :=
+  (Localization.Parameter.Projection.square j T p).comm n r s x t
+end Consumer.GlobalSupportedRawInputNullSquare

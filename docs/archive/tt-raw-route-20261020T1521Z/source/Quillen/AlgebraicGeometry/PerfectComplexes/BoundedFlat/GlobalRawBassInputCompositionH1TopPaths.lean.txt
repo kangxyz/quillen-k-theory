@@ -1,0 +1,155 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopMiddleRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopWord
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0ScalarEdges
+
+/-!
+# The five literal terminal/top path leaves
+
+The whole terminal product columns and preattached input paths equal the five original top
+leaves, with every native half-clock, normalization intermediate and actual reference retained.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopPaths
+open InputCompositionTopPieces InputCompositionTerminalAttach InputCompositionTopWord
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+private theorem first_path (k : laurent ⟶ polynomial)
+    (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+    (hrow : ∀ i, movingNodes f g k hk (CoefficientMovingSquareRows.firstRow i) =
+      InputCompositionTerminalProducts.nodes f g k hk
+        (Quillen.SimplexGrid.index 4 4 (i, 4))) (s : unitInterval) :
+    InputCompositionTerminalProducts.face f g k hk (1, s) =
+      movingFace f g k hk (1, lower s) := by
+  change CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (InputCompositionTerminalProducts.nodes f g k hk)
+      (InputCompositionTerminalProducts.parameter.{u} (1, s)) =
+    CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (movingNodes f g k hk)
+      (DoubleSquareScalarPaths.coefficientMovingSquareParameter (1, lower s))
+  have hp : InputCompositionTerminalProducts.parameter.{u} (1, s) =
+      StdSimplex.map (Quillen.SimplexGrid.columnFace 4 4 4).toOrderHom
+        (NativeSquareFiveSimplex.parameter s) := by
+    change Quillen.SimplexGrid.parameter.{u + 1} 4 4
+      (NativeSquareFiveSimplex.parameter s, NativeSquareFiveSimplex.parameter 1) = _
+    rw [Path.target]
+    exact Quillen.SimplexGrid.parameter_column 4 4 4 _
+  refine (congrArg (CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (InputCompositionTerminalProducts.nodes f g k hk)) hp).trans ?_
+  refine (CommonReferenceNerve.parameter_face (InputCompositionCarrierCharts.source f g)
+    (InputCompositionTerminalProducts.nodes f g k hk) (Quillen.SimplexGrid.columnFace 4 4 4)
+    (NativeSquareFiveSimplex.parameter s)).trans ?_
+  rw [CoefficientMovingSquareRows.moving_one_lower_row]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+    (fun j ↦ InputCompositionTerminalProducts.nodes f g k hk
+      ((Quillen.SimplexGrid.columnFace 4 4 4).toOrderHom j))
+    (movingNodes f g k hk) CoefficientMovingSquareRows.firstRow hrow
+    (BassH1Support.edgeFace i) (CoefficientMovingSquareRows.primitive_rows_monotone 1 i) z).symm
+
+private theorem second_path (k : laurent ⟶ polynomial)
+    (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+    (α : ⦋17⦌ ⟶ ⦋30⦌)
+    (hα : ∀ i, InputDescSimplex.nodes f (α.toOrderHom i) = InputDescSimplex.chartNodes f k hk i)
+    (hrow : ∀ i, movingNodes f g k hk (CoefficientMovingSquareRows.secondRow i) =
+      preNode f g (InputDescSimplex.chartNodes f k hk
+        (ProjectionRectangleSquareRows.polynomialRow i))) (s : unitInterval) :
+    CommonReferenceNerve.mapParameter (preNode f g)
+      (CommonReferenceNerve.parameter (InputDescSimplex.reference f) (InputDescSimplex.nodes f)
+        (ProjectionRectangleParameters.Ppath α s)) = movingFace f g k hk (1, upper s) := by
+  change _ = CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (movingNodes f g k hk)
+    (DoubleSquareScalarPaths.coefficientMovingSquareParameter (1, upper s))
+  rw [CommonReferenceNerve.mapParameter_parameter, CoefficientMovingSquareRows.moving_one_upper_row,
+    ← ProjectionRectangleSquareRows.polynomial_parameter α s]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  let N := fun j ↦ preNode f g (InputDescSimplex.chartNodes f k hk
+    (ProjectionRectangleSquareRows.polynomialRow j))
+  exact (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+    N (fun j ↦ preNode f g (InputDescSimplex.nodes f j))
+    (α.toOrderHom ∘ ProjectionRectangleSquareRows.polynomialRow)
+    (fun j ↦ congrArg (preNode f g) (hα _)) (BassH1Support.edgeFace i)
+    (α.toOrderHom.monotone.comp (ProjectionRectangleSquareRows.primitive_rows_monotone 1 i))
+    z).trans
+    (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+      N (movingNodes f g k hk) CoefficientMovingSquareRows.secondRow hrow
+      (BassH1Support.edgeFace i) (CoefficientMovingSquareRows.primitive_rows_monotone 2 i) z).symm
+
+/-- The actual positive terminal product column is the literal first positive top leaf. -/
+theorem first_plus (s : unitInterval) :
+    InputCompositionTerminalProducts.face f g plus plus_projection (1, s) = firstPlus f g s :=
+  first_path f g plus plus_projection (InputCompositionH1TopRows.plus_first_nodes f g) s
+
+/-- The actual inverse terminal product column is the literal first inverse top leaf. -/
+theorem first_minus (s : unitInterval) :
+    InputCompositionTerminalProducts.face f g minus minus_projection (1, s) = firstMinus f g s :=
+  first_path f g minus minus_projection (InputCompositionH1TopRows.minus_first_nodes f g) s
+
+/-- The original preattached positive polynomial path is the literal second positive leaf. -/
+theorem second_plus (s : unitInterval) :
+    preFace f g (1, lower s) = lastPlus f g s := by
+  change CommonReferenceNerve.mapParameter (preNode f g)
+    (CommonReferenceNerve.parameter (InputDescSimplex.reference f) (InputDescSimplex.nodes f)
+      (BassH0Diagram.parameter (1, lower s))) = _
+  rw [BassH0Diagram.parameter_one, path_lower]
+  exact second_path f g plus plus_projection BassH0Diagram.plusFace
+    (InputDescSimplex.plus_nodes f) (InputCompositionH1TopRows.plus_second_nodes f g) s
+
+/-- The original preattached inverse path keeps exactly the prescribed last-leaf reversal. -/
+theorem second_minus (s : unitInterval) :
+    preFace f g (1, upper (upper s)) = lastMinus f g (unitInterval.symm s) := by
+  change CommonReferenceNerve.mapParameter (preNode f g)
+    (CommonReferenceNerve.parameter (InputDescSimplex.reference f) (InputDescSimplex.nodes f)
+      (BassH0Diagram.parameter (1, upper (upper s)))) = _
+  rw [BassH0Diagram.parameter_one, path_upper, path_upper]
+  exact second_path f g minus minus_projection BassH0Diagram.minusFace
+    (InputDescSimplex.minus_nodes f) (InputCompositionH1TopRows.minus_second_nodes f g)
+    (unitInterval.symm s)
+
+/-- The full original product target uses the exact five-node Bass path. -/
+theorem middle_one_parameter (s : unitInterval) :
+    middleParameter.{u} (1, s) =
+      StdSimplex.map (Quillen.SimplexGrid.rowFace 2 4 2).toOrderHom
+        (NativeSquareFiveSimplex.parameter s) := by
+  change Quillen.SimplexGrid.parameter.{u + 1} 2 4
+    (binaryPath (k := 2) 0 1 2 1, InputIdentityProjection.parameter s) = _
+  rw [Path.target]
+  exact Quillen.SimplexGrid.parameter_row 2 4 2 _
+
+/-- The whole preattached middle path equals the literal original overlap leaf. -/
+theorem middle (s : unitInterval) :
+    preFace f g (1, upper (lower s)) = overlapTop f g s := by
+  change CommonReferenceNerve.mapParameter (preNode f g)
+    (CommonReferenceNerve.parameter (InputDescSimplex.reference f) (InputDescSimplex.nodes f)
+      (BassH0Diagram.parameter (1, upper (lower s)))) =
+    CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (middleNodes f g) (middleParameter.{u} (1, s))
+  rw [CommonReferenceNerve.mapParameter_parameter, ← first_middle_parameter, middle_one_parameter]
+  exact (CommonReferenceNerve.parameter_eq_of_face_nodes
+    (InputCompositionCarrierCharts.source f g) (fun i ↦ preNode f g (InputDescSimplex.nodes f i))
+    (middleNodes f g) firstMiddleFace (Quillen.SimplexGrid.rowFace 2 4 2)
+    (fun i ↦ (InputCompositionH1TopMiddleRows.whole_nodes f g i).symm)
+    (NativeSquareFiveSimplex.parameter s)).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopPaths

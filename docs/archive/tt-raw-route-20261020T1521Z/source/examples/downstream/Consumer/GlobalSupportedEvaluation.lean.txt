@@ -1,0 +1,44 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedEvaluationSeed
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawRows
+
+/-! Independent clients of original supported parameter R1 and specified seed evaluation. -/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes.GlobalSupportedEvaluation
+open Quillen.PerfectComplexes.GlobalSupportedRawBass
+universe u
+namespace Consumer.GlobalSupportedEvaluation
+
+/-- Both outside localization rows retain their actual original supported parameter sources. -/
+def outsideRowEvaluations {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+    [CompactSpace U] [CompactSpace X] (T : X.Opens) :
+    (strictSquareLoopedConeFunctor.obj (Source.parameterSquare (Rows.source j T)) ⟶
+      step (Rows.source j T)) ×
+    (strictSquareLoopedConeFunctor.obj (Source.parameterSquare (Rows.target j T)) ⟶
+      step (Rows.target j T)) :=
+  ⟨stepEvaluation _, stepEvaluation _⟩
+
+/-- The source-support row's original seed compares under the same actual R1 evaluation. -/
+def originalRowSeed {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+    [CompactSpace X] (T : X.Opens) :
+    Homotopy (parameterSeed (Rows.source j T) ≫ stepEvaluation (Rows.source j T))
+      (baseEvaluation (Rows.source j T) ≫ transition (Rows.source j T)) :=
+  seedHomotopy _
+
+/-- The middle support row preserves the actual supported Laurent evaluation at cone inclusion. -/
+theorem middle_laurent_inclusion {X : Scheme.{u}} [CompactSpace X] (T : X.Opens) :
+    mappingConeInclusion (StrictSquare.comparison (Source.sectionSquare (Rows.middle T))) ≫
+        coneEvaluation (Rows.middle T) =
+      evaluation (Geometry.laurent (Rows.middle T)) ≫
+        mappingConeInclusion (comparison (Rows.middle T)) :=
+  coneEvaluation_inclusion _
+
+end Consumer.GlobalSupportedEvaluation

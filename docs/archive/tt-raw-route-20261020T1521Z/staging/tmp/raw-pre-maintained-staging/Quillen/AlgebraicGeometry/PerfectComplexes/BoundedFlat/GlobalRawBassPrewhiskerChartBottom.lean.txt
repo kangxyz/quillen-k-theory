@@ -1,0 +1,76 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerChartAnchor
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassBottomScalarEdge
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassSupportOrder
+/-! All-point recovery of the original source-map first half with all three clocks retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+  Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct CutOpenCarrier
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+variable (k : laurent ⟶ polynomial)
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "KZ" => BassH0Merge.normalizedMap (k.app Z)
+
+private def chartBottomFace : ⦋2⦌ ⟶ ⦋17⦌ :=
+  SimplexCategory.Hom.mk ⟨CoefficientMovingSquareRows.targetSide,
+    CoefficientMovingSquareRows.side_rows_monotone 1⟩
+
+private theorem chartBottom_parameter (r : I) :
+    Convexity.StdSimplex.map chartBottomFace.toOrderHom
+      (binaryPath (k := 2) 0 1 2 r) = DoubleSquareScalarPaths.targetChart r :=
+  BassSupportOrder.map_any_binary chartBottomFace.toOrderHom 0 1 2 r
+
+/-- The full actual bottom nodes keep the original chart-side normalization anchor. -/
+theorem chartSurface_bottom_node (i : Fin 3) :
+    InputCompositionPolynomialScalar.chartNodes f g k (CoefficientMovingSquareRows.targetSide i) =
+      reanchor (lowerChartBottomAnchor f g k) (precompNode KZ (lowerLaurentNodes f g i)) := by
+  have h := CoefficientMovingSquareRows.target_side_nodes
+    (polynomial.map g) (polynomial.map f) (laurent.map g) (laurent.map f)
+    (k.app Z) (k.app Y) (k.app X) (k.naturality g).symm (k.naturality f).symm i
+  have hn : BassH0Merge.binaryNodes (laurent.map f) (laurent.map g) i =
+      lowerLaurentNodes f g i := by fin_cases i <;> rfl
+  have hrow : InputCompositionPolynomialScalar.chartNodes f g k
+      (CoefficientMovingSquareRows.targetSide i) =
+      BassH0Merge.preReferenceNode G KZ (lowerChartBottomAnchor f g k)
+        (BassH0Merge.binaryNodes (laurent.map f) (laurent.map g) i) := h
+  exact hrow.trans ((congrArg
+    (BassH0Merge.preReferenceNode G KZ (lowerChartBottomAnchor f g k)) hn).trans (by rfl))
+
+/-- The identical full bottom row in the common product-node spelling. -/
+theorem chartSurface_bottom_preNode (i : Fin 3) :
+    InputCompositionPolynomialScalar.chartNodes f g k (CoefficientMovingSquareRows.targetSide i) =
+      preNode G KZ (lowerChartBottomAnchor f g k) (lowerLaurentNodes f g i) := by
+  simpa only [preNode, reanchor, precompNode] using chartSurface_bottom_node f g k i
+
+/-- The complete original paused-chart bottom is exactly the reanchored Laurent binary path. -/
+theorem chartSurface_bottom (r : I) :
+    InputCompositionPolynomialScalar.chartSurface f g k (r, 0) =
+      mapParameter (fun N ↦ reanchor (lowerChartBottomAnchor f g k) (precompNode KZ N))
+        (lowerLaurentPath f g r) := by
+  change parameter G (InputCompositionPolynomialScalar.chartNodes f g k)
+    (DoubleSquareScalarPaths.coefficientPausedSquareParameter (r, 0)) = _
+  rw [DoubleSquareScalarPaths.coefficientPausedSquareParameter_left,
+    ← chartBottom_parameter r]
+  have h := parameter_face G (InputCompositionPolynomialScalar.chartNodes f g k)
+    chartBottomFace (binaryPath (k := 2) 0 1 2 r)
+  exact h.trans ((congrArg (fun ns ↦ parameter G ns (binaryPath (k := 2) 0 1 2 r))
+    (funext fun i ↦ chartSurface_bottom_node f g k i)).trans
+      (mapParameter_parameter (F := lowerLaurentBinary f g) («G» := G)
+        (fun N ↦ reanchor (lowerChartBottomAnchor f g k) (precompNode KZ N))
+        (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r)).symm)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

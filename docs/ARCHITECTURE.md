@@ -90,12 +90,13 @@ extension rules.
 
 ## Trust checks
 
-`scripts/check.sh` provides explicit comprehensive diagnostics and declared CI
-coverage; it is not a normal local acceptance step. It builds the library and
-tests, runs the configured lint checks, and builds the separate downstream
-package. It explicitly replays
-`QuillenTest/Axioms.lean` and the downstream `Audit.lean`, because cached compiled
-modules do not re-execute audit commands.
+`bash scripts/check.sh` selects affected local checks; `--full` explicitly
+requests comprehensive diagnostics. CI uses the shared plan/source/native/finalize
+lifecycle in [development policy](DEVELOPMENT.md#affected-check-scope), building
+the required library/test graph and separate downstream package when native
+checks are selected. Root and client axiom checks use generated scoped versions
+of `QuillenTest/Axioms.lean` and the downstream `Audit.lean`: cached compiled
+modules do not re-execute their audit commands.
 
 Incremental validation includes applicable compilation, declaration/text-style
 lint, affected `QuillenTest` and client tests, and source/trust checks. Cover the
@@ -131,10 +132,12 @@ key change selects matching artifacts and actual invalidation; it is not a
 local instruction to recompile every library.
 
 Project source hashes and source-independent prefixes permit restoration after
-source changes. The configured CI job runs `bash scripts/check.sh --ci --rehash`:
-Lake validates restored traces against current content and incrementally builds
-missing or stale modules and affected dependents. The complete CI checks include
-lints and both explicit audits even on exact cache hits. This CI coverage does
+source changes. The configured CI job calls
+`python3 scripts/check_run.py plan`, then `source`, `native` when selected, and
+`finalize`, sharing its external state directory. The native Lake graphs rehash
+restored traces against current content and incrementally build missing or stale
+modules and affected dependents. Required lints and scoped audits retain their
+check coverage on exact build-cache hits; matching check evidence may be reused. This CI coverage does
 not make that command the local merge or publication default. CI saves partial
 build progress, while publishing checked native artifacts only after successful
 checks. Publication of the native cache consumes those checked artifacts rather

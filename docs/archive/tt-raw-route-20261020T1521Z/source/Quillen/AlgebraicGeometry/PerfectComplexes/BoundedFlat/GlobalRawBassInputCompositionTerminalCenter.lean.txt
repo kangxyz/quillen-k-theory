@@ -1,0 +1,125 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalAttach
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeProjectionBinaryRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeReferenceCoherence
+
+/-!
+# The actual central full node of the terminal first/middle join
+
+The common source and target projection nodes retain their original Laurent naturality
+transport. Canonical three-factor pullback coherence identifies the complete postcomposed
+and precomposed nodes, for either original chart.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes.BassReferenceMerge
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTerminalCenter
+open InputCompositionTerminalAttach
+
+private theorem full_node_eq {V W : Model.{u}} {F : V ⟶ W}
+    (N M : CommonReferenceNerve.Node F)
+    (hf : N.1.functor = M.1.functor) (hr : HEq N.2 M.2) : N = M :=
+  Sigma.ext (Model.Hom.ext hf) hr
+
+variable {V W : Scheme.{u}} (h : V ⟶ W) (k : laurent ⟶ polynomial)
+  (hk : ∀ U, k.app U ≫ projection.app U = laurentProjection.app U)
+
+/-- The unchanged normalized source node is independent of the chart factorization. -/
+theorem source_normal : InputDescSimplex.chartNodes h k hk 2 =
+    (⟨BinaryNormalizationSimplex.targetMap (laurent.map h) (laurentProjection.app W),
+      BinaryNormalizationSimplex.total (laurent.map h) (laurentProjection.app W)⟩ :
+        InputDescSimplex.Node h) :=
+  ProjectionReference.shared_nodes (projection.app W) (k.app W)
+    (projection.app V) (k.app V) h (polynomial.map h) (laurent.map h)
+    (projection.naturality h) (k.naturality h)
+    (laurentProjection.app W) (laurentProjection.app V) (hk W) (hk V) 2
+
+/-- The actual target node keeps the original Laurent naturality equality transport. -/
+theorem target_normal : InputDescSimplex.chartNodes h k hk 15 =
+    (⟨BinaryNormalizationSimplex.targetMap (laurentProjection.app V) h,
+      eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+        (congrArg boundedFlatNormalizedPullback (laurentProjection.naturality h))) ≪≫
+          BinaryNormalizationSimplex.total (laurentProjection.app V) h⟩ :
+        InputDescSimplex.Node h) :=
+  ProjectionReference.shared_nodes (projection.app W) (k.app W)
+    (projection.app V) (k.app V) h (polynomial.map h) (laurent.map h)
+    (projection.naturality h) (k.naturality h)
+    (laurentProjection.app W) (laurentProjection.app V) (hk W) (hk V) 4
+
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The normalized first-component central node with its full actual postcomposition anchor. -/
+def firstCenter : InputCompositionCarrierCharts.Node f g :=
+  postNode f g
+    ⟨BinaryNormalizationSimplex.targetMap (laurentProjection.app Y) g,
+      eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+        (congrArg boundedFlatNormalizedPullback (laurentProjection.naturality g))) ≪≫
+          BinaryNormalizationSimplex.total (laurentProjection.app Y) g⟩
+
+/-- The normalized middle-component central node with its full actual precomposition anchor. -/
+def middleCenter : InputCompositionCarrierCharts.Node f g :=
+  preNode f g
+    ⟨BinaryNormalizationSimplex.targetMap (laurent.map f) (laurentProjection.app Y),
+      BinaryNormalizationSimplex.total (laurent.map f) (laurentProjection.app Y)⟩
+
+/-- Canonical normalized three-factor coherence retains both original central references. -/
+theorem center_reference : (firstCenter f g).2 = (middleCenter f g).2 := by
+  have he : eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+      (congrArg boundedFlatNormalizedPullback (laurentProjection.naturality g))) ≪≫
+        BinaryNormalizationSimplex.total (laurentProjection.app Y) g =
+    smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
+      (laurentProjection.naturality g)) ≪≫
+        boundedFlatNormalizedPullbackCompIso (laurentProjection.app Y) g) := by
+    rw [smallIso_trans, smallIso_eqToIso]
+    rfl
+  change postAnchor f g ≪≫ isoWhiskerRight
+      (eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+        (congrArg boundedFlatNormalizedPullback (laurentProjection.naturality g))) ≪≫
+          BinaryNormalizationSimplex.total (laurentProjection.app Y) g)
+      (arrow (laurent.map f)).functor =
+    preAnchor f g ≪≫ isoWhiskerLeft (arrow g).functor
+      (BinaryNormalizationSimplex.total (laurent.map f) (laurentProjection.app Y))
+  rw [he]
+  change smallIso (eqToIso (congrArg boundedFlatNormalizedPullback (post_total f g).symm) ≪≫
+      boundedFlatNormalizedPullbackCompIso (laurent.map f)
+        (laurent.map g ≫ laurentProjection.app Z)) ≪≫
+    isoWhiskerRight
+      (smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
+        (laurentProjection.naturality g)) ≪≫
+          boundedFlatNormalizedPullbackCompIso (laurentProjection.app Y) g))
+      (AsSmall.down ⋙ boundedFlatNormalizedPullback (laurent.map f) ⋙ AsSmall.up) =
+    smallIso (eqToIso (congrArg boundedFlatNormalizedPullback (pre_total f g).symm) ≪≫
+      boundedFlatNormalizedPullbackCompIso (laurent.map f ≫ laurentProjection.app Y) g) ≪≫
+    isoWhiskerLeft (AsSmall.down ⋙ boundedFlatNormalizedPullback g ⋙ AsSmall.up)
+      (smallIso (boundedFlatNormalizedPullbackCompIso (laurent.map f) (laurentProjection.app Y)))
+  rw [smallIso_postcomp, smallIso_precomp, ← smallIso_trans, ← smallIso_trans]
+  apply congrArg smallIso
+  simpa only [eqToIso_refl, Iso.refl_trans, Iso.trans_assoc] using
+    (anchored_factorizations_strict (laurent.map f) (laurentProjection.app Y) g
+      (laurent.map f ≫ laurentProjection.app Y) (laurent.map g ≫ laurentProjection.app Z)
+      (laurent.map (f ≫ g) ≫ laurentProjection.app Z) rfl
+      (laurentProjection.naturality g) (pre_total f g).symm (post_total f g).symm).symm
+
+/-- The shared central node is equal as a full dependent reference node for either chart. -/
+theorem center_node :
+    postNode f g (InputDescSimplex.chartNodes g k hk 15) =
+      preNode f g (InputDescSimplex.chartNodes f k hk 2) := by
+  rw [target_normal, source_normal]
+  exact full_node_eq (firstCenter f g) (middleCenter f g) rfl
+    (heq_of_eq (center_reference f g))
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTerminalCenter

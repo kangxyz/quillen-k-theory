@@ -1,0 +1,65 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialScalarCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierCharts
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceReanchorAttachment
+
+/-!
+The actual source projection attaches the new arbitrary-polynomial chart nerve to the
+already chosen global overlap reference. The full chart surface agrees before native
+evaluation. This is not yet a map of the full scalar cones or an overlap filler.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialOverlap
+open CommonReferenceNerve InputCompositionPolynomialScalar
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+  (k : laurent ⟶ polynomial)
+  (hk : ∀ W, k.app W ≫ projection.app W = laurentProjection.app W)
+
+/-- The actual source projection, not an assumed factorization of arbitrary polynomial input. -/
+abbrev sourceProjection := InputCompositionCarrierCharts.projectionMap (Z := Z)
+
+/-- Every polynomial-source Laurent node is precomposed and reanchored by the actual geometry. -/
+def overlapNode (N : Node (laurentReference f g k)) :
+    Node (InputCompositionCarrierCharts.source f g) :=
+  ⟨sourceProjection (Z := Z) ≫ N.1,
+    InputCompositionCarrierCharts.chartReferenceIso f g k hk ≪≫
+      isoWhiskerLeft (sourceProjection (Z := Z)).functor N.2⟩
+
+/-- All eighteen full dependent nodes become exactly those used by the original overlap cube. -/
+theorem overlap_nodes (i : Fin 18) :
+    overlapNode f g k hk (chartNodes f g k i) =
+      InputCompositionCarrierCharts.chartNodes f g k hk i := rfl
+
+/-- The whole new chart surface attaches to the original cube face at the unchanged clocks. -/
+theorem overlap_surface (r s : unitInterval) :
+    mapParameter (overlapNode f g k hk) (chartSurface f g k (r, s)) =
+      InputCompositionCarrierCharts.chartFace f g k hk (r, s) := by
+  change mapParameter _ (parameter _ _ _) = parameter _ _ _
+  rw [mapParameter_parameter]
+  rfl
+
+/-- This scalar attachment preserves the exact paused polynomial-to-Laurent seam. -/
+theorem overlap_paused_seam (r : unitInterval) :
+    mapParameter (overlapNode f g k hk)
+      (mapParameter (attachPostcompNode (polynomialReference f g) (chart (X := X) k)
+        (laurentReference f g k) (anchor f g k)) (pausedPolynomial f g r)) =
+      InputCompositionCarrierCharts.chartFace f g k hk (r, 1) := by
+  rw [pausedPolynomial_attachment]
+  exact overlap_surface f g k hk r 1
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialOverlap

@@ -1,0 +1,68 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionChosenCube
+/-! Regression for the four complete originally chosen seed-composition faces. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputSeedComposition
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Every original direct comparison and output-loop coordinate is retained. -/
+theorem original_direct (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((InputSeedCompositionChosenCube.seedSquare f g).level n (0,(r,x))) s =
+      (InputSeed.conjugateComparison (f ≫ g)).level n (r,(s,x)) :=
+  congrArg (fun p ↦ Path.toContinuousMap p s)
+    ((InputSeedCompositionChosenCube.seedSquare f g).at_zero n r x)
+
+/-- Both original arrowwise comparisons retain their exact first and second halves. -/
+theorem original_composite_halves (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((InputSeedCompositionChosenCube.seedSquare f g).level n
+      (1,(Quillen.NativePathCells.lower r,x))) s =
+      (coneMap f).map n ((InputSeed.conjugateComparison g).level n (r,(s,x))) ∧
+    Path.toContinuousMap ((InputSeedCompositionChosenCube.seedSquare f g).level n
+      (1,(Quillen.NativePathCells.upper r,x))) s =
+      (InputSeed.conjugateComparison f).level n
+        (r,(s,(boundedFlatPerfectPrespectrumMap g).map n x)) := by
+  constructor
+  · exact (congrArg (fun p ↦ Path.toContinuousMap p s)
+      ((InputSeedCompositionChosenCube.seedSquare f g).at_one n
+        (Quillen.NativePathCells.lower r) x)).trans
+      (InputSeedCompositionBoundary.composite_lower f g n r s x)
+  · exact (congrArg (fun p ↦ Path.toContinuousMap p s)
+      ((InputSeedCompositionChosenCube.seedSquare f g).at_one n
+        (Quillen.NativePathCells.upper r) x)).trans
+      (InputSeedCompositionBoundary.composite_upper f g n r s x)
+
+/-- The whole original source cone-composition track acts on the unchanged original seed word. -/
+theorem original_source_rail (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((InputSeedCompositionChosenCube.seedSquare f g).level n (r,(0,x))) s =
+      (InputComposition.coneHomotopy f g).level n
+        (r,(((unitHomotopy Z).postcomp (mappingConeInclusion (comparison Z))).conjugateToZero
+          (sourceNull Z)).level n (s,x)) :=
+  (congrArg (fun p ↦ Path.toContinuousMap p s)
+    ((InputSeedCompositionChosenCube.seedSquare f g).left n r x)).trans
+      (InputSeedCompositionBoundary.sourceRail_apply f g n r s x)
+
+/-- The whole original target base-composition track precedes the unchanged original transition. -/
+theorem original_target_rail (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((InputSeedCompositionChosenCube.seedSquare f g).level n (r,(1,x))) s =
+      Path.toContinuousMap ((transition X).map n
+        ((boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r,x))) s :=
+  congrArg (fun p ↦ Path.toContinuousMap p s)
+    ((InputSeedCompositionChosenCube.seedSquare f g).right n r x)
+
+end QuillenTest.GlobalRawBassInputSeedComposition

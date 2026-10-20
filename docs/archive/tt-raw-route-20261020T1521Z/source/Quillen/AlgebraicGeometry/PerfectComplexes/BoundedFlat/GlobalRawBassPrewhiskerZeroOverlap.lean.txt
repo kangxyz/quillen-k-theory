@@ -1,0 +1,65 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerZeroNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerChart
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassReferencePostFiniteNode
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSourceBoundary
+/-! All-point recovery of the original source-map first half with all three clocks retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+  Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+local notation "C" => BassH0Merge.normalizedMap (laurent.map c)
+local notation "H" => lowerLaurentBinary f g
+local notation "R" => InputIdentityProjection.source W
+local notation "Q" => InputDescSimplex.reference c
+
+open Convexity Quillen.SimplexParameters
+
+/-- The original source height-zero parameter is the unchanged five-node Bass comparison path. -/
+theorem zeroInputParameter (t : I) :
+    BassH0Diagram.parameter (0, t) =
+      StdSimplex.map ProjectionReference.Target.sourceFace.toOrderHom
+        (InputIdentityProjection.parameter t) := by
+  rw [BassH0Diagram.parameter_zero, ProjectionReference.Target.source_parameter]
+
+/-- The complete source-height-zero overlap is the original comparison path before the Laurent
+family. -/
+theorem lowerLaurent_zero (r t : I) :
+    lowerLaurent f g c ((r, 0), t) =
+      mapParameter (CommonReferenceProduct.reanchor (zeroOverlapAnchor f g c))
+        (FinitePrecomp.parameter R (InputIdentityProjection.nodes W) (zeroLaurentReference f g c)
+          (zeroLaurent f g c r, InputIdentityProjection.parameter t)) := by
+  change FiniteParameter.parameter H (lowerLaurentReference f g c)
+    (fun M j ↦ FinitePrecomp.node Q H (InputDescSimplex.nodes c j) M)
+    (parameter H (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r),
+      BassH0Diagram.parameter (0, t)) =
+    mapParameter (CommonReferenceProduct.reanchor (zeroOverlapAnchor f g c))
+      (FinitePrecomp.parameter R (InputIdentityProjection.nodes W) (zeroLaurentReference f g c)
+        (mapParameter (precompNode C)
+          (parameter H (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r)),
+          InputIdentityProjection.parameter t))
+  rw [zeroInputParameter, ← FiniteParameter.parameter_restrict,
+    FiniteParameter.parameter_characteristic, mapParameter_parameter,
+    FinitePrecomp.parameter_characteristic, mapParameter_parameter]
+  apply congrArg (fun ns ↦ parameter (lowerLaurentReference f g c) ns
+    (Quillen.SimplexGrid.parameter 2 4
+      (binaryPath (k := 2) 0 1 2 r, InputIdentityProjection.parameter t)))
+  funext i
+  exact zero_overlap_node f g c ((Quillen.SimplexGrid.indexEquiv 2 4).symm i).2
+    (lowerLaurentNodes f g ((Quillen.SimplexGrid.indexEquiv 2 4).symm i).1)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

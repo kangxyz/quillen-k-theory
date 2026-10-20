@@ -1,0 +1,111 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOverlapProjectionNodes
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenFold
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionCone
+/-!
+The actual finite-source precomposition carrier, with both original attachments.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct CutOpenCarrier
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "ε'" => CutOpenPrecomp.anchor S P K G ε
+local notation "J" => ProjectionReference.projectionMap X
+local notation "L" => ProjectionReference.reference X (A ≫ E)
+local notation "β" => ProjectionReference.FourEdge.beta X (A ≫ E)
+local notation "Q" => ProjectionReference.FourEdge.scalarCone X (A ≫ E)
+
+/-- The actual finite-source precomposition carrier, with both original attachments. -/
+abbrev sourceSquareCarrier := CutOpenCarrier.space (S ≫ P) K (S ≫ G) ε' ε'
+
+/-- The full Laurent nerve uses the exact source-square seam anchor. -/
+def preLaurentMap : C(|parameterSSet (S ≫ G)|, Q) :=
+  (FourEdgeTree.laurentInclusion (A ≫ E) J L β).comp
+    (mapParameter (reanchor (projectionLaurentSeamAnchor f g c k hk)))
+
+variable (v : parameterSSet ((BassH0Merge.normalizedMap c ≫
+    InputCompositionTopPieces.baseSource f g) ≫ ProjectionReference.projectionMap X) ⟶
+    FourEdgeTree.simplicial (BassH0Merge.normalizedMap c ≫
+      InputCompositionTopPieces.baseSource f g) (ProjectionReference.projectionMap X))
+  (hv : v ≫ ProjectionReference.FourEdge.beta X
+      (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g) =
+    ProjectionReference.FourEdge.chartMap X
+      (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g) k hk)
+
+/-- Reanchor each entire polynomial node and retain its independent original cone height. -/
+def preCylinderMap : C(|parameterSSet (S ≫ P)| × I, Q) :=
+  ⟨fun z ↦ FourEdgeTree.cylinder (A ≫ E) J L β
+    (SSet.toTop.map v (mapParameter (reanchor (projectionSeamAnchor f g c)) z.1), z.2),
+    by fun_prop⟩
+
+include hv in
+/-- The zero boundary is the full scalar attachment, proved before evaluation. -/
+theorem preCylinderMap_zero (z : |parameterSSet (S ≫ P)|) :
+    preCylinderMap f g c v (z, 0) =
+      preLaurentMap f g c k hk (mapParameter (attachPostcompNode (S ≫ P) K (S ≫ G) ε') z) := by
+  change FourEdgeTree.cylinder (A ≫ E) J L β (_, 0) = _
+  rw [FourEdgeTree.cone_cylinder_zero, ← FourEdgeTree.realized_comp, hv]
+  apply congrArg (FourEdgeTree.laurentInclusion (A ≫ E) J L β)
+  obtain ⟨n, N, w, rfl⟩ := exists_parameter (S ≫ P) z
+  change mapParameter (ProjectionReference.chartNode X k hk (A ≫ E))
+      (mapParameter (reanchor (projectionSeamAnchor f g c)) (parameter (S ≫ P) N w)) =
+    mapParameter (reanchor (projectionLaurentSeamAnchor f g c k hk))
+      (mapParameter (attachPostcompNode (S ≫ P) K (S ≫ G) ε') (parameter (S ≫ P) N w))
+  have h1 := mapParameter_parameter (F := S ≫ P) («G» := (A ≫ E) ≫ J)
+    (reanchor (projectionSeamAnchor f g c)) N w
+  have h2 := mapParameter_parameter (F := (A ≫ E) ≫ J) («G» := L)
+    (ProjectionReference.chartNode X k hk (A ≫ E))
+    (fun i ↦ reanchor (projectionSeamAnchor f g c) (N i)) w
+  have h3 := mapParameter_parameter (F := S ≫ P) («G» := S ≫ G)
+    (attachPostcompNode (S ≫ P) K (S ≫ G) ε') N w
+  have h4 := mapParameter_parameter (F := S ≫ G) («G» := L)
+    (reanchor (projectionLaurentSeamAnchor f g c k hk))
+    (fun i ↦ attachPostcompNode (S ≫ P) K (S ≫ G) ε' (N i)) w
+  exact ((congrArg (mapParameter (ProjectionReference.chartNode X k hk (A ≫ E))) h1).trans h2).trans
+    ((congrArg (fun ns ↦ parameter L ns w)
+      (funext fun i ↦ (projectionSeam_attachment_node f g c k hk (N i)).symm)).trans
+      ((congrArg (mapParameter (reanchor (projectionLaurentSeamAnchor f g c k hk))) h3).trans
+        h4).symm)
+
+/-- The actual terminal cone tip is unchanged. -/
+theorem preCylinderMap_one (z : |parameterSSet (S ≫ P)|) :
+    preCylinderMap f g c v (z, 1) = FourEdgeTree.tip (A ≫ E) J L β :=
+  FourEdgeTree.cone_cylinder_one (A ≫ E) J L β _
+
+/-- The entire finite-source chart carrier descends to the common overlap scalar cone. -/
+def preConeMap : C(sourceSquareCarrier f g c k, Q) :=
+  CutOpenFold.map (S ≫ P) K (S ≫ G) ε' Q (preLaurentMap f g c k hk)
+    (preCylinderMap f g c v) (FourEdgeTree.tip (A ≫ E) J L β)
+    (preCylinderMap_zero f g c k hk v hv) (preCylinderMap_one f g c v)
+
+/-- The positive source-square carrier lands in the original positive tree vertex. -/
+def prePlusConeMap := preConeMap f g c plus plus_projection
+  (FourEdgeTree.plusVertex (A ≫ E) J) (ProjectionReference.FourEdge.beta_plus X (A ≫ E))
+
+/-- The negative source-square carrier keeps its distinct original tree vertex. -/
+def preMinusConeMap := preConeMap f g c minus minus_projection
+  (FourEdgeTree.minusVertex (A ≫ E) J) (ProjectionReference.FourEdge.beta_minus X (A ≫ E))
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

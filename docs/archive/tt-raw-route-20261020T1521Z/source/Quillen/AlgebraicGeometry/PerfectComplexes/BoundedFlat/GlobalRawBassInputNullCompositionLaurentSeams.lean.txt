@@ -1,0 +1,228 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientMovingSquareReferenceRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedSurfaceTransport
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPrecompSeams
+/-!
+# Exact scalar boundaries of the original Laurent composition face
+
+Full original reference nodes identify the direct Laurent seed path and the two terminal
+postcomposed and precomposed Laurent paths. Supported primitive edges preserve the original
+nonmonotone five-node paths and all their time subdivisions before native evaluation.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier
+open CommonReferenceNerve CommonReferenceProduct BassH0Merge
+attribute [local irreducible] boundedFlatNormalizedPullback
+
+private theorem eqIso_symm {C : Type*} [Category C] {A B : C} (h : A = B) :
+    (eqToIso h).symm = eqToIso h.symm := rfl
+private theorem reanchor_symm_anchor {V W : Model.{u}} {F G : V ⟶ W}
+    (e : F.functor ≅ G.functor) (N : Node G) :
+    reanchor e.symm (anchorNode e N) = N := by
+  rcases N with ⟨H, a⟩
+  change (⟨H, e.symm ≪≫ (e ≪≫ a)⟩ : Node G) = ⟨H, a⟩
+  rw [← Iso.trans_assoc, Iso.symm_self_id, Iso.refl_trans]
+
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The original five nodes of the direct Laurent naturality square. -/
+abbrev directNodes {V W : Scheme.{u}} (h : V ⟶ W) :=
+  NativeSquareFiveSimplex.nodes (laurent.map h) (laurentProjection.app W)
+    (laurentProjection.app V) h (laurentProjection.naturality h)
+
+theorem outer_nodes (i : Fin 5) :
+    nodes f g (CoefficientMovingSquareRows.outerRow i) = directNodes (f ≫ g) i := by
+  have h := congrArg (reanchor (outerIso f g).symm)
+    (CoefficientMovingSquareRows.outer_row_nodes_cast
+      g f (laurent.map g) (laurent.map f)
+      (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+      (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm
+      (f ≫ g) (laurent.map (f ≫ g)) rfl (laurent.map_comp f g)
+      (laurentProjection.naturality (f ≫ g)) i)
+  exact h.trans (reanchor_symm_anchor (outerIso f g) (directNodes (f ≫ g) i))
+
+/-- The original seed's five Laurent nodes are the canonical naturality square. -/
+theorem input_nodes {V W : Scheme.{u}} (h : V ⟶ W) (i : Fin 5) :
+    InputDescSimplex.nodes h
+      (BassH0Diagram.plusFace.toOrderHom (ProjectionReference.sharedIndex i)) =
+        directNodes h i := by
+  rw [InputDescSimplex.plus_nodes]
+  exact ProjectionReference.shared_nodes (projection.app W) (plus.app W)
+    (projection.app V) (plus.app V) h (polynomial.map h) (laurent.map h)
+    (projection.naturality h) (plus.naturality h)
+    (laurentProjection.app W) (laurentProjection.app V)
+    (plus_projection W) (plus_projection V) i
+
+/-- The plus-chart inclusion of the shared input row in the Bass diagram. -/
+def inputRow : Fin 5 → Fin 31 :=
+  BassH0Diagram.plusFace.toOrderHom ∘ ProjectionReference.sharedIndex
+
+theorem inputRow_monotone : Monotone inputRow := by decide
+
+theorem input_parameter (s : unitInterval) :
+    StdSimplex.map inputRow (NativeSquareFiveSimplex.parameter s) =
+      ProjectionRectangleParameters.T BassH0Diagram.plusFace s :=
+  BassSupportOrder.map_two_binary inputRow 0 1 2 3 4 s
+
+theorem surface_zero (s : unitInterval) :
+    surface f g (0, s) =
+      parameter (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+        (InputDescSimplex.nodes (f ≫ g))
+        (ProjectionRectangleParameters.T BassH0Diagram.plusFace s) := by
+  change parameter _ _ (DoubleSquareScalarPaths.coefficientMovingSquareParameter (0, s)) = _
+  rw [CoefficientMovingSquareRows.moving_zero_row, ← input_parameter]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact (parameter_supported (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (directNodes (f ≫ g)) (nodes f g) CoefficientMovingSquareRows.outerRow
+    (outer_nodes f g) (BassH1Support.edgeFace i)
+    (CoefficientMovingSquareRows.primitive_rows_monotone 0 i) z).trans
+    (parameter_supported (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+      (directNodes (f ≫ g)) (InputDescSimplex.nodes (f ≫ g)) inputRow
+      (input_nodes (f ≫ g)) (BassH1Support.edgeFace i)
+      (inputRow_monotone.comp (BassH1Support.edgeFace i).toOrderHom.monotone) z).symm
+
+theorem face_zero (s : unitInterval) :
+    face f g (0, s) = InputIdentitySeedRectangle.laurentMovement (f ≫ g) false s := by
+  change CutOpenCarrier.laurentInclusion _ _ _ _ _ (surface f g (0, s)) = _
+  rw [surface_zero]
+  rfl
+
+
+open BassReferenceMerge
+
+theorem first_anchor : (outerIso f g).symm ≪≫
+    CoefficientMovingSquareRows.firstAnchor g f (laurent.map g) (laurent.map f)
+      (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+      (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm =
+      InputCompositionTerminalAttach.postAnchor f g := by
+  unfold outerIso CoefficientMovingSquareRows.firstAnchor
+    DoubleSquareCommonSimplex.lastSourceIso InputCompositionTerminalAttach.postAnchor
+    BinaryNormalizationSimplex.total
+  change (eqToIso _).symm ≪≫ smallIso (eqToIso _) ≪≫ smallIso _ = smallIso _
+  rw [eqIso_symm]
+  simp only [smallIso_trans, smallIso_eqToIso, ← Iso.trans_assoc, eqToIso_trans]
+
+theorem second_anchor : (outerIso f g).symm ≪≫
+    CoefficientMovingSquareRows.secondAnchor g f (laurent.map f)
+      (laurentProjection.app Y) (laurentProjection.app X)
+      (laurentProjection.naturality f).symm =
+      InputCompositionTerminalAttach.preAnchor f g := by
+  unfold outerIso CoefficientMovingSquareRows.secondAnchor
+    DoubleSquareCommonSimplex.middleSourceIso InputCompositionTerminalAttach.preAnchor
+    NormalizedTripleSimplex.rightFirst
+  change (eqToIso _).symm ≪≫ smallIso (eqToIso _) ≪≫ smallIso _ = smallIso _
+  rw [eqIso_symm]
+  simp only [smallIso_trans, smallIso_eqToIso, ← Iso.trans_assoc, eqToIso_trans]
+
+
+theorem first_nodes (i : Fin 5) :
+    nodes f g (CoefficientMovingSquareRows.firstRow i) =
+      InputCompositionTerminalAttach.postNode f g (directNodes g i) := by
+  have h := congrArg (reanchor (outerIso f g).symm)
+    (CoefficientMovingSquareRows.first_row_nodes g f (laurent.map g) (laurent.map f)
+      (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+      (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm i)
+  refine h.trans ?_
+  change anchorNode (outerIso f g).symm _ = _
+  rw [BassH1Join.anchor_post_node, first_anchor]
+  rfl
+
+theorem second_nodes (i : Fin 5) :
+    nodes f g (CoefficientMovingSquareRows.secondRow i) =
+      InputCompositionTerminalAttach.preNode f g (directNodes f i) := by
+  have h := congrArg (reanchor (outerIso f g).symm)
+    (CoefficientMovingSquareRows.second_row_nodes g f (laurent.map g) (laurent.map f)
+      (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+      (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm i)
+  refine h.trans ?_
+  change anchorNode (outerIso f g).symm _ = _
+  rw [BassMOuterJoin.anchor_pre_node, second_anchor]
+  rfl
+
+
+theorem input_square_parameter {V W : Scheme.{u}} (h : V ⟶ W) (s : unitInterval) :
+    parameter (InputIdentitySeedCarrier.laurentRef h) (directNodes h)
+      (NativeSquareFiveSimplex.parameter s) =
+      parameter (InputIdentitySeedCarrier.laurentRef h) (InputDescSimplex.nodes h)
+        (ProjectionRectangleParameters.T BassH0Diagram.plusFace s) := by
+  rw [← input_parameter]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact (parameter_supported (InputIdentitySeedCarrier.laurentRef h)
+    (directNodes h) (InputDescSimplex.nodes h) inputRow (input_nodes h)
+    (BassH1Support.edgeFace i)
+    (inputRow_monotone.comp (BassH1Support.edgeFace i).toOrderHom.monotone) z).symm
+
+theorem surface_one_lower (s : unitInterval) :
+    surface f g (1, Quillen.NativePathCells.lower s) =
+      mapParameter (InputCompositionTerminalAttach.postNode f g)
+        (parameter (InputIdentitySeedCarrier.laurentRef g) (InputDescSimplex.nodes g)
+          (ProjectionRectangleParameters.T BassH0Diagram.plusFace s)) := by
+  change parameter _ _ (DoubleSquareScalarPaths.coefficientMovingSquareParameter
+    (1, Quillen.NativePathCells.lower s)) = _
+  rw [CoefficientMovingSquareRows.moving_one_lower_row, ← input_square_parameter,
+    mapParameter_parameter]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact parameter_supported (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (fun j ↦ InputCompositionTerminalAttach.postNode f g (directNodes g j))
+    (nodes f g) CoefficientMovingSquareRows.firstRow (first_nodes f g)
+    (BassH1Support.edgeFace i) (CoefficientMovingSquareRows.primitive_rows_monotone 1 i) z
+
+theorem surface_one_upper (s : unitInterval) :
+    surface f g (1, Quillen.NativePathCells.upper s) =
+      mapParameter (InputCompositionTerminalAttach.preNode f g)
+        (parameter (InputIdentitySeedCarrier.laurentRef f) (InputDescSimplex.nodes f)
+          (ProjectionRectangleParameters.T BassH0Diagram.plusFace s)) := by
+  change parameter _ _ (DoubleSquareScalarPaths.coefficientMovingSquareParameter
+    (1, Quillen.NativePathCells.upper s)) = _
+  rw [CoefficientMovingSquareRows.moving_one_upper_row, ← input_square_parameter,
+    mapParameter_parameter]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact parameter_supported (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (fun j ↦ InputCompositionTerminalAttach.preNode f g (directNodes f j))
+    (nodes f g) CoefficientMovingSquareRows.secondRow (second_nodes f g)
+    (BassH1Support.edgeFace i) (CoefficientMovingSquareRows.primitive_rows_monotone 2 i) z
+
+theorem face_one_lower (s : unitInterval) :
+    face f g (1, Quillen.NativePathCells.lower s) =
+      SeedSurfaceTransport.laurentMovement f g s := by
+  change CutOpenCarrier.laurentInclusion _ _ _ _ _
+    (surface f g (1, Quillen.NativePathCells.lower s)) =
+      SeedSurfaceTransport.transport f g (SeedOrdinarySheet.laurent g _)
+  rw [surface_one_lower, SeedSurfaceTransport.transport_laurent]
+  rfl
+
+theorem face_one_upper (s : unitInterval) :
+    face f g (1, Quillen.NativePathCells.upper s) =
+      InputNullCompositionPrecomp.laurentMovement f g s := by
+  change CutOpenCarrier.laurentInclusion _ _ _ _ _
+    (surface f g (1, Quillen.NativePathCells.upper s)) =
+      InputNullCompositionPrecomp.transport f g (SeedOrdinarySheet.laurent f _)
+  rw [surface_one_upper, InputNullCompositionPrecomp.transport_laurent]
+  change CutOpenCarrier.laurentInclusion _ _ _ _ _ (mapParameter _ _) =
+    CutOpenCarrier.laurentInclusion _ _ _ _ _ (mapParameter _ _)
+  apply congrArg (CutOpenCarrier.laurentInclusion _ _ _ _ _)
+  exact congrArg (fun ns ↦ mapParameter ns
+    (parameter (InputIdentitySeedCarrier.laurentRef f) (InputDescSimplex.nodes f)
+      (ProjectionRectangleParameters.T BassH0Diagram.plusFace s)))
+    (funext (InputNullCompositionPrecomp.laurent_node f g)).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier

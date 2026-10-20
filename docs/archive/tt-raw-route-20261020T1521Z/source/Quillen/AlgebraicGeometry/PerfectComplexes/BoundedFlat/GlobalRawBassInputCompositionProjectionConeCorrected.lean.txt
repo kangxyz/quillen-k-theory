@@ -1,0 +1,90 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionProjectionConeEndpoints
+public import Quillen.Topology.Path.CarrierSquareCorrectionNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialRecovery
+/-! Entire chosen corrected chart squares attach to the global overlap endpoints. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionProjectionAttachment
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "Q" =>
+  ProjectionReference.FourEdge.scalarCone X (InputCompositionTopPieces.baseSource f g)
+/-- Overlap Eval for the exact original reference and parameter data. -/
+def overlapEval (t : unitInterval) : C(InputCompositionOverlapScalar.Carrier f g, Q) :=
+  ⟨fun z ↦ z t, continuous_eval_const t⟩
+
+/-- Plus corrected for the exact original reference and parameter data. -/
+theorem plus_corrected (r s : unitInterval) :
+    plusConeMap f g ((InputCompositionPolynomialScalar.correctedSquare f g plus).parameter (r, s)) =
+      InputCompositionOverlapScalar.correctedFamily f g ((r, s), 0) := by
+  refine Quillen.CarrierPathSquare.correctedSquareRecipe_evaluations
+    (plusConeMap f g) (overlapEval f g 0)
+    (InputCompositionPolynomialScalar.movingSquare f g plus)
+    (InputCompositionOverlapScalar.movingSquare f g)
+    (InputCompositionPolynomialScalar.finalChartFirst f g plus)
+    (InputCompositionPolynomialScalar.finalChartSecond f g plus)
+    (InputCompositionPolynomialScalar.finalCylinder f g plus)
+    (InputCompositionOverlapScalar.finalChartFirst f g)
+    (InputCompositionOverlapScalar.finalChartSecond f g)
+    (InputCompositionOverlapScalar.finalCylinder f g)
+    (InputCompositionPolynomialScalar.movingNullPath_one f g plus)
+    (InputCompositionOverlapScalar.movingNullPath_one f g) ?_ ?_ ?_ ?_ ?_ r s
+  · intro a b
+    change plusConeMap f g (InputCompositionPolynomialScalar.nullMoving f g plus (a, b)) =
+      InputCompositionOverlapScalar.nullMoving f g (a, b) 0
+    rcases cover b with ⟨t, rfl⟩ | ⟨t, rfl⟩
+    · rw [InputCompositionPolynomialScalar.nullMoving_lower,
+        InputCompositionOverlapScalar.nullMoving_lower]
+      exact plus_first f g a t
+    · rw [InputCompositionPolynomialScalar.nullMoving_upper,
+        InputCompositionOverlapScalar.nullMoving_upper]
+      exact plus_second f g a t
+  · intro t; exact plus_first f g t 0
+  · intro t; exact plus_first f g 1 (lower t)
+  · intro t; exact plus_first f g 1 (upper t)
+  · intro t; exact plus_second f g 1 t
+
+/-- Minus corrected for the exact original reference and parameter data. -/
+theorem minus_corrected (r s : unitInterval) :
+    minusConeMap f g
+      ((InputCompositionPolynomialScalar.correctedSquare f g minus).parameter (r, s)) =
+      InputCompositionOverlapScalar.correctedFamily f g ((r, s), 1) := by
+  refine Quillen.CarrierPathSquare.correctedSquareRecipe_evaluations
+    (minusConeMap f g) (overlapEval f g 1)
+    (InputCompositionPolynomialScalar.movingSquare f g minus)
+    (InputCompositionOverlapScalar.movingSquare f g)
+    (InputCompositionPolynomialScalar.finalChartFirst f g minus)
+    (InputCompositionPolynomialScalar.finalChartSecond f g minus)
+    (InputCompositionPolynomialScalar.finalCylinder f g minus)
+    (InputCompositionOverlapScalar.finalChartFirst f g)
+    (InputCompositionOverlapScalar.finalChartSecond f g)
+    (InputCompositionOverlapScalar.finalCylinder f g)
+    (InputCompositionPolynomialScalar.movingNullPath_one f g minus)
+    (InputCompositionOverlapScalar.movingNullPath_one f g) ?_ ?_ ?_ ?_ ?_ r s
+  · intro a b
+    change minusConeMap f g (InputCompositionPolynomialScalar.nullMoving f g minus (a, b)) =
+      InputCompositionOverlapScalar.nullMoving f g (a, b) 1
+    rcases cover b with ⟨t, rfl⟩ | ⟨t, rfl⟩
+    · rw [InputCompositionPolynomialScalar.nullMoving_lower,
+        InputCompositionOverlapScalar.nullMoving_lower]
+      exact minus_first f g a t
+    · rw [InputCompositionPolynomialScalar.nullMoving_upper,
+        InputCompositionOverlapScalar.nullMoving_upper]
+      exact minus_second f g a t
+  · intro t; exact minus_first f g t 0
+  · intro t; exact minus_first f g 1 (lower t)
+  · intro t; exact minus_first f g 1 (upper t)
+  · intro t; exact minus_second f g 1 t
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionProjectionAttachment

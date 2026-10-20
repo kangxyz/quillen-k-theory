@@ -21,6 +21,6 @@ projective-line/curve applications remain downstream in Quillen.
 
 ## Remaining comparisons
 
-- General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
+- General-source perfect preservation by derived direct image and unrestricted unbounded derived pushforward. The pinned native [D+ flat-base-change theorem](../BaseChange/Derived/README.md#canonical-base-change-mates) already covers qcqs direct-image maps and quasicoherent original homology under flat base change.
 
-- Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
+- Strict/local equivalence on arbitrary nonaffine schemes. Existing [strict-perfect pullback](Pullback.lean), [flat pullback of locally perfect complexes](FlatPullback.lean), and [arbitrary bounded-flat perfect pullback](BoundedFlat/Pullback.lean) require no quasi-compactness of the schemes.

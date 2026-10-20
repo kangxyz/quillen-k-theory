@@ -11,7 +11,7 @@ the exact assumptions. See the
 
 The displayed right concatenation is order-sensitive. The standard product
 retains the order of its actual zero-component loop and selected representative.
-The [original Q-loop application](../../KTheory/GrothendieckComparison/README.md)
+The [original Q-loop application](../../KTheory/Plus/README.md#original-k₀-times-the-original-plus-model)
 retains its continuous discrete K₀ classifier, normalized neutral slice,
 representative-change homotopies and ordinary forward-map naturality. Its
 [plus-model specialization](../../KTheory/Plus/README.md) retains the original

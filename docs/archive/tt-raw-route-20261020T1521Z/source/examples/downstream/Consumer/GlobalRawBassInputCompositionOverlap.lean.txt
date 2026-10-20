@@ -1,0 +1,37 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapNative
+/-! Exact original overlap composition and independent-clock regression. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Consumer.GlobalRawBassInputCompositionOverlap
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputCompositionOverlapScalar
+
+/-- Composition, cone height, overlap height and structure time remain independent. -/
+theorem independent_structure (n : ℕ) (r s t z : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    ProjectionReference.FourEdge.coneEval X (InputCompositionTopPieces.baseSource f g) (n+1)
+      (correctedFamily f g ((r,s),t))
+      ((originalPrespectrum (boundedFlatPerfectWaldhausen Z)).structureMap n x z) =
+      (mappingCone (GlobalRawBass.comparison X)).structureMap n
+        ((InputComposition.coneHomotopy f g).level n
+          (r,Quillen.ReducedMappingCone.cylinder ((span Z).point n)
+            ((originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).point n)
+            ((GlobalRawBass.comparison Z).map n) (s,overlapInput n t x))) z := by
+  exact (ProjectionReference.FourEdge.coneEval_structure X
+    (InputCompositionTopPieces.baseSource f g) n (correctedFamily f g ((r,s),t)) x z).trans
+      (congrArg (fun y ↦ (mappingCone (GlobalRawBass.comparison X)).structureMap n y z)
+        (coneHomotopy_overlap f g n t x r s))
+end Consumer.GlobalRawBassInputCompositionOverlap

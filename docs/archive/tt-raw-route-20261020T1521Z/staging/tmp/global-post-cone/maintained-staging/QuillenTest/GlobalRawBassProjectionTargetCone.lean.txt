@@ -1,0 +1,46 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetConeNative
+/-! Exact whole-reference cone action and independent original clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassProjectionTargetCone
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}} (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+open Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference
+local notation "E'" => E ≫ InputCompositionTerminalAttach.arrow f
+
+/-- Every scalar-cone point retains the literal original raw cone map. -/
+theorem original_map (n : ℕ) (z : FourEdge.scalarCone Y E) (x : (prespectrum V).space n) :
+    FourEdge.coneEval X E' n (TargetCone.coneMap f E z) x =
+      (GlobalRawBass.coneMap f).map n (FourEdge.coneEval Y E n z x) :=
+  TargetCone.coneMap_native f E n z x
+
+/-- The original first half retains the complete inputComparison surface. -/
+theorem original_lower (z : CommonReferenceNerve.FourEdgeTree.space E (projectionMap Y)) (s : I) :
+    TargetCone.coneMap f E
+      (CommonReferenceNerve.FourEdgeTree.cylinder E (projectionMap Y) (reference Y E)
+        (FourEdge.beta Y E) (z, lower s)) =
+    CommonReferenceNerve.FourEdgeTree.laurentInclusion E' (projectionMap X) (reference X E')
+      (FourEdge.beta X E') (TargetCone.surface f E (z,s)) :=
+  TargetCone.coneMap_lower f E z s
+
+/-- The original second half retains the actual span map and cone height. -/
+theorem original_upper (z : CommonReferenceNerve.FourEdgeTree.space E (projectionMap Y)) (s : I) :
+    TargetCone.coneMap f E
+      (CommonReferenceNerve.FourEdgeTree.cylinder E (projectionMap Y) (reference Y E)
+        (FourEdge.beta Y E) (z, upper s)) =
+    CommonReferenceNerve.FourEdgeTree.cylinder E' (projectionMap X) (reference X E')
+      (FourEdge.beta X E') (TargetSpan.treeMap f E z,s) :=
+  TargetCone.coneMap_upper f E z s
+end QuillenTest.GlobalRawBassProjectionTargetCone

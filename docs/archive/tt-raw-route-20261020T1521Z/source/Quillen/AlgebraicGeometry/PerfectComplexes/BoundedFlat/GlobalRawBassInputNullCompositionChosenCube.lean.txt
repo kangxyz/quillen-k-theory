@@ -1,0 +1,188 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionAlternateNative
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenChosenNullExtension
+/-! The exact chosen-null three-parameter comparison, with all original faces fixed. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionChosenCube
+open CommonReferenceNerve InputIdentitySeedCarrier InputNullCompositionAlternateCarrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The chosen direct null comparison, with only its endpoint types renamed. -/
+def direct : (oldDirect f g).Homotopy (targetDirect f g) :=
+  ((InputIdentitySeedNull.pastedNull (f ≫ g) false).pathCast
+    (InputIdentitySeedNull.oldNull (f ≫ g) false).source rfl).cast rfl rfl
+
+/-- The two chosen comparisons and their four fixed original boundary faces. -/
+def boundary := CutOpenCarrier.chosenNullSurfaces
+  (polyRef (f ≫ g)) (chart (X := X)) (laurentRef (f ≫ g))
+  (ordinary (f ≫ g)) (shifted (f ≫ g)) (direct f g) (alternate f g)
+
+/-- Extend the exact chosen boundary in the actual contractible scalar carrier. -/
+def scalarCube := (boundary f g).carrier
+
+/-- Compact native evaluation gives the full continuous three-parameter comparison. -/
+def cube (n : ℕ) :
+    C(((I × I) × I) × (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n,
+      (mappingCone (comparison X)).space n) :=
+  (InputIdentityPositive.inclusion X).map n |>.comp ((boundary f g).joint n)
+
+/-- Every cube value is native evaluation at the corresponding scalar carrier point. -/
+theorem cube_apply (n : ℕ) (q r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((q,r),s),x) =
+      InputNullCompositionCompositeCarrier.evaluate f g n x (scalarCube f g ((q,r),s)) := rfl
+
+/-- The entire q=0 face is the originally chosen direct null comparison. -/
+theorem cube_direct (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((0,r),s),x) =
+      (InputNull.originalNullComparison (f ≫ g)).level n (r,(s,x)) := by
+  rw [cube_apply]
+  change InputNullCompositionCompositeCarrier.evaluate f g n x
+    ((boundary f g).carrier ((0,r),s)) = _
+  rw [CutOpenCarrier.ChosenNullSurfaces.carrier_left]
+  exact InputIdentitySeedNull.originalNull_whole (f ≫ g) false n r s x
+
+/-- The entire q=1 face is the literal chosen alternate, including its terminal pause. -/
+theorem cube_alternate (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((1,r),s),x) =
+      (InputCompositionNull.alternateComparison f g).level n (r,(s,x)) := by
+  rw [cube_apply]
+  change InputNullCompositionCompositeCarrier.evaluate f g n x
+    ((boundary f g).carrier ((1,r),s)) = _
+  rw [CutOpenCarrier.ChosenNullSurfaces.carrier_right]
+  exact alternate_native f g n r s x
+
+/-- The whole original old-null path is fixed independently of filling time. -/
+theorem cube_old (n : ℕ) (q s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((q,0),s),x) =
+      (InputNull.originalOldNull (f ≫ g)).level n (s,x) := by
+  have h : cube f g n (((q,0),s),x) = cube f g n (((0,0),s),x) := by
+    simp only [cube_apply]
+    apply congrArg
+    exact ((boundary f g).carrier_start q s).trans
+      ((boundary f g).carrier_start 0 s).symm
+  rw [h, cube_direct]
+  exact ((InputNull.originalNullComparison (f ≫ g)).level n).map_zero_left (s,x)
+
+/-- The direct Laurent path followed by the whole original new-null path stays fixed. -/
+theorem cube_new (n : ℕ) (q s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((q,1),s),x) =
+      ((InputNull.laurentMovement (f ≫ g)).trans
+        (InputNull.originalNewNull (f ≫ g))).level n (s,x) := by
+  have h : cube f g n (((q,1),s),x) = cube f g n (((0,1),s),x) := by
+    simp only [cube_apply]
+    apply congrArg
+    exact ((boundary f g).carrier_finish q s).trans
+      ((boundary f g).carrier_finish 0 s).symm
+  rw [h, cube_direct]
+  exact ((InputNull.originalNullComparison (f ≫ g)).level n).map_one_left (s,x)
+
+/-- The source edge is unchanged at every comparison and filling time. -/
+theorem cube_source (n : ℕ) (q r : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((q,r),0),x) = cube f g n (((0,0),0),x) := by
+  simp only [cube_apply]
+  apply congrArg
+  exact ((boundary f g).carrier_zero q r).trans
+    ((boundary f g).carrier_zero 0 0).symm
+
+/-- The fixed source face is the original Laurent source, not a new tip or a reparameterization. -/
+theorem cube_source_original (n : ℕ) (q r : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((q,r),0),x) =
+      (InputNull.originalOldNull (f ≫ g)).level n (0,x) :=
+  (cube_source f g n q r x).trans (cube_old f g n 0 0 x)
+
+/-- The terminal ordinary-tip face is unchanged throughout the cube. -/
+theorem cube_tip (n : ℕ) (q r : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    cube f g n (((q,r),1),x) = (mappingCone (comparison X)).point n := by
+  rw [cube_apply]
+  change InputNullCompositionCompositeCarrier.evaluate f g n x
+    ((boundary f g).carrier ((q,r),1)) = _
+  rw [CutOpenCarrier.ChosenNullSurfaces.carrier_one]
+  exact tip_native f g n x
+
+/-- The whole three-parameter family is based. -/
+theorem cube_point (n : ℕ) (z : (I × I) × I) :
+    cube f g n (z, (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).point n) =
+      (mappingCone (comparison X)).point n := by
+  change (InputIdentityPositive.inclusion X).map n ((boundary f g).joint n (z,_)) = _
+  exact (congrArg ((InputIdentityPositive.inclusion X).map n)
+    ((boundary f g).joint_point n z)).trans ((InputIdentityPositive.inclusion X).map_point n)
+
+/-- Structure time remains independent of filling, comparison and path times. -/
+theorem cube_structure (n : ℕ) (z : (I × I) × I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) (t : I) :
+    cube f g (n+1)
+      (z, (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).structureMap n x t) =
+      (mappingCone (comparison X)).structureMap n (cube f g n (z,x)) t := by
+  change (InputIdentityPositive.inclusion X).map (n+1)
+    ((boundary f g).joint (n+1) (z,_)) = _
+  exact (congrArg ((InputIdentityPositive.inclusion X).map (n+1))
+    ((boundary f g).joint_structure n z x t)).trans
+      (congrArg (fun p ↦ p t)
+        ((InputIdentityPositive.inclusion X).comm n ((boundary f g).joint n (z,x))))
+/-- Actual relative homotopy of the two selected two-parameter comparisons at each level. -/
+def chosenComparison (n : ℕ) :
+    ((InputNull.originalNullComparison (f ≫ g)).level n).toContinuousMap.HomotopyRel
+      ((InputCompositionNull.alternateComparison f g).level n).toContinuousMap
+      {z | z.1 = 0 ∨ z.1 = 1 ∨ z.2.1 = 0 ∨ z.2.1 = 1 ∨
+        z.2.2 = (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).point n} where
+  toFun z := cube f g n (((z.1,z.2.1),z.2.2.1),z.2.2.2)
+  continuous_toFun := by fun_prop
+  map_zero_left z := cube_direct f g n z.1 z.2.1 z.2.2
+  map_one_left z := cube_alternate f g n z.1 z.2.1 z.2.2
+  prop' q z hz := by
+    rcases z with ⟨r,s,x⟩
+    change cube f g n (((q,r),s),x) =
+      (InputNull.originalNullComparison (f ≫ g)).level n (r,(s,x))
+    rcases hz with h | h | h | h | h
+    · dsimp at h
+      subst r
+      exact (cube_old f g n q s x).trans (cube_old f g n 0 s x).symm |>.trans
+        (cube_direct f g n 0 s x)
+    · dsimp at h
+      subst r
+      exact (cube_new f g n q s x).trans (cube_new f g n 0 s x).symm |>.trans
+        (cube_direct f g n 1 s x)
+    · dsimp at h
+      subst s
+      exact (cube_source f g n q r x).trans (cube_source f g n 0 r x).symm |>.trans
+        (cube_direct f g n r 0 x)
+    · dsimp at h
+      subst s
+      exact (cube_tip f g n q r x).trans (cube_tip f g n 0 r x).symm |>.trans
+        (cube_direct f g n r 1 x)
+    · dsimp at h
+      subst x
+      exact (cube_point f g n ((q,r),s)).trans (cube_point f g n ((0,r),s)).symm |>.trans
+        (cube_direct f g n r s _)
+
+/-- The extracted genuine relative homotopy also commutes with independent structure time. -/
+theorem chosenComparison_structure (n : ℕ) (q r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) (t : I) :
+    chosenComparison f g (n+1)
+      (q,(r,(s,(originalPrespectrum (boundedFlatPerfectWaldhausen Z)).structureMap n x t))) =
+      (mappingCone (comparison X)).structureMap n
+        (chosenComparison f g n (q,(r,(s,x)))) t :=
+  cube_structure f g n ((q,r),s) x t
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionChosenCube

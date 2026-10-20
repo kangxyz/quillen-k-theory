@@ -1,0 +1,305 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionChosenCube
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeed
+public import Quillen.Topology.Prespectrum.RelativeHomotopyTwoSheetConjugationEvaluation
+/-! Replace only the chosen null comparison while fixing all direct-arrow seed data. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionSeedReplacement
+
+private theorem rel_ext {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
+    {H K : Homotopy f g} (P Q : H.RelHomotopy K)
+    (h : ∀ n, P.level n = Q.level n) : P = Q := by
+  cases P with
+  | mk pl pc =>
+    cases Q with
+    | mk ql qc =>
+      have he : pl = ql := funext h
+      cases he
+      rfl
+
+private theorem continuous_trans_family {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
+    {H K L : Homotopy f g} (P : I → H.RelHomotopy K) (Q : I → K.RelHomotopy L)
+    (n : ℕ)
+    (hp : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (P z.1).level n (z.2.1,z.2.2)))
+    (hq : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (Q z.1).level n (z.2.1,z.2.2))) :
+    Continuous (fun z : I × (I × (I × E.space n)) ↦
+      ((P z.1).trans (Q z.1)).level n (z.2.1,z.2.2)) := by
+  let p : C(I × (I × (I × E.space n)), F.space n) := ⟨_,hp⟩
+  let q : C(I × (I × (I × E.space n)), F.space n) := ⟨_,hq⟩
+  let a : C(I × (I × E.space n), F.space n) := ⟨fun z ↦ H.level n z.2, by fun_prop⟩
+  let b : C(I × (I × E.space n), F.space n) := ⟨fun z ↦ K.level n z.2, by fun_prop⟩
+  let c : C(I × (I × E.space n), F.space n) := ⟨fun z ↦ L.level n z.2, by fun_prop⟩
+  let ph : a.Homotopy b :=
+    { toFun z := p (z.2.1,(z.1,z.2.2))
+      continuous_toFun := by fun_prop
+      map_zero_left z := ((P z.1).level n).map_zero_left z.2
+      map_one_left z := ((P z.1).level n).map_one_left z.2 }
+  let qh : b.Homotopy c :=
+    { toFun z := q (z.2.1,(z.1,z.2.2))
+      continuous_toFun := by fun_prop
+      map_zero_left z := ((Q z.1).level n).map_zero_left z.2
+      map_one_left z := ((Q z.1).level n).map_one_left z.2 }
+  have hc : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (ph.trans qh) (z.2.1,(z.1,z.2.2))) := by fun_prop
+  convert hc using 1
+  funext z
+  change (((P z.1).level n).trans ((Q z.1).level n)) (z.2.1,z.2.2) = _
+  rw [ContinuousMap.HomotopyRel.trans_apply, ContinuousMap.Homotopy.trans_apply]
+  split <;> rfl
+
+private theorem continuous_hcomp_family {E F : LoopPrespectrum.{u}} {f g h : E ⟶ F}
+    {H H' : Homotopy f g} {K K' : Homotopy g h}
+    (P : I → H.RelHomotopy H') (Q : I → K.RelHomotopy K') (n : ℕ)
+    (hp : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (P z.1).level n (z.2.1,z.2.2)))
+    (hq : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (Q z.1).level n (z.2.1,z.2.2))) :
+    Continuous (fun z : I × (I × (I × E.space n)) ↦
+      ((P z.1).hcomp (Q z.1)).level n (z.2.1,z.2.2)) := by
+  let p : C(I × (I × (I × E.space n)), F.space n) := ⟨_,hp⟩
+  let q : C(I × (I × (I × E.space n)), F.space n) := ⟨_,hq⟩
+  let a : C(I × (I × E.space n), F.space n) := ⟨fun z ↦ f.map n z.2.2, by fun_prop⟩
+  let b : C(I × (I × E.space n), F.space n) := ⟨fun z ↦ g.map n z.2.2, by fun_prop⟩
+  let c : C(I × (I × E.space n), F.space n) := ⟨fun z ↦ h.map n z.2.2, by fun_prop⟩
+  let ph : a.Homotopy b :=
+    { toFun z := p (z.2.1,(z.2.2.1,(z.1,z.2.2.2)))
+      continuous_toFun := by fun_prop
+      map_zero_left z := (((P z.1).level n).eq_fst z.2.1 (Or.inl rfl)).trans
+        (H.at_zero n z.2.2)
+      map_one_left z := (((P z.1).level n).eq_fst z.2.1 (Or.inr (Or.inl rfl))).trans
+        (H.at_one n z.2.2) }
+  let qh : b.Homotopy c :=
+    { toFun z := q (z.2.1,(z.2.2.1,(z.1,z.2.2.2)))
+      continuous_toFun := by fun_prop
+      map_zero_left z := (((Q z.1).level n).eq_fst z.2.1 (Or.inl rfl)).trans
+        (K.at_zero n z.2.2)
+      map_one_left z := (((Q z.1).level n).eq_fst z.2.1 (Or.inr (Or.inl rfl))).trans
+        (K.at_one n z.2.2) }
+  have hc : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (ph.trans qh) (z.2.2.1,(z.1,(z.2.1,z.2.2.2)))) := by fun_prop
+  convert hc using 1
+  funext z
+  unfold Homotopy.RelHomotopy.hcomp
+  dsimp only
+  change ContinuousMap.Homotopy.trans _ _ (z.2.2.1,(z.2.1,z.2.2.2)) = _
+  rw [ContinuousMap.Homotopy.trans_apply, ContinuousMap.Homotopy.trans_apply]
+  split <;> rfl
+
+private def conjugateTail {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
+    (L : Homotopy f g) (U : Homotopy f f) (V : Homotopy g g)
+    (N : Homotopy g (zeroHom E F))
+    (JU : (U.trans L).RelHomotopy (L.trans V)) :
+    ((L.trans N).symm.trans (U.trans (L.trans N))).RelHomotopy
+      (V.conjugateToZero N) := by
+  let T := V.trans N
+  let JU' : (U.trans (L.trans N)).RelHomotopy (L.trans T) :=
+    (Homotopy.RelHomotopy.transAssoc U L N).symm.trans
+      ((JU.hcomp (Homotopy.RelHomotopy.refl N)).trans
+        (Homotopy.RelHomotopy.transAssoc L V N))
+  let JC : (L.symm.trans (L.trans T)).RelHomotopy T :=
+    (Homotopy.RelHomotopy.transAssoc L.symm L T).symm.trans
+      (((Homotopy.RelHomotopy.reflSymmTrans L).symm.hcomp
+        (Homotopy.RelHomotopy.refl T)).trans (Homotopy.RelHomotopy.reflTrans T))
+  exact Homotopy.RelHomotopy.retypeSymmTransSource L N (U.trans (L.trans N))
+    (N.symm.trans T)
+      ((Homotopy.RelHomotopy.transAssoc N.symm L.symm (U.trans (L.trans N))).trans
+        ((Homotopy.RelHomotopy.refl N.symm).hcomp
+          (((Homotopy.RelHomotopy.refl L.symm).hcomp JU').trans JC)))
+
+private theorem conjugate_word {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
+    (L : Homotopy f g) (U : Homotopy f f) (V : Homotopy g g)
+    (N₀ : Homotopy f (zeroHom E F)) (N₁ : Homotopy g (zeroHom E F))
+    (JU : (U.trans L).RelHomotopy (L.trans V))
+    (P : N₀.RelHomotopy (L.trans N₁)) :
+    Homotopy.RelHomotopy.conjugateNaturality L U V N₀ N₁ JU P =
+      (P.symmPath.hcomp ((Homotopy.RelHomotopy.refl U).hcomp P)).trans
+        (conjugateTail L U V N₁ JU) := rfl
+
+private theorem continuous_conjugate_family {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
+    (L : Homotopy f g) (U : Homotopy f f) (V : Homotopy g g)
+    (N₀ : Homotopy f (zeroHom E F)) (N₁ : Homotopy g (zeroHom E F))
+    (JU : (U.trans L).RelHomotopy (L.trans V))
+    (P : I → N₀.RelHomotopy (L.trans N₁)) (n : ℕ)
+    (hp : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (P z.1).level n (z.2.1,z.2.2))) :
+    Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (Homotopy.RelHomotopy.conjugateNaturality L U V N₀ N₁ JU (P z.1)).level n
+        (z.2.1,z.2.2)) := by
+  let p : C(I × (I × (I × E.space n)), F.space n) := ⟨_,hp⟩
+  have hs : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (P z.1).symmPath.level n (z.2.1,z.2.2)) := by
+    change Continuous (fun z : I × (I × (I × E.space n)) ↦
+      p (z.1,(z.2.1,(unitInterval.symm z.2.2.1,z.2.2.2))))
+    fun_prop
+  have hu : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (Homotopy.RelHomotopy.refl U).level n (z.2.1,z.2.2)) := by
+    change Continuous (fun z : I × (I × (I × E.space n)) ↦
+      U.level n (z.2.2.1,z.2.2.2))
+    fun_prop
+  have hh := continuous_hcomp_family (fun q ↦ (P q).symmPath)
+    (fun q ↦ (Homotopy.RelHomotopy.refl U).hcomp (P q)) n hs
+    (continuous_hcomp_family (fun _ ↦ Homotopy.RelHomotopy.refl U) P n hu hp)
+  have ht : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (conjugateTail L U V N₁ JU).level n (z.2.1,z.2.2)) := by fun_prop
+  have hc := continuous_trans_family
+    (fun q ↦ (P q).symmPath.hcomp ((Homotopy.RelHomotopy.refl U).hcomp (P q)))
+    (fun _ ↦ conjugateTail L U V N₁ JU) n hh ht
+  exact hc.congr (fun z ↦ congrArg (fun Q ↦ Q.level n (z.2.1,z.2.2))
+    (conjugate_word L U V N₀ N₁ JU (P z.1)).symm)
+
+private theorem continuous_zeroLoop_family {E F : LoopPrespectrum.{u}}
+    {H K : Homotopy (zeroHom E F) (zeroHom E F)}
+    (P : I → H.RelHomotopy K) (n : ℕ)
+    (hp : Continuous (fun z : I × (I × (I × E.space n)) ↦
+      (P z.1).level n (z.2.1,z.2.2))) :
+    Continuous (fun z : I × (I × E.space n) ↦
+      ((P z.1).zeroLoopMapHomotopy).level n z.2) := by
+  let p : C(I × (I × (I × E.space n)), F.space n) := ⟨_,hp⟩
+  apply Path.continuous_uncurry_iff.mp
+  change Continuous (fun z : (I × (I × E.space n)) × I ↦
+    p (z.1.1,(z.1.2.1,(z.2,z.1.2.2))))
+  fun_prop
+
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Every filling slice is a native null comparison with the original endpoints. -/
+def nullSlice (q : I) : (InputNull.originalOldNull (f ≫ g)).RelHomotopy
+    ((InputNull.laurentMovement (f ≫ g)).trans (InputNull.originalNewNull (f ≫ g))) where
+  level n :=
+    { toFun z := InputNullCompositionChosenCube.cube f g n (((q,z.1),z.2.1),z.2.2)
+      continuous_toFun := by fun_prop
+      map_zero_left z := InputNullCompositionChosenCube.cube_old f g n q z.1 z.2
+      map_one_left z := InputNullCompositionChosenCube.cube_new f g n q z.1 z.2
+      prop' r z hz := by
+        rcases z with ⟨s,x⟩
+        rcases hz with h | h | h
+        · dsimp at h
+          subst s
+          exact InputNullCompositionChosenCube.cube_source_original f g n q r x
+        · dsimp at h
+          subst s
+          exact (InputNullCompositionChosenCube.cube_tip f g n q r x).trans
+            ((InputNull.originalOldNull (f ≫ g)).at_one n x).symm
+        · dsimp at h
+          subst x
+          exact (InputNullCompositionChosenCube.cube_point f g n ((q,r),s)).trans
+            ((InputNull.originalOldNull (f ≫ g)).at_point n s).symm }
+  comm n r s x t := InputNullCompositionChosenCube.cube_structure f g n ((q,r),s) x t
+
+/-- The first slice is the originally selected direct null comparison. -/
+theorem nullSlice_zero : nullSlice f g 0 = InputNull.originalNullComparison (f ≫ g) := by
+  apply rel_ext
+  intro n
+  ext z
+  exact InputNullCompositionChosenCube.cube_direct f g n z.1 z.2.1 z.2.2
+
+/-- The last slice is the literal alternate comparison with its original terminal pause. -/
+theorem nullSlice_one : nullSlice f g 1 = InputCompositionNull.alternateComparison f g := by
+  apply rel_ext
+  intro n
+  ext z
+  exact InputNullCompositionChosenCube.cube_alternate f g n z.1 z.2.1 z.2.2
+
+/-- Only the null comparison varies; every original unit and conjugation datum is fixed. -/
+def conjugateSlice (q : I) := Homotopy.RelHomotopy.conjugateNaturality
+  (InputNull.laurentMovement (f ≫ g)) (InputSeed.oldUnit (f ≫ g)) (InputSeed.newUnit (f ≫ g))
+  (InputNull.originalOldNull (f ≫ g)) (InputNull.originalNewNull (f ≫ g))
+  (InputSeed.unitPasting (f ≫ g)) (nullSlice f g q)
+
+/-- The alternate seed replaces only its original null comparison. -/
+def alternateConjugate := Homotopy.RelHomotopy.conjugateNaturality
+  (InputNull.laurentMovement (f ≫ g)) (InputSeed.oldUnit (f ≫ g)) (InputSeed.newUnit (f ≫ g))
+  (InputNull.originalOldNull (f ≫ g)) (InputNull.originalNewNull (f ≫ g))
+  (InputSeed.unitPasting (f ≫ g)) (InputCompositionNull.alternateComparison f g)
+
+/-- No original coordinate or endpoint cast changes in the alternate seed input homotopy. -/
+def alternateSeedInputHomotopy := (alternateConjugate f g).zeroLoopMapHomotopy.cast
+  (InputSeed.source_eq (f ≫ g)) (InputSeed.target_eq (f ≫ g))
+
+/-- Joint continuity follows the original horizontal and vertical binary clocks. -/
+theorem conjugateSlice_continuous (n : ℕ) :
+    Continuous (fun z : I × (I × (I ×
+      (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n)) ↦
+      (conjugateSlice f g z.1).level n (z.2.1,z.2.2)) := by
+  exact continuous_conjugate_family
+    (InputNull.laurentMovement (f ≫ g)) (InputSeed.oldUnit (f ≫ g))
+    (InputSeed.newUnit (f ≫ g)) (InputNull.originalOldNull (f ≫ g))
+    (InputNull.originalNewNull (f ≫ g)) (InputSeed.unitPasting (f ≫ g))
+    (nullSlice f g) n (by
+      change Continuous (fun z : I × (I × (I ×
+        (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n)) ↦
+        InputNullCompositionChosenCube.cube f g n (((z.1,z.2.1),z.2.2.1),z.2.2.2))
+      fun_prop)
+
+/-- The first conjugation slice is precisely the selected direct-arrow seed comparison. -/
+theorem conjugateSlice_zero : conjugateSlice f g 0 = InputSeed.conjugateComparison (f ≫ g) := by
+  unfold conjugateSlice InputSeed.conjugateComparison
+  rw [nullSlice_zero]
+
+/-- The last conjugation slice changes only the null-comparison input. -/
+theorem conjugateSlice_one : conjugateSlice f g 1 = alternateConjugate f g := by
+  unfold conjugateSlice alternateConjugate
+  rw [nullSlice_one]
+
+/-- Keep the original forward-seed endpoint casts while varying only the selected null. -/
+def seedSlice (q : I) := (conjugateSlice f g q).zeroLoopMapHomotopy.cast
+  (InputSeed.source_eq (f ≫ g)) (InputSeed.target_eq (f ≫ g))
+
+/-- Joint continuity includes the independent output-loop coordinate. -/
+theorem seedSlice_continuous (n : ℕ) :
+    Continuous (fun z : I × (I ×
+      (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) ↦
+      (seedSlice f g z.1).level n z.2) := by
+  exact continuous_zeroLoop_family (conjugateSlice f g) n (conjugateSlice_continuous f g n)
+
+/-- The initial seed homotopy remains the selected original input homotopy. -/
+theorem seedSlice_zero : seedSlice f g 0 = transitionInputHomotopy (f ≫ g) := by
+  unfold seedSlice transitionInputHomotopy
+  rw [conjugateSlice_zero]
+
+/-- The final seed homotopy uses the literal alternate null comparison and nothing else new. -/
+theorem seedSlice_one : seedSlice f g 1 = alternateSeedInputHomotopy f g := by
+  unfold seedSlice alternateSeedInputHomotopy
+  rw [conjugateSlice_one]
+
+/-- Concrete seed input homotopy comparison induced solely by replacing the chosen null. -/
+def seedInputComparison : (transitionInputHomotopy (f ≫ g)).RelHomotopy
+    (alternateSeedInputHomotopy f g) where
+  level n :=
+    { toFun z := (seedSlice f g z.1).level n z.2
+      continuous_toFun := seedSlice_continuous f g n
+      map_zero_left z := by rw [seedSlice_zero]; rfl
+      map_one_left z := by rw [seedSlice_one]; rfl
+      prop' q z hz := by
+        rcases z with ⟨r,x⟩
+        rcases hz with h | h | h
+        · dsimp at h
+          subst r
+          exact ((seedSlice f g q).at_zero n x).trans
+            ((transitionInputHomotopy (f ≫ g)).at_zero n x).symm
+        · dsimp at h
+          subst r
+          exact ((seedSlice f g q).at_one n x).trans
+            ((transitionInputHomotopy (f ≫ g)).at_one n x).symm
+        · dsimp at h
+          subst x
+          exact ((seedSlice f g q).at_point n r).trans
+            ((transitionInputHomotopy (f ≫ g)).at_point n r).symm }
+  comm n q r x t := (seedSlice f g q).comm n r x t
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionSeedReplacement

@@ -1,0 +1,135 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationNull
+
+/-!
+Regression checks for the actual geometric localization null and its base normalization square.
+The moving edge is the single realization of the pasted normalization isomorphism; no equality
+with the two separately realized row tracks and their half-clock concatenation is asserted.
+-/
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalSupportedRawLocalizationNull
+open GlobalSectionChangeIndex ParameterIdentity ParameterAuxiliarySupport
+open GlobalSupportedRawBass.Localization
+
+/-- The fixed-factor projection respects both components of every actual pair arrow. -/
+theorem pair_arrow {A B : Scheme.OpenPairs.{u}} (g : A ⟶ B) :
+    (pairTransformation g).app integerBase ≫ (projectionPairIso B.obj.hom).hom =
+      (projectionPairIso A.obj.hom).hom ≫ g :=
+  pairProjection_naturality g
+
+/-- The complete supported Model square retains the original pair arrow. -/
+theorem model_arrow {A B : Scheme.OpenPairs.{u}} (g : A ⟶ B) :
+    (supportedIso B.obj.hom).hom ≫ (supportedMap g).app (op integerBase) =
+      pairSupported.map g.op ≫ (supportedIso A.obj.hom).hom :=
+  supportedIso_naturality g
+
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- The enlargement row is the actual strict projection square. -/
+theorem enlargement_row :
+    (supportedIso (unionOpen f T).ι).hom ≫ (enlargement f T).app (op integerBase) =
+      pairSupported.map (enlargementPair f T).op ≫ (supportedIso T.ι).hom :=
+  supportedIso_enlargement f T
+
+omit [IsOpenImmersion f] in
+/-- The restriction row uses the inverse-image support and its unchanged projection. -/
+theorem restriction_row :
+    (supportedIso T.ι).hom ≫ (restriction f T).app (op integerBase) =
+      pairSupported.map (supportRestrictionPair f T).op ≫
+        (supportedIso (inverseOpen f T).ι).hom :=
+  supportedIso_restriction f T
+
+/-- The raw map remains the two independent original geometric row pullbacks. -/
+theorem raw_composite : rawComposite f T =
+    SupportedTensorEvaluation.evaluationRawMap (enlargementPair f T) ≫
+      SupportedTensorEvaluation.evaluationRawMap (supportRestrictionPair f T) := rfl
+
+/-- The independently defined geometric zero map is weak at every source object. -/
+theorem raw_weak (X : sourceModel f T) :
+    (targetModel f T).waldhausen.weq ((zeroToRawFull f T).app X) :=
+  zeroToRawFull_weak f T X
+
+/-- Every section-null time recovers the existing fixed-factor canonical null. -/
+theorem original_null (n : ℕ) (s : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (prespectrumMap (supportedIso (inverseOpen f T).ι).hom).map n
+        ((sectionNull f T).level n (s, x)) =
+      ((fullNull f T).homotopy (op integerBase)).level n
+        (s, (prespectrumMap (supportedIso (unionOpen f T).ι).hom).map n x) :=
+  sectionNull_recovery f T n s x
+
+/-- The raw null retains the exact reversal of its actual weak transformation. -/
+theorem raw_clock (n : ℕ) (s : I) (x : (prespectrum (sourceModel f T)).space n) :
+    (rawNull f T).level n (s, x) =
+      (prespectrumTransformationHomotopy (zeroToRawFull f T) (zeroToRawFull_weak f T)).level n
+        (unitInterval.symm s, x) :=
+  rawNull_level f T n s x
+
+/-- At prespectrum level zero the old loop time remains independent of the null time. -/
+theorem level_zero (s t : I) (x : (prespectrum (sourceModel f T)).space 0) :
+    Path.toContinuousMap ((rawNull f T).level 0 (s, x)) t =
+      Path.toContinuousMap
+        ((prespectrumTransformationHomotopy (zeroToRawFull f T)
+          (zeroToRawFull_weak f T)).level 0 (unitInterval.symm s, x)) t :=
+  congrArg (fun p ↦ Path.toContinuousMap p t) (rawNull_level f T 0 s x)
+
+/-- The entire first face is the original section null after target evaluation. -/
+theorem first_face (n : ℕ) (s : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (evaluationSquare f T).level n (0, (s, x)) =
+      (postSectionNull f T).level n (s, x) :=
+  (evaluationSquare f T).at_zero n s x
+
+/-- The entire second face is the original geometric null after source evaluation. -/
+theorem second_face (n : ℕ) (s : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (evaluationSquare f T).level n (1, (s, x)) = (preRawNull f T).level n (s, x) :=
+  (evaluationSquare f T).at_one n s x
+
+/-- The moving face is the single track of the actual pasted normalization isomorphism. -/
+theorem normalization_face (n : ℕ) (r : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (evaluationSquare f T).level n (r, (0, x)) = (evaluationTrack f T).level n (r, x) :=
+  (evaluationSquare f T).left n r x
+
+/-- The terminal null edge is the constant geometric zero throughout normalization. -/
+theorem zero_face (n : ℕ) (r : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (evaluationSquare f T).level n (r, (1, x)) = (prespectrum (targetModel f T)).point n :=
+  (evaluationSquare f T).right n r x
+
+/-- Both square times remain present in the selected genuine weak simplex family. -/
+theorem whole_family (n : ℕ) (r s : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (evaluationSquare f T).level n (r, (s, x)) =
+      prespectrumSimplexFamily
+        (ModelZeroNormalization.normalizationSimplex
+          (sectionComposite f T) (rawComposite f T) (sourceEvaluation f T) (targetEvaluation f T)
+          (evaluationIso f T) (zeroToSectionFull f T) (zeroToSectionFull_weak f T)) n
+        (WeakTriangleSquare.parameter (r, s), x) :=
+  evaluationSquare_apply f T n r s x
+
+/-- The geometric square is based at every pair of independent times. -/
+theorem based_line (n : ℕ) (r s : I) :
+    (evaluationSquare f T).level n (r, (s, (prespectrum (sectionSource f T)).point n)) =
+      (prespectrum (targetModel f T)).point n :=
+  (evaluationSquare f T).at_point n r s
+
+/-- Structure time remains independent of both null and normalization time. -/
+theorem structure_time (n : ℕ) (r s t : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (evaluationSquare f T).level (n + 1)
+        (r, (s, (prespectrum (sectionSource f T)).structureMap n x t)) =
+      (prespectrum (targetModel f T)).structureMap n
+        ((evaluationSquare f T).level n (r, (s, x))) t :=
+  (evaluationSquare f T).comm n r s x t
+
+end QuillenTest.GlobalSupportedRawLocalizationNull

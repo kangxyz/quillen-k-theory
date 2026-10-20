@@ -1,0 +1,137 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSpanPolynomial
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetOverlapReanchor
+
+/-!
+# Reanchoring the original target-span polynomial recipes
+
+Both the genuine polynomial-source map and the complete five-node coefficient square commute
+with the specified full input-reference change. The original normalization and geometric
+anchors are retained before realization; no native equality is used to identify scalar nodes.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetSpan
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct
+
+private theorem product_whiskering {A B C : Model.{u}} {E E' : A ⟶ B}
+    (δ : E'.functor ≅ E.functor) (H K : B ⟶ C) (θ : K.functor ≅ H.functor)
+    (N : CommonReferenceNerve.Node E) (M : CommonReferenceNerve.Node H) :
+    node (E' ≫ K) E' H (isoWhiskerLeft E'.functor θ) (reanchor δ N) M =
+      reanchor (isoWhiskerRight δ K.functor)
+        (node (E ≫ K) E H (isoWhiskerLeft E.functor θ) N M) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext X
+  change θ.hom.app (E'.functor.obj X) ≫
+      (H.functor.map (δ.hom.app X ≫ N.2.hom.app X) ≫
+        M.2.hom.app (N.1.functor.obj X)) =
+    K.functor.map (δ.hom.app X) ≫
+      (θ.hom.app (E.functor.obj X) ≫
+        (H.functor.map (N.2.hom.app X) ≫ M.2.hom.app (N.1.functor.obj X)))
+  simpa only [Functor.map_comp, Category.assoc] using
+    congrArg (fun g ↦ g ≫ H.functor.map (N.2.hom.app X) ≫
+      M.2.hom.app (N.1.functor.obj X)) (θ.hom.naturality (δ.hom.app X)).symm
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+
+private theorem squareAnchor_whiskering : polynomialSquareAnchor P f E =
+    isoWhiskerLeft E.functor (polynomialSquareBaseAnchor P f) := by
+  change Iso.refl _ ≪≫ isoWhiskerLeft E.functor (polynomialSquareBaseAnchor P f) = _
+  exact Iso.refl_trans _
+
+private theorem mapAnchor_whiskering : polynomialMapAnchor P f E =
+    isoWhiskerLeft E.functor
+      (polynomialSquareBaseAnchor P f ≪≫ BinaryNormalizationSimplex.total
+        (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a)) := by
+  change ((Iso.refl _ ≪≫ isoWhiskerLeft E.functor (polynomialSquareBaseAnchor P f)) ≪≫
+      isoWhiskerLeft E.functor (BinaryNormalizationSimplex.total
+        (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a))) ≪≫
+      Iso.refl _ = _
+  simp only [Iso.refl_trans, Iso.trans_refl, isoWhiskerLeft_trans]
+
+/-- The polynomial map preserves every full genuine polynomial-source node. -/
+theorem polynomialMapNode_reanchor
+    (N : CommonReferenceNerve.Node (WholeReference.polynomialReference P a E)) :
+    polynomialMapNode P f E'
+        (reanchor (isoWhiskerRight δ (sourceProjection P f).functor) N) =
+      reanchor
+        (isoWhiskerRight (isoWhiskerRight δ (coefficientPost P f).functor)
+          (targetProjection P f).functor) (polynomialMapNode P f E N) := by
+  unfold polynomialMapNode
+  rw [mapAnchor_whiskering, mapAnchor_whiskering]
+  exact Reanchor.chart_whiskering δ (sourceProjection P f) (polynomialPost P f)
+    (coefficientPost P f ≫ targetProjection P f) _ N
+
+/-- Every unchanged polynomial-square node retains its entire product anchor. -/
+theorem polynomialSquareNodes_reanchor (N : CommonReferenceNerve.Node E) (i : Fin 5) :
+    polynomialSquareNodes P f E' (reanchor δ N) i =
+      reanchor
+        (isoWhiskerRight (isoWhiskerRight δ (coefficientPost P f).functor)
+          (targetProjection P f).functor) (polynomialSquareNodes P f E N i) := by
+  unfold polynomialSquareNodes
+  rw [squareAnchor_whiskering, squareAnchor_whiskering]
+  exact product_whiskering δ (CoefficientSquareFamilies.polynomialSource P f)
+    (coefficientPost P f ≫ targetProjection P f) (polynomialSquareBaseAnchor P f)
+    N (CoefficientSquareFamilies.polynomialNodes P f i)
+
+/-- The complete genuine polynomial nerve square commutes strictly. -/
+theorem polynomialMap_reanchor
+    (y : |nerve (Codiscrete
+      (CommonReferenceNerve.Node (WholeReference.polynomialReference P a E)))|) :
+    mapParameter (reanchor
+      (isoWhiskerRight (isoWhiskerRight δ (coefficientPost P f).functor)
+        (targetProjection P f).functor)) (polynomialMap P f E y) =
+      polynomialMap P f E'
+        (mapParameter (reanchor (isoWhiskerRight δ (sourceProjection P f).functor)) y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter (WholeReference.polynomialReference P a E) y
+  change mapParameter _ (mapParameter _ (CommonReferenceNerve.parameter _ N z)) =
+    mapParameter _ (mapParameter _ (CommonReferenceNerve.parameter _ N z))
+  simp only [mapParameter_parameter]
+  apply congrArg (fun ns ↦ CommonReferenceNerve.parameter (polynomialReference P f E') ns z)
+  funext i
+  exact (polynomialMapNode_reanchor P f E E' δ (N i)).symm
+
+/-- The original reversed-binary square time is retained on the full coefficient nerve. -/
+theorem polynomialSquare_reanchor
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (s : I) :
+    mapParameter (reanchor
+      (isoWhiskerRight (isoWhiskerRight δ (coefficientPost P f).functor)
+        (targetProjection P f).functor)) (polynomialSquare P f E (y, s)) =
+      polynomialSquare P f E' (mapParameter (reanchor δ) y, s) := by
+  change mapParameter _ (FiniteParameter.parameter E (polynomialReference P f E)
+    (polynomialSquareNodes P f E) (y, NativeSquareFiveSimplex.parameter s)) =
+    FiniteParameter.parameter E' (polynomialReference P f E')
+      (polynomialSquareNodes P f E')
+      (mapParameter (reanchor δ) y, NativeSquareFiveSimplex.parameter s)
+  exact FiniteParameter.parameter_naturality
+    (E := E) (E' := E') (F := polynomialReference P f E) (F' := polynomialReference P f E')
+    (q := 4) (reanchor δ)
+    (reanchor (isoWhiskerRight (isoWhiskerRight δ (coefficientPost P f).functor)
+      (targetProjection P f).functor))
+    (polynomialSquareNodes P f E) (polynomialSquareNodes P f E')
+    (fun N i ↦ (polynomialSquareNodes_reanchor P f E E' δ N i).symm)
+    y (NativeSquareFiveSimplex.parameter s)
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetSpan

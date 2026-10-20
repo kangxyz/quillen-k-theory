@@ -1,0 +1,244 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterModels
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseSpecSquare
+public import Quillen.KTheory.Bass.StrictDiagram
+public import Quillen.Topology.Prespectrum.StrictSquareNull
+
+/-!
+# The original supported parameter square on the actual Bass pairs
+
+The original supported diagram at the integral parameter is compared with the literal
+polynomial and Laurent open pairs. The complete affine index isomorphism and the actual
+two-factor pair symmetry give a whole strict-square isomorphism, including its original
+basepoint projection. Applying the original cone and loop functors recovers the original
+first Bass stage. The original full-clock strict source null is preserved at identical
+time; no split-track replacement null or seed comparison is asserted.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+  (integerRing polynomialSpecIso laurentSpecIso)
+open AlgebraicGeometry.Scheme.PolynomialLaurent.IntegerSpec
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedEvaluation.Source
+open GlobalSectionChangeIndex GlobalSectionChangeIndex.SupportedParameterSwap
+open GlobalSupportedRawBass
+
+private theorem map_op_triangle {C D : Type*} [Category C] [Category D]
+    (F : Cᵒᵖ ⥤ D) {A B E : C} (f : A ⟶ B) (g : B ⟶ E) (k : A ⟶ E)
+    (h : f ≫ g = k) : F.map g.op ≫ F.map f.op = F.map k.op := by
+  rw [← F.map_comp]
+  exact congrArg (fun q : A ⟶ E ↦ F.map q.op) h
+
+private theorem map_op_three {C D : Type*} [Category C] [Category D]
+    (F : Cᵒᵖ ⥤ D) {A B E H : C} (f : A ⟶ B) (g : B ⟶ E)
+    (k : E ⟶ H) (q : A ⟶ H) (h : f ≫ g ≫ k = q) :
+    (F.map k.op ≫ F.map g.op) ≫ F.map f.op = F.map q.op := by
+  rw [← F.map_comp, ← F.map_comp]
+  exact congrArg (fun r : A ⟶ H ↦ F.map r.op) h
+
+/-- Realize a whole original square comparison without replacing either source functor. -/
+def mapSquareIso {C D E : Type*} [Category C] [Category D] [Category E]
+    (F : C ⥤ D) (G : D ⥤ E) (S : Arrow (Arrow C)) (T : Arrow (Arrow D))
+    (e : F.mapArrow.mapArrow.obj S ≅ T) :
+    (F ⋙ G).mapArrow.mapArrow.obj S ≅ G.mapArrow.mapArrow.obj T :=
+  G.mapArrow.mapArrow.mapIso e
+
+/-- The actual pair square uses both unchanged projections and the original two charts. -/
+def pairSquare (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Arrow (Arrow Scheme.OpenPairs.{u}ᵒᵖ) :=
+  Arrow.mk (Arrow.homMk (f := Arrow.mk (Geometry.projection A).op)
+    (g := Arrow.mk (Geometry.minus A).op)
+    (Geometry.projection A).op (Geometry.plus A).op
+    (Quiver.Hom.unop_inj
+      ((Geometry.minus_projection A).trans (Geometry.plus_projection A).symm)))
+
+/-- The strict original supported section Models on these actual geometric pairs. -/
+def modelSquare (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Arrow (Arrow Model.{u+1}) :=
+  pairSupported.mapArrow.mapArrow.obj (pairSquare A)
+
+/-- Realize precisely the original supported Models and their actual strict arrows. -/
+def sectionSquare (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Arrow (Arrow LoopPrespectrum.{u+1}) :=
+  prespectrumFunctor.mapArrow.mapArrow.obj (modelSquare A)
+
+/-- The first source leg is the original supported polynomial projection. -/
+theorem sectionSquare_left (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionSquare A).left.hom =
+      prespectrumMap (pairSupported.map (Geometry.projection A).op) := rfl
+
+/-- The second source leg is the very same original supported polynomial projection. -/
+theorem sectionSquare_top (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionSquare A).hom.left =
+      prespectrumMap (pairSupported.map (Geometry.projection A).op) := rfl
+
+/-- The final positive edge is the original supported positive chart map. -/
+theorem sectionSquare_positive (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionSquare A).hom.right =
+      prespectrumMap (pairSupported.map (Geometry.plus A).op) := rfl
+
+/-- The final inverse-coordinate edge is its original supported chart map. -/
+theorem sectionSquare_negative (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionSquare A).right.hom =
+      prespectrumMap (pairSupported.map (Geometry.minus A).op) := rfl
+
+/-- The strict positive composite is the unchanged supported Laurent projection. -/
+theorem sectionSquare_source (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionSquare A).left.hom ≫ (sectionSquare A).hom.right =
+      prespectrumMap (pairSupported.map (Geometry.laurentProjection A).op) := by
+  exact map_op_triangle (pairSupported ⋙ prespectrumFunctor)
+    (Geometry.plus A) (Geometry.projection A) (Geometry.laurentProjection A)
+    (Geometry.plus_projection A)
+
+/-- The unchanged all-scheme supported parameter Model diagram. -/
+abbrev parameterModels (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Scheme.{u}ᵒᵖ ⥤ Model.{u+1} :=
+  ParameterModels.supported A.obj.obj.hom
+
+/-- The original parameter square at the integral base, before any change of corners. -/
+def parameterModelSquare (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Arrow (Arrow Model.{u+1}) :=
+  (parameterModels A).mapArrow.mapArrow.obj (GlobalIndex.square (op integerBase))
+
+/-- The literal old supported prespectrum square at the integral parameter. -/
+def parameterSquare (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Arrow (Arrow LoopPrespectrum.{u+1}) :=
+  (parameterModels A ⋙ prespectrumFunctor).mapArrow.mapArrow.obj
+    (GlobalIndex.square (op integerBase))
+
+/-- The original parameter square after only the existing integral affine index change. -/
+def affineModelSquare (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Arrow (Arrow Model.{u+1}) :=
+  (parameterModels A).mapArrow.mapArrow.obj
+    (specUnder.mapArrow.mapArrow.obj
+      (CommRingCat.PolynomialLaurent.laurentUnderSquare integerRing (Under.mk (𝟙 _))))
+
+/-- The actual parameter projection recovers the unchanged right-factor pair projection. -/
+theorem parameterProjection_square {S : Scheme.{u}} (p : S ⟶ integerBase)
+    [QuasiCompact p] (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (parameterModels A).map p.op ≫ (sectionIso p A).hom =
+      (ParameterIdentity.supportedIso A.obj.obj.hom).inv ≫
+        pairSupported.map ((pairBaseProductProjection p).app A).hom.op := by
+  apply (cancel_epi (ParameterIdentity.supportedIso A.obj.obj.hom).hom).1
+  simp only [← Category.assoc, Iso.hom_inv_id, Category.id_comp]
+  change (pairSupported.map (ParameterIdentity.projectionPairIso A.obj.obj.hom).hom.op ≫
+      pairSupported.map (GlobalSupportedParameter.pairMap A.obj.obj.hom p).op) ≫
+        pairSupported.map (pairIso p A).hom.op = _
+  exact map_op_three pairSupported (pairIso p A).hom
+    (GlobalSupportedParameter.pairMap A.obj.obj.hom p)
+    (ParameterIdentity.projectionPairIso A.obj.obj.hom).hom
+    ((pairBaseProductProjection p).app A).hom (pairIso_projection p A)
+
+/-- The complete affine parameter square recovers both actual geometric chart maps. -/
+def affineModelIso (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    affineModelSquare A ≅ modelSquare A :=
+  Arrow.isoMk
+    (Arrow.isoMk (ParameterIdentity.supportedIso A.obj.obj.hom).symm
+      (sectionIso (polynomialProjection integerRing) A)
+      (parameterProjection_square (polynomialProjection integerRing) A).symm)
+    (Arrow.isoMk (sectionIso (polynomialProjection integerRing) A)
+      (sectionIso (laurentProjection integerRing) A)
+      (sectionIso_parameter (laurentProjection integerRing) (polynomialProjection integerRing)
+        (laurentMinus integerRing) (laurentMinus_projection integerRing) A)) (by
+      apply Arrow.hom_ext
+      · exact (parameterProjection_square (polynomialProjection integerRing) A).symm
+      · exact sectionIso_parameter (laurentProjection integerRing)
+          (polynomialProjection integerRing) (laurentPlus integerRing)
+          (laurentPlus_projection integerRing) A)
+
+/-- The whole original supported square, with its actual affine and pair-symmetry maps. -/
+def sourceModelIso (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    parameterModelSquare A ≅ modelSquare A :=
+  (parameterModels A).mapArrow.mapArrow.mapIso
+      (specSquareIso (Under.mk (𝟙 integerRing))) ≪≫ affineModelIso A
+
+/-- The original base corner is the inverse of the specified identity-parameter projection. -/
+theorem sourceModelIso_base (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sourceModelIso A).hom.left.left =
+      (ParameterIdentity.supportedIso A.obj.obj.hom).inv := by
+  change (parameterModels A).map (𝟙 _) ≫ _ = _
+  rw [CategoryTheory.Functor.map_id, Category.id_comp]
+  rfl
+
+/-- The first polynomial corner retains the original affine map and actual pair symmetry. -/
+theorem sourceModelIso_polynomial (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sourceModelIso A).hom.left.right =
+      (parameterModels A).map (polynomialSpecIso integerRing).hom.op ≫
+        (sectionIso (polynomialProjection integerRing) A).hom := rfl
+
+/-- The second polynomial corner is the very same original comparison. -/
+theorem sourceModelIso_polynomial_right (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sourceModelIso A).hom.right.left =
+      (parameterModels A).map (polynomialSpecIso integerRing).hom.op ≫
+        (sectionIso (polynomialProjection integerRing) A).hom := rfl
+
+/-- The Laurent corner retains the entire original affine map and actual pair symmetry. -/
+theorem sourceModelIso_laurent (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sourceModelIso A).hom.right.right =
+      (parameterModels A).map (laurentSpecIso integerRing).hom.op ≫
+        (sectionIso (laurentProjection integerRing) A).hom := rfl
+
+/-- The original whole-square isomorphism on the unchanged supported prespectra. -/
+def sourceSquareIso (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    parameterSquare A ≅ sectionSquare A :=
+  mapSquareIso (parameterModels A) prespectrumFunctor
+    (GlobalIndex.square (op integerBase)) (modelSquare A) (sourceModelIso A)
+
+/-- The realized base corner is the original inverse projection Model map. -/
+theorem sourceSquareIso_base (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sourceSquareIso A).hom.left.left =
+      prespectrumMap (ParameterIdentity.supportedIso A.obj.obj.hom).inv := by
+  change prespectrumMap (sourceModelIso A).hom.left.left = _
+  rw [sourceModelIso_base]
+
+/-- The original cone isomorphism retains the actual strict-square comparison arrow. -/
+def sourceConeIso (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    mappingCone (StrictSquare.comparison (parameterSquare A)) ≅
+      mappingCone (StrictSquare.comparison (sectionSquare A)) :=
+  (strictSquareComparisonFunctor ⋙ mappingConeFunctor).mapIso (sourceSquareIso A)
+
+/-- The original first supported Bass stage is recovered by the whole actual square map. -/
+def sourceStepIso (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    ((Quillen.KTheory.Bass.strictDiagramFunctor GlobalIndex.squareFunctor).obj
+      (parameterModels A ⋙ prespectrumFunctor)).obj (op integerBase) ≅
+        parameterLooping (mappingCone (StrictSquare.comparison (sectionSquare A))) :=
+  strictSquareLoopedConeFunctor.mapIso (sourceSquareIso A)
+
+/-- The recovered cone inclusion is the original Laurent corner of the same square. -/
+theorem sourceConeIso_inclusion (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    mappingConeInclusion (StrictSquare.comparison (parameterSquare A)) ≫
+        (sourceConeIso A).hom =
+      (sourceSquareIso A).hom.right.right ≫
+        mappingConeInclusion (StrictSquare.comparison (sectionSquare A)) := by
+  apply Hom.ext
+  funext n
+  ext x
+  rfl
+
+/-- Every original strict null time is preserved, with no added constant half-interval. -/
+theorem sourceNull_recovery (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (s : unitInterval) (x : (parameterSquare A).left.left.space n) :
+    (sourceConeIso A).hom.map n
+        ((StrictSquare.sourceNullHomotopy (parameterSquare A)).level n (s, x)) =
+      (StrictSquare.sourceNullHomotopy (sectionSquare A)).level n
+        (s, (prespectrumMap (ParameterIdentity.supportedIso A.obj.obj.hom).inv).map n x) := by
+  have h := StrictSquare.sourceNullHomotopy_naturality_apply
+    (sourceSquareIso A).hom n s x
+  rw [sourceSquareIso_base] at h
+  exact h
+
+end Quillen.PerfectComplexes.GlobalSupportedEvaluation.Source

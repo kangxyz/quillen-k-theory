@@ -1,0 +1,92 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCompositeCarrier
+/-! Typed scalar J1 retaining its entire original parameter. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionCompositeCarrier
+open InputIdentitySeedCarrier Quillen.NativePathCells Quillen.ScalarRectangle
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The whole middle null identifies the two transported terminal points. -/
+theorem end_eq : InputNullCompositionPrecomp.transport f g (SeedOrdinarySheet.tip f) =
+    SeedSurfaceTransport.transport f g (SeedOrdinarySheet.tip g) :=
+  (InputNullCompositionPrecomp.oldNull f g).target.symm.trans
+    ((middle_word f g 1).symm.trans (SeedSurfaceTransport.newNull f g).target)
+
+/-- Retype only the original source endpoints; every original path value is retained. -/
+def initialPath := (SeedSurfaceTransport.oldNull f g).cast
+  (SeedSurfaceTransport.laurentMovement f g).source
+  ((InputNullCompositionPrecomp.newNull f g).target.trans (end_eq f g))
+
+/-- The complete lower comparison face is the original source null word. -/
+theorem surface_zero (s : I) : surface f g (0,s) = initialPath f g s := by
+  rw [surface, concatFirst_zero, SeedSurfaceTransport.comparison_source]
+  rfl
+
+/-- The complete upper comparison face keeps the prescribed left-associated target word. -/
+theorem surface_one (s : I) : surface f g (1,s) =
+    (((firstPath f g).trans (secondPath f g)).trans (finalPath f g)) s := by
+  rw [surface, concatFirst_one, tail, concatFirst_one]
+  exact (Path.Homotopy.transAssoc (firstPath f g) (secondPath f g)
+    (finalPath f g)).symm.map_one_left s
+
+/-- The Laurent source is fixed throughout the original composite comparison. -/
+theorem surface_left (r : I) : surface f g (r,0) = firstPath f g 0 := by
+  rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [surface_lower]
+    exact (SeedSurfaceTransport.comparison f g).source t |>.trans
+      (SeedSurfaceTransport.laurentMovement f g).source.symm
+  · rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [surface_upper_lower, secondWhiskered, concatSecond_zero]
+      rfl
+    · rw [surface_upper_upper]
+      exact (Path.Homotopy.transAssoc (firstPath f g) (secondPath f g)
+        (finalPath f g)).symm.source v |>.trans (firstPath f g).source.symm
+
+/-- The original terminal point is fixed throughout the composite comparison. -/
+theorem surface_right (r : I) : surface f g (r,1) = finalPath f g 1 := by
+  rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [surface_lower]
+    exact (SeedSurfaceTransport.comparison f g).target t |>.trans
+      ((end_eq f g).symm.trans (InputNullCompositionPrecomp.newNull f g).target.symm)
+  · rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [surface_upper_lower, secondWhiskered, concatSecond_one]
+      exact (InputNullCompositionPrecomp.comparison f g).target v |>.trans
+        (InputNullCompositionPrecomp.newNull f g).target.symm
+    · rw [surface_upper_upper]
+      exact (Path.Homotopy.transAssoc (firstPath f g) (secondPath f g)
+        (finalPath f g)).symm.target v |>.trans (finalPath f g).target.symm
+
+/-- The typed original J1, with its full surface and all four scalar boundaries. -/
+def comparison : (initialPath f g).Homotopy
+    (((firstPath f g).trans (secondPath f g)).trans (finalPath f g)) where
+  toFun := surface f g
+  continuous_toFun := (surface f g).continuous
+  map_zero_left := surface_zero f g
+  map_one_left := surface_one f g
+  prop' r s hs := by
+    rcases hs with (rfl | rfl)
+    · exact (surface_left f g r).trans
+        ((firstPath f g).source.trans (initialPath f g).source.symm)
+    · exact (surface_right f g r).trans
+        ((finalPath f g).target.trans (initialPath f g).target.symm)
+
+/-- The typed J1 recovers the original native comparison at every parameter. -/
+theorem comparison_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (comparison f g (r,s)) =
+      (InputCompositionNull.compositeComparison f g).level n (r,(s,x)) :=
+  surface_native f g n r s x
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionCompositeCarrier

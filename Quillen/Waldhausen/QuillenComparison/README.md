@@ -3,10 +3,10 @@
 
 ## Comparison with exact-category Q
 
-For `E : Quillen.ExactStructure C`,
+For `E : CategoryTheory.ExactCategory.ExactStructure C`,
 [`ofExactCategory E`](../ExactCategory.lean) uses inflations
 and isomorphisms as its cofibrations and weak equivalences. Its axioms follow
-from the exact structure. A `F : Quillen.ExactFunctor E E'` has `F.waldhausenExact`,
+from the exact structure. A `F : CategoryTheory.ExactCategory.ExactFunctor E E'` has `F.waldhausenExact`,
 with pushout preservation derived from additive exactness.
 
 [`QuillenComparison.Equivalence`](Equivalence.lean)

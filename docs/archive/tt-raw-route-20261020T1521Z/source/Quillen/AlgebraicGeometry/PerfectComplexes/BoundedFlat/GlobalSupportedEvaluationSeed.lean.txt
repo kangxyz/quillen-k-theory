@@ -1,0 +1,89 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedEvaluation
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedEvaluationSourceUnit
+public import Quillen.Topology.Prespectrum.StrictSquareSplitSeed
+
+/-!
+# The specified original supported seed under actual first-stage evaluation
+
+The original parameter-square and scalar identifications recover the actual old supported
+scheme seed strictly. The supported unit evaluation square and whole source-null comparison
+then give the one-step seed homotopy into the original raw stage. No chart, unit or null filler
+is a hypothesis. Independent comparison, output-loop and structure coordinates are retained.
+This result does not assert compatibility with the localization composite's weak-zero null.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.KTheory.Bass
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedEvaluation
+open GlobalSectionChangeIndex GlobalSupportedRawBass SupportedTensorEvaluation
+variable (A : Scheme.QuasiCompactOpenPairs.{u})
+
+/-- The actual supported unit-evaluation square retains the source's original strict diagonal. -/
+def unitPasting :
+    (((Source.sectionTrack A).postcomp (evaluation (Geometry.laurent A))).trans
+      (diagonalComparison A)).RelHomotopy
+      ((diagonalComparison A).trans (Homotopy.precomp (evaluation A.obj) (unitHomotopy A))) := by
+  apply (evaluationUnitPasting (Geometry.laurentProjection A)
+    (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right))).ofLevels
+  · intro n
+    apply Homotopy.trans_level_congr <;> rfl
+  · intro n
+    apply Homotopy.trans_level_congr <;> rfl
+
+/-- The original strict geometric seed compares with the unchanged supported raw forward seed. -/
+def sectionSeedHomotopy :
+    Homotopy (Source.sectionSeed A ≫ sectionStepEvaluation A)
+      (evaluation A.obj ≫ transition A) :=
+  (splitEvaluation A).seedHomotopy (Source.sectionTrack A) (unitHomotopy A) (unitPasting A)
+
+/-- The actual original parameter base is evaluated through its specified identity projection. -/
+def baseEvaluation : (Source.parameterSquare A).left.left ⟶ rawSpectrum A.obj :=
+  (Source.sourceSquareIso A).hom.left.left ≫ evaluation A.obj
+
+/-- Base evaluation uses exactly the inverse of the original chosen-zero identity-parameter map. -/
+theorem baseEvaluation_eq :
+    baseEvaluation A =
+      prespectrumMap (ParameterIdentity.supportedIso A.obj.obj.hom).inv ≫ evaluation A.obj := by
+  rw [baseEvaluation, Source.sourceSquareIso_base]
+
+/-- The existing original scheme seed is retained as the source transition. -/
+abbrev parameterSeed :=
+  (SchemeNaturalSeed.seed (ParameterLaurentTrack.supportedTrack A.obj.obj.hom)).app
+    (op integerBase)
+
+/-- A recovered source seed retains any subsequent actual evaluation map. -/
+theorem source_seed_route {C : Type*} [Category C] {W X Y Z T : C}
+    (s : W ⟶ X) (e : X ⟶ Y) (a : W ⟶ Z) (t : Z ⟶ Y) (k : Y ⟶ T)
+    (h : s ≫ e = a ≫ t) : s ≫ (e ≫ k) = a ≫ (t ≫ k) := by
+  rw [← Category.assoc, h, Category.assoc]
+
+/-- The actual evaluation map intertwines the two original supported first-stage seeds. -/
+def seedHomotopy :
+    Homotopy (parameterSeed A ≫ stepEvaluation A) (baseEvaluation A ≫ transition A) :=
+  (Homotopy.precomp (Source.sourceSquareIso A).hom.left.left (sectionSeedHomotopy A)).cast
+    (source_seed_route (parameterSeed A) (Source.sourceStepIso A).hom
+      (Source.sourceSquareIso A).hom.left.left (Source.sectionSeed A)
+      (sectionStepEvaluation A) (Source.sourceSeed_recovery A)).symm
+    (Category.assoc _ _ _).symm
+
+/-- Independent comparison and output-loop times retain the complete original null/unit word. -/
+theorem seedHomotopy_apply (n : ℕ) (r s : unitInterval)
+    (x : (Source.parameterSquare A).left.left.space n) :
+    Path.toContinuousMap ((seedHomotopy A).level n (r, x)) s =
+      (StrictSquare.SplitEvaluation.Seed.conjugation (splitEvaluation A)
+        (Source.sectionTrack A) (unitHomotopy A) (unitPasting A)).level n
+          (r, (s, (Source.sourceSquareIso A).hom.left.left.map n x)) := rfl
+
+end Quillen.PerfectComplexes.GlobalSupportedEvaluation

@@ -1,0 +1,177 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleLift
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawPullbackTrack
+public import Quillen.Waldhausen.SConstruction.Iterated.ScalarRouteExtraction
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexWeakTriangleSquare
+
+/-!
+# Original supported binary path in its finite normalization simplex
+
+Both old geometric and chosen-zero normalization tracks retain their literal two-half path.
+The small-model transformation triangle is identified in full. No identification with the
+separately retyped original relative comparison is asserted here.
+-/
+
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.InputBinary
+open SupportedTensorEvaluation
+variable {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The actual intermediate normalization of the unnormalized composite functor. -/
+def intermediate :
+    (boundedFlatPerfectSupported Z.obj.hom).FullSubcategory ⥤
+      (boundedFlatPerfectSupported X.obj.hom).FullSubcategory :=
+  Quillen.rebaseFunctor
+    (boundedFlatPerfectSupportedPullback g ⋙ boundedFlatPerfectSupportedPullback f)
+    (boundedFlatPerfectSupportedWaldhausen Z.obj.hom).zero
+    (boundedFlatPerfectSupportedWaldhausen X.obj.hom).zero
+    ((((boundedFlatPerfectSupportedPullback_exact g).comp
+      (boundedFlatPerfectSupportedPullback_exact f)).zero
+      (boundedFlatPerfectSupportedWaldhausen Z.obj.hom).isZero).iso
+      (boundedFlatPerfectSupportedWaldhausen X.obj.hom).isZero)
+
+/-- The old first transformation is the conjugated geometric isomorphism. -/
+def geometricIso : normalizedPullback (f ≫ g) ≅ intermediate f g :=
+  (evaluationRawNormalization (f ≫ g)).symm ≪≫
+    boundedFlatPerfectSupportedPullbackCompIso f g ≪≫
+    Quillen.rebaseFunctorIso _ _ _ _
+
+/-- This is exactly the first component used by the old binary comparison. -/
+theorem geometricIso_hom : (geometricIso f g).hom =
+    Waldhausen.normalizedWeakTransformation (boundedFlatPerfectSupportedPullback_exact (f ≫ g))
+      ((boundedFlatPerfectSupportedPullback_exact g).comp
+        (boundedFlatPerfectSupportedPullback_exact f))
+      (boundedFlatPerfectSupportedPullbackCompIso f g).hom := rfl
+
+/-- The old second component is the unchanged binary normalization isomorphism. -/
+def normalizationIso : intermediate f g ≅
+    normalizedPullback g ⋙ normalizedPullback f :=
+  exactNormalizationCompIso (boundedFlatPerfectSupportedPullback_exact g)
+    (boundedFlatPerfectSupportedPullback_exact f)
+
+/-- The actual split composite is the native total normalized comparison. -/
+theorem composite_hom : (geometricIso f g).hom ≫ (normalizationIso f g).hom =
+    (normalizedCompositionIso f g).hom :=
+  (normalizedCompositionIso_hom f g).symm
+
+/-- The model map induced by normalized pullback along the composite scheme map `f ≫ g`. -/
+def sourceMap : modelOf (boundedFlatPerfectSupportedWaldhausen Z.obj.hom) ⟶
+    modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom) :=
+  modelMap _ _ ((boundedFlatPerfectSupportedPullback_exact (f ≫ g)).rebase)
+    (Quillen.rebaseFunctor_obj_base _ _ _ _)
+
+/-- The model map induced by rebasing the composite of the two unnormalized pullback functors. -/
+def intermediateMap : modelOf (boundedFlatPerfectSupportedWaldhausen Z.obj.hom) ⟶
+    modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom) :=
+  modelMap _ _ ((boundedFlatPerfectSupportedPullback_exact g).comp
+    (boundedFlatPerfectSupportedPullback_exact f)).rebase
+    (Quillen.rebaseFunctor_obj_base _ _ _ _)
+
+/-- The model map induced by composing normalized pullback along `g` with normalized pullback
+along `f`. -/
+def targetMap : modelOf (boundedFlatPerfectSupportedWaldhausen Z.obj.hom) ⟶
+    modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom) :=
+  modelMap _ _ (((boundedFlatPerfectSupportedPullback_exact g).rebase).comp
+    ((boundedFlatPerfectSupportedPullback_exact f).rebase))
+    ((congrArg (normalizedPullback f).obj (Quillen.rebaseFunctor_obj_base _ _ _ _)).trans
+      (Quillen.rebaseFunctor_obj_base _ _ _ _))
+
+/-- The geometric comparison from the composite-map model functor to its rebased intermediate. -/
+def first : (sourceMap f g).functor ≅ (intermediateMap f g).functor :=
+  isoWhiskerLeft AsSmall.down (isoWhiskerRight (geometricIso f g) AsSmall.up)
+
+/-- The normalization comparison from the rebased intermediate to the composite normalized model
+functor. -/
+def second : (intermediateMap f g).functor ≅ (targetMap f g).functor :=
+  isoWhiskerLeft AsSmall.down (isoWhiskerRight (normalizationIso f g) AsSmall.up)
+
+/-- The total normalized pullback composition isomorphism transported to the model functors. -/
+def total : (sourceMap f g).functor ≅ (targetMap f g).functor :=
+  isoWhiskerLeft AsSmall.down
+    (isoWhiskerRight (normalizedCompositionIso f g) AsSmall.up)
+
+theorem small_composite_hom : (first f g).hom ≫ (second f g).hom = (total f g).hom := by
+  have hh := congrArg
+    (fun η ↦ whiskerLeft AsSmall.down (whiskerRight η AsSmall.up)) (composite_hom f g)
+  simpa only [first, second, total, isoWhiskerLeft_hom, isoWhiskerRight_hom,
+    whiskerLeft_comp, whiskerRight_comp] using hh
+
+/-- All three actual binary vertices use the original total functor as common reference. -/
+def simplex : ModelSimplex (modelOf (boundedFlatPerfectSupportedWaldhausen Z.obj.hom))
+    (modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom)) 2 :=
+  ModelSimplex.ofIsos (sourceMap f g) ![sourceMap f g, intermediateMap f g, targetMap f g]
+    (Fin.cases (Iso.refl _) (Fin.cases (first f g)
+      (Fin.cases (total f g) (fun i ↦ Fin.elim0 i))))
+
+/-- The complete old triangle, including both original normalization components. -/
+theorem simplex_eq_triangle : simplex f g =
+    ModelSimplex.triangle (first f g).hom (second f g).hom
+      (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)
+      (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance) := by
+  have he : simplex f g = (simplex f g).face (𝟙 ⦋2⦌) :=
+    ModelSimplex.ext_diagram (by rfl)
+  rw [he]
+  unfold simplex
+  apply ModelSimplex.ofIsos_face_triangle
+  · exact Category.id_comp _
+  · exact small_composite_hom f g
+
+/-- Every point of the old composition triangle has an explicit common-simplex lift. -/
+theorem whole_triangle (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectSupportedWaldhausen Z.obj.hom)).space n) :
+    prespectrumSimplexFamily (simplex f g) n
+      (Quillen.TheoremB.compositionTriangleHomotopy (r, s), x) =
+      (prespectrumTransformationCompositionHomotopy (first f g).hom (second f g).hom
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)
+        (fun _ ↦ (modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom)).waldhausen.weq_iso _
+          inferInstance)).level n (r, (s, x)) := by
+  rw [simplex_eq_triangle]
+  exact prespectrumSimplexFamily_triangle _ _ _ _ n r s x
+
+/-- The complete two-edge parameter realizes the original small-model binary word. -/
+theorem model_native_path : Quillen.SimplexParameters.PathLift (simplex f g)
+    ((Quillen.SimplexParameters.edge 0 1).trans (Quillen.SimplexParameters.edge 1 2))
+    ((prespectrumTransformationHomotopy (first f g).hom
+      (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)).trans
+      (prespectrumTransformationHomotopy (second f g).hom
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance))) := by
+  rw [simplex_eq_triangle]
+  exact Quillen.SimplexParameters.PathLift.trans _
+    (WeakTriangleSquare.first_edge _ _ _ _) (WeakTriangleSquare.second_edge _ _ _ _)
+
+/-- The original split geometric word has these exact continuous levels. -/
+theorem native_path_level (n : ℕ) :
+    (compositionHomotopy f g).level n =
+      ((prespectrumTransformationHomotopy (first f g).hom
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)).trans
+        (prespectrumTransformationHomotopy (second f g).hom
+          (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance))).level n :=
+  Quillen.LoopPrespectrum.Homotopy.trans_level_congr _ _ _ _ n rfl
+    (exactOriginalPrespectrumMapCompHomotopy_level
+      (boundedFlatPerfectSupportedPullback_exact g)
+      (boundedFlatPerfectSupportedPullback_exact f) n)
+
+/-- Both original supported normalization pieces retain their literal half-clock. -/
+theorem native_path (n : ℕ) (t : unitInterval) (x : (rawSpectrum Z).space n) :
+    prespectrumSimplexFamily (simplex f g) n
+        (((Quillen.SimplexParameters.edge 0 1).trans
+          (Quillen.SimplexParameters.edge 1 2)) t, x) =
+      (compositionHomotopy f g).level n (t, x) :=
+  (model_native_path f g n t x).trans
+    (DFunLike.congr_fun (native_path_level f g n) (t, x)).symm
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.InputBinary

@@ -1,0 +1,81 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitProductRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitLaurent
+/-! Four entire scalar seams of the source/target unit products and the two distinct
+Laurent composition rectangles, with the unchanged original composition clock. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Convexity Quillen.Waldhausen.IteratedS
+  Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductSides
+open CommonReferenceNerve InputIdentitySeedCarrier
+open InputCompositionUnitProducts InputCompositionUnitProductRows InputCompositionUnitLaurent
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The whole source-unit lower edge is the unchanged ordinary left Laurent side. -/
+theorem source_lower_side (r : I) : sourceSurface f g (r, 0) = lowerSurface f g (r, 0) := by
+  change parameter _ (sourceNodes f g)
+    (Quillen.SimplexGrid.parameter 1 2 (edge (k := 1) 0 1 0, binaryPath (k := 2) 0 1 2 r)) =
+      parameter _ (InputNullCompositionLaurentCarrier.nodes f g)
+        (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 0))
+  rw [Path.source, Quillen.SimplexGrid.parameter_row,
+    CoefficientMovingSquareRows.moving_left_row]
+  exact parameter_eq_of_face_nodes (laurentRef (f ≫ g))
+    (InputNullCompositionLaurentCarrier.nodes f g) (sourceNodes f g)
+    InputNullCompositionLaurentCarrier.targetEdge (Quillen.SimplexGrid.rowFace 1 2 0)
+    (source_lower f g) (binaryPath (k := 2) 0 1 2 r)
+
+/-- The whole source-unit upper edge retains the distinct shifted left Laurent side. -/
+theorem source_upper_side (r : I) : sourceSurface f g (r, 1) = upperSurface f g (r, 0) := by
+  change parameter _ (sourceNodes f g)
+    (Quillen.SimplexGrid.parameter 1 2 (edge (k := 1) 0 1 1, binaryPath (k := 2) 0 1 2 r)) =
+      mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+        (parameter _ (InputNullCompositionLaurentCarrier.nodes f g)
+          (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 0)))
+  rw [Path.target, Quillen.SimplexGrid.parameter_row,
+    CoefficientMovingSquareRows.moving_left_row, mapParameter_parameter]
+  exact parameter_eq_of_face_nodes (laurentRef (f ≫ g))
+    (fun i ↦ BassH0Merge.anchorNode (commonUnit (f ≫ g))
+      (InputNullCompositionLaurentCarrier.nodes f g i)) (sourceNodes f g)
+    InputNullCompositionLaurentCarrier.targetEdge (Quillen.SimplexGrid.rowFace 1 2 1)
+    (source_upper f g) (binaryPath (k := 2) 0 1 2 r)
+
+/-- The whole target-unit lower edge is the unchanged ordinary right Laurent side. -/
+theorem target_lower_side (r : I) : targetSurface f g (r, 0) = lowerSurface f g (r, 1) := by
+  change parameter _ (targetNodes f g)
+    (Quillen.SimplexGrid.parameter 2 1 (binaryPath (k := 2) 0 1 2 r, edge (k := 1) 0 1 0)) =
+      parameter _ (InputNullCompositionLaurentCarrier.nodes f g)
+        (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 1))
+  rw [Path.source, Quillen.SimplexGrid.parameter_column,
+    CoefficientMovingSquareRows.moving_right_row]
+  exact parameter_eq_of_face_nodes (laurentRef (f ≫ g))
+    (InputNullCompositionLaurentCarrier.nodes f g) (targetNodes f g)
+    InputNullCompositionLaurentCarrier.sourceEdge (Quillen.SimplexGrid.columnFace 2 1 0)
+    (target_lower f g) (binaryPath (k := 2) 0 1 2 r)
+
+/-- The whole target-unit upper edge retains the distinct shifted right Laurent side. -/
+theorem target_upper_side (r : I) : targetSurface f g (r, 1) = upperSurface f g (r, 1) := by
+  change parameter _ (targetNodes f g)
+    (Quillen.SimplexGrid.parameter 2 1 (binaryPath (k := 2) 0 1 2 r, edge (k := 1) 0 1 1)) =
+      mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+        (parameter _ (InputNullCompositionLaurentCarrier.nodes f g)
+          (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 1)))
+  rw [Path.target, Quillen.SimplexGrid.parameter_column,
+    CoefficientMovingSquareRows.moving_right_row, mapParameter_parameter]
+  exact parameter_eq_of_face_nodes (laurentRef (f ≫ g))
+    (fun i ↦ BassH0Merge.anchorNode (commonUnit (f ≫ g))
+      (InputNullCompositionLaurentCarrier.nodes f g i)) (targetNodes f g)
+    InputNullCompositionLaurentCarrier.sourceEdge (Quillen.SimplexGrid.columnFace 2 1 1)
+    (target_upper f g) (binaryPath (k := 2) 0 1 2 r)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductSides

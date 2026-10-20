@@ -1,0 +1,32 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionProjectionConeCorrected
+/-! Downstream evaluation of both original corrected chart endpoint attachments. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry
+open Quillen.PerfectComplexes.GlobalRawBass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace ProjectionEndpointClient
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Any downstream observation retains the complete positive and inverse endpoint equalities. -/
+theorem observed_endpoints {T : Type*}
+    (observe : ProjectionReference.FourEdge.scalarCone X
+      (InputCompositionTopPieces.baseSource f g) → T) (r s : unitInterval) :
+    (observe (InputCompositionProjectionAttachment.plusConeMap f g
+      ((InputCompositionPolynomialScalar.correctedSquare f g plus).parameter (r,s))) =
+      observe (InputCompositionOverlapScalar.correctedFamily f g ((r,s),0))) ∧
+    (observe (InputCompositionProjectionAttachment.minusConeMap f g
+      ((InputCompositionPolynomialScalar.correctedSquare f g minus).parameter (r,s))) =
+      observe (InputCompositionOverlapScalar.correctedFamily f g ((r,s),1))) :=
+  ⟨congrArg observe (InputCompositionProjectionAttachment.plus_corrected f g r s),
+    congrArg observe (InputCompositionProjectionAttachment.minus_corrected f g r s)⟩
+end ProjectionEndpointClient

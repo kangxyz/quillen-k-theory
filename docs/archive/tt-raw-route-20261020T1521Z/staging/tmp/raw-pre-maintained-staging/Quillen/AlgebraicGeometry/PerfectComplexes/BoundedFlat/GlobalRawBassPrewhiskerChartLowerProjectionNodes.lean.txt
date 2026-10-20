@@ -1,0 +1,103 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartLowerGridPropagation
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartLowerSharedCells
+/-! The two genuine polynomial lower charts attach at every original projection-row node. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "D" => BassH0Merge.normalizedMap (projection.app W)
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "B" => lowerLaurentBinary f g
+local notation "Q" => InputDescSimplex.reference c
+local notation "F" => ProjectionReference.reference X
+  (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "SC" => NativeSquareFiveSimplex.source (laurent.map c) (k.app W)
+local notation "NC" => NativeSquareFiveSimplex.nodes (laurent.map c) (k.app W)
+  (k.app Z) (polynomial.map c) (k.naturality c)
+local notation "RHO" => ProjectionRectangleSquareRows.chartAnchor
+  (projection.app W) (k.app W) (laurent.map c) (laurentProjection.app W) (hk W)
+
+private theorem lower_chart_row (j : Fin 5) :
+    InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.chartRow j) =
+      preNode Q D RHO (NC j) := by
+  have h := ProjectionRectangleSquareRows.chart_row_nodes
+    (projection.app W) (k.app W) (projection.app Z) (k.app Z)
+    c (polynomial.map c) (laurent.map c) (projection.naturality c) (k.naturality c)
+    (laurentProjection.app W) (hk W) j
+  simpa only [InputDescSimplex.chartNodes, BassH0Merge.preReferenceNode, preNode, reanchor,
+    precompNode] using h
+
+private theorem lower_projection_rows
+    (hs : reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B (InputDescSimplex.chartNodes c k hk 13) (lowerLaurentNodes f g 0)) =
+      preNode F D (initialLaurentProjectionAnchor f g c k hk)
+        (reanchor (lowerChartAnchor f g c k)
+          (FinitePrecomp.node SC B (NC 4) (lowerLaurentNodes f g 0))))
+    (i : Fin 3) (j : Fin 5) :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B
+        (InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.chartRow j))
+        (lowerLaurentNodes f g i)) =
+    preNode F D (initialLaurentProjectionAnchor f g c k hk)
+      (reanchor (lowerChartAnchor f g c k)
+        (FinitePrecomp.node SC B (NC j) (lowerLaurentNodes f g i))) := by
+  have hseed := hs
+  change reanchor _ (FinitePrecomp.node Q B
+    (InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.chartRow 4)) _) = _ at hseed
+  rw [lower_chart_row] at hseed ⊢
+  have hnorm : node F Q B (lowerLaurentAnchor f g c) (preNode Q D RHO (NC 4))
+      (lowerLaurentNodes f g 0) =
+    preNode F D (initialLaurentProjectionAnchor f g c k hk)
+      (reanchor (lowerChartAnchor f g c k)
+        (node (SC ≫ B) SC B (Iso.refl _) (NC 4) (lowerLaurentNodes f g 0))) := by
+    simpa only [Functor.id_obj, FinitePrecomp.node, reanchor, node, Iso.refl_trans,
+      Iso.trans_assoc] using hseed
+  have h := lower_grid_of_one F D SC B Q (MC ≫ G) RHO (lowerChartAnchor f g c k)
+    (lowerLaurentAnchor f g c) (initialLaurentProjectionAnchor f g c k hk)
+    (NC 4) (NC j) (lowerLaurentNodes f g 0) (lowerLaurentNodes f g i) hnorm
+  simpa only [Functor.id_obj, FinitePrecomp.node, reanchor, node, Iso.refl_trans,
+    Iso.trans_assoc] using h
+
+/-- Every positive lower projection grid cell retains its complete original reference. -/
+theorem lower_plus_projection_nodes (i : Fin 3) (j : Fin 5) :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B
+        (InputDescSimplex.chartNodes c plus plus_projection
+          (ProjectionRectangleSquareRows.chartRow j)) (lowerLaurentNodes f g i)) =
+    preNode F D (initialLaurentProjectionAnchor f g c plus plus_projection)
+      (reanchor (lowerChartAnchor f g c plus)
+        (FinitePrecomp.node (NativeSquareFiveSimplex.source (laurent.map c) (plus.app W)) B
+          (NativeSquareFiveSimplex.nodes (laurent.map c) (plus.app W) (plus.app Z)
+            (polynomial.map c) (plus.naturality c) j) (lowerLaurentNodes f g i))) :=
+  lower_projection_rows f g c plus plus_projection (lower_plus_shared_cell f g c) i j
+
+/-- Every negative lower projection cell retains the separate inverse-chart reference. -/
+theorem lower_minus_projection_nodes (i : Fin 3) (j : Fin 5) :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B
+        (InputDescSimplex.chartNodes c minus minus_projection
+          (ProjectionRectangleSquareRows.chartRow j)) (lowerLaurentNodes f g i)) =
+    preNode F D (initialLaurentProjectionAnchor f g c minus minus_projection)
+      (reanchor (lowerChartAnchor f g c minus)
+        (FinitePrecomp.node (NativeSquareFiveSimplex.source (laurent.map c) (minus.app W)) B
+          (NativeSquareFiveSimplex.nodes (laurent.map c) (minus.app W) (minus.app Z)
+            (polynomial.map c) (minus.naturality c) j) (lowerLaurentNodes f g i))) :=
+  lower_projection_rows f g c minus minus_projection (lower_minus_shared_cell f g c) i j
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

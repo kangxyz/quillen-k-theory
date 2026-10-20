@@ -1,0 +1,94 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentityMap
+public import Quillen.Topology.Prespectrum.NullLoopNaturality
+
+/-!
+# The literal inverse-cone support of global raw input maps
+
+The actual inverse-chart cone enters the whole original cone through its strict square.
+Its complete cylinder and original arrowwise cone map retain their original clocks.
+No claim is made that the original positive source-null or seed has inverse support.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputIdentityNegative
+variable (X : Scheme.{u})
+
+/-- The genuine inverse-chart arrow whose cone supplies the inverse chart. -/
+abbrev chart := boundedFlatPerfectPrespectrumMap (minus.app X)
+
+/-- The strict inverse-chart square uses the actual span inclusion and Laurent identity. -/
+def inclusionSquare : Arrow.mk (chart X) ⟶ Arrow.mk (comparison X) :=
+  Arrow.homMk
+    (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app X))
+      (boundedFlatPerfectPrespectrumMap (projection.app X))) (𝟙 _)
+    (by apply Hom.ext; funext n; ext x; rfl)
+
+/-- The inverse cone enters through its strict square, with no extra path segment. -/
+def inclusion : mappingCone (chart X) ⟶ mappingCone (comparison X) :=
+  mappingConeMap (inclusionSquare X)
+
+/-- The supported Laurent inclusion is literally the original one. -/
+theorem inclusion_inclusion :
+    mappingConeInclusion (chart X) ≫ inclusion X = mappingConeInclusion (comparison X) := by
+  apply Hom.ext
+  funext n
+  ext x
+  rfl
+
+/-- Every inverse cylinder point retains its original height and polynomial point. -/
+theorem inclusion_cylinder (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj X))).space n) :
+    (inclusion X).map n (ReducedMappingCone.cylinder _ _ ((chart X).map n) (s, x)) =
+      ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+        (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app X))
+          (boundedFlatPerfectPrespectrumMap (projection.app X))).map n x) := rfl
+
+variable {X Y : Scheme.{u}} (g : X ⟶ Y)
+
+/-- The actual inverse input cone map uses the original inverse geometric square. -/
+def coneMap : mappingCone (chart Y) ⟶ mappingCone (chart X) :=
+  mappingConeSquareMap (chart Y) (chart X)
+    (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+    (boundedFlatPerfectPrespectrumMap (laurent.map g)) (minusSquareHomotopy g)
+
+/-- Both halves of the actual inverse input null factor to the fixed whole input null. -/
+theorem coneMapNull_factor (n : ℕ) :
+    ((mappingConeSquareNullHomotopy (chart Y) (chart X)
+      (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+      (boundedFlatPerfectPrespectrumMap (laurent.map g)) (minusSquareHomotopy g)).postcomp
+        (inclusion X)).level n =
+    (Homotopy.precomp
+      (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Y))
+        (boundedFlatPerfectPrespectrumMap (projection.app Y)))
+      (mappingConeSquareNullHomotopy (comparison Y) (comparison X) (spanMap g)
+        (boundedFlatPerfectPrespectrumMap (laurent.map g))
+        (inputComparisonHomotopy g))).level n := by
+  simp only [mappingConeSquareNullHomotopy, Homotopy.postcomp_trans, Homotopy.precomp_trans]
+  apply Homotopy.trans_level_congr <;> rfl
+
+/-- The original raw cone map preserves the strict inverse support on all cone points. -/
+theorem coneMap_factor :
+    inclusion Y ≫ GlobalRawBass.coneMap g = coneMap g ≫ inclusion X := by
+  apply mappingCone_hom_ext
+  · apply Hom.ext
+    funext n
+    ext x
+    rfl
+  · intro n s x
+    exact (DFunLike.congr_fun (coneMapNull_factor g n) (s, x)).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputIdentityNegative

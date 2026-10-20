@@ -16,7 +16,7 @@
 These comparisons retain the original object classes and K-maps. Exact-category
 presentations use conflation relations; Waldhausen presentations use weak-arrow
 and cofibration-pushout relations. Their separate size and naturality interfaces
-are described in the [exact](README.md#the-object-and-conflation-presentation-of-k₀)
+are described in the [exact](../README.md#degree-zero-presentation-boundary)
 and [Waldhausen](../../Waldhausen/GrothendieckComparison/README.md#classical-k₀-and-small-model-transport)
 guides. The perfect specialization does not supply a triangulated-derived
 presentation.
@@ -65,6 +65,6 @@ For exact functors in the stated common universes,
 `ExactFunctor.grothendieckKZeroEquiv_naturality` and
 `ExactFunctor.kZeroToGrothendieck_naturality` commute with `F.grothendieckMap`
 and `F.KMap 0` on every class. For bundled small exact categories,
-`Quillen.SmallExactCategory.grothendieckKZeroIso` is the resulting natural
+`CategoryTheory.ExactCategory.SmallExactCategory.grothendieckKZeroIso` is the resulting natural
 isomorphism from `grothendieckFunctor` to the original `KFunctor 0`, with
 the same forward comparison and inverse retraction as its components.

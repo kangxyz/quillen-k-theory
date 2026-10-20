@@ -20,6 +20,7 @@ public import Quillen.KTheory.Basic
 public import Quillen.KTheory.Bass.AffineDiagram
 public import Quillen.KTheory.Bass.AssociatedStrength
 public import Quillen.KTheory.Bass.ConeDiagramNull
+public import Quillen.KTheory.Bass.ConeGeneratorRecognition
 public import Quillen.KTheory.Bass.ConeTrack
 public import Quillen.KTheory.Bass.ConeTrackDoubleTime
 public import Quillen.KTheory.Bass.ConeTrackEquivariance
@@ -59,6 +60,9 @@ public import Quillen.KTheory.Bass.FiniteSeedRotation
 public import Quillen.KTheory.Bass.FiniteTrackEquivariance
 public import Quillen.KTheory.Bass.FiniteTwistedRotation
 public import Quillen.KTheory.Bass.FiniteTwistedTail
+public import Quillen.KTheory.Bass.GeneratedTensorStep
+public import Quillen.KTheory.Bass.GeneratedTensorTrace
+public import Quillen.KTheory.Bass.GeneratedTensorTraceProof
 public import Quillen.KTheory.Bass.GeometricChiCell
 public import Quillen.KTheory.Bass.GeometricChiCellEvaluation
 public import Quillen.KTheory.Bass.GeometricChiComparisonCells

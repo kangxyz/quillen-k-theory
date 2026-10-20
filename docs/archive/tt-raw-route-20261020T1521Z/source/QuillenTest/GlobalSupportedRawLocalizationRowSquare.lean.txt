@@ -1,0 +1,102 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationRowSquare
+import Quillen.Topology.Prespectrum.NativeHomotopyCells
+
+/-! Whole original row words, exact null clocks and independent times in the localization square. -/
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalSupportedRawLocalizationRowSquare
+open GlobalSectionChangeIndex ParameterIdentity ParameterAuxiliarySupport
+open GlobalSupportedRawBass.Localization SupportedTensorEvaluation
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- Every point of the original relative triangle survives the actual geometric specialization. -/
+theorem whole_triangle (n : ℕ) :
+    ((rowComparison f T).level n).toContinuousMap =
+      ((IsoSquareRoute.triangle (sectionEnlargement f T) (sectionRestriction f T)
+        (rawEnlargement f T) (rawRestriction f T)
+        (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+        (evaluationComparisonIso (enlargementPair f T))
+        (evaluationComparisonIso (supportRestrictionPair f T))).level n).toContinuousMap :=
+  rowComparison_whole_level f T n
+
+/-- The first half is precisely the second original evaluation at the precomposed input. -/
+theorem first_half (n : ℕ) (s : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (rowWord f T).level n (Quillen.NativePathCells.lower s, x) =
+      (prespectrumTransformationHomotopy
+        (evaluationComparisonIso (supportRestrictionPair f T)).hom
+        (fun _ ↦ (targetModel f T).waldhausen.weq_iso _ inferInstance)).level n
+        (s, (prespectrumMap (sectionEnlargement f T)).map n x) :=
+  Quillen.LoopPrespectrum.Homotopy.trans_lower_cell
+    (IsoSquareRoute.leftTrack (sectionEnlargement f T) (sectionRestriction f T)
+      (rawRestriction f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+      (evaluationComparisonIso (supportRestrictionPair f T)))
+    (IsoSquareRoute.rightTrack (sectionEnlargement f T) (rawEnlargement f T)
+      (rawRestriction f T) (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι)
+      (evaluationComparisonIso (enlargementPair f T))) n s x
+
+/-- The second half is precisely the first original evaluation followed by raw restriction. -/
+theorem second_half (n : ℕ) (s : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (rowWord f T).level n (Quillen.NativePathCells.upper s, x) =
+      (prespectrumMap (rawRestriction f T)).map n
+        ((prespectrumTransformationHomotopy (evaluationComparisonIso (enlargementPair f T)).hom
+          (fun _ ↦ (middleModel T).waldhausen.weq_iso _ inferInstance)).level n (s, x)) :=
+  Quillen.LoopPrespectrum.Homotopy.trans_upper_cell
+    (IsoSquareRoute.leftTrack (sectionEnlargement f T) (sectionRestriction f T)
+      (rawRestriction f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+      (evaluationComparisonIso (supportRestrictionPair f T)))
+    (IsoSquareRoute.rightTrack (sectionEnlargement f T) (rawEnlargement f T)
+      (rawRestriction f T) (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι)
+      (evaluationComparisonIso (enlargementPair f T))) n s x
+
+/-- Quotient descent restores every original source-null time without a new pause. -/
+theorem first_null (n : ℕ) (s : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (rowSquare f T).level n (0, (s, x)) = (postSectionNull f T).level n (s, x) :=
+  (rowSquare f T).at_zero n s x
+
+/-- Quotient descent also retains every original geometric target-null time. -/
+theorem second_null (n : ℕ) (s : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (rowSquare f T).level n (1, (s, x)) = (preRawNull f T).level n (s, x) :=
+  (rowSquare f T).at_one n s x
+
+/-- The whole moving edge is the actual original binary word, not only its endpoints. -/
+theorem row_edge (n : ℕ) (r : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (rowSquare f T).level n (r, (0, x)) = (rowWord f T).level n (r, x) :=
+  (rowSquare f T).left n r x
+
+/-- The other complete edge is the constant original geometric zero. -/
+theorem zero_edge (n : ℕ) (r : I) (x : (prespectrum (sectionSource f T)).space n) :
+    (rowSquare f T).level n (r, (1, x)) = (prespectrum (targetModel f T)).point n :=
+  (rowSquare f T).right n r x
+
+/-- The prespectrum level-zero input-loop coordinate remains independent of null time. -/
+theorem level_zero (s t : I) (x : (prespectrum (sectionSource f T)).space 0) :
+    Path.toContinuousMap ((rowSquare f T).level 0 (1, (s, x))) t =
+      Path.toContinuousMap ((preRawNull f T).level 0 (s, x)) t :=
+  congrArg (fun p ↦ Path.toContinuousMap p t) ((rowSquare f T).at_one 0 s x)
+
+/-- The square remains based for every pair of comparison and null times. -/
+theorem based_line (n : ℕ) (r s : I) :
+    (rowSquare f T).level n (r, (s, (prespectrum (sectionSource f T)).point n)) =
+      (prespectrum (targetModel f T)).point n :=
+  (rowSquare f T).at_point n r s
+
+/-- The independent structure coordinate survives the entire boundary and quotient construction. -/
+theorem structure_time (n : ℕ) (r s t : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (rowSquare f T).level (n + 1)
+        (r, (s, (prespectrum (sectionSource f T)).structureMap n x t)) =
+      (prespectrum (targetModel f T)).structureMap n
+        ((rowSquare f T).level n (r, (s, x))) t :=
+  (rowSquare f T).comm n r s x t
+
+end QuillenTest.GlobalSupportedRawLocalizationRowSquare

@@ -1,0 +1,106 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalCharts
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalBetaEdges
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeExt
+
+/-! The entire original target beta seam on both genuine polynomial sectors and all four cells. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge CommonReferenceNerve
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "Ja" => InputCompositionTerminalAttach.arrow (projection.app Y)
+local notation "U" => InputCompositionTerminalAttach.arrow f
+
+/-- The whole plus polynomial chart has the exact terminal coefficient span value. -/
+theorem chart_one_plus
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference Y E)))|) :
+    chart f E (plus) (plus_projection) (y, 1) =
+      mapParameter (terminalBoundaryNode f E)
+        (mapParameter (ProjectionReference.chartNode X plus plus_projection (E ≫ U))
+          (TargetSpan.polynomialMap f E y)) := by
+  change FiniteParameter.parameter (polynomialReference Y E) (reference f E)
+    (chartNodes f E (plus) (plus_projection))
+    (y, NativeSquareFiveSimplex.parameter 1) = _
+  rw [Path.target, FiniteParameter.parameter_vertex,
+    funext (chart_terminal_plus_node f E)]
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter (polynomialReference Y E) y
+  change mapParameter (fun M ↦ terminalBoundaryNode f E
+    (ProjectionReference.chartNode X plus plus_projection (E ≫ U)
+      (TargetSpan.polynomialMapNode f E M))) (CommonReferenceNerve.parameter _ N z) =
+    mapParameter (terminalBoundaryNode f E)
+      (mapParameter (ProjectionReference.chartNode X plus plus_projection (E ≫ U))
+        (mapParameter (TargetSpan.polynomialMapNode f E) (CommonReferenceNerve.parameter _ N z)))
+  simp only [mapParameter_parameter]
+
+/-- The whole minus polynomial chart has the exact terminal coefficient span value. -/
+theorem chart_one_minus
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference Y E)))|) :
+    chart f E (minus) (minus_projection) (y, 1) =
+      mapParameter (terminalBoundaryNode f E)
+        (mapParameter (ProjectionReference.chartNode X minus minus_projection (E ≫ U))
+          (TargetSpan.polynomialMap f E y)) := by
+  change FiniteParameter.parameter (polynomialReference Y E) (reference f E)
+    (chartNodes f E (minus) (minus_projection))
+    (y, NativeSquareFiveSimplex.parameter 1) = _
+  rw [Path.target, FiniteParameter.parameter_vertex,
+    funext (chart_terminal_minus_node f E)]
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter (polynomialReference Y E) y
+  change mapParameter (fun M ↦ terminalBoundaryNode f E
+    (ProjectionReference.chartNode X minus minus_projection (E ≫ U)
+      (TargetSpan.polynomialMapNode f E M))) (CommonReferenceNerve.parameter _ N z) =
+    mapParameter (terminalBoundaryNode f E)
+      (mapParameter (ProjectionReference.chartNode X minus minus_projection (E ≫ U))
+        (mapParameter (TargetSpan.polynomialMapNode f E) (CommonReferenceNerve.parameter _ N z)))
+  simp only [mapParameter_parameter]
+
+/-- The terminal H0 surface is exactly beta of the actual target span lift, on the whole tree. -/
+theorem tree_terminal (z : FourEdgeTree.space E Ja) :
+    tree f E (z, 1) =
+      mapParameter (terminalBoundaryNode f E)
+        (SSet.toTop.map (FourEdge.beta X (E ≫ U)) (TargetSpan.treeMap f E z)) := by
+  suffices h : (fun z ↦ tree f E (z, 1)) =
+      (fun z ↦ mapParameter (terminalBoundaryNode f E)
+        (SSet.toTop.map (FourEdge.beta X (E ≫ U)) (TargetSpan.treeMap f E z))) from congrFun h z
+  apply FourEdgeTree.funext_cells E Ja
+  · intro y
+    rw [tree_plus, TargetSpan.treeMap_plus]
+    change chart f E (plus) (plus_projection) (y, 1) =
+      mapParameter (terminalBoundaryNode f E)
+        (SSet.toTop.map (FourEdge.beta X (E ≫ U))
+          (SSet.toTop.map (FourEdgeTree.plusVertex (E ≫ U)
+            (InputCompositionTerminalAttach.arrow (projection.app X))) (TargetSpan.polynomialMap f E
+              y)))
+    rw [← FourEdgeTree.realized_comp, FourEdge.beta_plus]
+    exact chart_one_plus f E y
+  · intro y
+    rw [tree_minus, TargetSpan.treeMap_minus]
+    change chart f E (minus) (minus_projection) (y, 1) =
+      mapParameter (terminalBoundaryNode f E)
+        (SSet.toTop.map (FourEdge.beta X (E ≫ U))
+          (SSet.toTop.map (FourEdgeTree.minusVertex (E ≫ U)
+            (InputCompositionTerminalAttach.arrow (projection.app X))) (TargetSpan.polynomialMap f E
+              y)))
+    rw [← FourEdgeTree.realized_comp, FourEdge.beta_minus]
+    exact chart_one_minus f E y
+  · exact tree_terminal_edge12_beta f E
+  · exact tree_terminal_edge01_beta f E
+  · exact tree_terminal_edge03_beta f E
+  · exact tree_terminal_edge34_beta f E
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

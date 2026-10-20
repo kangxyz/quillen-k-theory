@@ -1,0 +1,81 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerPolynomialNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassConePrewhiskerWords
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialRecovery
+/-! The actual selected polynomial prewhiskering branch and its common-cone scalar placement. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve Quillen.LoopPrespectrum Quillen.NativePathCells
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+
+/-- The complete genuine plus polynomial sector recovers the original whole raw prewhiskering. -/
+theorem polynomialPrewhisker_plus_original (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj W))).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.polynomialReference f g)
+        (InputCompositionPolynomialScalar.chart (X := X) plus)
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.laurentReference f g plus)
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g plus))
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g plus)) n
+        (polynomialPrewhisker f g c plus (r, s)) x) =
+    (InputComposition.coneHomotopy f g).level n
+      (r, (GlobalRawBass.coneMap c).map n
+        (cylinder W n (s, (HomotopyPushout.inl
+          (boundedFlatPerfectPrespectrumMap (projection.app W))
+          (boundedFlatPerfectPrespectrumMap (projection.app W))).map n x))) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [polynomialPrewhisker_lower, polynomialLower_native, composition_lower,
+      inputComparisonHomotopy_inl]
+    rfl
+  · rw [polynomialPrewhisker_upper, polynomialUpper_native, composition_upper]
+    exact (InputCompositionPositive.nullSquare_factor f g n r t
+      ((boundedFlatPerfectPrespectrumMap (polynomial.map c)).map n x)).trans
+      (congrArg (fun y ↦ (InputComposition.comparisonConeNullSquare f g).level n (r, (t, y)))
+        (congrArg (fun h ↦ h.map n x) (inl_spanMap c)).symm)
+
+/-- The complete genuine minus polynomial sector recovers the original whole raw prewhiskering. -/
+theorem polynomialPrewhisker_minus_original (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj W))).space n) :
+    (InputIdentityNegative.inclusion X).map n
+      (CutOpenCarrier.nativeEval
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.polynomialReference f g)
+        (InputCompositionPolynomialScalar.chart (X := X) minus)
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.laurentReference f g minus)
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g minus))
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g minus)) n
+        (polynomialPrewhisker f g c minus (r, s)) x) =
+    (InputComposition.coneHomotopy f g).level n
+      (r, (GlobalRawBass.coneMap c).map n
+        (cylinder W n (s, (HomotopyPushout.inr
+          (boundedFlatPerfectPrespectrumMap (projection.app W))
+          (boundedFlatPerfectPrespectrumMap (projection.app W))).map n x))) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [polynomialPrewhisker_lower, polynomialLower_native, composition_lower,
+      inputComparisonHomotopy_inr]
+    rfl
+  · rw [polynomialPrewhisker_upper, polynomialUpper_native, composition_upper]
+    exact (InputCompositionNegative.nullSquare_factor f g n r t
+      ((boundedFlatPerfectPrespectrumMap (polynomial.map c)).map n x)).trans
+      (congrArg (fun y ↦ (InputComposition.comparisonConeNullSquare f g).level n (r, (t, y)))
+        (congrArg (fun h ↦ h.map n x) (inr_spanMap c)).symm)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

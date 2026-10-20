@@ -1,0 +1,133 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionComposite
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionRailEnds
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionRailsNative
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenSurfaceBoundary
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenMappedRelativeExtension
+public import Quillen.Topology.Prespectrum.HomotopySquareOfPasting
+/-! The original seed-composition square from both whole scalar routes and their actual rails. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionChosenCube
+open CommonReferenceNerve InputIdentitySeedCarrier Quillen.ScalarRectangle Quillen.NativePathCells
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- The original whole source seed joins the first composite seed boundary. -/
+theorem source_seam (s : I) : InputSeedCompositionRails.sourceRail f g (1,s) =
+    InputSeedCompositionComposite.surface f g (0,s) :=
+  (InputSeedCompositionRails.source_finish f g s).trans
+    (InputSeedCompositionComposite.surface_start f g s).symm
+
+/-- The source rail followed by the two original comparison halves. -/
+def initialRoute := concatFirst (InputSeedCompositionRails.sourceRail f g)
+  (InputSeedCompositionComposite.surface f g) (source_seam f g)
+
+/-- Reverse only the actual target-rail comparison coordinate. -/
+def reverseTarget : C(I × I, Carrier (f ≫ g)) :=
+  ⟨fun z ↦ InputSeedCompositionRails.targetRail f g (unitInterval.symm z.1,z.2), by fun_prop⟩
+
+/-- The composite seed joins the actual reversed target rail along the whole original word. -/
+theorem target_seam (s : I) : initialRoute f g (1,s) = reverseTarget f g (0,s) := by
+  rw [initialRoute, concatFirst_one]
+  change InputSeedCompositionComposite.surface f g (1,s) =
+    InputSeedCompositionRails.targetRail f g (unitInterval.symm 0,s)
+  rw [unitInterval.symm_zero]
+  exact (InputSeedCompositionComposite.surface_finish f g s).trans
+    (InputSeedCompositionRails.target_finish f g s).symm
+
+/-- The literal original three-side boundary with its unchanged left association. -/
+def alternate := concatFirst (initialRoute f g) (reverseTarget f g) (target_seam f g)
+
+/-- The actual two routes have the same whole start and finish and both separate tips. -/
+def surfaces : CutOpenCarrier.RouteSurfaces F J G ε ε' where
+  left := (InputIdentitySeedConjugation.comparison (f ≫ g)).toContinuousMap
+  right := alternate f g
+  start := (InputIdentitySeedConjugation.sourceWord (f ≫ g)).toContinuousMap
+  finish := (InputIdentitySeedConjugation.targetWord (f ≫ g)).toContinuousMap
+  left_start := InputIdentitySeedConjugation.comparison_source (f ≫ g)
+  left_finish := InputIdentitySeedConjugation.comparison_target (f ≫ g)
+  right_start s := by
+    rw [alternate, concatFirst_zero, initialRoute, concatFirst_zero]
+    exact InputSeedCompositionRails.source_start f g s
+  right_finish s := by
+    rw [alternate, concatFirst_one]
+    change InputSeedCompositionRails.targetRail f g (unitInterval.symm 1,s) = _
+    rw [unitInterval.symm_one]
+    exact InputSeedCompositionRails.target_start f g s
+  left_zero := InputIdentitySeedConjugation.comparison_zero (f ≫ g)
+  left_one := InputIdentitySeedConjugation.comparison_one (f ≫ g)
+  right_zero r := by
+    rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+    · rw [alternate, concatFirst_lower]
+      rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+      · rw [initialRoute, concatFirst_lower]
+        exact InputSeedCompositionRails.source_zero f g v
+      · rw [initialRoute, concatFirst_upper]
+        exact InputSeedCompositionComposite.surface_zero f g v
+    · rw [alternate, concatFirst_upper]
+      exact InputSeedCompositionRails.target_zero f g (unitInterval.symm t)
+  right_one r := by
+    rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+    · rw [alternate, concatFirst_lower]
+      rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+      · rw [initialRoute, concatFirst_lower]
+        exact InputSeedCompositionRails.source_one f g v
+      · rw [initialRoute, concatFirst_upper]
+        exact InputSeedCompositionComposite.surface_one f g v
+    · rw [alternate, concatFirst_upper]
+      exact InputSeedCompositionRails.target_one f g (unitInterval.symm t)
+
+/-- Every alternate-route coordinate recovers the literal original native three-side boundary. -/
+theorem alternate_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    InputSeedCompositionRails.evaluate f g n x (alternate f g (r,s)) =
+      Path.toContinuousMap ((InputSeedCompositionBoundary.alternateInput f g).level n (r,x)) s := by
+  unfold InputSeedCompositionBoundary.alternateInput
+  rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [alternate, concatFirst_lower, Homotopy.trans_lower_cell]
+    rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [initialRoute, concatFirst_lower, Homotopy.trans_lower_cell]
+      exact InputSeedCompositionRails.source_native f g n v s x
+    · rw [initialRoute, concatFirst_upper, Homotopy.trans_upper_cell]
+      exact InputSeedCompositionComposite.surface_native f g n v s x
+  · rw [alternate, concatFirst_upper, Homotopy.trans_upper_cell]
+    exact InputSeedCompositionRails.target_native f g n (unitInterval.symm t) s x
+
+/-- Both complete faces evaluate to the originally selected direct and composite routes. -/
+theorem recovers : (surfaces f g).boundary.RecoversMappedRoutes
+    (InputIdentityPositive.inclusion X) (transitionInputHomotopy (f ≫ g))
+    (InputSeedCompositionBoundary.alternateInput f g) where
+  left z n x := InputIdentitySeedConjugation.comparison_transition (f ≫ g)
+    n (z.val.val 1) (z.val.val 2) x
+  right z n x := alternate_native f g n (z.val.val 1) (z.val.val 2) x
+
+/-- The actual chosen seed is relatively homotopic to its actual original composition boundary. -/
+def comparison : (transitionInputHomotopy (f ≫ g)).RelHomotopy
+    (InputSeedCompositionBoundary.alternateInput f g) :=
+  (surfaces f g).boundary.mappedRelativeComparison (InputIdentityPositive.inclusion X)
+    _ _ (recovers f g)
+
+/-- The complete original seed-composition square, with no new chosen-face assumptions. -/
+def seedSquare : (transitionInputHomotopy (f ≫ g)).Square
+    (InputSeedCompositionBoundary.compositeInput f g)
+    (InputSeedCompositionBoundary.sourceRail f g)
+    (InputSeedCompositionBoundary.targetRail f g) :=
+  (comparison f g).toSquare
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionChosenCube

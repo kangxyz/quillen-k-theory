@@ -1,0 +1,30 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCompositeCarrier
+
+/-! Independent client of the chosen composite null comparison carrier. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalRawBassInputNullJ1Carrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputNullCompositionCompositeCarrier
+
+/-- A separate-package consumer keeps the first selected comparison at its original lower half. -/
+theorem first_comparison_cell (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (surface f g (Quillen.NativePathCells.lower r, s)) =
+      (InputCompositionNull.firstComparison f g).level n (r, (s, x)) := by
+  rw [surface_lower]
+  exact SeedSurfaceTransport.surface_native f g n r s x
+
+end Consumer.GlobalRawBassInputNullJ1Carrier

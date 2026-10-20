@@ -1,0 +1,89 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOuterGridNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerChartTerminal
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerInitialParameter
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartInitialProjectionReferences
+/-! The original label thirteen supplies both actual lower source-projection shared cells. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "SN" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+local notation "D" => BassH0Merge.normalizedMap (projection.app W)
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "B" => lowerLaurentBinary f g
+local notation "Q" => InputDescSimplex.reference c
+local notation "F" => ProjectionReference.reference X
+  (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "SC" => NativeSquareFiveSimplex.source (laurent.map c) (k.app W)
+local notation "NC" => NativeSquareFiveSimplex.nodes (laurent.map c) (k.app W)
+  (k.app Z) (polynomial.map c) (k.naturality c)
+
+/-- The original node-two source square retains the genuine projection in its full Laurent node. -/
+theorem lower_projection_initial_node (N : Node G) :
+    reanchor (projectionLaurentSeamAnchor f g c k hk)
+      (FinitePrecomp.node S G (SN 2) N) =
+    preNode F D (initialLaurentProjectionAnchor f g c k hk) (precompNode MC N) := by
+  rw [initial_reference_node c G N]
+  simp only [initialLaurentProjectionAnchor, initialSourceAnchor, preNode, reanchor,
+    Iso.trans_assoc]
+
+private theorem lower_shared_from_outer
+    (h : reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B (InputDescSimplex.chartNodes c k hk 13) (lowerLaurentNodes f g 0)) =
+      reanchor (projectionLaurentSeamAnchor f g c k hk)
+        (FinitePrecomp.node S G (SN 2) (InputCompositionPolynomialScalar.chartNodes f g k 15))) :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B (InputDescSimplex.chartNodes c k hk 13) (lowerLaurentNodes f g 0)) =
+    preNode F D (initialLaurentProjectionAnchor f g c k hk)
+      (reanchor (lowerChartAnchor f g c k) (FinitePrecomp.node SC B (NC 4) (lowerLaurentNodes f g
+        0))) := by
+  rw [lowerChart_terminal_node]
+  have hb := congrArg (fun N ↦ preNode F D (initialLaurentProjectionAnchor f g c k hk)
+    (precompNode MC N)) (chartSurface_bottom_node f g k 0)
+  exact h.trans ((lower_projection_initial_node f g c k hk
+    (InputCompositionPolynomialScalar.chartNodes f g k 15)).trans hb)
+
+/-- The positive projected lower chart shares its original terminal/source cell with label
+thirteen. -/
+theorem lower_plus_shared_cell :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B (InputDescSimplex.chartNodes c plus plus_projection 13)
+        (lowerLaurentNodes f g 0)) =
+    preNode F D (initialLaurentProjectionAnchor f g c plus plus_projection)
+      (reanchor (lowerChartAnchor f g c plus)
+        (FinitePrecomp.node (NativeSquareFiveSimplex.source (laurent.map c) (plus.app W)) B
+          (NativeSquareFiveSimplex.nodes (laurent.map c) (plus.app W) (plus.app Z)
+            (polynomial.map c) (plus.naturality c) 4) (lowerLaurentNodes f g 0))) :=
+  lower_shared_from_outer f g c plus plus_projection (outer_plus_grid_nodes f g c 0 2)
+
+/-- The negative projected lower chart keeps its separate original label-thirteen reference. -/
+theorem lower_minus_shared_cell :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B (InputDescSimplex.chartNodes c minus minus_projection 13)
+        (lowerLaurentNodes f g 0)) =
+    preNode F D (initialLaurentProjectionAnchor f g c minus minus_projection)
+      (reanchor (lowerChartAnchor f g c minus)
+        (FinitePrecomp.node (NativeSquareFiveSimplex.source (laurent.map c) (minus.app W)) B
+          (NativeSquareFiveSimplex.nodes (laurent.map c) (minus.app W) (minus.app Z)
+            (polynomial.map c) (minus.naturality c) 4) (lowerLaurentNodes f g 0))) :=
+  lower_shared_from_outer f g c minus minus_projection (outer_minus_grid_nodes f g c 0 2)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

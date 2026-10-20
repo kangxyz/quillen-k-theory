@@ -1,0 +1,102 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionCone
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpanScalarNodes
+
+/-! # Whole global cone evaluation preserves the original independent scalar coordinates -/
+set_option warningAsError true
+set_option autoImplicit false
+set_option linter.mathlibStandardSet true
+@[expose] public noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference
+open scoped Simplicial Topology unitInterval
+universe u v
+namespace QuillenTest.GlobalProjectionCone
+open CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier
+variable (X : Scheme.{u}) {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen X))
+local notation "J" => projectionMap X
+local notation "F" => reference X E
+local notation "β" => FourEdge.beta X E
+
+/-- A full external compact family retains different overlap, cone and structure times. -/
+theorem compact_overlap_structure {T : Type v} [TopologicalSpace T] [CompactSpace T]
+    (p : C(T, |parameterSSet E|)) (n : ℕ) (a : T) (s h r : I)
+    (x : (prespectrum V).space n) :
+    FourEdge.coneEval X E (n + 1)
+        (FourEdgeTree.overlapCylinder E J F β ((p a, s), h))
+        ((prespectrum V).structureMap n x r) =
+      (FourEdge.nativeBassCone X).structureMap n
+        (Quillen.ReducedMappingCone.cylinder _ _ ((GlobalRawBass.comparison X).map n)
+          (h, Quillen.LoopPrespectrum.HomotopyPushout.cylinder
+            (prespectrumMap J) (prespectrumMap J) n
+              (s, compactPrespectrumFamily E p n (a, x)))) r := by
+  rw [FourEdge.coneEval_structure, FourEdge.coneEval_overlapCylinder,
+    pointwisePrespectrumFamily_eq_compact E p]
+
+/-- The original overlap baseline is literally the full five-node family, before evaluation. -/
+theorem overlap_baseline (y : |parameterSSet E|) (s : I) :
+    FourEdgeTree.overlapCylinder E J F β ((y, s), 0) =
+      FourEdgeTree.laurentInclusion E J F β (family X E (y, s)) := by
+  rw [FourEdgeTree.overlapCylinder_zero, FourEdge.beta_overlap]
+
+/-- Distinct positive and inverse polynomial points have their separately prescribed values. -/
+theorem both_polynomial_summands (n : ℕ) (yp ym : |parameterSSet (E ≫ J)|)
+    (x : (prespectrum V).space n) :
+    (pointwisePrespectrumFamily F n
+        (SSet.toTop.map β (SSet.toTop.map (FourEdgeTree.plusVertex E J) yp)) x =
+      (GlobalRawBass.comparison X).map n
+        (FourEdgeTree.nativePlus E J n yp x)) ∧
+    (pointwisePrespectrumFamily F n
+        (SSet.toTop.map β (SSet.toTop.map (FourEdgeTree.minusVertex E J) ym)) x =
+      (GlobalRawBass.comparison X).map n
+        (FourEdgeTree.nativeMinus E J n ym x)) := by
+  constructor
+  · simpa only [FourEdgeTree.nativeEval_plus] using FourEdge.beta_native_plus X E n yp x
+  · simpa only [FourEdgeTree.nativeEval_minus] using FourEdge.beta_native_minus X E n ym x
+
+section Composition
+open GlobalRawBass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open GlobalRawBass.InputCompositionTopPieces
+open GlobalRawBass.InputCompositionSpanScalar
+variable {A B C : Scheme.{u}} (f : A ⟶ B) (g : B ⟶ C)
+local notation "Efg" => baseSource f g
+local notation "Jfg" => projectionMap A
+
+/-- The actual positive moving square retains both original clocks after the whole attachment. -/
+theorem positive_moving_square (r s : I) :
+    mapParameter (CommonReferenceProduct.reanchor (middleAnchor f g))
+      (SSet.toTop.map (FourEdge.beta A Efg)
+        (SSet.toTop.map (FourEdgeTree.plusVertex Efg Jfg)
+          (parameter (polynomialReference A Efg)
+            (fun i ↦ GlobalRawBass.InputCompositionSpanScalar.polynomialNode f g
+              (polynomialNodes f g i))
+            (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, s))))) =
+      movingFace f g plus plus_projection (r, s) := by
+  rw [← FourEdgeTree.realized_comp, FourEdge.beta_plus]
+  exact moving_parameter f g plus plus_projection _
+
+/-- The inverse square has the same exact attachment without replacing its distinct old anchor. -/
+theorem inverse_moving_square (r s : I) :
+    mapParameter (CommonReferenceProduct.reanchor (middleAnchor f g))
+      (SSet.toTop.map (FourEdge.beta A Efg)
+        (SSet.toTop.map (FourEdgeTree.minusVertex Efg Jfg)
+          (parameter (polynomialReference A Efg)
+            (fun i ↦ GlobalRawBass.InputCompositionSpanScalar.polynomialNode f g
+              (polynomialNodes f g i))
+            (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, s))))) =
+      movingFace f g minus minus_projection (r, s) := by
+  rw [← FourEdgeTree.realized_comp, FourEdge.beta_minus]
+  exact moving_parameter f g minus minus_projection _
+
+end Composition
+
+end QuillenTest.GlobalProjectionCone

@@ -1,0 +1,72 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawPullbackCoherence
+
+/-!
+# Associativity of the original normalized supported pullbacks
+
+The actual supported geometric two-route equation survives the original chosen-zero
+normalizations. The equality is between whole natural transformations, with the original
+geometric associativity transport and the functor associator displayed. It is the categorical
+input to the original relative triple-pasting construction; no spectral filler is assumed.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+open SupportedTensorEvaluation
+
+/-- The original normalized supported geometric pullback is exact. -/
+theorem normalizedPullback_exact {A B : Scheme.OpenPairs.{u}} (f : A ⟶ B) :
+    IsExact (boundedFlatPerfectSupportedWaldhausen B.obj.hom).cof
+      (boundedFlatPerfectSupportedWaldhausen B.obj.hom).weq
+      (boundedFlatPerfectSupportedWaldhausen A.obj.hom).cof
+      (boundedFlatPerfectSupportedWaldhausen A.obj.hom).weq (normalizedPullback f) :=
+  (boundedFlatPerfectSupportedPullback_exact f).rebase
+
+/-- The same normalization preserves the actual selected supported zero. -/
+theorem normalizedPullback_obj_zero {A B : Scheme.OpenPairs.{u}} (f : A ⟶ B) :
+    (normalizedPullback f).obj (boundedFlatPerfectSupportedWaldhausen B.obj.hom).zero =
+      (boundedFlatPerfectSupportedWaldhausen A.obj.hom).zero :=
+  Quillen.rebaseFunctor_obj_base _ _ _ _
+
+/-- Both complete normalized supported triple routes retain the original geometric equality. -/
+theorem normalizedCompositionIso_two_routes {A B C D : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) (h : C ⟶ D) :
+    (normalizedCompositionIso f (g ≫ h)).hom ≫
+      whiskerRight (normalizedCompositionIso g h).hom (normalizedPullback f) ≫
+      (Functor.associator (normalizedPullback h) (normalizedPullback g)
+        (normalizedPullback f)).hom =
+    eqToHom (congrArg normalizedPullback (Category.assoc f g h).symm) ≫
+      (normalizedCompositionIso (f ≫ g) h).hom ≫
+      whiskerLeft (normalizedPullback h) (normalizedCompositionIso f g).hom := by
+  apply NatTrans.ext
+  funext K
+  simp only [comp_obj, normalizedCompositionIso, Iso.trans_hom, Iso.symm_hom,
+    isoWhiskerRight_hom, isoWhiskerLeft_hom, whiskerRight_comp, whiskerRight_twice,
+    Category.assoc, NatTrans.comp_app, whiskerRight_app, whiskerLeft_app,
+    associator_hom_app, Functor.comp_map, associator_inv_app, Category.comp_id,
+    Category.id_comp, ← map_comp, NatTrans.naturality, NatTrans.naturality_assoc,
+    Iso.hom_inv_id_app_assoc, eqToHom_refl, whiskerLeft_comp, whiskerLeft_twice]
+  rw [Functor.map_comp, ← (evaluationRawNormalization f).hom.naturality_assoc]
+  have hc := congrArg (fun e ↦ e.app K) (pullbackCompIso_two_routes f g h)
+  simp only [NatTrans.comp_app, whiskerRight_app, whiskerLeft_app,
+    Functor.associator_hom_app, Category.comp_id, eqToHom_refl, Category.id_comp] at hc
+  rw [← Category.assoc ((boundedFlatPerfectSupportedPullbackCompIso f (g ≫ h)).hom.app K)
+    ((boundedFlatPerfectSupportedPullback f).map
+      ((boundedFlatPerfectSupportedPullbackCompIso g h).hom.app K))]
+  rw [hc]
+  simp only [Category.assoc]
+  rfl
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

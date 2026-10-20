@@ -1,0 +1,51 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerProjectionReference
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialScalarNative
+/-! The original corrected polynomial square precomposed by the original five-node source square. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "M" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "ε'" => CutOpenPrecomp.anchor S P K G ε
+
+/-- The literal original corrected interior and original five-node path have independent clocks. -/
+def selectedPolynomial : C((I × I) × I,
+    CutOpenCarrier.space (S ≫ P) K (S ≫ G) ε' ε') :=
+  (FinitePrecomp.precompFinite S M P K G ε ε).comp
+    ⟨fun z ↦ ((InputCompositionPolynomialScalar.correctedSquare f g k).parameter z.1,
+      NativeSquareFiveSimplex.parameter z.2), by fun_prop⟩
+
+/-- All source-native inputs pass through the original finite family before the chosen square. -/
+theorem selectedPolynomial_native (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    CutOpenCarrier.nativeEval (S ≫ P) K (S ≫ G) ε' ε' n
+      (selectedPolynomial f g c k ((r, s), t)) x =
+      (InputCompositionPolynomialScalar.nullSquare f g k).level n
+        (r, (s, prespectrumFamily S M n (NativeSquareFiveSimplex.parameter t, x))) := by
+  exact (FinitePrecomp.precompFinite_native S M P K G ε ε n
+    ((InputCompositionPolynomialScalar.correctedSquare f g k).parameter (r, s))
+    (NativeSquareFiveSimplex.parameter t) x).trans
+      (InputCompositionPolynomialScalar.correctedSquare_native f g k n r s _)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

@@ -1,0 +1,64 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenPrecompAttachments
+/-!
+Change the source of a real reference along a specified source-square isomorphism.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor Quillen.Waldhausen.IteratedS
+universe u v
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+private theorem attachment_component {C₀ : Type u} [Category.{v} C₀]
+    {l ga gs pa ps fk : C₀} (a : l ⟶ ga) (b : ga ⟶ gs) (c : gs ⟶ ps)
+    (d : ga ⟶ pa) (e : pa ⟶ ps) (q : l ⟶ fk) (r : fk ⟶ pa) (j : pa ⟶ pa)
+    (hj : j = 𝟙 pa) (hbc : b ≫ c = d ≫ e) (had : a ≫ d = q ≫ r) :
+    (a ≫ 𝟙 ga ≫ b) ≫ c ≫ 𝟙 ps = (q ≫ 𝟙 fk) ≫ r ≫ j ≫ e := by
+  rw [hj]
+  simp only [Category.id_comp, Category.comp_id]
+  rw [Category.assoc, hbc, ← Category.assoc, had, Category.assoc]
+
+variable {U V B C D₀ : Model.{u}}
+
+/-- Change the source of a real reference along a specified source-square isomorphism. -/
+def sourceSquareAnchor (A : U ⟶ V) (D : V ⟶ B) (S : U ⟶ B)
+    (θ : S.functor ≅ (A ≫ D).functor) (F : V ⟶ C) (H : B ⟶ C)
+    (η : F.functor ≅ (D ≫ H).functor) : (A ≫ F).functor ≅ (S ≫ H).functor :=
+  isoWhiskerLeft A.functor η ≪≫ (Functor.associator A.functor D.functor H.functor).symm ≪≫
+    isoWhiskerRight θ.symm H.functor
+
+/-- The original full attachment square remains commutative after actual source-square transport. -/
+theorem sourceSquare_attachment (A : U ⟶ V) (D : V ⟶ B) (S : U ⟶ B)
+    (θ : S.functor ≅ (A ≫ D).functor) (F : V ⟶ C) (L : V ⟶ D₀)
+    (P : B ⟶ C) (G : B ⟶ D₀) (K : C ⟶ D₀)
+    (η : F.functor ≅ (D ≫ P).functor) (ζ : L.functor ≅ (D ≫ G).functor)
+    (χ : L.functor ≅ (F ≫ K).functor) (ε : G.functor ≅ (P ≫ K).functor)
+    (h : ζ ≪≫ isoWhiskerLeft D.functor ε = χ ≪≫ isoWhiskerRight η K.functor) :
+    sourceSquareAnchor A D S θ L G ζ ≪≫
+        CommonReferenceNerve.CutOpenPrecomp.anchor S P K G ε =
+      CommonReferenceNerve.CutOpenPrecomp.anchor A F K L χ ≪≫
+        isoWhiskerRight (sourceSquareAnchor A D S θ F P η) K.functor := by
+  apply Iso.ext
+  ext x
+  have hx := congrArg (fun e ↦ e.hom.app (A.functor.obj x)) h
+  simp only [Iso.trans_hom, isoWhiskerLeft_hom, isoWhiskerRight_hom,
+    NatTrans.comp_app, whiskerLeft_app, whiskerRight_app] at hx
+  simp only [sourceSquareAnchor, CommonReferenceNerve.CutOpenPrecomp.anchor,
+    Iso.trans_hom, isoWhiskerLeft_hom, isoWhiskerRight_hom, Iso.symm_hom,
+    NatTrans.comp_app, whiskerLeft_app, whiskerRight_app, Functor.associator_inv_app,
+    Functor.comp_obj, Functor.map_comp]
+  exact attachment_component
+    (ζ.hom.app (A.functor.obj x)) (G.functor.map (θ.inv.app x))
+    (ε.hom.app (S.functor.obj x)) (ε.hom.app (D.functor.obj (A.functor.obj x)))
+    (K.functor.map (P.functor.map (θ.inv.app x))) (χ.hom.app (A.functor.obj x))
+    (K.functor.map (η.hom.app (A.functor.obj x)))
+    (K.functor.map (𝟙 (P.functor.obj (D.functor.obj (A.functor.obj x)))))
+    (K.functor.map_id _) (ε.hom.naturality (θ.inv.app x)) hx
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

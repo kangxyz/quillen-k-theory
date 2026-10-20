@@ -92,6 +92,8 @@ composed diagram from two independently varying families.
 identifies stage, realization and whole prespectrum evaluation using the actual
 realization-product homeomorphism and monotone grid parameter. Original zeros,
 all levels including zero, and the separate structure coordinate are retained.
-The original coefficient Bass application now supplies both chart pauses and
-its whole bottom surface with literal shared edges; the remaining compatible
+The prescribed raw point-set Bass comparison now has both chart pauses and
+its whole bottom surface with literal shared edges; its remaining compatible
 faces and genuine composition cylinder require additional construction.
+This separate implementation-comparison target is not a premise of the direct
+[tensor/Bass realization of original TT 7.4](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md).

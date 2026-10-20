@@ -1,0 +1,29 @@
+{
+  "active_archive_sha256": "15a709ae530a1610ec156e47068605d275afede1d7399231552e138ae8a6020f",
+  "guides": [
+    {
+      "input_path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ChartRelativeTransport.md",
+      "archived_path": "incoming-guide-snapshots/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ChartRelativeTransport.md",
+      "sha256": "4a5fe95fb67ad024106e47951db5aeb63354c07815bde9452ac0a763beeabdc7",
+      "status": "historical incoming route exposition; not an active proof dependency"
+    },
+    {
+      "input_path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalProjectionCarrier.md",
+      "archived_path": "incoming-guide-snapshots/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalProjectionCarrier.md",
+      "sha256": "cfd2e4421c3be26033bc7b1c5cb4f1ca170346b4e548f581dbf1d6f6ab72e12c",
+      "status": "historical incoming route exposition; not an active proof dependency"
+    },
+    {
+      "input_path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ProjectionEndpoints.md",
+      "archived_path": "incoming-guide-snapshots/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ProjectionEndpoints.md",
+      "sha256": "f8696bb833ff50808224dde89e690bb13b822e2e448831add3c0c77ebd5927b1",
+      "status": "historical incoming route exposition; not an active proof dependency"
+    },
+    {
+      "input_path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TargetReanchoring.md",
+      "archived_path": "incoming-guide-snapshots/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TargetReanchoring.md",
+      "sha256": "4e098888451d8f31e2396c233d16c8a1112d3abe1acdc199ae57ace719253684",
+      "status": "historical incoming route exposition; not an active proof dependency"
+    }
+  ]
+}

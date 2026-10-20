@@ -1,0 +1,47 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerZeroLaurent
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerChart
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassReferencePostFiniteNode
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSourceBoundary
+/-! All-point recovery of the original source-map first half with all three clocks retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+  Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+local notation "C" => BassH0Merge.normalizedMap (laurent.map c)
+local notation "H" => lowerLaurentBinary f g
+local notation "R" => InputIdentityProjection.source W
+local notation "Q" => InputDescSimplex.reference c
+
+/-- The original source row anchor postcomposes the complete five-node comparison reference. -/
+def zeroOverlapAnchor : (Q ≫ H).functor ≅ (R ≫ zeroLaurentReference f g c).functor :=
+  isoWhiskerRight (ProjectionReference.Target.h0ProjectionIso c) (H).functor ≪≫
+    Functor.associator (R).functor (C).functor (H).functor
+
+/-- Every original source-row node retains its complete reference and original Laurent node. -/
+theorem zero_overlap_node (j : Fin 5) (M : Node H) :
+    FinitePrecomp.node Q H (InputDescSimplex.nodes c (ProjectionReference.Target.sourceRow j)) M =
+      CommonReferenceProduct.reanchor (zeroOverlapAnchor f g c)
+        (FinitePrecomp.node R (zeroLaurentReference f g c)
+          (InputIdentityProjection.nodes W j) (precompNode C M)) := by
+  have h := congrArg (fun N ↦ FinitePrecomp.node Q H N M)
+    (ProjectionReference.Target.source_nodes c j)
+  exact h.trans (CommonReferenceProduct.post_finite_node R C H Q
+    (ProjectionReference.Target.h0ProjectionIso c) (InputIdentityProjection.nodes W j) M)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

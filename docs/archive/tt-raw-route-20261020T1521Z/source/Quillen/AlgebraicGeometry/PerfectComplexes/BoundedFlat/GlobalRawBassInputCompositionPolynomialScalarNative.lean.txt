@@ -1,0 +1,190 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialScalarCorrection
+public import Quillen.Topology.Prespectrum.ConeCompositionCorrectionEvaluation
+public import Quillen.Topology.Path.NullWordEvaluation
+public import Quillen.Topology.Prespectrum.RelativeHomotopyOperationEvaluation
+
+/-! Exact native recovery of the chosen corrected square and complete original source rail. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH1Join
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar
+open CommonReferenceNerve
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (k : laurent ⟶ polynomial)
+
+local notation "F" => polynomialReference f g
+local notation "G" => laurentReference f g k
+local notation "J" => chart (X := X) k
+local notation "ε" => anchor f g k
+
+open Quillen.SimplexParameters Quillen.ScalarRectangle Quillen.NativePathCells
+
+local notation "a" => boundedFlatPerfectPrespectrumMap (polynomial.map g)
+local notation "b" => boundedFlatPerfectPrespectrumMap (laurent.map g)
+local notation "c" => boundedFlatPerfectPrespectrumMap (polynomial.map f)
+local notation "d" => boundedFlatPerfectPrespectrumMap (laurent.map f)
+local notation "h" => chartP k X
+
+/-- The first original chart half is exactly the first native associator piece. -/
+theorem finalChartFirst_native (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (finalChartFirst f g k s) x =
+      (ConeCompositionPieces.first h a d (InputCompositionTransformations.square k g)).level n
+        (s, x) := by
+  change CutOpenCarrier.nativeEval F J G ε ε n
+    (nullMovingFirst f g k (1, lower s)) x = _
+  rw [nullMovingFirst_native]
+  have ht := (comparisonSquare f g k).at_one n (lower s)
+    (x)
+  change (comparisonSquare f g k).level n (1, (lower s, _)) =
+    (compositeComparison f g k).level n (lower s, _) at ht
+  rw [ht]
+  unfold compositeComparison coneSquarePastedHomotopy
+  rw [Homotopy.cast_level, Homotopy.trans_lower_cell]
+  rfl
+
+/-- The second original chart half is exactly the second native associator piece. -/
+theorem finalChartSecond_native (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (finalChartSecond f g k s) x =
+      (ConeCompositionPieces.second h a c d (InputCompositionTransformations.square k f)).level n
+        (s, x) := by
+  change CutOpenCarrier.nativeEval F J G ε ε n
+    (nullMovingFirst f g k (1, upper s)) x = _
+  rw [nullMovingFirst_native]
+  have ht := (comparisonSquare f g k).at_one n (upper s)
+    (x)
+  change (comparisonSquare f g k).level n (1, (upper s, _)) =
+    (compositeComparison f g k).level n (upper s, _) at ht
+  rw [ht]
+  unfold compositeComparison coneSquarePastedHomotopy
+  rw [Homotopy.cast_level, Homotopy.trans_upper_cell]
+  rfl
+
+/-- The last actual cylinder is the unchanged third native associator piece. -/
+theorem finalCylinder_native (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (finalCylinder f g k s) x =
+      (ConeCompositionPieces.third h a c).level n
+        (s, x) := by
+  change CutOpenCarrier.nativeEval F J G ε ε n (nullMovingSecond f g k (1, s)) x = _
+  rw [nullMovingSecond_native, Homotopy.at_one]
+  rfl
+
+/-- The exact original correction, without replacing its associator interior or either clock. -/
+def nativeCorrection := coneSquareCompositionNullComparison
+  (chartP k Z) (chartP k Y) h a b c d
+  (InputCompositionTransformations.square k g) (InputCompositionTransformations.square k f)
+
+/-- Every value of the scalar correction recovers the already chosen native correction. -/
+theorem finalCorrection_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (finalCorrection f g k (r, s)) x =
+      (nativeCorrection f g k).level n
+        (r, (s, x)) := by
+  unfold nativeCorrection
+  rw [ConeCompositionPieces.correction_apply]
+  change CutOpenCarrier.nativeEval F J G ε ε n
+    (Path.Homotopy.transAssoc (finalChartFirst f g k) (finalChartSecond f g k)
+      (finalCylinder f g k) (r, s)) x = _
+  exact Path.Evaluation.transAssoc (fun z ↦ CutOpenCarrier.nativeEval F J G ε ε n z x)
+    _ _ _ _ _ _ (fun t ↦ finalChartFirst_native f g k n t x)
+    (fun t ↦ finalChartSecond_native f g k n t x)
+    (fun t ↦ finalCylinder_native f g k n t x) r s
+
+
+private theorem comparisonTrans_native {V : Type*} [TopologicalSpace V]
+    {v w : V} {p q t : Path v w} {E T : LoopPrespectrum.{u}} {i j : E ⟶ T}
+    {H K L : Homotopy i j} (n : ℕ) (x : E.space n) (ev : V → T.space n)
+    (P : p.Homotopy q) (Q : q.Homotopy t)
+    (P' : H.RelHomotopy K) (Q' : K.RelHomotopy L)
+    (hp : ∀ r s, ev (P (r, s)) = P'.level n (r, (s, x)))
+    (hq : ∀ r s, ev (Q (r, s)) = Q'.level n (r, (s, x))) (r s : unitInterval) :
+    ev (P.trans Q (r, s)) = (P'.trans Q').level n (r, (s, x)) := by
+  rw [Homotopy.RelHomotopy.trans_apply_path]
+  exact Path.Evaluation.comparison_trans ev P Q (P'.path n x) (Q'.path n x) hp hq r s
+
+private theorem comparisonHcomp_native {V : Type*} [TopologicalSpace V]
+    {v w z : V} {p q : Path v w} {t u : Path w z}
+    {E T : LoopPrespectrum.{u}} {i j k : E ⟶ T}
+    {H H' : Homotopy i j} {K K' : Homotopy j k}
+    (n : ℕ) (x : E.space n) (ev : V → T.space n)
+    (P : p.Homotopy q) (Q : t.Homotopy u)
+    (P' : H.RelHomotopy H') (Q' : K.RelHomotopy K')
+    (hp : ∀ r s, ev (P (r, s)) = P'.level n (r, (s, x)))
+    (hq : ∀ r s, ev (Q (r, s)) = Q'.level n (r, (s, x))) (r s : unitInterval) :
+    ev (P.hcomp Q (r, s)) = (P'.hcomp Q').level n (r, (s, x)) := by
+  rw [Homotopy.RelHomotopy.hcomp_apply_path]
+  exact Path.Evaluation.comparison_hcomp ev P Q (P'.path n x) (Q'.path n x) hp hq r s
+
+/-- The native three-side boundary uses the actual bottom track and terminal zero pause. -/
+def nativeBoundary := (nativeMovingSquare f g k).toBoundary.trans
+  (((Homotopy.RelHomotopy.refl
+    (Homotopy.precomp (chartP k Z)
+      ((InputCompositionCharts.laurentComposition f g).postcomp (mappingConeInclusion h)))).hcomp
+        (nativeCorrection f g k)).hcomp
+    (Homotopy.RelHomotopy.refl (Quillen.LoopPrespectrum.Homotopy.refl
+      (Quillen.LoopPrespectrum.zeroHom
+        (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z)))
+        (mappingCone h))).symm))
+
+/-- The whole corrected scalar boundary recovers the prescribed native composition boundary. -/
+theorem correctedBoundary_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (correctedBoundary f g k (r, s)) x =
+      (nativeBoundary f g k).level n
+        (r, (s, x)) := by
+  unfold correctedBoundary nativeBoundary
+  refine comparisonTrans_native n
+    (x)
+    (fun z ↦ CutOpenCarrier.nativeEval F J G ε ε n z x) _ _ _ _ ?_ ?_ r s
+  · intro t v
+    exact movingBoundary_native f g k n t v x
+  · intro t v
+    refine comparisonHcomp_native n
+      (x)
+      (fun z ↦ CutOpenCarrier.nativeEval F J G ε ε n z x) _ _ _ _ ?_ ?_ t v
+    · intro t' v'
+      refine comparisonHcomp_native n
+        (x)
+        (fun z ↦ CutOpenCarrier.nativeEval F J G ε ε n z x) _ _ _ _ ?_ ?_ t' v'
+      · intro t'' v''
+        change CutOpenCarrier.nativeEval F J G ε ε n (nullMovingFirst f g k (v'', 0)) x = _
+        rw [nullMovingFirst_native]
+        have hc := (comparisonSquare f g k).left n v''
+          (x)
+        exact congrArg ((mappingConeInclusion h).map n) hc
+      · intro t'' v''
+        exact finalCorrection_native f g k n t'' v'' x
+    · intro t' v'
+      change CutOpenCarrier.nativeEval F J G ε ε n
+        (tip f g k) x = _
+      exact CutOpenCarrier.nativeEval_tipMinus F J G ε ε n x
+
+/-- The actual quotient descent recovers the entire already chosen corrected native square. -/
+theorem correctedSquare_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n ((correctedSquare f g k).parameter (r, s)) x =
+      (nullSquare f g k).level n
+        (r, (s, x)) := by
+  exact Quillen.CarrierPathSquare.boundarySquare_native (correctedBoundary f g k)
+    (nativeBoundary f g k) n (x)
+    (fun z ↦ CutOpenCarrier.nativeEval F J G ε ε n z x)
+    (fun t v ↦ correctedBoundary_native f g k n t v x) r s
+
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar

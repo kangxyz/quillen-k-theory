@@ -1,0 +1,250 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionShiftedRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedFullPostTransport
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionPrecomp
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedPositiveSeam
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionJ1Seams
+/-! Exact shifted whole-null joins between the original transported seed surfaces. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.NativePathCells
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionShiftedJoins
+open CommonReferenceNerve InputIdentitySeedCarrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- Postcomposition commutes with the shifted anchor on every Laurent nerve point. -/
+theorem post_parameter (y : |CutOpenCarrier.parameterSSet (laurentRef g)|) :
+    mapParameter (InputCompositionTerminalAttach.postNode f g)
+      (mapParameter (BassH0Merge.anchorNode (commonUnit g)) y) =
+    mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+      (mapParameter (InputCompositionTerminalAttach.postNode f g) y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter (laurentRef g) y
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter,
+    mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter G ns z)
+    (funext fun i ↦ (InputCompositionUnitShift.post_shift f g (N i)).symm)
+
+/-- Precomposition commutes with the shifted anchor on every Laurent nerve point. -/
+theorem pre_parameter (y : |CutOpenCarrier.parameterSSet (laurentRef f)|) :
+    mapParameter (InputNullCompositionPrecomp.laurentNode f g)
+      (mapParameter (BassH0Merge.anchorNode (commonUnit f)) y) =
+    mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+      (mapParameter (InputCompositionTerminalAttach.preNode f g) y) := by
+  have h : mapParameter (InputNullCompositionPrecomp.laurentNode f g)
+      (mapParameter (BassH0Merge.anchorNode (commonUnit f)) y) =
+      mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+        (mapParameter (InputNullCompositionPrecomp.laurentNode f g) y) := by
+    obtain ⟨k, N, z, rfl⟩ := exists_parameter (laurentRef f) y
+    rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter,
+      mapParameter_parameter]
+    apply congrArg (fun ns ↦ parameter G ns z)
+    funext i
+    rw [InputNullCompositionPrecomp.laurent_node, InputNullCompositionPrecomp.laurent_node]
+    exact (InputCompositionUnitShift.pre_shift f g (N i)).symm
+  exact h.trans (congrArg (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g))))
+    (SeedPositiveSeam.pre_parameter f g y))
+
+/-- The whole positive middle path joins on the shifted Laurent sheet. -/
+theorem positive_middle (s : I) :
+    SeedFullPostTransport.transport f g (InputIdentitySeedRectangle.newPositive g true s) =
+      InputSeedCompositionPrecomp.transport f g
+        (InputIdentitySeedRectangle.oldPositive f true s) := by
+  change SeedFullPostTransport.transport f g
+    (CutOpenCarrier.laurentInclusion _ _ _ _ _
+      (mapParameter (BassH0Merge.anchorNode (commonUnit g))
+        (parameter _ _ (ProjectionRectangleParameters.K BassH0Diagram.plusFace s)))) =
+    InputSeedCompositionPrecomp.transport f g
+      (CutOpenCarrier.laurentInclusion _ _ _ _ _
+        (mapParameter (BassH0Merge.anchorNode (commonUnit f))
+          (parameter _ _ (ProjectionRectangleParameters.D BassH0Diagram.plusFace s))))
+  rw [SeedFullPostTransport.transport_laurent, InputSeedCompositionPrecomp.transport_laurent]
+  change CutOpenCarrier.laurentInclusion F J G ε ε' (mapParameter _ (mapParameter _ _)) = _
+  rw [post_parameter, pre_parameter, SeedPositiveSeam.positive_parameter]
+
+/-- The first final chart equals the second initial movement before shifting. -/
+theorem chart_middle_parameter (s : I) :
+    SeedSurfaceTransport.chartParameter f g (s, movement g 1) =
+      mapParameter (InputCompositionTerminalAttach.preNode f g)
+        (parameter (laurentRef f) (InputDescSimplex.nodes f)
+          (ProjectionRectangleParameters.L BassH0Diagram.plusFace s)) := by
+  rw [SeedSurfaceTransport.chartParameter_movement, InputCompositionTerminalSeams.plus_middle]
+  change mapParameter _ (parameter _ _ (BassH0Diagram.parameter (s, 0))) = _
+  rw [BassH0Diagram.parameter_left]
+
+/-- The whole middle cone retains the original chart-then-cylinder half split. -/
+theorem cone_middle (s : I) :
+    SeedFullPostTransport.transport f g (InputIdentitySeedRectangle.newCone g true s) =
+      InputSeedCompositionPrecomp.transport f g
+        (((InputIdentitySeedRectangle.positiveMovement f true).trans
+          (InputIdentitySeedRectangle.oldCone f true)) s) := by
+  change SeedFullPostTransport.transport f g
+    (CutOpenCarrier.cylinderPlus _ _ _ _ _ (movement g 1, s)) = _
+  rw [SeedFullPostTransport.transport_cylinderPlus]
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [SeedFullPostTransport.cylinderTrack, Quillen.ScalarRectangle.homotopy_lower, path_lower]
+    change CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+        (SeedSurfaceTransport.chartParameter f g (t, movement g 1))) =
+      InputSeedCompositionPrecomp.transport f g
+        (CutOpenCarrier.laurentInclusion _ _ _ _ _
+          (mapParameter (BassH0Merge.anchorNode (commonUnit f))
+            (parameter _ _ (ProjectionRectangleParameters.L BassH0Diagram.plusFace t))))
+    rw [InputSeedCompositionPrecomp.transport_laurent, pre_parameter, chart_middle_parameter]
+  · rw [SeedFullPostTransport.cylinderTrack, Quillen.ScalarRectangle.homotopy_upper, path_upper]
+    change CutOpenCarrier.cylinderPlus F J G ε ε'
+      (SeedSurfaceTransport.polynomialParameter f g (movement g 1), t) =
+      InputSeedCompositionPrecomp.transport f g
+        (CutOpenCarrier.cylinderPlus _ _ _ _ _ (movement f 0, t))
+    rw [InputSeedCompositionPrecomp.transport_cylinderPlus,
+      InputNullCompositionJ1Seams.polynomial_middle]
+
+/-- Both full shifted null words meet, with every original path clock unchanged. -/
+theorem middle_word (s : I) :
+    SeedFullPostTransport.transport f g (InputIdentitySeedNull.newNull g true s) =
+      InputSeedCompositionPrecomp.transport f g (InputIdentitySeedNull.oldNull f true s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [InputIdentitySeedNull.newNull, InputIdentitySeedNull.oldNull, path_lower, path_lower]
+    exact positive_middle f g t
+  · rw [InputIdentitySeedNull.newNull, InputIdentitySeedNull.oldNull, path_upper, path_upper]
+    exact cone_middle f g t
+
+/-- The first source-positive product ends at the exact original postcomposition path. -/
+theorem sourcePositive_one (s : I) :
+    InputNullCompositionPolynomialCarrier.sourcePositive f g (1, s) =
+      mapParameter (InputCompositionTerminalAttach.postNode f g)
+        (parameter (laurentRef g) (InputDescSimplex.nodes g)
+          (ProjectionRectangleParameters.D BassH0Diagram.plusFace s)) := by
+  change parameter G (InputCompositionCarrierBottom.nodes f g)
+    (Quillen.SimplexGrid.parameter 4 2
+      (binaryPath (k := 4) 0 1 2 s, binaryPath (k := 2) 0 1 2 1)) = _
+  rw [Path.target, Quillen.SimplexGrid.parameter_column, mapParameter_parameter]
+  have h := parameter_eq_of_face_nodes G
+    (fun i ↦ InputCompositionTerminalAttach.postNode f g (InputDescSimplex.nodes g i))
+    (InputCompositionCarrierBottom.nodes f g) BassH1Join.middleSourceFace
+    (Quillen.SimplexGrid.columnFace 4 2 2)
+    (fun i ↦ (InputCompositionH1BottomSeam.whole_nodes f g i).symm)
+    (binaryPath (k := 4) 0 1 2 s)
+  refine h.trans ?_
+  exact congrArg (fun z ↦ parameter G
+    (fun i ↦ InputCompositionTerminalAttach.postNode f g (InputDescSimplex.nodes g i)) z)
+    (map_binaryPath BassH1Join.middleSourceFace 0 1 2 s)
+
+theorem sourceFirst_one (s : I) :
+    SeedShiftedSheet.inclusion (f ≫ g)
+      (InputNullCompositionOrdinaryRails.sourceFirst f g (1, s)) =
+    SeedFullPostTransport.transport f g (InputIdentitySeedRectangle.oldPositive g true s) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (SeedOrdinarySheet.laurent (f ≫ g)
+      (InputNullCompositionPolynomialCarrier.sourcePositive f g (1, s))) =
+    SeedFullPostTransport.transport f g
+      (CutOpenCarrier.laurentInclusion _ _ _ _ _
+        (mapParameter (BassH0Merge.anchorNode (commonUnit g))
+          (parameter _ _ (ProjectionRectangleParameters.D BassH0Diagram.plusFace s))))
+  rw [SeedShiftedSheet.inclusion_laurent, SeedFullPostTransport.transport_laurent]
+  change CutOpenCarrier.laurentInclusion F J G ε ε' (mapParameter _ _) =
+    CutOpenCarrier.laurentInclusion F J G ε ε' (mapParameter _ (mapParameter _ _))
+  rw [post_parameter, sourcePositive_one]
+
+theorem finalChartFirst (s : I) :
+    SeedShiftedSheet.inclusion (f ≫ g)
+      (InputNullCompositionOrdinaryRails.finalChartFirst f g s) =
+    SeedFullPostTransport.transport f g
+      (InputIdentitySeedRectangle.positiveMovement g true s) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (SeedOrdinarySheet.laurent (f ≫ g)
+      (InputCompositionCarrierCharts.chartFace f g plus plus_projection (1, lower s))) =
+    SeedFullPostTransport.transport f g
+      (CutOpenCarrier.laurentInclusion _ _ _ _ _
+        (mapParameter (BassH0Merge.anchorNode (commonUnit g))
+          (parameter _ _ (ProjectionRectangleParameters.L BassH0Diagram.plusFace s))))
+  rw [SeedShiftedSheet.inclusion_laurent, SeedFullPostTransport.transport_laurent]
+  change CutOpenCarrier.laurentInclusion F J G ε ε' (mapParameter _ _) =
+    CutOpenCarrier.laurentInclusion F J G ε ε' (mapParameter _ (mapParameter _ _))
+  rw [post_parameter, ← InputCompositionH1ChartSeams.first_plus]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (mapParameter _ (mapParameter _ (parameter _ _ (BassH0Diagram.parameter (s, 0))))) = _
+  rw [BassH0Diagram.parameter_left]
+
+theorem finalCone (s : I) :
+    SeedShiftedSheet.inclusion (f ≫ g)
+      (((InputNullCompositionOrdinaryRails.finalChartSecond f g).trans
+        (InputNullCompositionOrdinaryRails.finalCylinder f g)) s) =
+    SeedFullPostTransport.transport f g (InputIdentitySeedRectangle.oldCone g true s) := by
+  change _ = SeedFullPostTransport.transport f g
+    (CutOpenCarrier.cylinderPlus _ _ _ _ _ (movement g 0, s))
+  rw [SeedFullPostTransport.transport_cylinderPlus]
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower, SeedFullPostTransport.cylinderTrack, Quillen.ScalarRectangle.homotopy_lower]
+    change SeedShiftedSheet.inclusion (f ≫ g)
+      (SeedOrdinarySheet.laurent (f ≫ g)
+        (InputCompositionCarrierCharts.chartFace f g plus plus_projection (1, upper t))) = _
+    rw [SeedShiftedSheet.inclusion_laurent, ← InputCompositionH1ChartSeams.second_plus,
+      InputCompositionTerminalSecond.face, Quillen.ScalarRectangle.concatSecond_zero]
+    change CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+        (InputCompositionTerminalProducts.face f g plus plus_projection (t, 0))) =
+      CutOpenCarrier.laurentInclusion F J G ε ε'
+        (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+          (SeedSurfaceTransport.chartParameter f g (t, movement g 0)))
+    rw [SeedSurfaceTransport.chartParameter_movement]
+  · rw [path_upper, SeedFullPostTransport.cylinderTrack, Quillen.ScalarRectangle.homotopy_upper]
+    change SeedShiftedSheet.inclusion (f ≫ g)
+      (SeedOrdinarySheet.cylinder (f ≫ g)
+        (InputNullCompositionPolynomialCarrier.pausedPolynomial f g 1, t)) = _
+    rw [SeedShiftedSheet.inclusion_cylinder, Path.target]
+    change CutOpenCarrier.cylinderPlus F J G ε ε'
+      (InputNullCompositionPolynomialCarrier.surface f g (1, 0), t) = _
+    have hl : lower (0 : I) = 0 := Subtype.ext (by norm_num [lower])
+    exact congrArg (fun y ↦ CutOpenCarrier.cylinderPlus F J G ε ε' (y, t))
+      (by simpa only [hl] using InputNullCompositionRailEndpoints.polynomial_one_lower f g 0)
+
+/-- The entire shifted source rail ends at the actual full first transported null word. -/
+theorem sourceRail_one (s : I) :
+    InputNullCompositionShiftedRails.shiftedSourceRail f g (1, s) =
+      SeedFullPostTransport.transport f g (InputIdentitySeedNull.oldNull g true s) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (InputNullCompositionOrdinaryRails.sourceRail f g (1, s)) = _
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [InputNullCompositionOrdinaryRails.sourceRail_lower,
+      InputIdentitySeedNull.oldNull, path_lower]
+    exact sourceFirst_one f g t
+  · rw [InputNullCompositionOrdinaryRails.sourceRail_upper,
+      (InputNullCompositionOrdinaryRails.correctedSquare f g).at_one,
+      InputIdentitySeedNull.oldNull, path_upper]
+    rcases cover t with ⟨t, rfl⟩ | ⟨t, rfl⟩
+    · rw [path_lower, path_lower]
+      exact finalChartFirst f g t
+    · rw [path_upper, path_upper]
+      exact finalCone f g t
+
+/-- The existing ordinary source rail also ends at the full first-carrier map. -/
+theorem ordinary_sourceRail_one (s : I) :
+    InputNullCompositionPolynomialCarrier.sourceRail f g (1, s) =
+      SeedFullPostTransport.transport f g (InputIdentitySeedNull.oldNull g false s) := by
+  rw [InputNullCompositionRailEndpoints.sourceRail_one]
+  symm
+  exact Path.Evaluation.path_trans (SeedFullPostTransport.transport f g) _ _ _ _
+    (fun t ↦ SeedFullPostTransport.transport_first f g (SeedOrdinarySheet.oldPositive g t))
+    (fun t ↦ Path.Evaluation.path_trans (SeedFullPostTransport.transport f g) _ _ _ _
+      (fun v ↦ SeedFullPostTransport.transport_first f g (SeedOrdinarySheet.positiveMovement g v))
+      (fun v ↦ SeedFullPostTransport.transport_first f g (SeedOrdinarySheet.oldCone g v)) t) s
+
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionShiftedJoins

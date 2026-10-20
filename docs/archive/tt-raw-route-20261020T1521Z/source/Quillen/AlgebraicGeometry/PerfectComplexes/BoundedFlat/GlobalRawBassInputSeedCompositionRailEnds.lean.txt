@@ -1,0 +1,84 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionTargetRail
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionShiftedJoins
+/-! Whole original endpoint words of the actual source and target seed rails. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionRails
+open CommonReferenceNerve InputIdentitySeedCarrier Quillen.ScalarRectangle Quillen.NativePathCells
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- The final source unit is the unchanged first unit under the actual whole-carrier map. -/
+theorem sourceUnit_finish (s : I) : sourceUnit f g (1,s) =
+    SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.oldUnit g s) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.sourceSurface f g (1,s)) =
+    SeedFullPostTransport.transport f g
+      (CutOpenCarrier.laurentInclusion (polyRef g) (chart (X := Y)) (laurentRef g)
+        (ordinary g) (shifted g)
+        (parameter (laurentRef g) (InputIdentitySeedUnitNodes.nodes g)
+          (InputIdentitySeedUnitNodes.V s)))
+  rw [SeedFullPostTransport.transport_laurent, InputCompositionUnitProductJoins.source_one_path]
+  rfl
+
+/-- The final target unit is the unchanged second unit under the actual whole-carrier map. -/
+theorem targetUnit_finish (s : I) : targetUnit f g (1,s) =
+    InputSeedCompositionPrecomp.transport f g (InputIdentitySeedConjugation.newUnit f s) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionUnitProducts.targetSurface f g (1,s)) =
+    InputSeedCompositionPrecomp.transport f g
+      (CutOpenCarrier.laurentInclusion (polyRef f) J (laurentRef f) (ordinary f) (shifted f)
+        (parameter (laurentRef f) (InputIdentitySeedUnitNodes.nodes f)
+          (InputIdentitySeedUnitNodes.W s)))
+  rw [InputSeedCompositionPrecomp.transport_laurent,
+    InputCompositionUnitProductJoins.target_one_path]
+  have hn : InputNullCompositionPrecomp.laurentNode f g =
+      InputCompositionTerminalAttach.preNode f g :=
+    funext (InputNullCompositionPrecomp.laurent_node f g)
+  rw [hn]
+  rfl
+
+/-- The whole source rail joins the original first source seed, with exact nested clock. -/
+theorem source_finish (s : I) : sourceRail f g (1,s) =
+    SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.sourceWord g s) := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [sourceRail, concatSecond_lower, InputIdentitySeedConjugation.sourceWord, path_lower]
+    exact InputSeedCompositionShiftedJoins.ordinary_sourceRail_one f g (unitInterval.symm t)
+  · rw [sourceRail, concatSecond_upper, InputIdentitySeedConjugation.sourceWord, path_upper]
+    rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [sourceTail, concatSecond_lower, path_lower]
+      exact sourceUnit_finish f g v
+    · rw [sourceTail, concatSecond_upper, path_upper]
+      exact InputSeedCompositionShiftedJoins.sourceRail_one f g v
+
+/-- The whole target rail joins the original second target seed, with exact nested clock. -/
+theorem target_finish (s : I) : targetRail f g (1,s) =
+    InputSeedCompositionPrecomp.transport f g (InputIdentitySeedConjugation.targetWord f s) := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [targetRail, concatSecond_lower, InputIdentitySeedConjugation.targetWord, path_lower]
+    exact InputSeedCompositionTargetRail.ordinary_targetRail_one f g (unitInterval.symm t)
+  · rw [targetRail, concatSecond_upper, InputIdentitySeedConjugation.targetWord, path_upper]
+    rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [targetTail, concatSecond_lower, path_lower]
+      exact targetUnit_finish f g v
+    · rw [targetTail, concatSecond_upper, path_upper]
+      exact InputSeedCompositionTargetRail.targetRail_one f g v
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionRails

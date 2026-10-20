@@ -1,0 +1,73 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompFirstCells
+/-! The finite source action on the complete original two-tip carrier. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Convexity
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp
+open CutOpenCarrier
+variable {U V W T : Model.{u}} (A : U ⟶ V)
+variable {q : ℕ} (M : Fin (q + 1) → Node A)
+variable (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
+variable (ε₀ ε₁ : G.functor ≅ (F ≫ J).functor)
+
+/-- The positive cylinder retains its independent original height. -/
+def plus : C(|parameterSSet F| × TopCat.I.{u},
+    C(StdSimplex ℝ (Fin (q + 1)), target A F J G ε₀ ε₁)) :=
+  (show C((|parameterSSet F| × TopCat.I.{u}) × StdSimplex ℝ (Fin (q + 1)),
+    target A F J G ε₀ ε₁) from
+    (cylinderPlus (A ≫ F) J (A ≫ G)
+      (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁)).comp
+      ⟨fun z ↦ (parameter A M F (z.1.1, z.2), z.1.2.down), by fun_prop⟩).curry
+
+/-- The second endpoints retain the complete first sheet and the distinct positive tip. -/
+def secondEnds : C(|firstSimplicial F J G ε₀| ⊕ |tipSSet.{u}|,
+    C(StdSimplex ℝ (Fin (q + 1)), target A F J G ε₀ ε₁)) :=
+  ⟨Sum.elim (first A M F J G ε₀ ε₁)
+      (fun _ ↦ ContinuousMap.const _ (tipPlus (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁))),
+    continuous_sum_dom.mpr ⟨(first A M F J G ε₀ ε₁).continuous, continuous_const⟩⟩
+
+/-- The second attachment uses its own full anchor, without changing the first sheet. -/
+theorem second_square :
+    Quillen.intervalEndpoints |parameterSSet F| ≫ TopCat.ofHom (plus A M F J G ε₀ ε₁) =
+      DoubleCylinder.endMap (SSet.toTop.map (secondAttaching F J G ε₀ ε₁))
+        (SSet.toTop.map (erase F)) ≫ TopCat.ofHom (secondEnds A M F J G ε₀ ε₁) := by
+  ext z w
+  rcases z with z | z
+  · change cylinderPlus _ _ _ _ _ (parameter A M F (z, w), 0) =
+      first A M F J G ε₀ ε₁ (SSet.toTop.map (secondAttaching F J G ε₀ ε₁) z) w
+    have h : SSet.toTop.map (secondAttaching F J G ε₀ ε₁) z =
+        SSet.toTop.map (left₀ F J G ε₀)
+          (mapParameter (attachPostcompNode F J G ε₁) z) := by
+      simp only [secondAttaching, Functor.map_comp]
+      rfl
+    rw [h, first_left, cylinderPlus_zero]
+    change _ = laurentInclusion _ _ _ _ _
+      (parameter A M G (mapParameter (attachPostcompNode F J G ε₁) z, w))
+    rw [attachment_parameter]
+  · exact cylinderPlus_one _ _ _ _ _ (parameter A M F (z, w))
+
+/-- The actual second displayed pushout descends the complete finite-family action. -/
+def curried : C(space F J G ε₀ ε₁,
+    C(StdSimplex ℝ (Fin (q + 1)), target A F J G ε₀ ε₁)) :=
+  ((second_isPushout F J G ε₀ ε₁).desc (TopCat.ofHom (plus A M F J G ε₀ ε₁))
+    (TopCat.ofHom (secondEnds A M F J G ε₀ ε₁))
+    (second_square A M F J G ε₀ ε₁)).hom
+
+/-- Finite precomposition on the whole cut-open carrier, with an independent source simplex. -/
+def precompFinite : C(space F J G ε₀ ε₁ × StdSimplex ℝ (Fin (q + 1)),
+    target A F J G ε₀ ε₁) :=
+  (curried A M F J G ε₀ ε₁).uncurry
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp

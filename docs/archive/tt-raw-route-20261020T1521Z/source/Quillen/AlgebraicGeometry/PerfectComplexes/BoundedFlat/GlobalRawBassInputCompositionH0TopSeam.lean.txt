@@ -1,0 +1,128 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0TopMiddleRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTop
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0ScalarEdges
+
+/-!
+# The complete original direct-input and composition-top seam
+
+The actual positive, middle and reversed inverse pieces agree with their unchanged
+half/quarter/quarter clocks. All equalities hold in the complete original reference carrier,
+before native evaluation and with the actual polynomial normalization intermediates retained.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0TopSeam
+open InputCompositionTopPieces
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+private theorem polynomial_path (k : laurent ⟶ polynomial)
+    (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+    (α : ⦋17⦌ ⟶ ⦋30⦌)
+    (hα : ∀ i, InputDescSimplex.nodes (f ≫ g) (α.toOrderHom i) =
+      InputDescSimplex.chartNodes (f ≫ g) k hk i) (s : unitInterval) :
+    CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (InputDescSimplex.nodes (f ≫ g)) (ProjectionRectangleParameters.Ppath α s) =
+      movingFace f g k hk (0, s) := by
+  change _ = CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (movingNodes f g k hk) (DoubleSquareScalarPaths.coefficientMovingSquareParameter (0, s))
+  rw [CoefficientMovingSquareRows.moving_zero_row,
+    ← ProjectionRectangleSquareRows.polynomial_parameter α s]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  let N := fun j ↦ InputDescSimplex.chartNodes (f ≫ g) k hk
+    (ProjectionRectangleSquareRows.polynomialRow j)
+  exact (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+    N (InputDescSimplex.nodes (f ≫ g))
+    (α.toOrderHom ∘ ProjectionRectangleSquareRows.polynomialRow)
+    (fun j ↦ hα _) (BassH1Support.edgeFace i)
+    (α.toOrderHom.monotone.comp (ProjectionRectangleSquareRows.primitive_rows_monotone 1 i))
+    z).trans
+    (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+      N (movingNodes f g k hk) CoefficientMovingSquareRows.outerRow
+      (fun j ↦ (InputCompositionH0TopRows.row_nodes f g k hk j).symm)
+      (BassH1Support.edgeFace i) (CoefficientMovingSquareRows.primitive_rows_monotone 0 i) z).symm
+
+/-- The actual direct positive target piece has exactly the whole moving-source clock. -/
+theorem input_plus (s : unitInterval) :
+    InputCompositionCarrierCharts.inputFace f g (1, lower s) =
+      movingFace f g plus plus_projection (0, s) := by
+  change CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (InputDescSimplex.nodes (f ≫ g)) (BassH0Diagram.parameter (1, lower s)) = _
+  rw [BassH0Diagram.parameter_one, path_lower]
+  exact polynomial_path f g plus plus_projection BassH0Diagram.plusFace
+    (InputDescSimplex.plus_nodes (f ≫ g)) s
+
+/-- The actual direct inverse piece retains its original final-quarter reversal. -/
+theorem input_minus (s : unitInterval) :
+    InputCompositionCarrierCharts.inputFace f g (1, upper (upper s)) =
+      movingFace f g minus minus_projection (0, unitInterval.symm s) := by
+  change CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (InputDescSimplex.nodes (f ≫ g)) (BassH0Diagram.parameter (1, upper (upper s))) = _
+  rw [BassH0Diagram.parameter_one, path_upper, path_upper]
+  exact polynomial_path f g minus minus_projection BassH0Diagram.minusFace
+    (InputDescSimplex.minus_nodes (f ≫ g)) (unitInterval.symm s)
+
+/-- The middle product's entire source path keeps the original five-node Bass parameter. -/
+theorem middle_zero_parameter (s : unitInterval) :
+    middleParameter.{u} (0, s) =
+      StdSimplex.map (Quillen.SimplexGrid.rowFace 2 4 0).toOrderHom
+        (NativeSquareFiveSimplex.parameter s) := by
+  change Quillen.SimplexGrid.parameter.{u + 1} 2 4
+    (binaryPath (k := 2) 0 1 2 0, InputIdentityProjection.parameter s) = _
+  rw [Path.source]
+  exact Quillen.SimplexGrid.parameter_row 2 4 0 _
+
+/-- The whole original direct middle piece equals the actual middle product's source. -/
+theorem input_middle (s : unitInterval) :
+    InputCompositionCarrierCharts.inputFace f g (1, upper (lower s)) =
+      middleFace f g (0, s) := by
+  change CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (InputDescSimplex.nodes (f ≫ g)) (BassH0Diagram.parameter (1, upper (lower s))) =
+    CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (middleNodes f g) (middleParameter.{u} (0, s))
+  rw [← first_middle_parameter, middle_zero_parameter]
+  exact (CommonReferenceNerve.parameter_eq_of_face_nodes
+    (InputCompositionCarrierCharts.source f g) (InputDescSimplex.nodes (f ≫ g))
+    (middleNodes f g) firstMiddleFace (Quillen.SimplexGrid.rowFace 2 4 0)
+    (fun i ↦ (InputCompositionH0TopMiddleRows.whole_nodes f g i).symm)
+    (NativeSquareFiveSimplex.parameter s)).symm
+
+/-- Every direct target point equals the original three-piece vertex source in the whole carrier. -/
+theorem input_vertex (t : unitInterval) :
+    InputCompositionCarrierCharts.inputFace f g (1, t) =
+      InputCompositionTopVertex.face f g (0, t) := by
+  rcases three_cover t with ⟨s, rfl⟩ | ⟨s, rfl⟩ | ⟨s, rfl⟩
+  · rw [InputCompositionTopVertex.face_plus]
+    exact input_plus f g s
+  · rw [InputCompositionTopVertex.face_middle]
+    exact input_middle f g s
+  · rw [InputCompositionTopVertex.face_minus]
+    exact input_minus f g s
+
+/-- The entire original direct/top seam agrees before evaluation, at every overlap height. -/
+theorem input_top (t : unitInterval) :
+    InputCompositionCarrierCharts.inputFace f g (1, t) =
+      InputCompositionCarrierTop.face f g (0, t) := by
+  rw [InputCompositionCarrierTop.face, concatFirst_zero]
+  exact input_vertex f g t
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0TopSeam

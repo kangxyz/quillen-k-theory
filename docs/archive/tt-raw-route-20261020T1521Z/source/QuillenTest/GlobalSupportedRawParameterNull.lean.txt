@@ -1,0 +1,196 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterRowSquare
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterProjection
+import Quillen.Topology.Prespectrum.NativeHomotopyCells
+
+/-! Whole original row words, exact null clocks and independent times in the localization square. -/
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalSupportedRawParameterNull
+open GlobalSectionChangeIndex SupportedParameterSwap
+open GlobalSupportedRawBass GlobalSupportedRawBass.Localization.Parameter SupportedTensorEvaluation
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+variable {U X S : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+  (p : S ⟶ integerBase) [QuasiCompact p]
+
+/-- Every point of the original relative triangle survives the actual geometric specialization. -/
+theorem whole_triangle (n : ℕ) :
+    ((rowComparison j T p).level n).toContinuousMap =
+      ((IsoSquareRoute.triangle (strictEnlargement j T p) (strictRestriction j T p)
+        (rawEnlargement j T p) (rawRestriction j T p)
+        (sourceEvaluation j T p)
+        (evaluationModel (X := op (middlePair T p).obj.right) (middlePair T p).obj.hom)
+        (targetEvaluation j T p)
+        (evaluationComparisonIso (enlargementPair j T p))
+        (evaluationComparisonIso (restrictionPair j T p))).level n).toContinuousMap :=
+  rowComparison_whole_level j T p n
+
+/-- The first half is precisely the second original evaluation at the precomposed input. -/
+theorem first_half (n : ℕ) (s : I) (x : (prespectrum (strictSource j T p)).space n) :
+    (rowWord j T p).level n (Quillen.NativePathCells.lower s, x) =
+      (prespectrumTransformationHomotopy
+        (evaluationComparisonIso (restrictionPair j T p)).hom
+        (fun _ ↦ (targetModel j T p).waldhausen.weq_iso _ inferInstance)).level n
+        (s, (prespectrumMap (strictEnlargement j T p)).map n x) :=
+  Quillen.LoopPrespectrum.Homotopy.trans_lower_cell
+    (IsoSquareRoute.leftTrack (strictEnlargement j T p) (strictRestriction j T p)
+      (rawRestriction j T p)
+      (evaluationModel (X := op (middlePair T p).obj.right) (middlePair T p).obj.hom)
+        (targetEvaluation j T p)
+      (evaluationComparisonIso (restrictionPair j T p)))
+    (IsoSquareRoute.rightTrack (strictEnlargement j T p) (rawEnlargement j T p)
+      (rawRestriction j T p) (sourceEvaluation j T p)
+      (evaluationModel (X := op (middlePair T p).obj.right) (middlePair T p).obj.hom)
+      (evaluationComparisonIso (enlargementPair j T p))) n s x
+
+/-- The second half is precisely the first original evaluation followed by raw restriction. -/
+theorem second_half (n : ℕ) (s : I) (x : (prespectrum (strictSource j T p)).space n) :
+    (rowWord j T p).level n (Quillen.NativePathCells.upper s, x) =
+      (prespectrumMap (rawRestriction j T p)).map n
+        ((prespectrumTransformationHomotopy (evaluationComparisonIso (enlargementPair j T p)).hom
+          (fun _ ↦ (middleModel T p).waldhausen.weq_iso _ inferInstance)).level n (s, x)) :=
+  Quillen.LoopPrespectrum.Homotopy.trans_upper_cell
+    (IsoSquareRoute.leftTrack (strictEnlargement j T p) (strictRestriction j T p)
+      (rawRestriction j T p)
+      (evaluationModel (X := op (middlePair T p).obj.right) (middlePair T p).obj.hom)
+        (targetEvaluation j T p)
+      (evaluationComparisonIso (restrictionPair j T p)))
+    (IsoSquareRoute.rightTrack (strictEnlargement j T p) (rawEnlargement j T p)
+      (rawRestriction j T p) (sourceEvaluation j T p)
+      (evaluationModel (X := op (middlePair T p).obj.right) (middlePair T p).obj.hom)
+      (evaluationComparisonIso (enlargementPair j T p))) n s x
+
+/-- Quotient descent restores every original source-null time without a new pause. -/
+theorem first_null (n : ℕ) (s : I) (x : (prespectrum (strictSource j T p)).space n) :
+    (rowSquare j T p).level n (0, (s, x)) = (postSectionNull j T p).level n (s, x) :=
+  (rowSquare j T p).at_zero n s x
+
+/-- Quotient descent also retains every original geometric target-null time. -/
+theorem second_null (n : ℕ) (s : I) (x : (prespectrum (strictSource j T p)).space n) :
+    (rowSquare j T p).level n (1, (s, x)) = (preRawNull j T p).level n (s, x) :=
+  (rowSquare j T p).at_one n s x
+
+/-- The whole moving edge is the actual original binary word, not only its endpoints. -/
+theorem row_edge (n : ℕ) (r : I) (x : (prespectrum (strictSource j T p)).space n) :
+    (rowSquare j T p).level n (r, (0, x)) = (rowWord j T p).level n (r, x) :=
+  (rowSquare j T p).left n r x
+
+/-- The other complete edge is the constant original geometric zero. -/
+theorem zero_edge (n : ℕ) (r : I) (x : (prespectrum (strictSource j T p)).space n) :
+    (rowSquare j T p).level n (r, (1, x)) = (prespectrum (targetModel j T p)).point n :=
+  (rowSquare j T p).right n r x
+
+/-- The prespectrum level-zero input-loop coordinate remains independent of null time. -/
+theorem level_zero (s t : I) (x : (prespectrum (strictSource j T p)).space 0) :
+    Path.toContinuousMap ((rowSquare j T p).level 0 (1, (s, x))) t =
+      Path.toContinuousMap ((preRawNull j T p).level 0 (s, x)) t :=
+  congrArg (fun p ↦ Path.toContinuousMap p t) ((rowSquare j T p).at_one 0 s x)
+
+/-- The square remains based for every pair of comparison and null times. -/
+theorem based_line (n : ℕ) (r s : I) :
+    (rowSquare j T p).level n (r, (s, (prespectrum (strictSource j T p)).point n)) =
+      (prespectrum (targetModel j T p)).point n :=
+  (rowSquare j T p).at_point n r s
+
+/-- The independent structure coordinate survives the entire boundary and quotient construction. -/
+theorem structure_time (n : ℕ) (r s t : I)
+    (x : (prespectrum (strictSource j T p)).space n) :
+    (rowSquare j T p).level (n + 1)
+        (r, (s, (prespectrum (strictSource j T p)).structureMap n x t)) =
+      (prespectrum (targetModel j T p)).structureMap n
+        ((rowSquare j T p).level n (r, (s, x))) t :=
+  (rowSquare j T p).comm n r s x t
+
+/-- The original parameter-first full null is recovered at every time through the full swap. -/
+theorem old_full_null (n : ℕ) (s : I)
+    (x : (prespectrum ((ParameterAuxiliarySupport.fiber j T).obj (op S))).space n) :
+    (prespectrumMap (sectionIso p (Rows.target j T)).hom).map n
+        (((ParameterAuxiliarySupport.fullNull j T).homotopy (op S)).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionIso p (Rows.source j T)).hom).map n x) :=
+  strictNull_recovery j T p n s x
+
+omit [CompactSpace U] in
+/-- The source projection is the exact original whole Model route, including its selected zero. -/
+theorem whole_projection :
+    ((ParameterIdentity.supportedIso (Rows.source j T).obj.obj.hom).hom ≫
+        (ParameterModels.supported (Rows.source j T).obj.obj.hom).map p.op) ≫
+          (sectionIso p (Rows.source j T)).hom = sectionProjection p (Rows.source j T) :=
+  sectionProjection_recovery p (Rows.source j T)
+
+/-- Every time of the unchanged base null commutes with the actual scalar projection. -/
+theorem projection_null (n : ℕ) (s : I)
+    (x : (prespectrum (ParameterIdentity.sectionSource j T)).space n) :
+    (prespectrumMap (sectionProjection p (Rows.target j T))).map n
+        ((ParameterIdentity.sectionNull j T).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionProjection p (Rows.source j T))).map n x) :=
+  strictNull_projection j T p n s x
+
+/-- Every raw null point is the reverse of the actual weak chosen-zero transformation. -/
+theorem geometric_zero_time (n : ℕ) (s : I) (x : (prespectrum (sourceModel j T p)).space n) :
+    (rawNull j T p).level n (s, x) =
+      (prespectrumTransformationHomotopy (zeroToRawFull j T p)
+        (zeroToRawFull_weak j T p)).level n (unitInterval.symm s, x) :=
+  rawNull_level j T p n s x
+
+/-- Every two-time point is the actual selected weak-triangle realization. -/
+theorem geometric_native (n : ℕ) (r s : I)
+    (x : (prespectrum (strictSource j T p)).space n) :
+    (evaluationSquare j T p).level n (r, (s, x)) =
+      prespectrumSimplexFamily
+        (ModelZeroNormalization.normalizationSimplex
+          (strictComposite j T p) (rawComposite j T p)
+          (sourceEvaluation j T p) (targetEvaluation j T p)
+          (evaluationIso j T p) (zeroToStrictFull j T p) (zeroToStrictFull_weak j T p)) n
+        (WeakTriangleSquare.parameter (r, s), x) :=
+  evaluationSquare_apply j T p n r s x
+
+omit p [QuasiCompact p] in
+/-- The polynomial composite is literally the original two normalized polynomial row maps. -/
+theorem polynomial_raw_rows :
+    rawComposite j T (Scheme.PolynomialLaurent.polynomialProjection (.of (ULift.{u} ℤ))) =
+      evaluationRawMap (pairPolynomialFunctor.map (Rows.enlargement j T)).hom ≫
+        evaluationRawMap (pairPolynomialFunctor.map (Rows.restriction j T)).hom := rfl
+
+omit p [QuasiCompact p] in
+/-- The Laurent composite is literally the original two normalized Laurent row maps. -/
+theorem laurent_raw_rows :
+    rawComposite j T (Scheme.PolynomialLaurent.laurentProjection (.of (ULift.{u} ℤ))) =
+      evaluationRawMap (pairLaurentFunctor.map (Rows.enlargement j T)).hom ≫
+        evaluationRawMap (pairLaurentFunctor.map (Rows.restriction j T)).hom := rfl
+
+/-- A genuine scalar change preserves the complete old chosen-null path, including both times. -/
+theorem scalar_null {S' : Scheme.{u}} (q : S' ⟶ integerBase) [QuasiCompact q]
+    (h : S ⟶ S') (hh : h ≫ q = p) (n : ℕ) (s : I)
+    (x : (prespectrum (strictSource j T q)).space n) :
+    (prespectrumMap (sectionParameterMap p q h hh (Rows.target j T))).map n
+        ((strictNull j T q).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionParameterMap p q h hh (Rows.source j T))).map n x) :=
+  strictNull_parameter j T p q h hh n s x
+
+/-- The two-factor swap retains the entire original pair arrow, including its open entry. -/
+theorem whole_pair_arrow {A B : Scheme.QuasiCompactOpenPairs.{u}} (g : A ⟶ B) :
+    ((pairBaseProductFunctor p).map g).hom ≫ (pairIso p B).hom =
+      (pairIso p A).hom ≫ (ParameterAuxiliarySupport.pairTransformation g.hom).app S :=
+  pairIso_naturality p g
+
+/-- Parameter naturality is the entire selected-zero Model square, not a realized edge only. -/
+theorem whole_parameter_square {S' : Scheme.{u}} (q : S' ⟶ integerBase) [QuasiCompact q]
+    (h : S ⟶ S') (hh : h ≫ q = p) (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionIso q A).hom ≫ sectionParameterMap p q h hh A =
+      (ParameterModels.supported A.obj.obj.hom).map h.op ≫ (sectionIso p A).hom :=
+  sectionIso_parameter p q h hh A
+
+end QuillenTest.GlobalSupportedRawParameterNull

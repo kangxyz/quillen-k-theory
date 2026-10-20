@@ -1,0 +1,7 @@
+{
+  "status": "moved",
+  "count": 188,
+  "manifest_sha256": "d850376ea08ff68d327f38e4fef0b979b0f07e7f0c40ff47562f3a9d4805fff1",
+  "restoration_map": "STAGING-MANIFEST.json: files[].path -> files[].archive_path",
+  "audit_template_preserved": "tmp/global-null-j1-carrier/exact-origin-audit.lean"
+}

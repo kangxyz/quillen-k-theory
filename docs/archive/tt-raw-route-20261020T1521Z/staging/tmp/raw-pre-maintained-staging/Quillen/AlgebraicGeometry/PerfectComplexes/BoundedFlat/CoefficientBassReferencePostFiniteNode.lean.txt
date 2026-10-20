@@ -1,0 +1,46 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompNodes
+/-!
+Actual source postcomposition and finite output composition retain their complete reference.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceProduct
+open CommonReferenceNerve
+variable {U V W T : Model.{u}} (R : U ⟶ V) (C : V ⟶ W) (H : W ⟶ T)
+  (B : U ⟶ W) (θ : B.functor ≅ (R ≫ C).functor)
+
+/-- Actual source postcomposition and finite output composition retain their complete reference. -/
+theorem post_finite_node (N : Node R) (M : Node H) :
+    FinitePrecomp.node B H (postNode B C θ N) M =
+      reanchor (isoWhiskerRight θ H.functor ≪≫
+        Functor.associator R.functor C.functor H.functor)
+        (FinitePrecomp.node R (C ≫ H) N (precompNode C M)) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  apply NatTrans.ext
+  funext x
+  simp only [FinitePrecomp.node, node, postNode, reanchor, postcompNode, precompNode,
+    Iso.trans_hom, Iso.refl_hom, Functor.mapIso_hom, Iso.prod_hom,
+    isoWhiskerRight_hom, isoWhiskerLeft_hom, Functor.associator_hom_app,
+    NatTrans.comp_app, whiskerRight_app, Category.id_comp,
+    Category.comp_id]
+  change H.functor.map (θ.hom.app x ≫ C.functor.map (N.2.hom.app x)) ≫
+    M.2.hom.app (C.functor.obj (N.1.functor.obj x)) =
+      H.functor.map (θ.hom.app x) ≫
+        (H.functor.map (C.functor.map (N.2.hom.app x)) ≫
+          M.2.hom.app (C.functor.obj (N.1.functor.obj x)))
+  rw [Functor.map_comp, Category.assoc]
+end Quillen.Waldhausen.IteratedS.CommonReferenceProduct

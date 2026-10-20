@@ -1,0 +1,72 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionProjectionChartReference
+/-! Full attaching nodes and Laurent surfaces under source projection. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionProjectionAttachment
+open CommonReferenceNerve CommonReferenceProduct BassH0Merge BassH1Join
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+  (k : laurent ⟶ polynomial)
+  (hk : ∀ W, k.app W ≫ projection.app W = laurentProjection.app W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionTopPieces.chartMap (X := X) k
+local notation "D" => InputCompositionCarrierCharts.projectionMap (Z := Z)
+local notation "L" => ProjectionReference.reference X E
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+
+/-- Chart attachment node for the exact original reference and parameter data. -/
+theorem chart_attachment_node (N : Node P) :
+    laurentNode f g k hk (attachPostcompNode P K G ε N) =
+      ProjectionReference.chartNode X k hk E (polynomialNode f g N) := by
+  have h := congrArg
+    (fun e ↦ (InputCompositionTopPieces.middleAnchor f g).symm ≪≫ e)
+    (attachment_anchor f g k hk)
+  have hbase :
+      (InputCompositionTopPieces.middleAnchor f g).symm ≪≫
+        (InputCompositionCarrierCharts.chartReferenceIso f g k hk ≪≫
+          isoWhiskerLeft (D).functor ε) =
+      ProjectionReference.chartAnchor X k hk E ≪≫
+        isoWhiskerRight (polynomialAnchor f g) (K).functor := by
+    simpa only [← Iso.trans_assoc, Iso.symm_self_id, Iso.refl_trans] using h.symm
+  apply Sigma.ext
+  · exact Model.Hom.ext rfl
+  apply heq_of_eq
+  change (InputCompositionTopPieces.middleAnchor f g).symm ≪≫
+    (InputCompositionCarrierCharts.chartReferenceIso f g k hk ≪≫
+      isoWhiskerLeft (D).functor (ε ≪≫ isoWhiskerRight N.2 (K).functor)) =
+    ProjectionReference.chartAnchor X k hk E ≪≫
+      isoWhiskerRight (polynomialAnchor f g ≪≫ isoWhiskerLeft (D).functor N.2)
+        (K).functor
+  rw [isoWhiskerLeft_trans, isoWhiskerRight_trans, whisker_iso_interchange]
+  simpa only [Iso.trans_assoc] using congrArg
+    (fun e ↦ e ≪≫ isoWhiskerLeft (D).functor (isoWhiskerRight N.2 (K).functor)) hbase
+
+/-- Laurent surface for the exact original reference and parameter data. -/
+theorem laurent_surface (r s : unitInterval) :
+    mapParameter (laurentNode f g k hk)
+      (InputCompositionPolynomialScalar.chartSurface f g k (r, s)) =
+    mapParameter (reanchor (InputCompositionTopPieces.middleAnchor f g).symm)
+      (InputCompositionCarrierCharts.chartFace f g k hk (r, s)) := by
+  change mapParameter _ (parameter _ _ _) = _
+  rw [mapParameter_parameter, ← InputCompositionPolynomialOverlap.overlap_surface f g k hk,
+    InputCompositionPolynomialScalar.chartSurface]
+  change _ = mapParameter _ (mapParameter _ (parameter _ _ _))
+  rw [mapParameter_parameter, mapParameter_parameter]
+  rfl
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionProjectionAttachment

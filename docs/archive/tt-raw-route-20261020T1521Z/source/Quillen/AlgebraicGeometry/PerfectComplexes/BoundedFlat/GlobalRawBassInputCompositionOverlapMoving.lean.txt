@@ -1,0 +1,72 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapCube
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionCone
+/-! Jointly continuous overlap families for the original chosen cube and moving cone cylinder. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open Quillen.ScalarRectangle Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar
+open CommonReferenceNerve InputCompositionTopPieces InputCompositionSpanScalar
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "E" => baseSource f g
+local notation "J" => ProjectionReference.projectionMap X
+local notation "F" => ProjectionReference.reference X E
+local notation "β" => ProjectionReference.FourEdge.beta X E
+/-- Continuous overlap-indexed families in the actual projection-reference scalar cone. -/
+abbrev Carrier := C(I, ProjectionReference.FourEdge.scalarCone X E)
+
+/-- The constant family at the original cone tip. -/
+def tip : Carrier f g := ContinuousMap.const _ (FourEdgeTree.tip E J F β)
+
+/-- The original cube included in the scalar cone, with overlap time curried. -/
+def nullMovingFirst : C(I × I, Carrier f g) := ContinuousMap.curry
+  ⟨fun z : (I × I) × I ↦ FourEdgeTree.laurentInclusion E J F β
+    (originalOverlapCube f g ![z.1.1,z.1.2,z.2]), by fun_prop⟩
+
+/-- The actual tree composition in the cone cylinder at its original height. -/
+def nullMovingSecond : C(I × I, Carrier f g) := ContinuousMap.curry
+  ⟨fun z : (I × I) × I ↦ FourEdgeTree.cylinder E J F β
+    (treeComposition f g (z.1.1,z.2), z.1.2), by fun_prop⟩
+
+/-- The whole Laurent-to-cylinder join retains both independent parameters. -/
+theorem nullMoving_seam (r : I) :
+    nullMovingFirst f g (r,1) = nullMovingSecond f g (r,0) := by
+  apply ContinuousMap.ext
+  intro t
+  change FourEdgeTree.laurentInclusion E J F β (originalOverlapCube f g ![r,1,t]) = _
+  rw [originalOverlapCube_seam]
+  exact (FourEdgeTree.cone_cylinder_zero E J F β _).symm
+
+/-- Every overlap-indexed cylinder family ends at the original tip. -/
+theorem nullMovingSecond_tip (r : I) : nullMovingSecond f g (r,1) = tip f g := by
+  apply ContinuousMap.ext
+  intro t
+  exact FourEdgeTree.cone_cylinder_one E J F β _
+
+/-- The complete original two-half null construction, jointly continuous in overlap time. -/
+def nullMoving := concatSecond (nullMovingFirst f g) (nullMovingSecond f g)
+  (nullMoving_seam f g)
+
+/-- The first original half is exactly the included chosen cube. -/
+theorem nullMoving_lower (r s : I) :
+    nullMoving f g (r,lower s) = nullMovingFirst f g (r,s) :=
+  concatSecond_lower _ _ _ r s
+
+/-- The second original half is exactly the actual moving cone cylinder. -/
+theorem nullMoving_upper (r s : I) :
+    nullMoving f g (r,upper s) = nullMovingSecond f g (r,s) :=
+  concatSecond_upper _ _ _ r s
+
+/-- The complete moving family ends at the original constant tip. -/
+theorem nullMoving_tip (r : I) : nullMoving f g (r,1) = tip f g :=
+  (concatSecond_one _ _ _ r).trans (nullMovingSecond_tip f g r)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar

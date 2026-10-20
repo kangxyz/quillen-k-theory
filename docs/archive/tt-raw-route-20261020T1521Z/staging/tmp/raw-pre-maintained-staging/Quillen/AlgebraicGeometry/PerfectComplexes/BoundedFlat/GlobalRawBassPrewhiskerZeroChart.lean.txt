@@ -1,0 +1,64 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerZeroLaurent
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerChart
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassReferenceFixedFiniteNode
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSourceBoundary
+/-! All-point recovery of the original source-map first half with all three clocks retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+  Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+variable (k : laurent ⟶ polynomial)
+local notation "C" => BassH0Merge.normalizedMap (laurent.map c)
+local notation "H" => lowerLaurentBinary f g
+local notation "K" => BassH0Merge.normalizedMap (k.app W)
+local notation "S" => NativeSquareFiveSimplex.source (laurent.map c) (k.app W)
+local notation "M" => NativeSquareFiveSimplex.nodes (laurent.map c) (k.app W)
+  (k.app Z) (polynomial.map c) (k.naturality c)
+
+/-- The original source-square node two uses its binary total, not an identity anchor. -/
+def zeroChartAnchor : (S ≫ H).functor ≅ (K ≫ zeroLaurentReference f g c).functor :=
+  isoWhiskerRight (BinaryNormalizationSimplex.total (laurent.map c) (k.app W)) (H).functor ≪≫
+    Functor.associator (K).functor (C).functor (H).functor
+
+/-- The source-square node two retains the exact complete Laurent output node. -/
+theorem zero_chart_node (N : Node H) :
+    FinitePrecomp.node S H (M 2) N =
+      CommonReferenceProduct.reanchor (zeroChartAnchor f g c k)
+        (precompNode K (precompNode C N)) :=
+  CommonReferenceProduct.fixed_finite_node K C H S
+    (BinaryNormalizationSimplex.total (laurent.map c) (k.app W)) N
+
+/-- The whole chart source-height-zero family is the original chart map before Laurent
+composition. -/
+theorem lowerChart_zero (r : I) :
+    lowerChart f g c k (r, 0) =
+      mapParameter (CommonReferenceProduct.reanchor (zeroChartAnchor f g c k))
+        (mapParameter (precompNode K) (zeroLaurent f g c r)) := by
+  change FiniteParameter.parameter H (S ≫ H) (fun N j ↦ FinitePrecomp.node S H (M j) N)
+    (parameter H (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r),
+      NativeSquareFiveSimplex.parameter 0) =
+    mapParameter (CommonReferenceProduct.reanchor (zeroChartAnchor f g c k))
+      (mapParameter (precompNode K) (mapParameter (precompNode C)
+        (parameter H (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r))))
+  rw [Path.source, FiniteParameter.parameter_vertex, mapParameter_parameter,
+    mapParameter_parameter, mapParameter_parameter, mapParameter_parameter]
+  apply congrArg (fun ns ↦ parameter (S ≫ H) ns (binaryPath (k := 2) 0 1 2 r))
+  funext i
+  exact zero_chart_node f g c k (lowerLaurentNodes f g i)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

@@ -1,0 +1,97 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialScalarNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionInverseFactor
+/-! Scalar recovery of both exact original polynomial-cylinder composition squares. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar
+open CommonReferenceNerve
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (k : laurent ⟶ polynomial)
+local notation "F" => polynomialReference f g
+local notation "G" => laurentReference f g k
+local notation "J" => chart (X := X) k
+local notation "ε" => anchor f g k
+
+/-- The contractible carrier is constructed from the actual polynomial input reference. -/
+theorem carrier_contractible : ContractibleSpace (Carrier f g k) :=
+  CutOpenCarrier.contractibleSpace F J G ε ε
+
+/-- Joint continuity keeps every original polynomial input, not its evaluation at a section. -/
+def correctedFamily (n : ℕ) : C((unitInterval × unitInterval) ×
+    (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n,
+    (mappingCone (chartP k X)).space n) :=
+  CutOpenCarrier.compactNativeFamily F J G ε ε (correctedSquare f g k).parameter n
+
+/-- The corrected scalar family preserves the original polynomial basepoint. -/
+theorem correctedFamily_point (n : ℕ) (r s : unitInterval) :
+    correctedFamily f g k n ((r, s),
+      (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).point n) =
+        (mappingCone (chartP k X)).point n :=
+  CutOpenCarrier.compactNativeFamily_point F J G ε ε (correctedSquare f g k).parameter n (r, s)
+
+/-- Native structure time stays independent of both scalar square coordinates. -/
+theorem correctedFamily_structure (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n)
+    (t : unitInterval) :
+    correctedFamily f g k (n + 1) ((r, s),
+      (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).structureMap n x t) =
+        (mappingCone (chartP k X)).structureMap n (correctedFamily f g k n ((r, s), x)) t :=
+  CutOpenCarrier.compactNativeFamily_structure F J G ε ε
+    (correctedSquare f g k).parameter n (r, s) x t
+
+/-- The positive scalar square recovers the selected whole-cone null square at every input. -/
+theorem plus_whole (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityPositive.inclusion X).map n (correctedFamily f g plus n ((r, s), x)) =
+      (InputComposition.comparisonConeNullSquare f g).level n
+        (r, (s, (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) := by
+  exact (congrArg ((InputIdentityPositive.inclusion X).map n)
+    (correctedSquare_native f g plus n r s x)).trans
+      (InputCompositionPositive.nullSquare_factor f g n r s x)
+
+/-- The inverse scalar square keeps its separately selected chart and entire original interior. -/
+theorem minus_whole (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityNegative.inclusion X).map n (correctedFamily f g minus n ((r, s), x)) =
+      (InputComposition.comparisonConeNullSquare f g).level n
+        (r, (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) := by
+  exact (congrArg ((InputIdentityNegative.inclusion X).map n)
+    (correctedSquare_native f g minus n r s x)).trans
+      (InputCompositionNegative.nullSquare_factor f g n r s x)
+
+/-- Directly consuming the selected coneHomotopy makes the positive pilot's target unambiguous. -/
+theorem plus_coneHomotopy (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityPositive.inclusion X).map n (correctedFamily f g plus n ((r, s), x)) =
+      (InputComposition.coneHomotopy f g).level n
+        (r, ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s, (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) :=
+  plus_whole f g n r s x
+
+/-- The inverse pilot recovers the same original whole-cone choice on genuine inverse input. -/
+theorem minus_coneHomotopy (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityNegative.inclusion X).map n (correctedFamily f g minus n ((r, s), x)) =
+      (InputComposition.coneHomotopy f g).level n
+        (r, ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) :=
+  minus_whole f g n r s x
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar

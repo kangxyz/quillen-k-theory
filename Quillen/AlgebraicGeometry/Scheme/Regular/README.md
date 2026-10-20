@@ -15,7 +15,7 @@ For a nonaffine scheme, `KToGRegularEquiv X n` requires this regularity,
 The resolution property says that every coherent sheaf is an actual quotient
 of a finite locally free sheaf. It supplies coherent syzygies; the regular,
 quasi-compact argument produces the finite resolutions needed by
-[Quillen resolution](../../../Localization/Serre/README.md).
+[Quillen resolution](../../../Resolution/README.md).
 Regularity alone does not supply the resolution property.
 
 `KToGRegularEquiv_coe` retains the canonical comparison, and

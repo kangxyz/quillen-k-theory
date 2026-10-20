@@ -1,0 +1,129 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentSides
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalProduct
+/-!
+# Actual unit-times-composition products for binary raw seeds
+
+The original raw unit edge and original split composition triangle form independent
+six-node products. The actual Laurent rectangle's side anchors retain the complete
+references. No edge join or higher unit comparison is assumed here.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProducts
+open CommonReferenceNerve InputCompositionCarrierBottom InputCompositionTopPieces
+open GlobalBassEvaluation.InputSeedEvaluationProduct
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The unchanged source Laurent unit followed by the original Laurent composite. -/
+abbrev sourceProductMap := unitMap Z ≫ laurentSource f g
+/-- The original base composite followed by the unchanged target Laurent unit. -/
+abbrev targetProductMap := baseSource f g ≫ unitMap X
+
+/-- The exact original left Laurent reference for the source unit product. -/
+def sourceAnchor : (InputCompositionCarrierCharts.source f g).functor ≅
+    (sourceProductMap f g).functor := InputNullCompositionLaurentCarrier.leftAnchor f g
+
+/-- The exact original right Laurent reference for the target unit product. -/
+def targetAnchor : (InputCompositionCarrierCharts.source f g).functor ≅
+    (targetProductMap f g).functor := InputNullCompositionLaurentCarrier.rightAnchor f g
+
+/-- Two original unit references times three original Laurent references. -/
+def sourceProductNodes (i : Fin 6) : Node (sourceProductMap f g) :=
+  ⟨CommonReferenceProduct.vertices (unitVertices Z) (laurentVertices f g) i,
+    CommonReferenceProduct.references (unitMap Z) (unitVertices Z) (unitAnchors Z)
+      (laurentSource f g) (laurentVertices f g) (laurentReferences f g) i⟩
+
+/-- Three original base references times two original unit references. -/
+def targetProductNodes (i : Fin 6) : Node (targetProductMap f g) :=
+  ⟨CommonReferenceProduct.vertices (baseVertices f g) (unitVertices X) i,
+    CommonReferenceProduct.references (baseSource f g) (baseVertices f g) (baseReferences f g)
+      (unitMap X) (unitVertices X) (unitAnchors X) i⟩
+
+/-- The six source-product nodes in the chosen composite Laurent reference. -/
+def sourceNodes := ModelSimplex.reanchorNodes (sourceAnchor f g) (sourceProductNodes f g)
+/-- The six target-product nodes in the chosen composite Laurent reference. -/
+def targetNodes := ModelSimplex.reanchorNodes (targetAnchor f g) (targetProductNodes f g)
+
+/-- Reanchoring retains the complete original source-product simplex. -/
+theorem source_family : ModelSimplex.ofIsos (InputCompositionCarrierCharts.source f g)
+    (fun i ↦ (sourceNodes f g i).1) (fun i ↦ (sourceNodes f g i).2) =
+    CommonReferenceProduct.simplex (unitMap Z) (unitVertices Z) (unitAnchors Z)
+      (laurentSource f g) (laurentVertices f g) (laurentReferences f g) :=
+  ModelSimplex.ofIsos_change_reference (sourceAnchor f g)
+    (fun i ↦ (sourceProductNodes f g i).1) (fun i ↦ (sourceProductNodes f g i).2)
+
+/-- Reanchoring retains the complete original target-product simplex. -/
+theorem target_family : ModelSimplex.ofIsos (InputCompositionCarrierCharts.source f g)
+    (fun i ↦ (targetNodes f g i).1) (fun i ↦ (targetNodes f g i).2) =
+    CommonReferenceProduct.simplex (baseSource f g) (baseVertices f g) (baseReferences f g)
+      (unitMap X) (unitVertices X) (unitAnchors X) :=
+  ModelSimplex.ofIsos_change_reference (targetAnchor f g)
+    (fun i ↦ (targetProductNodes f g i).1) (fun i ↦ (targetProductNodes f g i).2)
+
+/-- Composition time is first, unit time second, without changing either original clock. -/
+def sourceParameter : C(I × I, StdSimplex ℝ (Fin 6)) :=
+  ⟨fun z ↦ Quillen.SimplexGrid.parameter.{u + 1} 1 2
+    (edge (k := 1) 0 1 z.2, binaryPath (k := 2) 0 1 2 z.1), by fun_prop⟩
+
+/-- Independent original base-composition and target-unit parameters. -/
+def targetParameter : C(I × I, StdSimplex ℝ (Fin 6)) :=
+  ⟨fun z ↦ Quillen.SimplexGrid.parameter.{u + 1} 2 1
+    (binaryPath (k := 2) 0 1 2 z.1, edge (k := 1) 0 1 z.2), by fun_prop⟩
+
+/-- The complete scalar source unit rail with both original clocks. -/
+def sourceSurface := (parameter (InputCompositionCarrierCharts.source f g)
+  (sourceNodes f g)).comp sourceParameter.{u}
+/-- The complete scalar target unit rail with both original clocks. -/
+def targetSurface := (parameter (InputCompositionCarrierCharts.source f g)
+  (targetNodes f g)).comp targetParameter.{u}
+
+/-- The entire source rail evaluates the original unit through original Laurent composition. -/
+theorem source_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+      (sourceSurface f g) n ((r, s), x) =
+      (InputCompositionCharts.laurentComposition f g).level n
+        (r, (unitHomotopy Z).level n (s, x)) := by
+  refine (compactPrespectrumFamily_eq_simplex (InputCompositionCarrierCharts.source f g)
+    (sourceSurface f g) (sourceNodes f g) (r, s) (sourceParameter.{u} (r, s)) rfl n x).trans ?_
+  rw [prespectrumFamily_eq, source_family]
+  refine (CommonReferenceProduct.prespectrum_comp (unitMap Z) (unitVertices Z) (unitAnchors Z)
+    (laurentSource f g) (laurentVertices f g) (laurentReferences f g) n x
+    (edge (k := 1) 0 1 s) (binaryPath (k := 2) 0 1 2 r)).trans ?_
+  refine (congrArg (fun y ↦ prespectrumSimplexFamily
+    (ModelSimplex.ofIsos (laurentSource f g) (laurentVertices f g) (laurentReferences f g)) n
+      (binaryPath (k := 2) 0 1 2 r, y)) (unit_native Z n s x)).trans ?_
+  exact BinaryNormalizationSimplex.native_path (laurent.map f) (laurent.map g) n r _
+
+/-- The entire target rail evaluates the original unit after original base composition. -/
+theorem target_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+      (targetSurface f g) n ((r, s), x) =
+      (unitHomotopy X).level n
+        (s, (boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r, x)) := by
+  refine (compactPrespectrumFamily_eq_simplex (InputCompositionCarrierCharts.source f g)
+    (targetSurface f g) (targetNodes f g) (r, s) (targetParameter.{u} (r, s)) rfl n x).trans ?_
+  rw [prespectrumFamily_eq, target_family]
+  refine (CommonReferenceProduct.prespectrum_comp (baseSource f g)
+    (baseVertices f g) (baseReferences f g) (unitMap X) (unitVertices X) (unitAnchors X)
+    n x (binaryPath (k := 2) 0 1 2 r) (edge (k := 1) 0 1 s)).trans ?_
+  refine (unit_native X n s _).trans ?_
+  exact congrArg (fun y ↦ (unitHomotopy X).level n (s, y))
+    (BinaryNormalizationSimplex.native_path f g n r x)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProducts

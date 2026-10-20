@@ -1,0 +1,90 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeSquareModelNormalization
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialScalarCarrier
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceProductNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompNative
+/-! The genuine initial polynomial-square seam retaining its original binary total. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct CutOpenCarrier
+attribute [local irreducible] boundedFlatNormalizedPullback
+private theorem composite_pre_node {U V W T : Model.{u}}
+    (S : U ⟶ W) (A : U ⟶ V) (D : V ⟶ W) (P : W ⟶ T)
+    (θ : S.functor ≅ (A ≫ D).functor) (N : Node P) :
+    node (S ≫ P) S P (Iso.refl _) ⟨A ≫ D, θ⟩ N =
+      preNode (S ≫ P) A (H := D ≫ P)
+        (isoWhiskerRight θ P.functor ≪≫
+          Functor.associator A.functor D.functor P.functor) (precompNode D N) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext x
+  simp only [node, Iso.refl_trans, mapIso_hom, Iso.prod_hom, uncurry_obj_map,
+    whiskeringLeft_obj_obj, whiskeringLeft_obj_map, NatTrans.comp_app, comp_obj,
+    whiskeringLeft_map_app_app, whiskerLeft_app, NatTrans.naturality, precompNode, preNode,
+    reanchor, isoWhiskerLeft_twice, Iso.trans_assoc, Iso.self_symm_id_assoc, Iso.trans_hom,
+    isoWhiskerRight_hom, isoWhiskerLeft_hom, whiskerRight_app, associator_hom_app,
+    Category.comp_id]
+  exact (N.2.hom.naturality (θ.hom.app x)).symm
+
+
+variable {Z W : Scheme.{u}} (c : Z ⟶ W)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "D" => BassH0Merge.normalizedMap (projection.app W)
+local notation "M" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "η" => NativeSquareModelNormalization.total (polynomial.map c) (projection.app W)
+local notation "N₅" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+
+/-- The actual node-two identity works for both full polynomial and Laurent references. -/
+theorem initial_reference_node {T : Model.{u + 1}}
+    (H : modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Z)) ⟶ T) (N : Node H) :
+    FinitePrecomp.node S H (N₅ 2) N =
+      preNode (S ≫ H) D (H := M ≫ H)
+        (isoWhiskerRight η H.functor ≪≫
+          Functor.associator (D).functor (M).functor H.functor) (precompNode M N) := by
+  change node (S ≫ H) S H (Iso.refl _) (N₅ 2) N = _
+  rw [NativeSquareModelNormalization.nodes_two]
+  exact composite_pre_node S D M H η N
+
+/-- Every initial nerve point retains its full source projection and binary normalization. -/
+theorem initial_reference_parameter {T : Model.{u + 1}}
+    (H : modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Z)) ⟶ T)
+    (F : modelOf (boundedFlatPerfectWaldhausen W) ⟶ T)
+    (ξ : F.functor ≅ (S ≫ H).functor) (y : |parameterSSet H|) :
+    mapParameter (reanchor ξ)
+      (FinitePrecomp.parameter S N₅ H (y, Convexity.StdSimplex.single 2)) =
+    mapParameter (fun N ↦ reanchor (ξ ≪≫ isoWhiskerRight η H.functor ≪≫
+      Functor.associator (D).functor (M).functor H.functor) (precompNode D N))
+      (mapParameter (precompNode M) y) := by
+  have hn (N : Node H) : reanchor ξ (FinitePrecomp.node S H (N₅ 2) N) =
+      reanchor (ξ ≪≫ isoWhiskerRight η H.functor ≪≫
+        Functor.associator (D).functor (M).functor H.functor)
+        (precompNode D (precompNode M N)) := by
+    rw [initial_reference_node c H N]
+    simp only [preNode, reanchor, Iso.trans_assoc]
+  have hv := FiniteParameter.parameter_vertex H (S ≫ H)
+    (fun N i ↦ FinitePrecomp.node S H (N₅ i) N) 2 y
+  rw [show FinitePrecomp.parameter S N₅ H (y, Convexity.StdSimplex.single 2) =
+    mapParameter (fun N ↦ FinitePrecomp.node S H (N₅ 2) N) y from hv]
+  obtain ⟨p, N, w, rfl⟩ := exists_parameter H y
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter]
+  exact (mapParameter_parameter (F := S ≫ H) («G» := F) (reanchor ξ)
+    (fun i ↦ FinitePrecomp.node S H (N₅ 2) (N i)) w).trans
+      (congrArg (fun ns ↦ parameter F ns w) (funext fun i ↦ hn (N i)))
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

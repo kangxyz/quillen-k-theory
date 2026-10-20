@@ -1,0 +1,122 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapMoving
+public import Quillen.Topology.Prespectrum.CarrierSquareDescentEvaluation
+/-! The original boundary and associator correction in continuous overlap-indexed scalar families.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open Quillen.SimplexParameters Quillen.ScalarRectangle Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+/-- The actual uncorrected moving-null row, with the ordinary tip fixed. -/
+def movingNullPath (r : unitInterval) :
+    Path (nullMovingFirst f g (r, 0)) (tip f g) where
+  toFun s := nullMoving f g (r, s)
+  continuous_toFun := by fun_prop
+  source' := concatSecond_zero _ _ _ r
+  target' := nullMoving_tip f g r
+
+/-- The entire bottom edge is retained as a path, not replaced by endpoint data. -/
+def nullBottom : Path (nullMovingFirst f g (0, 0)) (nullMovingFirst f g (1, 0)) where
+  toFun r := nullMovingFirst f g (r, 0)
+  continuous_toFun := by fun_prop
+  source' := rfl
+  target' := rfl
+
+/-- The scalar square comes from the explicit Laurent/cylinder construction above. -/
+def movingSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g 0)
+    (movingNullPath f g 1) (nullBottom f g)
+    (Path.refl (tip f g)) where
+  parameter := nullMoving f g
+  at_zero _ := rfl
+  at_one _ := rfl
+  left r := concatSecond_zero _ _ _ r
+  right r := nullMoving_tip f g r
+
+/-- The first original half of the last chart row. -/
+def finalChartFirst : Path (nullMovingFirst f g (1, 0))
+    (nullMovingFirst f g (1, lower 1)) where
+  toFun s := nullMovingFirst f g (1, lower s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [lower]))
+  target' := rfl
+
+/-- The second original half of the last chart row; its middle endpoint is exact. -/
+def finalChartSecond : Path (nullMovingFirst f g (1, lower 1))
+    (nullMovingFirst f g (1, 1)) where
+  toFun s := nullMovingFirst f g (1, upper s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [lower, upper]))
+  target' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [upper]))
+
+/-- The last cylinder row, attached at its original scalar seam. -/
+def finalCylinder : Path (nullMovingFirst f g (1, 1))
+    (tip f g) where
+  toFun s := nullMovingSecond f g (1, s)
+  continuous_toFun := by fun_prop
+  source' := (nullMoving_seam f g 1).symm
+  target' := nullMovingSecond_tip f g 1
+
+/-- Splitting the chart at its original half height recovers the entire original row. -/
+theorem finalChart_halves (s : unitInterval) :
+    ((finalChartFirst f g).trans (finalChartSecond f g)) s =
+      nullMovingFirst f g (1, s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower]
+    rfl
+  · rw [path_upper]
+    rfl
+
+/-- The uncorrected final row has precisely the left-associated three-piece word. -/
+theorem movingNullPath_one :
+    ((finalChartFirst f g).trans (finalChartSecond f g)).trans (finalCylinder f g) =
+      movingNullPath f g 1 := by
+  apply Path.ext
+  funext s
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower, finalChart_halves]
+    exact (nullMoving_lower f g 1 t).symm
+  · rw [path_upper]
+    exact (nullMoving_upper f g 1 t).symm
+
+/-- The prescribed correction is the literal path associator of the three original pieces. -/
+def finalCorrection : (movingNullPath f g 1).Homotopy
+    ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g))) :=
+  (Path.Homotopy.transAssoc (finalChartFirst f g) (finalChartSecond f g)
+    (finalCylinder f g)).cast (movingNullPath_one f g) rfl
+
+/-- The full chosen boundary recipe retains both horizontal compositions and the terminal pause. -/
+def correctedBoundary : (movingNullPath f g 0).Homotopy
+    (((nullBottom f g).trans
+      ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g)))).trans
+        (Path.refl (tip f g)).symm) :=
+  (movingSquare f g).toBoundary.trans
+    (((Path.Homotopy.refl (nullBottom f g)).hcomp (finalCorrection f g)).hcomp
+      (Path.Homotopy.refl (Path.refl (tip f g)).symm))
+
+/-- The actual corrected scalar square descends the literal boundary recipe. -/
+def correctedSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g 0)
+    ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g)))
+    (nullBottom f g) (Path.refl (tip f g)) :=
+  Quillen.CarrierPathSquare.boundarySquare (correctedBoundary f g)
+
+/-- Every collapsed parameter is recovered exactly, preserving the complete correction interior. -/
+theorem correctedSquare_collapse (z : unitInterval × unitInterval) :
+    (correctedSquare f g).parameter (Quillen.ThreeSideSquare.collapse z) =
+      correctedBoundary f g z :=
+  Quillen.CarrierPathSquare.boundaryParameter_collapse (correctedBoundary f g) z
+
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar

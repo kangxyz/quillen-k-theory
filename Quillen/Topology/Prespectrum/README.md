@@ -11,7 +11,10 @@ application; [affine perfect complexes](../../AlgebraicGeometry/PerfectComplexes
 and [geometric localization](../../AlgebraicGeometry/PerfectComplexes/Localization.md)
 own the scheme and open-localization conclusions, with their qcqs and
 quasi-compact-open hypotheses. Those guides retain finite-stage bounds,
-negative-class maps and the distinction from classical nonconnective K-theory.
+negative-class maps and the direct realization of TT nonconnective K-theory.
+The original TT 7.4 theorem follows from that construction; a full
+multiplicative API and comparison with another prescribed raw implementation
+remain separate tasks.
 
 ## Public imports
 
@@ -20,10 +23,10 @@ Module paths are relative to `Quillen.` unless fully qualified.
 | Import | Interface |
 | --- | --- |
 | [`Quillen.Topology.Prespectrum.StableLocalization`](StableLocalization.lean) | Coherent-homotopy quotient and categorical stable localization |
-| [`Topology.Prespectrum.FiberSequence`](FiberSequence.lean) | Signed stable long exact sequence of actual path-space fibers; Actual path-space fibers and signed stable long exact sequence |
-| [`Topology.Prespectrum.ConeLinearExcision`](ConeLinearExcision.lean) | Specified cone-fiber comparison under growth and point HEP; Cone-fiber excision with explicit growth and point HEP |
+| [`Topology.Prespectrum.FiberSequence`](FiberSequence.lean) | Signed stable long exact sequence of actual path-space fibers |
+| [`Topology.Prespectrum.ConeLinearExcision`](ConeLinearExcision.lean) | Specified cone-fiber comparison under growth and point HEP |
 | [`Topology.Prespectrum.TelescopeStableColimit`](TelescopeStableColimit.lean) | T1 telescope stable-colimit comparison |
-| [`Topology.Prespectrum.LoopTailReplacementFiberEquivalence`](LoopTailReplacementFiberEquivalence.lean) | Ω replacement and fiber comparison; Ω replacement and its actual fiber comparison |
+| [`Topology.Prespectrum.LoopTailReplacementFiberEquivalence`](LoopTailReplacementFiberEquivalence.lean) | Ω replacement and its actual fiber comparison |
 | [`Topology.Prespectrum.PushoutConeFamily`](PushoutConeFamily.lean), [`Topology.Prespectrum.PushoutConeFamilyRecovery`](PushoutConeFamilyRecovery.lean) | Locally compact parameter descent through the original pushout and reduced cone, strict restriction/looping and recovery of entire chosen families |
 | [`Topology.Prespectrum.LoopTranspose`](LoopTranspose.lean) | `Quillen.LoopPrespectrum.FiniteParameterLooping.loops`, `loopDiagram` and their object/association equations |
 | [`Topology.Prespectrum.FiniteLoopWords`](FiniteLoopWords.lean), `FiniteLoopWordSlide` | Finite loop evaluation, cyclic/reversal natural isomorphisms and the new-loop slide |
@@ -155,8 +158,8 @@ the actual reduced polynomial span. Both original chart tracks and every
 cylinder value are preserved; constant pieces are contracted within the
 relative comparison before the native three-side square descent. The native
 polynomial producer supplies that square in `CoefficientPolynomialSpanUnit`.
-This span identity does not supply the missing whole Bass comparison identity
-or coherent raw iteration.
+This span identity does not supply the whole Bass comparison identity or
+coherent iteration of the separately prescribed raw point-set implementation.
 
 
 ## Strict double-square geometry
@@ -170,3 +173,11 @@ external-factor braid and track transport belong to the
 The four-dimensional permutation supplies no older raw overlap four-cube with
 prescribed faces and earlier fillers; that separate route remains in the
 [geometric localization guide](../../AlgebraicGeometry/PerfectComplexes/Localization.md).
+
+## Exact relative-surface values
+
+[RelativeSurfaceValue](RelativeSurfaceValue.lean) evaluates a supplied relative
+homotopy at an original level, both independent times and an original input.
+`surfaceValue_eq_level` identifies this value definitionally with the original
+level evaluation. Whole-level equality and both originally supplied comparison
+faces are preserved; the interface never selects a replacement homotopy.

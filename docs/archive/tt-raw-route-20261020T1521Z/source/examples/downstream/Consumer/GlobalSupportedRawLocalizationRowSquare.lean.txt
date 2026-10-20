@@ -1,0 +1,44 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationRowSquare
+
+/-! Independent exact-clock consumers of the supported localization row-word square. -/
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalSupportedRawLocalizationRowSquare
+open GlobalSectionChangeIndex ParameterIdentity
+open GlobalSupportedRawBass.Localization
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- The actual full row-word square is available without a filler hypothesis. -/
+def actual_square :
+    (postSectionNull f T).Square (preRawNull f T) (rowWord f T)
+      (Quillen.LoopPrespectrum.Homotopy.refl
+        (Quillen.LoopPrespectrum.zeroHom (prespectrum (sectionSource f T))
+          (prespectrum (targetModel f T)))) :=
+  rowSquare f T
+
+/-- The original geometric null retains every time after source evaluation. -/
+theorem original_null (n : ℕ) (s : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (actual_square f T).level n (1, (s, x)) = (preRawNull f T).level n (s, x) :=
+  (actual_square f T).at_one n s x
+
+/-- Independent comparison, null and structure coordinates survive the complete square. -/
+theorem structure_time (n : ℕ) (r s t : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (actual_square f T).level (n + 1)
+        (r, (s, (prespectrum (sectionSource f T)).structureMap n x t)) =
+      (prespectrum (targetModel f T)).structureMap n
+        ((actual_square f T).level n (r, (s, x))) t :=
+  (actual_square f T).comm n r s x t
+
+end Consumer.GlobalSupportedRawLocalizationRowSquare

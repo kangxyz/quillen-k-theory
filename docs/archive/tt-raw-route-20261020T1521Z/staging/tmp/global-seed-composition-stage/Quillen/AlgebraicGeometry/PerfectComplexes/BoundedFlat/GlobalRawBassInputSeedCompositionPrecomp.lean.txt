@@ -1,0 +1,182 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitShift
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPrecompSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedConjugation
+/-! The full two-tip second seed carrier under the actual base precomposition. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionPrecomp
+open CommonReferenceNerve InputIdentitySeedCarrier InputNullCompositionPrecomp
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "Ff" => polyRef f
+local notation "Gf" => laurentRef f
+local notation "J" => chart (X := X)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "εf" => ordinary f
+local notation "εf'" => shifted f
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- Actual precomposition preserves the complete shifted attachment node. -/
+theorem shifted_attachment_node (N : Node Ff) :
+    laurentNode f g (attachPostcompNode Ff J Gf εf' N) =
+      attachPostcompNode F J G ε' (polynomialNode f g N) := by
+  rw [← InputIdentitySeedCarrier.shifted_node f N, laurent_node]
+  rw [← InputCompositionUnitShift.pre_shift]
+  rw [← laurent_node, attachment_node]
+  exact InputIdentitySeedCarrier.shifted_node (f ≫ g) (polynomialNode f g N)
+
+/-- The full shifted attachment commutes on the actual realized nerve. -/
+theorem shifted_attachment_parameter (y : |CutOpenCarrier.parameterSSet Ff|) :
+    mapParameter (laurentNode f g) (mapParameter (attachPostcompNode Ff J Gf εf') y) =
+      mapParameter (attachPostcompNode F J G ε') (polynomial f g y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter Ff y
+  change mapParameter _ (mapParameter _ (parameter _ _ _)) =
+    mapParameter _ (mapParameter _ (parameter _ _ _))
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter,
+    mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter G ns z)
+    (funext (fun i ↦ shifted_attachment_node f g (N i)))
+
+/-- The actual polynomial premap as a topological map. -/
+def polynomialMap : |CutOpenCarrier.parameterSSet Ff| ⟶
+    |CutOpenCarrier.parameterSSet F| := TopCat.ofHom (polynomial f g)
+
+/-- The actual Laurent premap as a topological map. -/
+def laurentMap : |CutOpenCarrier.parameterSSet Gf| ⟶
+    |CutOpenCarrier.parameterSSet G| := TopCat.ofHom (mapParameter (laurentNode f g))
+
+/-- The original ordinary attachment square before native evaluation. -/
+theorem ordinary_square :
+    SSet.toTop.map (CutOpenCarrier.attaching Ff J Gf εf) ≫ laurentMap f g =
+      polynomialMap f g ≫ SSet.toTop.map (CutOpenCarrier.attaching F J G ε) := by
+  ext y
+  exact attachment_parameter f g y
+
+/-- The original shifted attachment square before native evaluation. -/
+theorem shifted_square :
+    SSet.toTop.map (CutOpenCarrier.attaching Ff J Gf εf') ≫ laurentMap f g =
+      polynomialMap f g ≫ SSet.toTop.map (CutOpenCarrier.attaching F J G ε') := by
+  ext y
+  exact shifted_attachment_parameter f g y
+
+/-- The full second carrier map retains both distinct tips and every cylinder clock. -/
+def transport : C(Carrier f, Carrier (f ≫ g)) :=
+  (CutOpenMap.map Ff J Gf F J G εf εf' ε ε'
+    (polynomialMap f g) (laurentMap f g) (ordinary_square f g) (shifted_square f g)).hom
+
+/-- The complete Laurent reference is transported by the actual base premap. -/
+theorem transport_laurent (y : |CutOpenCarrier.parameterSSet Gf|) :
+    transport f g (CutOpenCarrier.laurentInclusion Ff J Gf εf εf' y) =
+      CutOpenCarrier.laurentInclusion F J G ε ε' (mapParameter (laurentNode f g) y) :=
+  CutOpenMap.map_laurent _ _ _ _ _ _ _ _ _ _ _ _ _ _ y
+
+/-- The ordinary cylinder keeps its original height and whole polynomial parameter. -/
+theorem transport_cylinderMinus (y : |CutOpenCarrier.parameterSSet Ff|) (s : I) :
+    transport f g (CutOpenCarrier.cylinderMinus Ff J Gf εf εf' (y,s)) =
+      CutOpenCarrier.cylinderMinus F J G ε ε' (polynomial f g y,s) :=
+  CutOpenMap.map_cylinderMinus _ _ _ _ _ _ _ _ _ _ _ _ _ _ y s
+
+/-- The shifted cylinder keeps its separate sheet and original height. -/
+theorem transport_cylinderPlus (y : |CutOpenCarrier.parameterSSet Ff|) (s : I) :
+    transport f g (CutOpenCarrier.cylinderPlus Ff J Gf εf εf' (y,s)) =
+      CutOpenCarrier.cylinderPlus F J G ε ε' (polynomial f g y,s) :=
+  CutOpenMap.map_cylinderPlus _ _ _ _ _ _ _ _ _ _ _ _ _ _ y s
+
+/-- The entire original second seed comparison, not merely its null component. -/
+def surface : C(I × I, Carrier (f ≫ g)) :=
+  (transport f g).comp (InputIdentitySeedConjugation.comparison f).toContinuousMap
+
+/-- The whole second source word is the transported original conjugate word. -/
+theorem surface_source (s : I) : surface f g (0,s) =
+    transport f g (InputIdentitySeedConjugation.sourceWord f s) :=
+  congrArg (transport f g) (InputIdentitySeedConjugation.comparison_source f s)
+
+/-- The whole second target word is the transported original conjugate word. -/
+theorem surface_target (s : I) : surface f g (1,s) =
+    transport f g (InputIdentitySeedConjugation.targetWord f s) :=
+  congrArg (transport f g) (InputIdentitySeedConjugation.comparison_target f s)
+
+/-- The ordinary source tip stays fixed along the full original comparison. -/
+theorem surface_zero (r : I) : surface f g (r,0) =
+    CutOpenCarrier.tipMinus F J G ε ε' := by
+  change transport f g (InputIdentitySeedConjugation.comparison f (r,0)) = _
+  rw [InputIdentitySeedConjugation.comparison_zero]
+  exact CutOpenMap.map_tipMinus _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+/-- The separate shifted terminal tip stays fixed along the full original comparison. -/
+theorem surface_one (r : I) : surface f g (r,1) =
+    CutOpenCarrier.tipPlus F J G ε ε' := by
+  change transport f g (InputIdentitySeedConjugation.comparison f (r,1)) = _
+  rw [InputIdentitySeedConjugation.comparison_one]
+  exact CutOpenMap.map_tipPlus _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+attribute [local semireducible] boundedFlatNormalizedPullback
+
+private theorem parameter_native {W : Model.{u + 1}}
+    (H : modelOf (boundedFlatPerfectWaldhausen Y) ⟶ W)
+    (K : modelOf (boundedFlatPerfectWaldhausen Z) ⟶ W)
+    (η : K.functor ≅ (premap g ≫ H).functor)
+    (n : ℕ) (y : |CutOpenCarrier.parameterSSet H|)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily K n (mapParameter (attachPrecompNode H (premap g) K η) y) x =
+      pointwisePrespectrumFamily H n y ((boundedFlatPerfectPrespectrumMap g).map n x) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter H y
+  rw [mapParameter_parameter, pointwisePrespectrumFamily_parameter,
+    pointwisePrespectrumFamily_parameter]
+  exact prespectrumFamily_attachPrecomp H (premap g) K η N n z x
+
+/-- Every point of both sheets recovers the actual original base-precomposed value. -/
+theorem transport_native (n : ℕ) (z : Carrier f)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (transport f g z) x =
+      CutOpenCarrier.nativeEval Ff J Gf εf εf' n z
+        ((boundedFlatPerfectPrespectrumMap g).map n x) := by
+  rcases CutOpenCarrier.exists_native_cell Ff J Gf εf εf' z with
+    ⟨y, rfl⟩ | ⟨y, t, rfl⟩ | ⟨y, t, rfl⟩ | rfl | rfl
+  · rw [transport, CutOpenMap.map_laurent,
+      CutOpenCarrier.nativeEval_laurentInclusion, CutOpenCarrier.nativeEval_laurentInclusion]
+    exact congrArg ((Quillen.LoopPrespectrum.mappingConeInclusion
+      (InputIdentityPositive.chart X)).map n)
+      (parameter_native g Gf G (laurentAnchor f g) n y x)
+  · rw [transport, CutOpenMap.map_cylinderMinus,
+      CutOpenCarrier.nativeEval_cylinderMinus, CutOpenCarrier.nativeEval_cylinderMinus]
+    exact congrArg (fun z ↦ Quillen.ReducedMappingCone.cylinder _ _ _ (t,z))
+      (parameter_native g Ff F (polynomialAnchor f g) n y x)
+  · rw [transport, CutOpenMap.map_cylinderPlus,
+      CutOpenCarrier.nativeEval_cylinderPlus, CutOpenCarrier.nativeEval_cylinderPlus]
+    exact congrArg (fun z ↦ Quillen.ReducedMappingCone.cylinder _ _ _ (t,z))
+      (parameter_native g Ff F (polynomialAnchor f g) n y x)
+  · rw [transport, CutOpenMap.map_tipMinus,
+      CutOpenCarrier.nativeEval_tipMinus, CutOpenCarrier.nativeEval_tipMinus]
+  · rw [transport, CutOpenMap.map_tipPlus,
+      CutOpenCarrier.nativeEval_tipPlus, CutOpenCarrier.nativeEval_tipPlus]
+
+/-- Both independent original seed coordinates survive the complete second transport. -/
+theorem surface_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval F J G ε ε' n (surface f g (r,s)) x) =
+      Path.toContinuousMap ((transitionInputHomotopy f).level n
+        (r,(boundedFlatPerfectPrespectrumMap g).map n x)) s := by
+  change (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (InputIdentitySeedConjugation.comparison f (r,s))) x) = _
+  rw [transport_native]
+  exact InputIdentitySeedConjugation.comparison_transition f n r s _
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionPrecomp

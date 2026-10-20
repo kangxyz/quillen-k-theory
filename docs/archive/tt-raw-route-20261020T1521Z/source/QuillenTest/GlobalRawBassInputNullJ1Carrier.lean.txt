@@ -1,0 +1,40 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCompositeCarrier
+
+/-! Regression of the entire chosen composite null comparison and its original clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputNullJ1Carrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputNullCompositionCompositeCarrier
+
+/-- The entire original J1 is recovered on every spectrum point and both clocks. -/
+theorem original_composite (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (surface f g (r, s)) =
+      (InputCompositionNull.compositeComparison f g).level n (r, (s, x)) :=
+  surface_native f g n r s x
+
+/-- The original last quarter is the inverse associator, not a removed terminal stage. -/
+theorem original_last_quarter (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x
+      (surface f g (Quillen.NativePathCells.upper (Quillen.NativePathCells.upper r), s)) =
+      (Homotopy.RelHomotopy.transAssoc (InputCompositionNull.firstLaurent f g)
+        (InputCompositionNull.secondLaurent f g) (InputCompositionNull.newComposite f g)).symm.level
+        n (r, (s, x)) := by
+  rw [surface_upper_upper]
+  exact reassociation_native f g n r s x
+
+end QuillenTest.GlobalRawBassInputNullJ1Carrier

@@ -89,11 +89,13 @@ publication and unavailable-input behavior. For an explicit leaf while developin
 lake build Quillen.KTheory.API
 ```
 
-Final validation runs the configured full-library environment lint once and the
-whole-workspace native text lint once, before selected tests and downstream
-clients. The shared runner builds selected providers, `Quillen`, tests and lint
-runtimes in one native Lake graph, preserving compatible cached artifacts. The full library import basis is required even when only
-one source changed; it does not select full diagnostics or replay every test.
+When changes select native validation, final checks run the configured
+full-library environment lint once and the whole-workspace native text lint once,
+before selected tests and downstream clients. Documentation-only scope retains
+the static checks described above. The shared runner builds selected providers,
+`Quillen`, tests and lint runtimes in one native Lake graph, preserving compatible
+cached artifacts. The full library import basis is required even when only one
+source changed; it does not select full diagnostics or replay every test.
 The standard commands are:
 
 ```sh

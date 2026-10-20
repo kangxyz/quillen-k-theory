@@ -1,0 +1,56 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceProductNodes
+/-! One shared full chart cell determines the actual fixed-projection product grid. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceProduct
+open CommonReferenceNerve
+
+private theorem pre_reference_eq {V W T : Model.{u}} (F : V ⟶ T) (D : V ⟶ W)
+    (H : W ⟶ T) (a b : F.functor ≅ (D ≫ H).functor) (N : Node H)
+    (h : preNode F D a N = preNode F D b N) : a = b := by
+  have hs := eq_of_heq (Sigma.mk.inj h).2
+  change a ≪≫ isoWhiskerLeft D.functor N.2 = b ≪≫ isoWhiskerLeft D.functor N.2 at hs
+  have hc := congrArg (fun e ↦ e ≪≫ (isoWhiskerLeft D.functor N.2).symm) hs
+  simpa only [Iso.trans_assoc, Iso.self_symm_id, Iso.trans_refl] using hc
+
+variable {V U W T : Model.{u}} (F : V ⟶ T) (D : V ⟶ U) (S : U ⟶ W)
+    (B : W ⟶ T) (Q : V ⟶ W) (H : U ⟶ T)
+    (rho : Q.functor ≅ (D ≫ S).functor) (xi : H.functor ≅ (S ≫ B).functor)
+    (eta : F.functor ≅ (Q ≫ B).functor) (psi : F.functor ≅ (D ≫ H).functor)
+
+private theorem lower_normal (N : Node S) (M : Node B) :
+    node F Q B eta (preNode Q D rho N) M =
+      preNode F D (H := S ≫ B) (eta ≪≫ isoWhiskerRight rho B.functor)
+        (node (S ≫ B) S B (Iso.refl _) N M) := by
+  rw [pre_node_reanchor Q D S rho N, node_first_reanchor]
+  exact node_precomp F D S B _ N M
+
+private theorem projected_normal (Z : Node (S ≫ B)) :
+    preNode F D psi (reanchor xi Z) =
+      preNode F D (psi ≪≫ isoWhiskerLeft D.functor xi) Z := by
+  simp only [preNode, reanchor, precompNode, isoWhiskerLeft_trans, Iso.trans_assoc]
+
+/-- Full reference cancellation propagates a genuine shared source cell to the whole chart grid. -/
+theorem lower_grid_of_one (N₀ N : Node S) (M₀ M : Node B)
+    (h : node F Q B eta (preNode Q D rho N₀) M₀ =
+      preNode F D psi (reanchor xi (node (S ≫ B) S B (Iso.refl _) N₀ M₀))) :
+    node F Q B eta (preNode Q D rho N) M =
+      preNode F D psi (reanchor xi (node (S ≫ B) S B (Iso.refl _) N M)) := by
+  rw [lower_normal F D S B Q rho eta,
+    projected_normal F D S B H xi psi] at h ⊢
+  have he := pre_reference_eq F D (S ≫ B) _ _
+    (node (S ≫ B) S B (Iso.refl _) N₀ M₀) h
+  exact congrArg (fun e ↦ preNode F D e (node (S ≫ B) S B (Iso.refl _) N M)) he
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceProduct

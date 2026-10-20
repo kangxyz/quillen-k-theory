@@ -1,0 +1,38 @@
+{
+  "status": "sources_moved_documents_updated_pending_validation",
+  "prepared_manifest_sha256": "f9320b39ab821894de5298002fe934602ed4487251543ebeb574c82c7189124f",
+  "moved_count": 322,
+  "documents": [
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md",
+      "old_sha256": "7e85a89eff4e2a18ba5d15e44b8bbbb6e74ed3e5de65d21537dda5630fdc6be6",
+      "new_sha256": "1a256ec92e6411e9dbe909f3e51b3fd4ce3fd9c6e0b08ec48b7c856e49979f6b",
+      "rewritten_links": 10
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalProjectionCarrier.md",
+      "old_sha256": "557f117a6887a9abcc55072fa13e665fd57fcff484ba28537b8e6a480c6942e2",
+      "new_sha256": "cfd2e4421c3be26033bc7b1c5cb4f1ca170346b4e548f581dbf1d6f6ab72e12c",
+      "rewritten_links": 1
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/RawEvaluation.md",
+      "old_sha256": "b9d4f668e2d3677f7d3ff6e13b11cf8d525086214fc53e73344c3379cd81b379",
+      "new_sha256": "d12951c5b1817ee106805998c29d07501531f93433a25bd446726e29d25b52f0",
+      "rewritten_links": 32
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TargetReanchoring.md",
+      "old_sha256": "fbe3a34ebdcd81499f9b3e91c7da49ec55c0a55b18c33c5285cd098d9474bb70",
+      "new_sha256": "4e098888451d8f31e2396c233d16c8a1112d3abe1acdc199ae57ace719253684",
+      "rewritten_links": 7
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/README.md",
+      "old_sha256": "8326087430016a5c256ee3fedebe9aee6e2d188a2c066c3df05dbc928b3ca5be",
+      "new_sha256": "81c7d306b85f087228a7585d04d48af3e88abd35c64071dc6d6892298c03cd9c",
+      "rewritten_links": 1
+    }
+  ],
+  "version": "0.10.0"
+}

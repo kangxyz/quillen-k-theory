@@ -1,0 +1,54 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpanPolynomial
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceReanchorAttachment
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BinaryNativePath
+/-! Exact original native recovery of the projection-reference polynomial and base paths. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces BassH0Merge
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Every polynomial-square value is the literal original native square. -/
+theorem polynomialSquare_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily
+      (ProjectionReference.polynomialReference X (baseSource f g)) n
+      (polynomialSquare f g (r, s)) x =
+      (InputCompositionPolynomial.square f g).level n (r, (s, x)) := by
+  change pointwisePrespectrumFamily _ n
+    (parameter _ (fun i ↦ reanchor (polynomialAnchor f g).symm (polynomialNodes f g i)) _) x = _
+  rw [← mapParameter_parameter, pointwise_reanchor,
+    pointwisePrespectrumFamily_parameter, prespectrumFamily_eq]
+  exact polynomial_native f g n r s x
+
+private theorem binary_nodes_simplex :
+    ModelSimplex.ofIsos (baseSource f g)
+      (fun i ↦ (binaryNodes f g i).1) (fun i ↦ (binaryNodes f g i).2) =
+      BinaryNormalizationSimplex.simplex f g := by
+  exact ModelSimplex.ofIsos_nodes_congr (binaryNodes f g)
+    (fun i ↦ ⟨baseVertices f g i, baseReferences f g i⟩)
+    (by intro i; fin_cases i <;> rfl)
+
+/-- The base path recovers the original native composition homotopy. -/
+theorem basePath_native (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily (baseSource f g) n (basePath f g r) x =
+      (boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r, x) := by
+  change pointwisePrespectrumFamily _ n (parameter _ _ _) x = _
+  rw [pointwisePrespectrumFamily_parameter, prespectrumFamily_eq, binary_nodes_simplex]
+  exact BinaryNormalizationSimplex.native_path f g n r x
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar

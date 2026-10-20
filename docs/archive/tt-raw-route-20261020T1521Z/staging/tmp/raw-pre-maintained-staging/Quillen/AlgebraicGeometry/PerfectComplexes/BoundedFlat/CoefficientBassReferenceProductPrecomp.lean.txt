@@ -1,0 +1,47 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompNodes
+/-!
+Full finite source action equals fixed precomposition under its exact reference identity.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceProduct
+open CommonReferenceNerve
+variable {U V W T : Model.{u}}
+variable (A : U ⟶ V) (P : V ⟶ W) (H : W ⟶ T) (B : U ⟶ W) (K : V ⟶ T)
+variable (theta : B.functor ≅ (A ≫ P).functor)
+  (eta : (A ≫ K).functor ≅ (B ≫ H).functor)
+  (gamma : K.functor ≅ (P ≫ H).functor)
+
+
+/-- Full finite source action equals fixed precomposition under its exact reference identity. -/
+theorem finite_precomp_node
+    (h : eta ≪≫ isoWhiskerRight theta H.functor = isoWhiskerLeft A.functor gamma)
+    (N : Node P) (M : Node H) :
+    reanchor eta (FinitePrecomp.node B H (reanchor theta (precompNode A N)) M) =
+      precompNode A (reanchor gamma (node (P ≫ H) P H (Iso.refl _) N M)) := by
+  have hs : reanchor eta (FinitePrecomp.node B H (reanchor theta (precompNode A N)) M) =
+      node (A ≫ K) B H eta
+        (reanchor theta (preNode (A ≫ P) A (Iso.refl _) N)) M := by
+    apply Sigma.ext
+    · rfl
+    apply heq_of_eq
+    simp only [FinitePrecomp.node, node, reanchor, preNode, precompNode,
+      Iso.refl_trans]
+  rw [hs, node_first_reanchor, node_precomp, h]
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  simp only [preNode, reanchor, precompNode, isoWhiskerLeft_trans]
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceProduct

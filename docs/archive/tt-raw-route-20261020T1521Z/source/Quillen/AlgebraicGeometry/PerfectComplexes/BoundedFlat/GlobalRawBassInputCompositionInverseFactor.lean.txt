@@ -1,0 +1,169 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionMap
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputInverseSupport
+public import Quillen.Topology.Prespectrum.HomotopySquareMappedSupport
+
+/-!
+# The exact inverse support of original global raw composition
+
+The prescribed paused inverse chart and polynomial composition track supply an inverse-cone
+composition homotopy. Its strict image is the already chosen whole-cone homotopy at every
+inverse-cone point. The original terminal pause, cone reassociation, boundary collapse and
+square descent are retained. No general overlap interior is reconstructed.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionNegative
+open InputIdentityNegative
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The original polynomial composition retains the fixed span law's terminal constant half. -/
+def polynomialTrack := (InputCompositionPolynomial.polynomialComposition f g).trans
+  (Quillen.LoopPrespectrum.Homotopy.refl (boundedFlatPerfectPrespectrumMap (polynomial.map g) ≫
+    boundedFlatPerfectPrespectrumMap (polynomial.map f)))
+
+/-- The two original inverse squares have the exact square-cone composition association. -/
+def compositeComparison := coneSquarePastedHomotopy (chart Z) (chart Y) (chart X)
+  (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+  (boundedFlatPerfectPrespectrumMap (laurent.map g))
+  (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+  (boundedFlatPerfectPrespectrumMap (laurent.map f))
+  (minusSquareHomotopy g) (minusSquareHomotopy f)
+
+/-- The whole inverse face is the prescribed original geometric rectangle with its pause. -/
+def comparisonSquare :
+    (minusSquareHomotopy (f ≫ g)).Square (compositeComparison f g)
+      (Homotopy.precomp (chart Z) (InputCompositionCharts.laurentComposition f g))
+      ((polynomialTrack f g).postcomp (chart X)) := by
+  refine ((InputCompositionTransformations.movingSquare minus f g).pauseRight).ofBoundaryLevels
+    _ _ _ _ (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl) ?_
+  intro n
+  rw [polynomialTrack, Homotopy.postcomp_trans]
+  apply Homotopy.trans_level_congr <;> rfl
+
+/-- The whole span law retains exactly the paused polynomial track on its inverse chart. -/
+theorem polynomialTrack_inr (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputCompositionSpan.homotopy f g).level n
+      (r, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+        (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x) =
+      (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app X))
+        (boundedFlatPerfectPrespectrumMap (projection.app X))).map n
+        ((polynomialTrack f g).level n (r, x)) := by
+  rw [InputCompositionSpan.homotopy_inr]
+  change ((Homotopy.levelHomotopy _ n).trans (Homotopy.levelHomotopy _ n)) (r, x) =
+    (HomotopyPushout.inr _ _).map n
+      (((Homotopy.levelHomotopy _ n).trans (Homotopy.levelHomotopy _ n)) (r, x))
+  rw [ContinuousMap.HomotopyRel.trans_apply, ContinuousMap.HomotopyRel.trans_apply]
+  split <;> rfl
+
+/-- Positive composition keeps the entire original corrected moving-null square. -/
+def nullSquare := coneSquareCompositionMovingNullSquare (chart Z) (chart Y) (chart X)
+  (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+  (boundedFlatPerfectPrespectrumMap (laurent.map g))
+  (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+  (boundedFlatPerfectPrespectrumMap (laurent.map f))
+  (minusSquareHomotopy g) (minusSquareHomotopy f) (minusSquareHomotopy (f ≫ g))
+  (polynomialTrack f g) (InputCompositionCharts.laurentComposition f g)
+  (comparisonSquare f g)
+
+/-- The actual inverse input cone maps compose with their original paused chart choice. -/
+def coneHomotopy : Homotopy (InputIdentityNegative.coneMap (f ≫ g))
+    (InputIdentityNegative.coneMap g ≫ InputIdentityNegative.coneMap f) :=
+  coneSquareCompositionHomotopyOfSquare (chart Z) (chart Y) (chart X)
+    (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+    (boundedFlatPerfectPrespectrumMap (laurent.map g))
+    (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+    (boundedFlatPerfectPrespectrumMap (laurent.map f))
+    (minusSquareHomotopy g) (minusSquareHomotopy f) (minusSquareHomotopy (f ≫ g))
+    (polynomialTrack f g) (InputCompositionCharts.laurentComposition f g)
+    (comparisonSquare f g)
+
+/-- The three original cone-null pieces keep their actual inverse support through reassociation. -/
+theorem nullCorrection_factor (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (inclusion X).map n ((coneSquareCompositionNullComparison (chart Z) (chart Y) (chart X)
+      (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+      (boundedFlatPerfectPrespectrumMap (laurent.map g))
+      (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+      (boundedFlatPerfectPrespectrumMap (laurent.map f))
+      (minusSquareHomotopy g) (minusSquareHomotopy f)).level n (r, (s, x))) =
+    (coneSquareCompositionNullComparison (comparison Z) (comparison Y) (comparison X)
+      (spanMap g) (boundedFlatPerfectPrespectrumMap (laurent.map g))
+      (spanMap f) (boundedFlatPerfectPrespectrumMap (laurent.map f))
+      (inputComparisonHomotopy g) (inputComparisonHomotopy f)).level n
+        (r, (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) := by
+  apply coneSquareCompositionNullComparison_mapped_points
+  all_goals intro t; rfl
+
+/-- Every value of the fixed whole composition null square lies in its original inverse support. -/
+theorem nullSquare_factor (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (inclusion X).map n ((nullSquare f g).level n (r, (s, x))) =
+      (InputComposition.comparisonConeNullSquare f g).level n
+        (r, (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) := by
+  unfold nullSquare InputComposition.comparisonConeNullSquare
+    coneSquareCompositionMovingNullSquare
+  apply Homotopy.RelHomotopy.toSquare_mapped_points
+  intro r' s'
+  apply Homotopy.RelHomotopy.trans_mapped_points
+  · intro r'' s''
+    apply Homotopy.Square.toBoundary_mapped_points
+    intro r''' s'''
+    unfold coneSquareNullMovingSquare
+    apply Homotopy.Square.pastePaths_mapped_points
+    · intro t w
+      rfl
+    · intro t w
+      change ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+        (w, (HomotopyPushout.inr _ _).map n ((polynomialTrack f g).level n (t, x))) =
+          ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+            (w, (InputCompositionSpan.homotopy f g).level n
+              (t, (HomotopyPushout.inr _ _).map n x))
+      rw [polynomialTrack_inr]
+  · intro r'' s''
+    apply Homotopy.RelHomotopy.hcomp_mapped_points
+    · intro r''' s'''
+      apply Homotopy.RelHomotopy.hcomp_mapped_points
+      · intro _ _
+        rfl
+      · intro t w
+        exact nullCorrection_factor f g n t w x
+    · intro _ _
+      rfl
+
+/-- The fixed global homotopy agrees with the inverse construction on every inverse-cone point. -/
+theorem coneHomotopy_factor (n : ℕ) (r : unitInterval)
+    (x : (mappingCone (chart Z)).space n) :
+    (inclusion X).map n ((coneHomotopy f g).level n (r, x)) =
+      (InputComposition.coneHomotopy f g).level n (r, (inclusion Z).map n x) := by
+  have h : (coneHomotopy f g).at r ≫ inclusion X =
+      inclusion Z ≫ (InputComposition.coneHomotopy f g).at r := by
+    apply mappingCone_hom_ext
+    · apply Hom.ext
+      funext k
+      ext y
+      rfl
+    · intro k s y
+      exact nullSquare_factor f g k r s y
+  exact congrArg (fun k ↦ k.map n x) h
+
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionNegative

@@ -1,0 +1,50 @@
+{
+  "basis_commit": "25387c653f01abc24bf25cc166dee33cc63b67a2",
+  "original_path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeNerveTerminalChartComparisonClients.lean",
+  "snapshot_path": "MWholeNerveTerminalChartComparisonClients.lean.txt",
+  "original_sha256": "c02fddb1a148dba35f7fc7033f62599a1a1a9f162718ccd48487958ed9995bf7",
+  "live_sha256": "502c9a62394bf349857b602d92866582be13c598418dcfe552660f546c047afe",
+  "disposition": "Canonical theorem owner remains live; public module and identifiers remain as deprecated aliases. No independent mathematical result removed.",
+  "aliases": [
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_zero",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_zero"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_one",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_one"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_plus_one",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_plus_one"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_minus_one",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_minus_one"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_source",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_source"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_target",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_target"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_left",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_left"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_right",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_right"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_plus_laurent",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_plus_laurent"
+    },
+    {
+      "old": "Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients.client_terminal_chart_comparison_minus_laurent",
+      "canonical": "Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_minus_laurent"
+    }
+  ]
+}

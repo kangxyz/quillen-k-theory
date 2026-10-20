@@ -1,0 +1,68 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitProducts
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitShift
+/-! The actual unit product anchors preserve the same original forward scalar. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS Quillen.FunctorIdentityAutomorphism
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductAnchors
+open InputCompositionUnitProducts InputCompositionUnitShift InputIdentitySeedCarrier
+open GlobalBassEvaluation.InputSeedEvaluationProduct GlobalSectionChangeIndex
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The original binary Laurent source preserves exactly the forward pulled-back scalar. -/
+theorem laurent_source_preserves :
+    Preserves (InputCompositionCarrierBottom.laurentSource f g).functor
+      (evaluationSmallUnit (op (laurent.obj Z)) (GlobalSchemeLaurentTrack.laurentScalar (op Z)))
+      (evaluationSmallUnit (op (laurent.obj X)) (GlobalSchemeLaurentTrack.laurentScalar (op X))) :=
+        by
+  have h := GlobalBassEvaluation.InputSeedPostUnit.raw_preserves
+    (laurent.map f ≫ laurent.map g) (GlobalSchemeLaurentTrack.laurentScalar (op Z))
+  have hscalar : Units.map (laurent.map f ≫ laurent.map g).appTop.hom.toMonoidHom
+      (GlobalSchemeLaurentTrack.laurentScalar (op Z)) =
+        GlobalSchemeLaurentTrack.laurentScalar (op X) := by
+    rw [← laurent.map_comp f g]
+    exact laurentUnit_map (f ≫ g)
+  rw [hscalar] at h
+  exact h
+
+/-- The source unit product anchor retains the full unit before the Laurent factor. -/
+theorem source_anchor_unit :
+    commonUnit (f ≫ g) ≪≫ sourceAnchor f g =
+      sourceAnchor f g ≪≫ isoWhiskerRight (unitIso Z)
+        (InputCompositionCarrierBottom.laurentSource f g).functor := by
+  rw [commonUnit_eq_target]
+  apply Iso.ext
+  exact onFunctor_intertwine (laurentRef (f ≫ g)).functor (unitMap Z).functor
+    (InputCompositionCarrierBottom.laurentSource f g).functor (sourceAnchor f g).hom
+    (evaluationSmallUnit (op (laurent.obj Z)) (GlobalSchemeLaurentTrack.laurentScalar (op Z)))
+    (evaluationSmallUnit (op (laurent.obj X)) (GlobalSchemeLaurentTrack.laurentScalar (op X)))
+    (laurent_source_preserves f g)
+
+/-- The target product anchor retains the full unit after the base factor. -/
+theorem target_anchor_unit :
+    commonUnit (f ≫ g) ≪≫ targetAnchor f g =
+      targetAnchor f g ≪≫ isoWhiskerLeft
+        (InputCompositionTopPieces.baseSource f g).functor (unitIso X) := by
+  rw [commonUnit_eq_target]
+  apply Iso.ext
+  apply NatTrans.ext
+  funext K
+  simp only [Iso.trans_hom, NatTrans.comp_app, isoWhiskerLeft_hom, whiskerLeft_app,
+    unitIso, onFunctor_hom_app]
+  exact ((evaluationSmallUnit (op (laurent.obj X))
+    (GlobalSchemeLaurentTrack.laurentScalar (op X))).hom.naturality
+      ((targetAnchor f g).hom.app K)).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductAnchors

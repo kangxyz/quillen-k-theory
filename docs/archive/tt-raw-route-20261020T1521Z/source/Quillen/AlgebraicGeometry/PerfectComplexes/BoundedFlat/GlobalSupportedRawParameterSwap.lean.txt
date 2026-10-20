@@ -1,0 +1,134 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawGeometry
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIdentityModels
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliarySupportMaps
+
+/-!
+# Actual two-factor products for supported parameter rows
+
+The original right-factor product of a quasi-compact open pair is identified with
+the parameter-first pair by genuine pullback symmetry. The specified structural
+map is retained through its unique terminal-map equality. Both projections and
+whole pair-arrow naturality, in the pair and in the parameter, are proved. This
+is not the independent-variable three-factor swap and supplies no new raw null.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+universe u
+namespace Quillen.PerfectComplexes.GlobalSectionChangeIndex.SupportedParameterSwap
+open ParameterAuxiliarySupport
+variable {S T : Scheme.{u}}
+
+/-- Retain the actual structural morphism through its unique equality with the terminal map. -/
+theorem structural_eq (p : S ⟶ integerBase) : p = toIntegerBase S :=
+  specULiftZIsTerminal.hom_ext _ _
+
+/-- The actual two-factor symmetry, including the original structural-map transport. -/
+def factorIso (p : S ⟶ integerBase) (X : Scheme.{u}) :
+    (baseProductFunctor p).obj X ≅ (baseProductFunctor (toIntegerBase X)).obj S :=
+  pullbackSymmetry (toIntegerBase X) p ≪≫ pullback.congrHom (structural_eq p) rfl
+
+/-- The original right factor becomes the parameter-first projection. -/
+@[reassoc] theorem factorIso_fst (p : S ⟶ integerBase) (X : Scheme.{u}) :
+    (factorIso p X).hom ≫ pullback.fst _ _ = pullback.snd (toIntegerBase X) p := by
+  simp [factorIso, pullback.congrHom]
+
+/-- The original ambient factor becomes the fixed-factor second projection. -/
+@[reassoc] theorem factorIso_snd (p : S ⟶ integerBase) (X : Scheme.{u}) :
+    (factorIso p X).hom ≫ pullback.snd _ _ = pullback.fst (toIntegerBase X) p := by
+  simp [factorIso, pullback.congrHom]
+
+/-- The complete fixed-factor scheme square retains both original pullback projections. -/
+theorem factorIso_naturality (p : S ⟶ integerBase) {X Y : Scheme.{u}} (g : X ⟶ Y) :
+    (baseProductFunctor p).map g ≫ (factorIso p Y).hom =
+      (factorIso p X).hom ≫ (productMap g).app S := by
+  apply pullback.hom_ext <;>
+    simp [factorIso, pullback.congrHom, baseProductFunctor, productMap,
+      baseProductTransformation, Category.assoc]
+
+/-- Parameter change retains the actual map over the integral base, not just its objects. -/
+theorem factorIso_parameter (p : S ⟶ integerBase) (q : T ⟶ integerBase)
+    (h : S ⟶ T) (hh : h ≫ q = p) (X : Scheme.{u}) :
+    (baseProductTransformation p q h hh).app X ≫ (factorIso q X).hom =
+      (factorIso p X).hom ≫ (baseProductFunctor (toIntegerBase X)).map h := by
+  apply pullback.hom_ext <;>
+    simp [factorIso, pullback.congrHom, baseProductFunctor, baseProductTransformation,
+      Category.assoc]
+
+/-- Symmetry on both actual entries of the original quasi-compact support pair. -/
+def pairIso (p : S ⟶ integerBase) [QuasiCompact p] (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    ((pairBaseProductFunctor p).obj A).obj ≅ GlobalSupportedParameter.pair A.obj.obj.hom S :=
+  Scheme.openPairProperty.isoMk
+    (Arrow.isoMk (factorIso p A.obj.obj.left) (factorIso p A.obj.obj.right)
+      (factorIso_naturality p A.obj.obj.hom).symm)
+
+/-- The entire actual support-enlargement or restriction square commutes with symmetry. -/
+theorem pairIso_naturality (p : S ⟶ integerBase) [QuasiCompact p]
+    {A B : Scheme.QuasiCompactOpenPairs.{u}} (g : A ⟶ B) :
+    ((pairBaseProductFunctor p).map g).hom ≫ (pairIso p B).hom =
+      (pairIso p A).hom ≫ (pairTransformation g.hom).app S := by
+  apply ObjectProperty.hom_ext
+  apply Arrow.hom_ext
+  · exact factorIso_naturality p g.hom.hom.left
+  · exact factorIso_naturality p g.hom.hom.right
+
+/-- The full pair comparison preserves parameter projection and positive/inverse chart maps. -/
+theorem pairIso_parameter (p : S ⟶ integerBase) (q : T ⟶ integerBase)
+    [QuasiCompact p] [QuasiCompact q] (h : S ⟶ T) (hh : h ≫ q = p)
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    ((pairBaseProductTransformation p q h hh).app A).hom ≫ (pairIso q A).hom =
+      (pairIso p A).hom ≫ GlobalSupportedParameter.pairMap A.obj.obj.hom h := by
+  apply ObjectProperty.hom_ext
+  apply Arrow.hom_ext
+  · exact factorIso_parameter p q h hh A.obj.obj.left
+  · exact factorIso_parameter p q h hh A.obj.obj.right
+
+/-- On the actual ambient scheme, the original scalar factor is still the same projection. -/
+@[reassoc] theorem pairIso_right_fst (p : S ⟶ integerBase) [QuasiCompact p]
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (pairIso p A).hom.hom.right ≫ pullback.fst _ _ =
+      pullback.snd (toIntegerBase A.obj.obj.right) p :=
+  factorIso_fst p A.obj.obj.right
+
+/-- On the actual ambient scheme, the original geometric factor is still the same projection. -/
+@[reassoc] theorem pairIso_right_snd (p : S ⟶ integerBase) [QuasiCompact p]
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (pairIso p A).hom.hom.right ≫ pullback.snd _ _ =
+      pullback.fst (toIntegerBase A.obj.obj.right) p :=
+  factorIso_snd p A.obj.obj.right
+
+/-- Parameter projection followed by the original identity-pair projection is the unchanged
+right-factor projection of the entire supported pair. -/
+theorem pairIso_projection (p : S ⟶ integerBase) [QuasiCompact p]
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (pairIso p A).hom ≫ GlobalSupportedParameter.pairMap A.obj.obj.hom p ≫
+        (ParameterIdentity.projectionPairIso A.obj.obj.hom).hom =
+      ((pairBaseProductProjection p).app A).hom := by
+  apply ObjectProperty.hom_ext
+  apply Arrow.hom_ext
+  · change (factorIso p A.obj.obj.left).hom ≫
+        (baseProductFunctor (toIntegerBase A.obj.obj.left)).map p ≫
+          (ParameterIdentity.projectionIso A.obj.obj.left).hom =
+      pullback.fst (toIntegerBase A.obj.obj.left) p
+    rw [ParameterIdentity.projectionIso_hom]
+    simpa [baseProductFunctor, Category.assoc] using
+      factorIso_snd p A.obj.obj.left
+  · change (factorIso p A.obj.obj.right).hom ≫
+        (baseProductFunctor (toIntegerBase A.obj.obj.right)).map p ≫
+          (ParameterIdentity.projectionIso A.obj.obj.right).hom =
+      pullback.fst (toIntegerBase A.obj.obj.right) p
+    rw [ParameterIdentity.projectionIso_hom]
+    simpa [baseProductFunctor, Category.assoc] using
+      factorIso_snd p A.obj.obj.right
+
+end Quillen.PerfectComplexes.GlobalSectionChangeIndex.SupportedParameterSwap

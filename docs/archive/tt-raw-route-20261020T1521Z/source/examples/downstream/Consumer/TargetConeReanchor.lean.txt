@@ -1,0 +1,44 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetConeReanchor
+
+/-! # Two complete scalar reference changes commute with the original action on whole families -/
+
+@[expose] public noncomputable section
+
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge
+open scoped Simplicial Topology unitInterval
+
+universe u
+namespace Consumer.TargetConeReanchor
+
+open BassH0Merge
+
+/-- Any finite external cube retains its independent old loop and seed parameters. -/
+theorem successive_cone_references {R : CommRingCat.{u}} (P : Over (Spec R))
+    {a b : Under R} (f : a ⟶ b) {V : Model.{u + 1}}
+    (E E' E'' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+    (δ : E'.functor ≅ E.functor) (ε : E''.functor ≅ E'.functor)
+    (d : ℕ) (p : C((Fin d → I) × (I × I), scalarCone P a E))
+    (z : Fin d → I) (v t : I) :
+    Reanchor.cone P b (E' ≫ normalizedMap (coefficientMap P f))
+      (E'' ≫ normalizedMap (coefficientMap P f))
+      (isoWhiskerRight ε (normalizedMap (coefficientMap P f)).functor)
+      (Reanchor.cone P b (E ≫ normalizedMap (coefficientMap P f))
+        (E' ≫ normalizedMap (coefficientMap P f))
+        (isoWhiskerRight δ (normalizedMap (coefficientMap P f)).functor)
+        (TargetCone.coneMap P f E (p (z, (v, t))))) =
+      TargetCone.coneMap P f E''
+        (Reanchor.cone P a E' E'' ε (Reanchor.cone P a E E' δ (p (z, (v, t))))) := by
+  rw [TargetCone.coneMap_reanchor P f E E' δ, TargetCone.coneMap_reanchor P f E' E'' ε]
+
+end Consumer.TargetConeReanchor

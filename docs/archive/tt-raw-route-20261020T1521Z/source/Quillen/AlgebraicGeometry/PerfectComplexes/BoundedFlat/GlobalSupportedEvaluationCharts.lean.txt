@@ -1,0 +1,84 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedEvaluationSource
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedEvaluationComposition
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawSplitSquare
+public import Quillen.Topology.Prespectrum.StrictSquareSplitEvaluation
+
+/-!
+# Actual supported evaluation on the two original Bass charts
+
+The existing supported evaluation Models act at the four actual geometric corners. The proved
+mixed composition comparison supplies both complete chart pastings with the original split
+geometric tracks. They instantiate strict-to-split evaluation without any caller-supplied
+chart filler. The strict source is linked to the original parameter square by its whole
+source-square isomorphism; its constant cylinder and full-clock null are unchanged.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedEvaluation
+open GlobalSectionChangeIndex GlobalSupportedRawBass SupportedTensorEvaluation
+
+/-- The actual chosen-zero supported section evaluation at an unchanged open pair. -/
+def evaluation (A : Scheme.OpenPairs.{u}) :
+    prespectrum (pairSupported.obj (op A)) ⟶ rawSpectrum A :=
+  prespectrumMap (evaluationModel (X := op A.obj.right) A.obj.hom)
+
+/-- Equality of actual open-pair arrows retains every evaluation comparison time. -/
+theorem evaluation_level_congr {A B : Scheme.OpenPairs.{u}} {p q : A ⟶ B}
+    (h : p = q) (n : ℕ) :
+    (evaluationComparison p).level n = (evaluationComparison q).level n := by
+  cases h
+  rfl
+
+/-- The common diagonal comparison retains the original strict source composite. -/
+def diagonalComparison (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Homotopy
+      (((Source.sectionSquare A).left.hom ≫ (Source.sectionSquare A).hom.right) ≫
+        evaluation (Geometry.laurent A))
+      (evaluation A.obj ≫ rawMap (Geometry.laurentProjection A)) :=
+  (evaluationComparison (Geometry.laurentProjection A)).cast
+    (congrArg (fun f ↦ f ≫ evaluation (Geometry.laurent A))
+      (Source.sectionSquare_source A).symm) rfl
+
+/-- Both actual supported chart pastings give the strict-to-original-split evaluation input. -/
+def splitEvaluation (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    StrictSquare.SplitEvaluation (Source.sectionSquare A) (splitSquare A) where
+  a := evaluation A.obj
+  bp := evaluation (Geometry.polynomial A)
+  bm := evaluation (Geometry.polynomial A)
+  c := evaluation (Geometry.laurent A)
+  Qp := evaluationComparison (Geometry.projection A)
+  Qm := evaluationComparison (Geometry.projection A)
+  Hp := evaluationComparison (Geometry.plus A)
+  Hm := evaluationComparison (Geometry.minus A)
+  T := diagonalComparison A
+  Jp := by
+    apply (evaluationCompositionRelHomotopy (Geometry.plus A) (Geometry.projection A)).symm.ofLevels
+    · intro n
+      apply Homotopy.trans_level_congr <;> rfl
+    · intro n
+      apply Homotopy.trans_level_congr
+      · exact (evaluation_level_congr (Geometry.plus_projection A) n).symm
+      · rfl
+  Jm := by
+    apply (evaluationCompositionRelHomotopy
+      (Geometry.minus A) (Geometry.projection A)).symm.ofLevels
+    · intro n
+      apply Homotopy.trans_level_congr <;> rfl
+    · intro n
+      apply Homotopy.trans_level_congr
+      · exact (evaluation_level_congr (Geometry.minus_projection A) n).symm
+      · rfl
+
+end Quillen.PerfectComplexes.GlobalSupportedEvaluation

@@ -1,6 +1,14 @@
 # Thomason–Trobaugh comparison boundaries
 
-The constructed section completion and native current-stage localization have proved comparisons. Their identification with a specified classical Thomason–Trobaugh spectrum and its original null diagram remains open. This guide records that boundary and the separate raw-cell route; it does not rename a constructed completion as classical Kᴮ.
+The tensor construction directly realizes the Bass recipe of TT §§6.3–6.4,
+with independent cone-generator laws and a uniform finite-stage trace. It proves
+the basic and auxiliary localization statements of TT 7.4: the specified
+canonical-null fiber lifts are stable equivalences in every integer degree.
+[Tensor construction and localization](BoundedFlat/TensorBassConstruction.md)
+gives the exact represented recipe, stable comparison roof and hypotheses.
+The separate natural comparison with the prescribed raw implementation below
+remains open, including its forward transitions and whole-null diagram. That
+additional comparison is not a premise of the directly proved TT 7.4 theorem.
 
 ## Classical target and source
 
@@ -16,7 +24,7 @@ For a closed auxiliary support `Z` with quasi-compact complement, its supported 
 Kᴮ(X on Y ∩ Z) → Kᴮ(X on Z) → Kᴮ(U on U ∩ Z).
 ```
 
-R. W. Thomason and T. Trobaugh, *Higher Algebraic K-Theory of Schemes and of Derived Categories*, The Grothendieck Festschrift III, Progress in Mathematics 88 (1990), 247–435, Theorem 7.4, printed pp. 365–366; §§6.4, 6.6(a), 7.0, 7.5(a) retain the initial comparison for every `n ≥ 0`, including zero. [DOI](https://doi.org/10.1007/978-0-8176-4576-2_10); [original paper](https://www.sas.rochester.edu/mth/sites/doug-ravenel/otherpapers/Thomason-Trobaugh.pdf).
+R. W. Thomason and T. Trobaugh, *Higher Algebraic K-Theory of Schemes and of Derived Categories*, The Grothendieck Festschrift III, Progress in Mathematics 88 (1990), 247–435, Theorem 7.4, printed p. 365; §§6.4, 6.6(a), 7.0, 7.5(a) retain the initial comparison for every `n ≥ 0`, including zero. [DOI](https://doi.org/10.1007/978-0-8176-4576-2_10); [original paper](https://www.sas.rochester.edu/mth/sites/doug-ravenel/otherpapers/Thomason-Trobaugh.pdf).
 
 ## Constructed results and their conditions
 
@@ -131,7 +139,15 @@ Generic fiber-lift naturality still takes the complete null square `Q`.
 These supplied primitives therefore do not constitute an all-successor
 recipe or the supported raw same-null comparison.
 
-## Classical object and same-null correspondence
+<a id="classical-object-and-same-null-correspondence"></a>
+
+## Comparison with the prescribed raw point-set implementation
+
+This section specifies an additional comparison with a separately fixed raw
+implementation. Its remaining obligations concern that implementation and its
+chosen class conventions. Direct realization of the TT construction recipe
+provides another route to TT 7.4 and does not require a second spectrum object
+or this additional comparison.
 
 Specify the classical model by the original raw perfect/bounded-flat-perfect
 spectrum, native polynomial/Laurent squares, original cone/loop stages and

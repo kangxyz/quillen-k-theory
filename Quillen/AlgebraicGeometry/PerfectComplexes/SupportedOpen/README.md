@@ -69,4 +69,19 @@ pullback of `T` and `V_a = T_a ∪ range(f_a)`.
 | Seeds and coarse completion | The same ambient forward Laurent unit on the `V_a`-supported fiber, forget/changeWeak seed squares, every canonical-null time-slice square, actual finite towers/telescope null, and stable `Cone(forget∞) → C_Z∞` | Only the original open immersion. Original inclusions, whole identity-action interchange, finite Model excision/T1 and telescope cone descent retain independent null time and telescope height. No supplied compatibility or localization input. |
 | Final fine auxiliary sequence | Postcomposition with original `r_Z∞`, same-null stable fiber lift for `Fiber_Z∞ → A_Z∞ → F_Z∞`, projection and signed connecting identity | Compact `P,Q,T` and quasi-separated `Q` for final fine stability. Projection and boundary identities retain only the open immersion. |
 
-The same joint zero is retained throughout the fiber, native acyclic equivalence, fibration inputs, and every level/time value of the canonical null. This does not identify independently chosen geometric zeros. These are constructed section-completion comparisons with auxiliary support; identification with classical Kᴮ remains separate.
+The same joint zero is retained throughout the fiber, native acyclic
+equivalence, fibration inputs, and every level/time value of the canonical
+null. This does not identify independently chosen geometric zeros.
+
+The [tensor-generated Bass realization](../BoundedFlat/TensorBassConstruction.md)
+directly proves the auxiliary statement of original TT 7.4. For qcqs `X`,
+quasi-compact `U ⊂ X`, and closed `Z` with quasi-compact complement `T`, its
+three support objects are `(X, (X ∖ U) ∩ Z)`, `(X, Z)`, and `(U, U ∩ Z)`.
+They are defined by acyclicity on `U ∪ T`, `T`, and the inverse image of `T`;
+the arrows are actual support enlargement and open restriction.
+[`ParameterAuxiliaryCurrentFiber.currentLift_integer_isStableEquivalence`](../BoundedFlat/ParameterAuxiliaryCurrentLocalization.lean)
+proves stability of their canonical-null fiber lift, and
+`currentLift_integer_signed_isIso` covers every integer degree. This gives
+the supported long exact sequence as well. Comparison with the
+[separately prescribed raw implementation](../Development.md#comparison-with-the-prescribed-raw-point-set-implementation)
+and its chosen class/boundary conventions remains an additional task.

@@ -5,8 +5,34 @@ retaining the original geometric evaluation maps. This guide develops their
 fine finite stages, original classes, telescope and same-null localization.
 [Raw evaluation](RawEvaluation.md), [geometric connecting maps](GeometricBoundary.md),
 [affine graded objects](../Affine/README.md) and [scheme Bass groups](../Bass/README.md)
-keep their own interfaces. The [classical comparison boundary](../Development.md)
-requires the specified object, transitions and whole null diagram.
+keep their own interfaces. The [TT localization and comparison guide](../Development.md)
+separates the direct TT 7.4 proof from comparison with a separately prescribed
+raw object, transitions and whole null diagram.
+
+## Direct realization of TT 7.4
+
+The [tensor-generated construction](TensorBassConstruction.md) realizes the
+Bass recipe of TT §§6.3–6.4 and proves original Theorem 7.4. It uses the actual
+perfect K-model and geometric maps, the constant-overlap looped cone, genuine
+forward left-[T] tensor input, an independently specified cone-generator law
+and uniform recursion on the transformed diagram. The specified stable roof
+then compares the forward operation with the current transition and the
+actual telescope; no arbitrary stable inverse or group-only recognition is
+substituted.
+
+For qcqs `X` and quasi-compact `U ⊂ X`, the basic canonical-null fiber lift is
+a stable equivalence in every integer degree. The same holds for the
+auxiliary supported lift when the closed support has quasi-compact
+complement. The [current-stage localization section](#native-current-stage-full-open-localization)
+gives the exact declarations and hypotheses. Both lifts retain the original
+support maps and every time of the acyclicity null; their stable fiber
+identifications give the long exact sequences.
+
+A full multiplicative API and comparison to the
+[prescribed raw point-set implementation](../Development.md#comparison-with-the-prescribed-raw-point-set-implementation)
+remain additional targets. Their unresolved coherences do not leave original
+TT 7.4 incomplete. The exact primary-source locator is in the
+[comparison guide](../Development.md#classical-target-and-source).
 
 ## Bass groups and geometric spectral comparisons
 
@@ -191,8 +217,8 @@ equivariance or tower-coherence premise. At the integer parameter,
 identifies the ambient and supported Models by their original projection and
 preserves both maps. The auxiliary lift below and the original-class
 boundary comparisons use further assembled map and whole-null squares;
-classical raw-stage identification retains its separate target. Source and
-validation identities are in the
+comparison with the prescribed raw stages retains its separate target.
+Source and validation identities are in the
 [global evidence registry](../../../../docs/evidence/README.md#tt-source-and-validation-records).
 
 The auxiliary lift in
@@ -209,7 +235,7 @@ projection is precisely the original enlargement. This constructs the
 auxiliary current-stage localization as well as the basic full-open case.
 Its original negative classes and positive geometric sign are described in
 [geometric connecting maps](GeometricBoundary.md); identification with the
-specified classical raw object remains separate.
+separately prescribed raw object remains separate from the direct TT result.
 
 ## Finite-stage excision and bottom groups
 
@@ -323,8 +349,8 @@ naturally on all of `Under R`. Their degree-zero forward maps agree literally.
 `CoefficientSupportedNegativeTelescopeForget` preserves the original
 support-forgetting maps and Laurent representatives through the actual
 ambient and supported inclusions. These are identifications with the
-constructed fine completion; the original raw all-stage tower and its
-classical interpretation remain separate.
+constructed fine completion; comparison to the separately prescribed raw
+all-stage tower remains an additional target.
 
 ## Raw identity and second-stage coherence
 
@@ -371,8 +397,8 @@ coefficient-natural stable map from this telescope to its Bass image in every
 integer degree. Its initial face is exactly the original Laurent seed followed
 by Bass of the original initial inclusion. The construction retains all original
 transitions and independent cylinder/loop parameters, without assuming any
-finite transition stable. This self-comparison alone does not identify classical
-negative groups of the telescope.
+finite transition stable. This self-comparison alone does not supply the
+original negative-group identifications proved above.
 
 For `j : U ⟶ Spec R` with `[IsOpenImmersion j]`,
 `Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.AffineBaseChange` chooses one actual
@@ -423,8 +449,11 @@ action needs compact P/Q, while pointwise grading has no compactness premise.
 Their cofinality, canonical null, signed cones, and completed localization are supplied by the dedicated supported interfaces below.
 `CoefficientSectionEvaluationNaturality`, `CoefficientSectionEvaluationUnit`
 and `CoefficientLaurentEvaluation` preserve the actual evaluation tracks and
-forward units. Complete raw-iterate/telescope geometric comparison and classical Kᴮ
-identification remain open; see the [classical comparison boundary](../Development.md).
+forward units. Complete comparison with the prescribed raw iterates and
+telescope remains open; see the
+[additional comparison target](../Development.md#comparison-with-the-prescribed-raw-point-set-implementation).
+The direct tensor-generated realization of TT 7.4 does not require this
+second implementation comparison.
 
 `BoundedFlat.OpenConeComparison` proves the actual geometric acyclic-support
 cone stably equivalent to the original coarse relative-open S-prespectrum in
@@ -627,7 +656,14 @@ quasi-separated Q. This is constructed section-completion localization.
 
 `CoefficientSectionEvaluationSourceLeg` supplies original source-leg movement and raw-cone two-time interchange. `CoefficientSectionEvaluationTopology` supplies the actual e/V levelwise equivalences and span/cone/loop HEP/T1. `CoefficientSectionEvaluationComposition` proves normalized pasting, the relative split-track comparison, and both chart/cylinder faces, without openness, compactness, or flatness. The source-null/seed comparison is supplied by `CoefficientSectionEvaluationSeedComparison`; complete original raw iteration retains the boundary in [raw evaluation](RawEvaluation.md).
 
-The projective-line geometric inputs have their own [source-family authority](../ProjectiveLine/README.md): determinant-normalized tensor and pullback mates, intrinsic-perfect quasicoherent/strict representatives, actual derived projection perfection, natural generation on genuine roofs, and both original K-inverse laws. Older objectwise projection or strictification criteria do not retract those later results. The [classical comparison guide](../Development.md) keeps the raw-cell and external classical Kᴮ boundaries separate from the native current-stage endpoint above.
+The projective-line geometric inputs have their own
+[source-family authority](../ProjectiveLine/README.md): determinant-normalized
+tensor and pullback mates, intrinsic-perfect quasicoherent/strict
+representatives, actual derived projection perfection, natural generation on
+genuine roofs, and both original K-inverse laws. Older objectwise projection
+or strictification criteria do not retract those later results. The
+[comparison guide](../Development.md) distinguishes the proved TT 7.4 result
+from the additional raw-cell implementation comparison.
 
 ## Finite normalization and original group interfaces
 
@@ -676,10 +712,10 @@ normalized classes and intrinsic boundary are developed in
 These identifications concern the constructed fine/current/normalized rows.
 The positive geometric boundary on every original perfect class has a single
 minus with the unchanged class maps and degree cast. An unsigned geometric
-square is therefore not asserted. Classical object, forward-transition and
-whole-null correspondence, together with any separately required
-arbitrary-pair naturality, retain their exact targets in the
-[classical comparison guide](../Development.md).
+square is therefore not asserted. Correspondence with the separately
+prescribed raw object, forward transitions and whole null, together with any
+required arbitrary-pair naturality, retain their exact targets in the
+[additional comparison guide](../Development.md#comparison-with-the-prescribed-raw-point-set-implementation).
 
 ## Declaration locators
 

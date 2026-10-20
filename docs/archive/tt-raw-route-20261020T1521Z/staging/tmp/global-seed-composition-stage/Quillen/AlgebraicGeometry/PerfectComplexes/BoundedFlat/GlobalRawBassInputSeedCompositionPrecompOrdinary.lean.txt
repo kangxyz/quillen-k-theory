@@ -1,0 +1,73 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionPrecomp
+/-! The full second seed carrier restricts to the already chosen ordinary null transport. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionPrecomp
+open CommonReferenceNerve InputIdentitySeedCarrier InputNullCompositionPrecomp
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "Ff" => polyRef f
+local notation "Gf" => laurentRef f
+local notation "J" => chart (X := X)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "εf" => ordinary f
+local notation "εf'" => shifted f
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- On the whole ordinary sheet this is exactly the previously chosen null transport. -/
+theorem transport_ordinary (z : SeedOrdinarySheet.Sheet f) :
+    transport f g (SeedOrdinarySheet.inclusion f z) =
+      InputNullCompositionPrecomp.transport f g z := by
+  rcases Types.eq_or_eq_of_isPushout
+    ((CutOpenCarrier.first_isPushout Ff J Gf εf).map (forget TopCat)) z with
+      ⟨⟨y,t⟩,hz⟩ | ⟨y | y,hz⟩
+  · change DoubleCylinder.realizedCylinder (CutOpenCarrier.attaching Ff J Gf εf)
+      (CutOpenCarrier.erase Ff) (y,t) = z at hz
+    rw [← hz]
+    change transport f g (SeedOrdinarySheet.inclusion f
+      (SeedOrdinarySheet.cylinder f (y,t.down))) =
+      InputNullCompositionPrecomp.transport f g (SeedOrdinarySheet.cylinder f (y,t.down))
+    rw [SeedOrdinarySheet.inclusion_cylinder, transport, CutOpenMap.map_cylinderMinus,
+      InputNullCompositionPrecomp.transport_cylinder]
+    rfl
+  · change DoubleCylinder.realizedEnds (CutOpenCarrier.attaching Ff J Gf εf)
+      (CutOpenCarrier.erase Ff) (Sum.inl y) = z at hz
+    rw [← hz, ← FourEdgeTree.SetDescent.eval_realized_left]
+    change transport f g (SeedOrdinarySheet.inclusion f (SeedOrdinarySheet.laurent f y)) =
+      InputNullCompositionPrecomp.transport f g (SeedOrdinarySheet.laurent f y)
+    rw [SeedOrdinarySheet.inclusion_laurent, transport, CutOpenMap.map_laurent,
+      InputNullCompositionPrecomp.transport_laurent]
+    rfl
+  · change DoubleCylinder.realizedEnds (CutOpenCarrier.attaching Ff J Gf εf)
+      (CutOpenCarrier.erase Ff) (Sum.inr y) = z at hz
+    rw [← hz, ← FourEdgeTree.SetDescent.eval_realized_right]
+    have hy : y = (default : |CutOpenCarrier.tipSSet.{u + 1}|) := Subsingleton.elim _ _
+    rw [hy]
+    change transport f g (SeedOrdinarySheet.inclusion f (SeedOrdinarySheet.tip f)) =
+      InputNullCompositionPrecomp.transport f g (SeedOrdinarySheet.tip f)
+    rw [SeedOrdinarySheet.inclusion_tip, transport, CutOpenMap.map_tipMinus,
+      InputNullCompositionPrecomp.transport_tip]
+
+/-- The original ordinary null comparison is preserved pointwise inside the full transport. -/
+theorem null_ordinary (r s : I) :
+    transport f g (InputIdentitySeedNull.pastedNull f false (r,s)) =
+      InputNullCompositionPrecomp.surface f g (r,s) := by
+  rw [← SeedOrdinarySheet.inclusion_pastedNull, transport_ordinary]
+  rfl
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionPrecomp

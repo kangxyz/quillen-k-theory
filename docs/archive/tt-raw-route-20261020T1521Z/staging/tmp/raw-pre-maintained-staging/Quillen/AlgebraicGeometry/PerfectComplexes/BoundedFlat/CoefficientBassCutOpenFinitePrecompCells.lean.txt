@@ -1,0 +1,108 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompMap
+/-! Whole Laurent, cylinder, and tip formulas with every original coordinate retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Convexity
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp
+open CutOpenCarrier
+variable {U V W T : Model.{u}} (A : U ⟶ V)
+variable {q : ℕ} (M : Fin (q + 1) → Node A)
+variable (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
+variable (ε₀ ε₁ : G.functor ≅ (F ≫ J).functor)
+
+/-- The second descended map retains its complete endpoint-pair values. -/
+theorem curried_ends (z : |firstSimplicial F J G ε₀| ⊕ |tipSSet.{u}|) :
+    curried A M F J G ε₀ ε₁ (DoubleCylinder.realizedEnds
+      (secondAttaching F J G ε₀ ε₁) (erase F) z) = secondEnds A M F J G ε₀ ε₁ z :=
+  ConcreteCategory.congr_hom ((second_isPushout F J G ε₀ ε₁).inr_desc
+    (TopCat.ofHom (plus A M F J G ε₀ ε₁))
+    (TopCat.ofHom (secondEnds A M F J G ε₀ ε₁))
+    (second_square A M F J G ε₀ ε₁)) z
+
+/-- The second descended map retains the entire positive cylinder. -/
+theorem curried_cylinder (z : |parameterSSet F| × TopCat.I.{u}) :
+    curried A M F J G ε₀ ε₁ (DoubleCylinder.realizedCylinder
+      (secondAttaching F J G ε₀ ε₁) (erase F) z) = plus A M F J G ε₀ ε₁ z :=
+  ConcreteCategory.congr_hom ((second_isPushout F J G ε₀ ε₁).inl_desc
+    (TopCat.ofHom (plus A M F J G ε₀ ε₁))
+    (TopCat.ofHom (secondEnds A M F J G ε₀ ε₁))
+    (second_square A M F J G ε₀ ε₁)) z
+
+/-- The complete first sheet remains unchanged by the second descent. -/
+theorem curried_left (y : |firstSimplicial F J G ε₀|) :
+    curried A M F J G ε₀ ε₁ (SSet.toTop.map (left₁ F J G ε₀ ε₁) y) =
+      first A M F J G ε₀ ε₁ y := by
+  rw [show SSet.toTop.map (left₁ F J G ε₀ ε₁) y =
+    DoubleCylinder.realizedEnds (secondAttaching F J G ε₀ ε₁) (erase F) (Sum.inl y) from
+      realized_left _ _ y, curried_ends]
+  rfl
+
+/-- The Laurent inclusion follows the finite source action on the entire reference nerve. -/
+theorem precompFinite_laurent (y : |parameterSSet G|)
+    (w : StdSimplex ℝ (Fin (q + 1))) :
+    precompFinite A M F J G ε₀ ε₁ (laurentInclusion F J G ε₀ ε₁ y, w) =
+      laurentInclusion (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁)
+        (parameter A M G (y, w)) := by
+  change curried A M F J G ε₀ ε₁
+    (SSet.toTop.map (left₁ F J G ε₀ ε₁) (SSet.toTop.map (left₀ F J G ε₀) y)) w = _
+  rw [curried_left, first_left]
+  rfl
+
+/-- The whole negative cylinder retains its source height. -/
+theorem precompFinite_cylinderMinus (y : |parameterSSet F|) (t : I)
+    (w : StdSimplex ℝ (Fin (q + 1))) :
+    precompFinite A M F J G ε₀ ε₁ (cylinderMinus F J G ε₀ ε₁ (y, t), w) =
+      cylinderMinus (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁)
+        (parameter A M F (y, w), t) := by
+  change curried A M F J G ε₀ ε₁ (SSet.toTop.map (left₁ F J G ε₀ ε₁)
+    (DoubleCylinder.realizedCylinder (attaching F J G ε₀) (erase F) (y, ULift.up t))) w = _
+  rw [curried_left, first_cylinder]
+  rfl
+
+/-- The whole positive cylinder retains its independently supplied source height. -/
+theorem precompFinite_cylinderPlus (y : |parameterSSet F|) (t : I)
+    (w : StdSimplex ℝ (Fin (q + 1))) :
+    precompFinite A M F J G ε₀ ε₁ (cylinderPlus F J G ε₀ ε₁ (y, t), w) =
+      cylinderPlus (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁)
+        (parameter A M F (y, w), t) := by
+  change curried A M F J G ε₀ ε₁ (DoubleCylinder.realizedCylinder
+    (secondAttaching F J G ε₀ ε₁) (erase F) (y, ULift.up t)) w = _
+  rw [curried_cylinder]
+  rfl
+
+/-- The negative tip is fixed for every finite source parameter. -/
+theorem precompFinite_tipMinus (w : StdSimplex ℝ (Fin (q + 1))) :
+    precompFinite A M F J G ε₀ ε₁ (tipMinus F J G ε₀ ε₁, w) =
+      tipMinus (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁) := by
+  change curried A M F J G ε₀ ε₁ (SSet.toTop.map (left₁ F J G ε₀ ε₁)
+    (SSet.toTop.map (right₀ F J G ε₀) default)) w = _
+  rw [curried_left, first_right]
+  rfl
+
+/-- The separate positive tip is fixed for every finite source parameter. -/
+theorem precompFinite_tipPlus (w : StdSimplex ℝ (Fin (q + 1))) :
+    precompFinite A M F J G ε₀ ε₁ (tipPlus F J G ε₀ ε₁, w) =
+      tipPlus (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁) := by
+  change curried A M F J G ε₀ ε₁ (SSet.toTop.map (right₁ F J G ε₀ ε₁) default) w = _
+  rw [show SSet.toTop.map (right₁ F J G ε₀ ε₁) default =
+    DoubleCylinder.realizedEnds (secondAttaching F J G ε₀ ε₁) (erase F) (Sum.inr default)
+    from realized_right _ _ _, curried_ends]
+  rfl
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp

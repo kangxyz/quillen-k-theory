@@ -131,3 +131,28 @@ See [GlobalLocalizationNaturality.lean](GlobalLocalizationNaturality.lean).
 Principal opens of affines are a special case over every commutative ring,
 including zero divisors and localization at zero. The focused interface is
 `Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalPerfectLocalization`.
+
+## All-integer Bass localization
+
+The [tensor-generated realization](BoundedFlat/TensorBassConstruction.md)
+directly realizes the Bass recipe of TT §§6.3–6.4 and proves original TT 7.4.
+For qcqs `X` and an open immersion `j : U ⟶ X` with quasi-compact `U`, its
+actual support-to-fiber map is
+`ParameterFullCurrentNull.currentLift j (op integerBase)`.
+[`currentLift_integer_isStableEquivalence`](BoundedFlat/ParameterCurrentFullFiber.lean)
+proves that this canonical-null map is stable, and
+`currentLift_integer_signed_isIso` gives its isomorphism in every `d : ℤ`.
+The source is the original supported model, and the two arrows are support
+forgetting and full-open restriction. The whole null comes from acyclicity
+after restriction.
+
+For a closed support `Z ⊂ X` with quasi-compact complement, the
+[auxiliary supported theorem](SupportedOpen/README.md#auxiliary-supported-constructed-completion)
+gives the corresponding stable fiber lift. Together with
+[`stableFiberLongExactSequence`](../../Topology/Prespectrum/FiberSequence.lean),
+these lifts give the two all-integer long exact sequences. The
+[original class and connecting-map comparisons](BoundedFlat/GeometricBoundary.md)
+retain their degree casts and single minus in nonnegative target degrees.
+The [prescribed raw point-set comparison](Development.md#comparison-with-the-prescribed-raw-point-set-implementation)
+and a full multiplicative API remain additional tasks. The exact TT source
+locator is in [the comparison guide](Development.md#classical-target-and-source).

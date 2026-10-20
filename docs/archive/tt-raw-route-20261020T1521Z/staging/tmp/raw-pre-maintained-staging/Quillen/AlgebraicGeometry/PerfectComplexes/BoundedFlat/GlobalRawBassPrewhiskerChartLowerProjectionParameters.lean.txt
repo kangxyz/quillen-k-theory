@@ -1,0 +1,116 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartLowerProjectionNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0ChartBoundaryRows
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteEdge
+/-! Both genuine polynomial lower surfaces attach to the complete original overlap endpoints. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+
+private theorem chart_parameter_row {V W V' W' : Model.{u}}
+    (E : V ⟶ W) (F : V' ⟶ W') {k : ℕ} (g : Node E → Fin (k + 1) → Node F)
+    (α : ⦋17⦌ ⟶ ⦋k⦌) (y : |nerve (Codiscrete (Node E))|) (t : I) :
+    FiniteParameter.parameter E F g (y, ProjectionRectangleParameters.L α t) =
+      FiniteParameter.parameter E F
+        (fun N i ↦ g N (α.toOrderHom (ProjectionRectangleSquareRows.chartRow i)))
+        (y, NativeSquareFiveSimplex.parameter t) := by
+  rw [← ProjectionRectangleSquareRows.chart_parameter]
+  exact (FiniteParameter.parameter_restrict E F g
+    (BassH0ChartBoundaryRows.rowFace ≫ α) y (NativeSquareFiveSimplex.parameter t)).symm
+
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "D" => BassH0Merge.normalizedMap (projection.app W)
+local notation "B" => lowerLaurentBinary f g
+local notation "Q" => InputDescSimplex.reference c
+local notation "F" => ProjectionReference.reference X
+  (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "SC" => NativeSquareFiveSimplex.source (laurent.map c) (k.app W)
+local notation "NC" => NativeSquareFiveSimplex.nodes (laurent.map c) (k.app W)
+  (k.app Z) (polynomial.map c) (k.naturality c)
+
+private theorem lower_parameter_rows (α : ⦋17⦌ ⟶ ⦋30⦌)
+    (hn : ∀ j, InputDescSimplex.nodes c (α.toOrderHom j) = InputDescSimplex.chartNodes c k hk j)
+    (hg : ∀ i j, reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B
+        (InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.chartRow j))
+        (lowerLaurentNodes f g i)) =
+      preNode F D (initialLaurentProjectionAnchor f g c k hk)
+        (reanchor (lowerChartAnchor f g c k)
+          (FinitePrecomp.node SC B (NC j) (lowerLaurentNodes f g i)))) (r s : I) :
+    mapParameter (reanchor (lowerLaurentAnchor f g c))
+      (FinitePrecomp.parameter Q (InputDescSimplex.nodes c) B
+        (lowerLaurentPath f g r, ProjectionRectangleParameters.L α s)) =
+    mapParameter (preNode F D (initialLaurentProjectionAnchor f g c k hk))
+      (anchoredLowerChart f g c k (r, s)) := by
+  change mapParameter _ (FiniteParameter.parameter B (Q ≫ B)
+    (fun N j ↦ FinitePrecomp.node Q B (InputDescSimplex.nodes c j) N)
+      (lowerLaurentPath f g r, ProjectionRectangleParameters.L α s)) = _
+  rw [chart_parameter_row]
+  simp only [hn]
+  change mapParameter _ (FinitePrecomp.parameter Q
+    (fun j ↦ InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.chartRow j))
+      B (parameter B (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r),
+        NativeSquareFiveSimplex.parameter s)) =
+    mapParameter (preNode F D (initialLaurentProjectionAnchor f g c k hk))
+      (mapParameter (reanchor (lowerChartAnchor f g c k))
+        (FinitePrecomp.parameter SC NC B
+          (parameter B (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r),
+            NativeSquareFiveSimplex.parameter s)))
+  rw [FinitePrecomp.parameter_characteristic, FinitePrecomp.parameter_characteristic]
+  refine (mapParameter_parameter (reanchor (lowerLaurentAnchor f g c)) _ _).trans ?_
+  let ns := FiniteParameter.gridNodes B (SC ≫ B)
+    (fun N i ↦ FinitePrecomp.node SC B (NC i) N) (lowerLaurentNodes f g)
+  let z := Quillen.SimplexGrid.parameter 2 4
+    (binaryPath (k := 2) 0 1 2 r, NativeSquareFiveSimplex.parameter s)
+  have hr := (congrArg (mapParameter (preNode F D (initialLaurentProjectionAnchor f g c k hk)))
+    (mapParameter_parameter (reanchor (lowerChartAnchor f g c k)) ns z)).trans
+      (mapParameter_parameter (preNode F D (initialLaurentProjectionAnchor f g c k hk)) _ _)
+  refine Eq.trans ?_ hr.symm
+  apply congrArg (fun ns ↦ parameter F ns
+    (Quillen.SimplexGrid.parameter 2 4
+      (binaryPath (k := 2) 0 1 2 r, NativeSquareFiveSimplex.parameter s)))
+  funext i
+  exact hg ((Quillen.SimplexGrid.indexEquiv 2 4).symm i).1
+    ((Quillen.SimplexGrid.indexEquiv 2 4).symm i).2
+
+/-- The entire positive polynomial lower surface projects to the actual source overlap endpoint. -/
+theorem lowerChart_plus_projection (r s : I) :
+    mapParameter (fun N ↦ reanchor (initialLaurentProjectionAnchor f g c plus plus_projection)
+      (precompNode D N)) (anchoredLowerChart f g c plus (r, s)) =
+        anchoredLowerLaurent f g c ((r, s), 0) := by
+  change _ = mapParameter (reanchor (lowerLaurentAnchor f g c))
+    (FinitePrecomp.parameter Q (InputDescSimplex.nodes c) B
+      (lowerLaurentPath f g r, BassH0Diagram.parameter (s, 0)))
+  rw [BassH0Diagram.parameter_left]
+  exact (lower_parameter_rows f g c plus plus_projection BassH0Diagram.plusFace
+    (InputDescSimplex.plus_nodes c) (lower_plus_projection_nodes f g c) r s).symm
+
+/-- The entire negative lower surface keeps the separate inverse source overlap endpoint. -/
+theorem lowerChart_minus_projection (r s : I) :
+    mapParameter (fun N ↦ reanchor (initialLaurentProjectionAnchor f g c minus minus_projection)
+      (precompNode D N)) (anchoredLowerChart f g c minus (r, s)) =
+        anchoredLowerLaurent f g c ((r, s), 1) := by
+  change _ = mapParameter (reanchor (lowerLaurentAnchor f g c))
+    (FinitePrecomp.parameter Q (InputDescSimplex.nodes c) B
+      (lowerLaurentPath f g r, BassH0Diagram.parameter (s, 1)))
+  rw [BassH0Diagram.parameter_right]
+  exact (lower_parameter_rows f g c minus minus_projection BassH0Diagram.minusFace
+    (InputDescSimplex.minus_nodes c) (lower_minus_projection_nodes f g c) r s).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

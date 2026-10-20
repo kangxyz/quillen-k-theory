@@ -1,0 +1,47 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerOverlapHalf
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerUpperNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassConePrewhiskerWords
+/-!
+The entire overlap-cylinder sector is the literal original raw prewhiskering.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve Quillen.LoopPrespectrum Quillen.NativePathCells
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+
+/-- The entire overlap-cylinder sector is the literal original raw prewhiskering. -/
+theorem overlapPrewhisker_original (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    ProjectionReference.FourEdge.coneEval X (A ≫ E) n
+      (overlapPrewhisker f g c ((r, s), t)) x =
+    (InputComposition.coneHomotopy f g).level n
+      (r, (GlobalRawBass.coneMap c).map n
+        (cylinder W n (s, HomotopyPushout.cylinder
+          (boundedFlatPerfectPrespectrumMap (projection.app W))
+          (boundedFlatPerfectPrespectrumMap (projection.app W)) n (t, x)))) := by
+  rcases cover s with ⟨v, rfl⟩ | ⟨v, rfl⟩
+  · rw [overlapPrewhisker_lower, composition_lower]
+    change ProjectionReference.FourEdge.coneEval X (A ≫ E) n
+      (FourEdgeTree.laurentInclusion _ _ _ _ (anchoredLowerLaurent f g c ((r, v), t))) x = _
+    rw [ProjectionReference.FourEdge.coneEval_laurent]
+    exact congrArg (fun y ↦ (mappingConeInclusion (comparison X)).map n y)
+      (anchoredLowerLaurent_native f g c n r v t x)
+  · rw [overlapPrewhisker_upper, composition_upper]
+    exact upperSpan_native f g c n r v t x
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

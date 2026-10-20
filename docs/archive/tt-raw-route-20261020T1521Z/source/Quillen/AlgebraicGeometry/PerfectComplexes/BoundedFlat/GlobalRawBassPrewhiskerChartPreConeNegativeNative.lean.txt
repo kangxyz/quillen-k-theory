@@ -1,0 +1,92 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartCone
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenFoldWholeCells
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenEvaluation
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputInverseSupport
+/-!
+Every point of the actual negative source-square carrier evaluates by the strict chart
+inclusion.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct CutOpenCarrier
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g minus
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) minus
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g minus
+local notation "ε'" => CutOpenPrecomp.anchor S P K G ε
+local notation "J" => ProjectionReference.projectionMap X
+local notation "L" => ProjectionReference.reference X (A ≫ E)
+local notation "β" => ProjectionReference.FourEdge.beta X (A ≫ E)
+
+/-- Every point of the actual negative source-square carrier evaluates by the strict chart
+inclusion. -/
+theorem preMinusConeMap_native (n : ℕ) (z : sourceSquareCarrier f g c minus)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    ProjectionReference.FourEdge.coneEval X (A ≫ E) n (preMinusConeMap f g c z) x =
+      (InputIdentityNegative.inclusion X).map n
+        (nativeEval (S ≫ P) K (S ≫ G) ε' ε' n z x) := by
+  rcases exists_native_cell (S ≫ P) K (S ≫ G) ε' ε' z with
+    ⟨y, rfl⟩ | ⟨y, s, rfl⟩ | ⟨y, s, rfl⟩ | rfl | rfl
+  · rw [preMinusConeMap, preConeMap, CutOpenFold.map_laurent, nativeEval_laurentInclusion]
+    change ProjectionReference.FourEdge.coneEval X (A ≫ E) n
+      (FourEdgeTree.laurentInclusion (A ≫ E) J L β
+        (mapParameter (reanchor (projectionLaurentSeamAnchor f g c minus minus_projection)) y)) x
+          = _
+    rw [ProjectionReference.FourEdge.coneEval_laurent]
+    change (mappingConeInclusion (comparison X)).map n
+      (pointwisePrespectrumFamily L n
+        (mapParameter (reanchor (projectionLaurentSeamAnchor f g c minus minus_projection)) y) x)
+          = _
+    rw [pointwise_reanchor]
+    rfl
+  · rw [preMinusConeMap, preConeMap, CutOpenFold.map_cylinder, nativeEval_cylinderMinus]
+    change ProjectionReference.FourEdge.coneEval X (A ≫ E) n
+      (FourEdgeTree.cylinder (A ≫ E) J L β
+        (SSet.toTop.map (FourEdgeTree.minusVertex (A ≫ E) J)
+          (mapParameter (reanchor (projectionSeamAnchor f g c)) y), s)) x = _
+    rw [ProjectionReference.FourEdge.coneEval_cylinder, FourEdgeTree.nativeEval_minus]
+    change Quillen.ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+      (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app X))
+        (boundedFlatPerfectPrespectrumMap (projection.app X))).map n
+          (pointwisePrespectrumFamily ((A ≫ E) ≫ J) n
+            (mapParameter (reanchor (projectionSeamAnchor f g c)) y) x)) = _
+    rw [pointwise_reanchor]
+    rfl
+  · rw [preMinusConeMap, preConeMap, CutOpenFold.map_cylinderPlus, nativeEval_cylinderPlus]
+    change ProjectionReference.FourEdge.coneEval X (A ≫ E) n
+      (FourEdgeTree.cylinder (A ≫ E) J L β
+        (SSet.toTop.map (FourEdgeTree.minusVertex (A ≫ E) J)
+          (mapParameter (reanchor (projectionSeamAnchor f g c)) y), s)) x = _
+    rw [ProjectionReference.FourEdge.coneEval_cylinder, FourEdgeTree.nativeEval_minus]
+    change Quillen.ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+      (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app X))
+        (boundedFlatPerfectPrespectrumMap (projection.app X))).map n
+          (pointwisePrespectrumFamily ((A ≫ E) ≫ J) n
+            (mapParameter (reanchor (projectionSeamAnchor f g c)) y) x)) = _
+    rw [pointwise_reanchor]
+    rfl
+  · rw [preMinusConeMap, preConeMap, CutOpenFold.map_tipMinus,
+      ProjectionReference.FourEdge.coneEval_tip, nativeEval_tipMinus]
+    exact ((InputIdentityNegative.inclusion X).map_point n).symm
+  · rw [preMinusConeMap, preConeMap, CutOpenFold.map_tipPlus,
+      ProjectionReference.FourEdge.coneEval_tip, nativeEval_tipPlus]
+    exact ((InputIdentityNegative.inclusion X).map_point n).symm
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

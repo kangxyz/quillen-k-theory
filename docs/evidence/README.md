@@ -7,6 +7,20 @@ source/runtime/premise identities; it does not prove an open comparison.
 
 ## TT source and validation records
 
+The [2026-10-21 tensor construction integration](TTTensorConstruction20261021.json)
+binds the two incoming archives, the 39 new production modules and their
+seven tests/five clients, the independent construction-correspondence review,
+and the current checks. It also records the single alias-only implementation
+archive and the retained public names. Its mathematical scope is the represented
+tensor recipe and specified-null localization described in the
+[source guide](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md).
+Its rebuttal review corrects the completion criterion: directly realizing the
+TT Bass recipe establishes the two statements of TT 7.4; comparison with a
+separately fixed raw implementation is an additional goal.
+Open-target descriptions in older records apply to their identified source
+snapshots. The current completion conclusion is in this integration record and
+its rebuttal continuation; the older evidence is preserved as history.
+
 | Record | Recorded scope |
 | --- | --- |
 | [TTBassCube](TTBassCube.json) | Original composition-cube source and retained compiler/review scope |
@@ -17,9 +31,11 @@ source/runtime/premise identities; it does not prove an open comparison.
 | [TTRecoveredComparisons](TTRecoveredComparisons.json) | Recovered-comparison selection and retained checks |
 
 The records support encoded constructions within their own scope. Compilation,
-review bookkeeping and origin audits do not identify a completion with classical
-Kᴮ. Mathematical gaps remain in the
-[comparison guide](../../Quillen/AlgebraicGeometry/PerfectComplexes/Development.md).
+review bookkeeping and origin audits do not themselves identify the Bass
+construction. The
+[comparison guide](../../Quillen/AlgebraicGeometry/PerfectComplexes/Development.md)
+distinguishes the direct TT 7.4 proof from additional comparison tasks for the
+separately prescribed raw implementation.
 
 ## TT checkpoint integration
 

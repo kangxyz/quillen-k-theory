@@ -1,0 +1,60 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSurfaceReanchor
+
+/-! # Both complete old boundary tracks of the reanchored target surface -/
+
+set_option warningAsError true
+set_option autoImplicit false
+set_option linter.mathlibStandardSet true
+
+@[expose] public noncomputable section
+
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge
+open scoped Simplicial Topology unitInterval
+
+universe u
+namespace QuillenTest.TargetSurfaceReanchor
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+local notation "U" => normalizedMap (coefficientMap P f)
+local notation "J" => normalizedMap (polynomialProjection P a)
+
+/-- At the old initial face, the unchanged Laurent track survives on the whole source tree. -/
+theorem source_boundary (z : FourEdgeTree.space E J) :
+    mapParameter (reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor))
+        (TargetCone.laurent P f E
+          (SSet.toTop.map (BassProjectionPath.WholeReference.FourEdge.beta P a E) z)) =
+      TargetCone.laurent P f E'
+        (SSet.toTop.map (BassProjectionPath.WholeReference.FourEdge.beta P a E')
+          (Reanchor.tree P a E E' δ z)) := by
+  rw [← TargetCone.surface_zero, ← TargetCone.surface_zero]
+  exact TargetCone.surface_reanchor P f E E' δ z 0
+
+/-- The old terminal face still is the entire target-beta seam, with no new choice. -/
+theorem terminal_boundary (z : FourEdgeTree.space E J) :
+    mapParameter (reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor))
+        (SSet.toTop.map (BassProjectionPath.WholeReference.FourEdge.beta P b (E ≫ U))
+          (TargetSpan.treeMap P f E z)) =
+      SSet.toTop.map (BassProjectionPath.WholeReference.FourEdge.beta P b (E' ≫ U))
+        (TargetSpan.treeMap P f E' (Reanchor.tree P a E E' δ z)) := by
+  rw [← TargetCone.surface_one, ← TargetCone.surface_one]
+  exact TargetCone.surface_reanchor P f E E' δ z 1
+
+end QuillenTest.TargetSurfaceReanchor

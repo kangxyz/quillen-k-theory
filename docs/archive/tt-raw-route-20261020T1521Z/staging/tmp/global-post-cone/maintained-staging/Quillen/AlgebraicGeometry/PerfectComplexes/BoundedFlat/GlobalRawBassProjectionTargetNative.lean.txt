@@ -1,0 +1,153 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetCells
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeExt
+
+/-!
+# All-level recovery of the original Bass comparison on the ordinary tree
+
+The two polynomial summands and four full oriented cylinders recover the six prescribed
+native cells. Their set-level extensionality identifies the descended surface with the
+original Bass comparison on every tree input. Continuity is asserted only after a compact
+parameter restriction, using the existing common-reference evaluator.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u v
+
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}} (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "J" => projectionMap Y
+local notation "F" => reference f E
+
+/-- Every point of the genuine positive polynomial sector recovers the original moving square. -/
+theorem tree_native_plus (n : ℕ) (y : |parameterSSet (E ≫ J)|) (s : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+      (tree f E (SSet.toTop.map (FourEdgeTree.plusVertex E J) y, s)) x =
+    (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n (SSet.toTop.map (FourEdgeTree.plusVertex E J) y) x) := by
+  rw [tree_plus, FourEdgeTree.nativeEval_plus]
+  exact (chart_plus_native f E n y s x).trans
+    (inputComparisonHomotopy_inl f n s _).symm
+
+/-- The separate inverse polynomial sector retains its original negative square and cast. -/
+theorem tree_native_minus (n : ℕ) (y : |parameterSSet (E ≫ J)|) (s : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+      (tree f E (SSet.toTop.map (FourEdgeTree.minusVertex E J) y, s)) x =
+    (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n (SSet.toTop.map (FourEdgeTree.minusVertex E J) y) x) := by
+  rw [tree_minus, FourEdgeTree.nativeEval_minus]
+  exact (chart_minus_native f E n y s x).trans
+    (inputComparisonHomotopy_inr f n s _).symm
+
+/-- The complete positive normalization cylinder keeps its original reversed quarter clock. -/
+theorem tree_native_edge12 (n : ℕ) (y : |parameterSSet E|) (s t : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+      (tree f E (FourEdgeTree.realizedEdge (FourEdgeTree.edge12 E J) (y, t), s)) x =
+    (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n
+        (FourEdgeTree.realizedEdge (FourEdgeTree.edge12 E J) (y, t)) x) := by
+  rw [tree_edge12, FourEdgeTree.nativeEval_edge12]
+  exact overlap_native f E n y s (clock12 t) x
+
+/-- The complete positive geometric cylinder retains the other original reversed quarter. -/
+theorem tree_native_edge01 (n : ℕ) (y : |parameterSSet E|) (s t : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+      (tree f E (FourEdgeTree.realizedEdge (FourEdgeTree.edge01 E J) (y, t), s)) x =
+    (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n
+        (FourEdgeTree.realizedEdge (FourEdgeTree.edge01 E J) (y, t)) x) := by
+  rw [tree_edge01, FourEdgeTree.nativeEval_edge01]
+  exact overlap_native f E n y s (clock01 t) x
+
+/-- The complete inverse geometric cylinder retains its original forward quarter clock. -/
+theorem tree_native_edge03 (n : ℕ) (y : |parameterSSet E|) (s t : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+      (tree f E (FourEdgeTree.realizedEdge (FourEdgeTree.edge03 E J) (y, t), s)) x =
+    (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n
+        (FourEdgeTree.realizedEdge (FourEdgeTree.edge03 E J) (y, t)) x) := by
+  rw [tree_edge03, FourEdgeTree.nativeEval_edge03]
+  exact overlap_native f E n y s (clock03 t) x
+
+/-- The final inverse normalization cylinder retains the original last quarter clock. -/
+theorem tree_native_edge34 (n : ℕ) (y : |parameterSSet E|) (s t : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+      (tree f E (FourEdgeTree.realizedEdge (FourEdgeTree.edge34 E J) (y, t), s)) x =
+    (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n
+        (FourEdgeTree.realizedEdge (FourEdgeTree.edge34 E J) (y, t)) x) := by
+  rw [tree_edge34, FourEdgeTree.nativeEval_edge34]
+  exact overlap_native f E n y s (clock34 t) x
+
+/-- Every ordinary tree input recovers the actual original Bass comparison in all degrees. -/
+theorem tree_native (n : ℕ) (y : FourEdgeTree.space E J) (s : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n (tree f E (y, s)) x =
+    (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n y x) := by
+  exact congrFun (FourEdgeTree.funext_cells E J
+    (fun z ↦ pointwisePrespectrumFamily F n (tree f E (z, s)) x)
+    (fun z ↦ (inputComparisonHomotopy f).level n
+      (s, FourEdgeTree.nativeEval E J n z x))
+    (fun z ↦ tree_native_plus f E n z s x)
+    (fun z ↦ tree_native_minus f E n z s x)
+    (fun z t ↦ tree_native_edge12 f E n z s t x)
+    (fun z t ↦ tree_native_edge01 f E n z s t x)
+    (fun z t ↦ tree_native_edge03 f E n z s t x)
+    (fun z t ↦ tree_native_edge34 f E n z s t x)) y
+
+/-- Every surface parameter preserves the original native base point, including degree zero. -/
+theorem tree_point (n : ℕ) (y : FourEdgeTree.space E J) (s : I) :
+    pointwisePrespectrumFamily F n (tree f E (y, s)) ((prespectrum V).point n) =
+    (prespectrum (modelOf (boundedFlatPerfectWaldhausen
+      (laurent.obj X)))).point n :=
+  pointwisePrespectrumFamily_point F n (tree f E (y, s))
+
+/-- The original structure coordinate remains independent of comparison and tree parameters. -/
+theorem tree_structure (n : ℕ) (y : FourEdgeTree.space E J) (s r : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F (n + 1) (tree f E (y, s))
+      ((prespectrum V).structureMap n x r) =
+    (prespectrum (modelOf (boundedFlatPerfectWaldhausen
+      (laurent.obj X)))).structureMap n
+      (pointwisePrespectrumFamily F n (tree f E (y, s)) x) r :=
+  pointwisePrespectrumFamily_structure F n (tree f E (y, s)) x r
+
+variable {T : Type v} [TopologicalSpace T] [CompactSpace T]
+
+/-- Compact restrictions of the actual surface have the existing joint native continuity. -/
+theorem tree_compact_continuous (p : C(T, FourEdgeTree.space E J × I)) (n : ℕ) :
+    Continuous (fun z : T × (prespectrum V).space n ↦
+      pointwisePrespectrumFamily F n (tree f E (p z.1)) z.2) :=
+  pointwisePrespectrumFamily_compact_continuous F ((tree f E).comp p) n
+
+/-- The compact native evaluator agrees with the prescribed comparison on every parameter. -/
+theorem tree_compact_native (p : C(T, FourEdgeTree.space E J × I))
+    (n : ℕ) (t : T) (x : (prespectrum V).space n) :
+    compactPrespectrumFamily F ((tree f E).comp p) n (t, x) =
+    (inputComparisonHomotopy f).level n
+      ((p t).2, FourEdgeTree.nativeEval E J n (p t).1 x) :=
+  (pointwisePrespectrumFamily_eq_compact F ((tree f E).comp p) n t x).symm.trans
+    (tree_native f E n (p t).1 (p t).2 x)
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

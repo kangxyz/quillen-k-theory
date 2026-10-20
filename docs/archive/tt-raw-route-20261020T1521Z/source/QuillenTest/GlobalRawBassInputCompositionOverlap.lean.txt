@@ -1,0 +1,49 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapNative
+/-! Exact original overlap composition and independent-clock regression. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputCompositionOverlap
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputCompositionSpanScalar InputCompositionOverlapScalar
+
+/-- Every original chosen cube value retains all three independent scalar coordinates. -/
+theorem original_cube (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CommonReferenceNerve.pointwisePrespectrumFamily
+      (ProjectionReference.reference X (InputCompositionTopPieces.baseSource f g)) n
+      (originalOverlapCube f g ![r,s,t]) x =
+      (InputComposition.comparisonCylinder f g).level n (r,(s,(t,x))) :=
+  originalOverlapCube_native f g n r s t x
+
+/-- The whole scalar tree recovers the unchanged span-composition homotopy. -/
+theorem original_span (n : ℕ) (r t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CommonReferenceNerve.FourEdgeTree.nativeEval (InputCompositionTopPieces.baseSource f g)
+      (ProjectionReference.projectionMap X) n (treeComposition f g (r,t)) x =
+      (InputCompositionSpan.homotopy f g).level n (r,overlapInput n t x) :=
+  treeComposition_native f g n r t x
+
+/-- The original corrected cone homotopy is recovered, not just its uncorrected square. -/
+theorem original_corrected_cone (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    ProjectionReference.FourEdge.coneEval X (InputCompositionTopPieces.baseSource f g) n
+      (correctedFamily f g ((r,s),t)) x =
+      (InputComposition.coneHomotopy f g).level n
+        (r,Quillen.ReducedMappingCone.cylinder ((span Z).point n)
+          ((originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).point n)
+          ((GlobalRawBass.comparison Z).map n) (s,overlapInput n t x)) :=
+  coneHomotopy_overlap f g n t x r s
+end QuillenTest.GlobalRawBassInputCompositionOverlap

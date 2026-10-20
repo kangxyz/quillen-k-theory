@@ -1,0 +1,92 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputSeed
+
+/-! Regression clients for original supported triple cells and actual localization-row inputs. -/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes.GlobalSupportedRawBass
+universe u
+namespace QuillenTest.GlobalSupportedRawInput
+
+/-- The original triple cell preserves independent comparison, path and structure coordinates. -/
+theorem triple_structure {A B C D : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) (h : C ⟶ D) (n : ℕ) (r s t : unitInterval)
+    (x : (rawSpectrum D).space n) :
+    (tripleComparison f g h).level (n + 1)
+        (r, (s, (rawSpectrum D).structureMap n x t)) =
+      (rawSpectrum A).structureMap n ((tripleComparison f g h).level n (r, (s, x))) t :=
+  (tripleComparison f g h).comm n r s x t
+
+/-- The actual supported chart adapter recovers both halves of the specified Bass source-null. -/
+theorem source_null_recovery (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (s : unitInterval) (x : (rawSpectrum A.obj).space n) :
+    (splitSquare A).sourceNull.level n (s, x) = (sourceNull A).level n (s, x) := by
+  rw [splitSquare_sourceNull]
+  rfl
+
+/-- Both independent cylinder coordinates survive under an actual supported pair input map. -/
+theorem full_input_cylinder {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+    (n : ℕ) (r s : unitInterval) (x : (rawSpectrum B.obj).space n) :
+    (inputComparisonHomotopy f).level n
+      (r, HomotopyPushout.cylinder (rawMap (Geometry.projection B))
+        (rawMap (Geometry.projection B)) n (s, x)) =
+      (splitInput f).inputDescPasting.toSquare.level n (r, (s, x)) :=
+  inputComparisonHomotopy_cylinder f n r s x
+
+/-- The null comparison ends in the literal target source-null after the Laurent square. -/
+theorem source_null_target {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B) :
+    (sourceNullComparison f).at 1 =
+      ((splitInput f).T.postcomp (mappingConeInclusion (comparison A))).trans
+        ((Homotopy.precomp (rawMap f.hom) (sourceNull A)).cast
+          (Category.assoc _ _ _).symm rfl) :=
+  Homotopy.RelHomotopy.at_one _
+
+/-- The original null comparison also preserves its independent structure coordinate. -/
+theorem source_null_structure {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+    (n : ℕ) (r s t : unitInterval) (x : (rawSpectrum B.obj).space n) :
+    (sourceNullComparison f).level (n + 1)
+        (r, (s, (rawSpectrum B.obj).structureMap n x t)) =
+      (mappingCone (comparison A)).structureMap n
+        ((sourceNullComparison f).level n (r, (s, x))) t :=
+  (sourceNullComparison f).comm n r s x t
+
+/-- Support enlargement retains the literal Laurent inclusion square on the actual cone. -/
+theorem enlargement_cone_inclusion {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+    [CompactSpace X] (T : X.Opens) :
+    mappingConeInclusion (comparison (Rows.source j T)) ≫ coneMap (Rows.enlargement j T) =
+      rawMap (InputGeometry.laurentMap (Rows.enlargement j T)) ≫
+        mappingConeInclusion (comparison (Rows.middle T)) :=
+  coneMap_inclusion _
+
+/-- The literal restriction row has the complete supported seed-input homotopy. -/
+def restrictionSeed {U X : Scheme.{u}} (j : U ⟶ X)
+    [CompactSpace U] [CompactSpace X] (T : X.Opens) :
+    Homotopy (transition (Rows.middle T) ≫ Rows.restrictionMap j T)
+      (rawMap (Rows.restriction j T).hom ≫ transition (Rows.target j T)) :=
+  transitionInputHomotopy _
+
+/-- Nested Laurent/polynomial products retain their actual original row-map seed comparison. -/
+def nestedEnlargementSeed {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+    [CompactSpace X] (T : X.Opens) :
+    let f := Scheme.Bass.pairLaurentFunctor.map
+      (Scheme.Bass.pairPolynomialFunctor.map (Rows.enlargement j T))
+    Homotopy (transition _ ≫ map f) (rawMap f.hom ≫ transition _) :=
+  transitionInputHomotopy _
+
+/-- The raw seed comparison keeps its comparison, output-loop and structure clocks independent. -/
+theorem seed_structure {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+    (n : ℕ) (r s t : unitInterval) (x : (rawSpectrum B.obj).space n) :
+    Path.toContinuousMap ((transitionInputHomotopy f).level (n + 1)
+        (r, (rawSpectrum B.obj).structureMap n x t)) s =
+      Path.toContinuousMap ((step A).structureMap n
+        ((transitionInputHomotopy f).level n (r, x)) t) s :=
+  congrArg (fun p ↦ Path.toContinuousMap p s) ((transitionInputHomotopy f).comm n r x t)
+
+end QuillenTest.GlobalSupportedRawInput

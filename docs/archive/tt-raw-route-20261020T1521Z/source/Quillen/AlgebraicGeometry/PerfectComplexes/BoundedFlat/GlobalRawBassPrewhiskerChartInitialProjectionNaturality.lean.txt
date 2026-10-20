@@ -1,0 +1,59 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOverlapAnchorNaturality
+/-!
+Transport the actual source square to its displayed initial projection composite.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor Quillen.Waldhausen.IteratedS
+universe u v
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+private theorem initial_component {C₀ D₀ : Type u} [Category.{v} C₀] [Category.{v} D₀]
+    (K : C₀ ⥤ D₀) {l gs gm : D₀} {r p q : C₀}
+    (a : l ⟶ gs) (b : gs ⟶ gm) (e : gm ⟶ K.obj q) (eS : gs ⟶ K.obj p)
+    (χ : l ⟶ K.obj r) (η : r ⟶ p) (δP : p ⟶ q)
+    (hn : b ≫ e = eS ≫ K.map δP) (hb : a ≫ (eS ≫ 𝟙 _) = χ ≫ K.map η) :
+    (a ≫ b ≫ 𝟙 _) ≫ ((e ≫ 𝟙 _) ≫ 𝟙 _) = χ ≫ K.map (η ≫ δP ≫ 𝟙 _) := by
+  simp only [Category.comp_id] at hb
+  simp only [Category.comp_id, K.map_comp]
+  rw [Category.assoc, hn, ← Category.assoc, hb, Category.assoc]
+
+variable {U V B C T : Model.{u}}
+/-- Transport the actual source square to its displayed initial projection composite. -/
+def initialSourceAnchor (D : U ⟶ V) (M : V ⟶ B) (S : U ⟶ B)
+    (δ : S.functor ≅ (D ≫ M).functor) (F : U ⟶ C) (P : B ⟶ C)
+    (η : F.functor ≅ (S ≫ P).functor) : F.functor ≅ (D ≫ (M ≫ P)).functor :=
+  η ≪≫ isoWhiskerRight δ P.functor ≪≫ Functor.associator D.functor M.functor P.functor
+
+/-- The original attachment survives both actual source projections and the node-two anchor. -/
+theorem initialSource_attachment (D : U ⟶ V) (M : V ⟶ B) (S : U ⟶ B)
+    (δ : S.functor ≅ (D ≫ M).functor) (F : U ⟶ C) (L : U ⟶ T)
+    (P : B ⟶ C) (G : B ⟶ T) (K : C ⟶ T)
+    (η : F.functor ≅ (S ≫ P).functor) (ζ : L.functor ≅ (S ≫ G).functor)
+    (χ : L.functor ≅ (F ≫ K).functor) (ε : G.functor ≅ (P ≫ K).functor)
+    (h : ζ ≪≫ CutOpenPrecomp.anchor S P K G ε = χ ≪≫ isoWhiskerRight η K.functor) :
+    initialSourceAnchor D M S δ L G ζ ≪≫
+        CutOpenPrecomp.anchor D (M ≫ P) K (M ≫ G) (CutOpenPrecomp.anchor M P K G ε) =
+      χ ≪≫ isoWhiskerRight (initialSourceAnchor D M S δ F P η) K.functor := by
+  apply Iso.ext
+  ext x
+  have hx := congrArg (fun e ↦ e.hom.app x) h
+  change ζ.hom.app x ≫ (ε.hom.app (S.functor.obj x) ≫ 𝟙 _) =
+    χ.hom.app x ≫ K.functor.map (η.hom.app x) at hx
+  change (ζ.hom.app x ≫ G.functor.map (δ.hom.app x) ≫ 𝟙 _) ≫
+      ((ε.hom.app (M.functor.obj (D.functor.obj x)) ≫ 𝟙 _) ≫ 𝟙 _) =
+    χ.hom.app x ≫ K.functor.map (η.hom.app x ≫ P.functor.map (δ.hom.app x) ≫ 𝟙 _)
+  exact initial_component K.functor (ζ.hom.app x) (G.functor.map (δ.hom.app x))
+    (ε.hom.app (M.functor.obj (D.functor.obj x))) (ε.hom.app (S.functor.obj x))
+    (χ.hom.app x) (η.hom.app x) (P.functor.map (δ.hom.app x))
+    (ε.hom.naturality (δ.hom.app x)) hx
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

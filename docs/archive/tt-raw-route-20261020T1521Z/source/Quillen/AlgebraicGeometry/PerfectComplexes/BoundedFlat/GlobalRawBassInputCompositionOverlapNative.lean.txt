@@ -1,0 +1,160 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapMovingNative
+public import Quillen.Topology.Prespectrum.ConeCompositionCorrectionEvaluation
+public import Quillen.Topology.Path.NullWordEvaluation
+public import Quillen.Topology.Prespectrum.RelativeHomotopyOperationEvaluation
+/-! The complete corrected original cone homotopy on every overlap-cylinder input. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open Quillen.ScalarRectangle Quillen.NativePathCells
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar
+open CommonReferenceNerve InputCompositionTopPieces InputCompositionSpanScalar
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "a" => spanMap g
+local notation "b" => boundedFlatPerfectPrespectrumMap (laurent.map g)
+local notation "c" => spanMap f
+local notation "d" => boundedFlatPerfectPrespectrumMap (laurent.map f)
+local notation "h" => comparison X
+
+/-- The originally selected three-piece cone-composition associator. -/
+def nativeCorrection := coneSquareCompositionNullComparison (comparison Z) (comparison Y) h
+  a b c d (inputComparisonHomotopy g) (inputComparisonHomotopy f)
+
+/-- The exact original boundary correction, including both horizontal compositions. -/
+def nativeBoundary := (nativeMovingSquare f g).toBoundary.trans
+  (((Homotopy.RelHomotopy.refl
+    (Homotopy.precomp (comparison Z)
+      ((InputCompositionCharts.laurentComposition f g).postcomp (mappingConeInclusion h)))).hcomp
+        (nativeCorrection f g)).hcomp
+    (Homotopy.RelHomotopy.refl (Quillen.LoopPrespectrum.Homotopy.refl
+      (Quillen.LoopPrespectrum.zeroHom (span Z) (mappingCone h))).symm))
+
+variable (n : ℕ) (t : I)
+  (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n)
+local notation "ev" => eval f g n t x
+local notation "x₀" => overlapInput n t x
+
+/-- The first final-row half recovers the first original associator piece. -/
+theorem finalChartFirst_native (s : I) : ev (finalChartFirst f g s) =
+    (ConeCompositionPieces.first h a d (inputComparisonHomotopy g)).level n (s,x₀) := by
+  change ev (nullMovingFirst f g (1,lower s)) = _
+  rw [nullMovingFirst_native]
+  have ht := (InputComposition.comparisonSquare f g).at_one n (lower s) x₀
+  rw [ht]
+  unfold InputCompositionCharts.compositeComparison coneSquarePastedHomotopy
+  rw [Homotopy.cast_level, Homotopy.trans_lower_cell]
+  rfl
+
+/-- The second final-row half recovers the second original associator piece. -/
+theorem finalChartSecond_native (s : I) : ev (finalChartSecond f g s) =
+    (ConeCompositionPieces.second h a c d (inputComparisonHomotopy f)).level n (s,x₀) := by
+  change ev (nullMovingFirst f g (1,upper s)) = _
+  rw [nullMovingFirst_native]
+  have ht := (InputComposition.comparisonSquare f g).at_one n (upper s) x₀
+  rw [ht]
+  unfold InputCompositionCharts.compositeComparison coneSquarePastedHomotopy
+  rw [Homotopy.cast_level, Homotopy.trans_upper_cell]
+  rfl
+
+/-- The final cylinder recovers the third original associator piece. -/
+theorem finalCylinder_native (s : I) : ev (finalCylinder f g s) =
+    (ConeCompositionPieces.third h a c).level n (s,x₀) := by
+  change ev (nullMovingSecond f g (1,s)) = _
+  rw [nullMovingSecond_native, Homotopy.at_one]
+  rfl
+
+/-- The entire selected associator is retained at both original parameters. -/
+theorem finalCorrection_native (r s : I) : ev (finalCorrection f g (r,s)) =
+    (nativeCorrection f g).level n (r,(s,x₀)) := by
+  unfold nativeCorrection
+  rw [ConeCompositionPieces.correction_apply]
+  change ev (Path.Homotopy.transAssoc (finalChartFirst f g) (finalChartSecond f g)
+    (finalCylinder f g) (r,s)) = _
+  exact Path.Evaluation.transAssoc ev _ _ _ _ _ _
+    (fun v ↦ finalChartFirst_native f g n t x v)
+    (fun v ↦ finalChartSecond_native f g n t x v)
+    (fun v ↦ finalCylinder_native f g n t x v) r s
+
+private theorem comparisonTrans_native {V : Type*} [TopologicalSpace V]
+    {v w : V} {p q t : Path v w} {E T : LoopPrespectrum.{u}} {i j : E ⟶ T}
+    {H K L : Homotopy i j} (n : ℕ) (x : E.space n) (value : V → T.space n)
+    (P : p.Homotopy q) (Q : q.Homotopy t)
+    (P' : H.RelHomotopy K) (Q' : K.RelHomotopy L)
+    (hp : ∀ r s, value (P (r, s)) = P'.level n (r, (s, x)))
+    (hq : ∀ r s, value (Q (r, s)) = Q'.level n (r, (s, x))) (r s : unitInterval) :
+    value (P.trans Q (r, s)) = (P'.trans Q').level n (r, (s, x)) := by
+  rw [Homotopy.RelHomotopy.trans_apply_path]
+  exact Path.Evaluation.comparison_trans value P Q (P'.path n x) (Q'.path n x) hp hq r s
+
+private theorem comparisonHcomp_native {V : Type*} [TopologicalSpace V]
+    {v w z : V} {p q : Path v w} {t u : Path w z}
+    {E T : LoopPrespectrum.{u}} {i j k : E ⟶ T}
+    {H H' : Homotopy i j} {K K' : Homotopy j k}
+    (n : ℕ) (x : E.space n) (value : V → T.space n)
+    (P : p.Homotopy q) (Q : t.Homotopy u)
+    (P' : H.RelHomotopy H') (Q' : K.RelHomotopy K')
+    (hp : ∀ r s, value (P (r, s)) = P'.level n (r, (s, x)))
+    (hq : ∀ r s, value (Q (r, s)) = Q'.level n (r, (s, x))) (r s : unitInterval) :
+    value (P.hcomp Q (r, s)) = (P'.hcomp Q').level n (r, (s, x)) := by
+  rw [Homotopy.RelHomotopy.hcomp_apply_path]
+  exact Path.Evaluation.comparison_hcomp value P Q (P'.path n x) (Q'.path n x) hp hq r s
+
+/-- The full corrected boundary recovers the original native boundary word. -/
+theorem correctedBoundary_native (r s : I) : ev (correctedBoundary f g (r,s)) =
+    (nativeBoundary f g).level n (r,(s,x₀)) := by
+  unfold correctedBoundary nativeBoundary
+  refine comparisonTrans_native (E := span Z) (T := mappingCone h) n x₀ ev _ _ _ _ ?_ ?_ r s
+  · intro v w
+    exact movingBoundary_native f g n t v w x
+  · intro v w
+    refine comparisonHcomp_native (E := span Z) (T := mappingCone h) n x₀ ev _ _ _ _ ?_ ?_ v w
+    · intro v' w'
+      refine comparisonHcomp_native (E := span Z) (T := mappingCone h) n x₀ ev _ _ _ _ ?_ ?_ v' w'
+      · intro v'' w''
+        change ev (nullMovingFirst f g (w'',0)) = _
+        rw [nullMovingFirst_native]
+        exact congrArg ((mappingConeInclusion h).map n)
+          ((InputComposition.comparisonSquare f g).left n w'' x₀)
+      · intro v'' w''
+        exact finalCorrection_native f g n t x v'' w''
+    · intro v' w'
+      change ProjectionReference.FourEdge.coneEval X (baseSource f g) n
+        (FourEdgeTree.tip _ _ _ _) x = _
+      exact ProjectionReference.FourEdge.coneEval_tip X (baseSource f g) n x
+
+/-- The exact boundary descent recovers the selected corrected native square. -/
+theorem correctedSquare_native (r s : I) :
+    ev ((correctedSquare f g).parameter (r,s)) =
+      (InputComposition.comparisonConeNullSquare f g).level n (r,(s,x₀)) := by
+  exact Quillen.CarrierPathSquare.boundarySquare_native (correctedBoundary f g)
+    (nativeBoundary f g) n x₀ ev
+    (fun v w ↦ correctedBoundary_native f g n t x v w) r s
+
+/-- The corrected scalar family with independent composition, cone and overlap times. -/
+def correctedFamily : C((I × I) × I,
+    ProjectionReference.FourEdge.scalarCone X (baseSource f g)) :=
+  (correctedSquare f g).parameter.uncurry
+
+/-- Every original overlap-cylinder input retains the literal chosen cone homotopy. -/
+theorem coneHomotopy_overlap (r s : I) :
+    ProjectionReference.FourEdge.coneEval X (baseSource f g) n
+      (correctedFamily f g ((r,s),t)) x =
+      (InputComposition.coneHomotopy f g).level n
+        (r, ReducedMappingCone.cylinder ((span Z).point n)
+          ((originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).point n)
+          ((comparison Z).map n) (s,x₀)) :=
+  correctedSquare_native f g n t x r s
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar

@@ -1,0 +1,44 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompCells
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompParameterNative
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenEvaluation
+/-! All-point native recovery for the entire finite-precomposed two-tip carrier. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory Convexity
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp
+open CutOpenCarrier
+variable {U V W T : Model.{u}} (A : U ⟶ V)
+variable {q : ℕ} (M : Fin (q + 1) → Node A)
+variable (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
+variable (ε₀ ε₁ : G.functor ≅ (F ≫ J).functor)
+
+/-- Every native input follows the finite source family before the original carrier evaluator. -/
+theorem precompFinite_native (n : ℕ) (y : space F J G ε₀ ε₁)
+    (w : StdSimplex ℝ (Fin (q + 1))) (x : (prespectrum U).space n) :
+    nativeEval (A ≫ F) J (A ≫ G)
+      (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁) n
+      (precompFinite A M F J G ε₀ ε₁ (y, w)) x =
+    nativeEval F J G ε₀ ε₁ n y (prespectrumFamily A M n (w, x)) := by
+  rcases exists_native_cell F J G ε₀ ε₁ y with
+    ⟨z, rfl⟩ | ⟨z, t, rfl⟩ | ⟨z, t, rfl⟩ | rfl | rfl
+  · rw [precompFinite_laurent, nativeEval_laurentInclusion, nativeEval_laurentInclusion,
+      parameter_native]
+  · rw [precompFinite_cylinderMinus, nativeEval_cylinderMinus, nativeEval_cylinderMinus,
+      parameter_native]
+  · rw [precompFinite_cylinderPlus, nativeEval_cylinderPlus, nativeEval_cylinderPlus,
+      parameter_native]
+  · rw [precompFinite_tipMinus, nativeEval_tipMinus, nativeEval_tipMinus]
+  · rw [precompFinite_tipPlus, nativeEval_tipPlus, nativeEval_tipPlus]
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp

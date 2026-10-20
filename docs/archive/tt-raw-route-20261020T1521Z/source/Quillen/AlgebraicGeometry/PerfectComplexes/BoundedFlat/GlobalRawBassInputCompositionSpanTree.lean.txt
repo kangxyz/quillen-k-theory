@@ -1,0 +1,110 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpanPolynomial
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpanMiddle
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTop
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeSpanComposition
+/-! The actual whole span composition in the four-edge tree, with its original Laurent image. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces InputCompositionTopWord
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "E" => baseSource f g
+local notation "J" => ProjectionReference.projectionMap X
+
+/-- The actual positive, middle and reversed inverse moving stage in the four-edge tree. -/
+def treeMoving := FourEdgeTree.movingSquare E J (polynomialSquare f g)
+  (basePath f g) (polynomialSquare_attachment f g)
+
+/-- The actual Laurent attachment followed by the original reference change. -/
+def betaOld : C(FourEdgeTree.space E J, InputCompositionCarrierCharts.Carrier f g) :=
+  (mapParameter (reanchor (middleAnchor f g))).comp
+    (SSet.toTop.map (ProjectionReference.FourEdge.beta X E)).hom
+
+/-- The whole moving stage attaches to the original scalar vertex surface. -/
+theorem treeMoving_beta (r t : I) :
+    betaOld f g (treeMoving f g (r,t)) = InputCompositionTopVertex.face f g (r,t) := by
+  rcases three_cover t with ⟨s,rfl⟩ | ⟨s,rfl⟩ | ⟨s,rfl⟩
+  · rw [InputCompositionTopVertex.face_plus]
+    change mapParameter _ (SSet.toTop.map _ (FourEdgeTree.movingSquare _ _ _ _ _ _)) = _
+    rw [FourEdgeTree.movingSquare_lower, ← FourEdgeTree.realized_comp,
+      ProjectionReference.FourEdge.beta_plus]
+    exact polynomialSquare_chart f g plus plus_projection r s
+  · rw [InputCompositionTopVertex.face_middle]
+    change mapParameter _ (SSet.toTop.map _ (FourEdgeTree.movingSquare _ _ _ _ _ _)) = _
+    rw [FourEdgeTree.movingSquare_middle]
+    exact middle_overlap_beta f g r s
+  · rw [InputCompositionTopVertex.face_minus]
+    change mapParameter _ (SSet.toTop.map _ (FourEdgeTree.movingSquare _ _ _ _ _ _)) = _
+    rw [FourEdgeTree.movingSquare_upper, ← FourEdgeTree.realized_comp,
+      ProjectionReference.FourEdge.beta_minus]
+    exact polynomialSquare_chart f g minus minus_projection r (unitInterval.symm s)
+
+/-- The original final polynomial row with its proved base endpoint. -/
+def polynomialTop : Path (polynomialSquare f g (1,0))
+    (SSet.toTop.map (FourEdgeTree.attachment E J) (basePath f g 1)) where
+  toFun s := polynomialSquare f g (1,s)
+  continuous_toFun := by fun_prop
+  source' := rfl
+  target' := polynomialSquare_attachment f g 1
+
+/-- The literal first half of the final polynomial row. -/
+def firstPolynomial := firstHalf (polynomialTop f g)
+/-- The literal second half of the final polynomial row. -/
+def lastPolynomial := lastHalf (polynomialTop f g)
+
+/-- The two unchanged halves recover the full original final polynomial row. -/
+theorem polynomialTop_pasted (s : I) :
+    polynomialSquare f g (1,s) =
+      ((firstPolynomial f g).trans (lastPolynomial f g)) s :=
+  (Path.CarrierHalfPaths.trans_apply (polynomialTop f g).toContinuousMap s).symm
+
+/-- The original moving stage followed by the reversed five-piece reassociation. -/
+def treeComposition := FourEdgeTree.spanComposition E J (basePath f g 1)
+  (firstPolynomial f g) (lastPolynomial f g)
+  (polynomialSquare f g) (basePath f g) (polynomialSquare_attachment f g)
+  rfl (polynomialTop_pasted f g)
+
+/-- The full reassociation attaches without changing either original parameter. -/
+theorem treeReassociation_beta (r t : I) :
+    betaOld f g (FourEdgeTree.spanReassociation E J (basePath f g 1)
+      (firstPolynomial f g) (lastPolynomial f g) (r,t)) =
+      reassociation f g (r,t) := by
+  apply Path.Evaluation.spanReassociation_of_target_function (betaOld f g)
+    (ContinuousMap.id _) _ _ _ _ _ _ _ _ _ _ ?_ r t
+  intro s
+  change betaOld f g _ = pastedTop f g s
+  rw [pastedTop_apply]
+  have h := FourEdgeTree.spanComposition_join E J (basePath f g 1)
+    (firstPolynomial f g) (lastPolynomial f g) (polynomialSquare f g)
+    (basePath f g) (polynomialSquare_attachment f g) rfl (polynomialTop_pasted f g) s
+  have ht := (congrArg (betaOld f g) h).symm.trans (treeMoving_beta f g 1 s)
+  simpa only [FourEdgeTree.spanReassociation, ContinuousMap.HomotopyWith.apply_one,
+    Path.coe_toContinuousMap] using ht
+
+/-- The entire tree composition attaches to the original chosen top face. -/
+theorem treeComposition_beta (r t : I) :
+    betaOld f g (treeComposition f g (r,t)) = InputCompositionCarrierTop.face f g (r,t) := by
+  rcases cover r with ⟨s,rfl⟩ | ⟨s,rfl⟩
+  · rw [InputCompositionCarrierTop.face_lower]
+    change betaOld f g (FourEdgeTree.spanComposition _ _ _ _ _ _ _ _ _ _ _) = _
+    rw [FourEdgeTree.spanComposition_lower]
+    exact treeMoving_beta f g s t
+  · rw [InputCompositionCarrierTop.face_upper]
+    change betaOld f g (FourEdgeTree.spanComposition _ _ _ _ _ _ _ _ _ _ _) = _
+    rw [FourEdgeTree.spanComposition_upper]
+    exact treeReassociation_beta f g (unitInterval.symm s) t
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar

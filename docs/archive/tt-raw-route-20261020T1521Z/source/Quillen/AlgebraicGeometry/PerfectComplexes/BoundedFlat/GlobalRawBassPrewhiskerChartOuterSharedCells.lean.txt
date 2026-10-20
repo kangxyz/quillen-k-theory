@@ -1,0 +1,69 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOuterOverlapNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerMiddleNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionBottomNodes
+/-! The two original outer grids share actual full scalar cells with the middle grid. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "SN" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+local notation "A" => BassH0Merge.normalizedMap c
+
+
+/-- The positive outer grid shares its terminal/source cell with the original middle grid. -/
+theorem outer_plus_shared_cell :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node (InputDescSimplex.reference c) (lowerLaurentBinary f g)
+        (InputDescSimplex.chartNodes c plus plus_projection 17) (lowerLaurentNodes f g 0)) =
+    reanchor (projectionLaurentSeamAnchor f g c plus plus_projection)
+      (FinitePrecomp.node S (InputCompositionPolynomialScalar.laurentReference f g plus)
+        (SN 4) (InputCompositionPolynomialScalar.chartNodes f g plus 15)) := by
+  have hc : InputDescSimplex.chartNodes c plus plus_projection 17 =
+      InputDescSimplex.nodes c (ProjectionReference.Target.terminalRow 2) :=
+    (InputDescSimplex.plus_nodes c 17).symm
+  rw [hc, middle_grid_node]
+  have hb := congrArg (fun N ↦ precompNode A
+    (reanchor (InputCompositionTopPieces.middleAnchor f g).symm N))
+      (InputCompositionBottomNodes.plus_source_node f g).symm
+  exact hb.trans ((congrArg (precompNode A)
+    (outer_chart_overlap_node f g plus plus_projection 15)).symm.trans
+      (terminal_laurent_fixed_node f g c plus plus_projection
+        (InputCompositionPolynomialScalar.chartNodes f g plus 15)).symm)
+
+/-- The negative outer grid retains its distinct original endpoint and reference. -/
+theorem outer_minus_shared_cell :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node (InputDescSimplex.reference c) (lowerLaurentBinary f g)
+        (InputDescSimplex.chartNodes c minus minus_projection 17) (lowerLaurentNodes f g 0)) =
+    reanchor (projectionLaurentSeamAnchor f g c minus minus_projection)
+      (FinitePrecomp.node S (InputCompositionPolynomialScalar.laurentReference f g minus)
+        (SN 4) (InputCompositionPolynomialScalar.chartNodes f g minus 15)) := by
+  have hc : InputDescSimplex.chartNodes c minus minus_projection 17 =
+      InputDescSimplex.nodes c (ProjectionReference.Target.terminalRow 4) :=
+    (InputDescSimplex.minus_nodes c 17).symm
+  rw [hc, middle_grid_node]
+  have hb := congrArg (fun N ↦ precompNode A
+    (reanchor (InputCompositionTopPieces.middleAnchor f g).symm N))
+      (InputCompositionBottomNodes.minus_source_node f g).symm
+  exact hb.trans ((congrArg (precompNode A)
+    (outer_chart_overlap_node f g minus minus_projection 15)).symm.trans
+      (terminal_laurent_fixed_node f g c minus minus_projection
+        (InputCompositionPolynomialScalar.chartNodes f g minus 15)).symm)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

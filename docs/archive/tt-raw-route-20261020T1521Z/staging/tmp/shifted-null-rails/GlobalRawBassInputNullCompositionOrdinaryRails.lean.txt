@@ -1,0 +1,420 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionRailEndpoints
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedOrdinarySheet
+public import Quillen.Topology.Prespectrum.CarrierSquareDescentEvaluation
+public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionBottomSeams
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPositiveFactor
+
+/-! The original corrected null-composition rails factor through their actual ordinary sheet.
+Both comparison clocks, the literal associator, and the chosen quotient descent are retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH1Join
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionOrdinaryRails
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+local notation "F" => InputIdentitySeedCarrier.polyRef (f ≫ g)
+local notation "G" => InputIdentitySeedCarrier.laurentRef (f ≫ g)
+local notation "J" => InputIdentitySeedCarrier.chart (X := X)
+local notation "ε" => InputIdentitySeedCarrier.ordinary (f ≫ g)
+local notation "ε'" => InputIdentitySeedCarrier.shifted (f ≫ g)
+open Quillen.SimplexParameters Quillen.ScalarRectangle Quillen.NativePathCells
+
+
+open InputNullCompositionPolynomialCarrier
+
+/-- The first half of the target rail lies in the unchanged Laurent summand. -/
+def targetFirst : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  (SeedOrdinarySheet.laurent (f ≫ g)).comp (targetPositive f g)
+
+/-- The second half follows the actual ordinary polynomial cylinder, not a chosen filler. -/
+def targetSecond : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  ⟨fun z ↦ SeedOrdinarySheet.cylinder (f ≫ g) (surface f g (z.1, 1), z.2),
+    by fun_prop⟩
+
+/-- The whole midpoint seam is a proved scalar attachment with no appeal to native injectivity. -/
+theorem target_seam (r : unitInterval) : targetFirst f g (r, 1) = targetSecond f g (r, 0) := by
+  change SeedOrdinarySheet.laurent (f ≫ g) (targetPositive f g (r, 1)) =
+    SeedOrdinarySheet.cylinder (f ≫ g) (surface f g (r, 1), 0)
+  rw [SeedOrdinarySheet.cylinder_zero, targetPositive_attachment]
+
+/-- The actual target-null rail is assembled in the same fixed carrier as the original J0. -/
+def targetRail : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  concatSecond (targetFirst f g) (targetSecond f g) (target_seam f g)
+
+/-- The first literal half retains the original positive Laurent leg. -/
+theorem targetRail_lower (r s : unitInterval) :
+    targetRail f g (r, lower s) = targetFirst f g (r, s) :=
+  concatSecond_lower _ _ _ r s
+
+/-- The second literal half retains the original ordinary polynomial cylinder. -/
+theorem targetRail_upper (r s : unitInterval) :
+    targetRail f g (r, upper s) = targetSecond f g (r, s) :=
+  concatSecond_upper _ _ _ r s
+
+
+/-- The fixed carrier already contains the full first original half of the source rail. -/
+def sourceFirst : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  (SeedOrdinarySheet.laurent (f ≫ g)).comp (sourcePositive f g)
+
+
+/-- The entire selected chart square enters the Laurent summand with its original pause. -/
+def nullMovingFirst : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  (SeedOrdinarySheet.laurent (f ≫ g)).comp
+    (InputCompositionCarrierCharts.chartFace f g plus plus_projection)
+
+/-- The independent cone-cylinder coordinate follows the original paused polynomial edge. -/
+def nullMovingSecond : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  ⟨fun z ↦ SeedOrdinarySheet.cylinder (f ≫ g) (pausedPolynomial f g z.1, z.2),
+    by fun_prop⟩
+
+/-- The entire intermediate source-height seam is an exact scalar attachment. -/
+theorem nullMoving_seam (r : unitInterval) :
+    nullMovingFirst f g (r, 1) = nullMovingSecond f g (r, 0) := by
+  change SeedOrdinarySheet.laurent (f ≫ g)
+    (InputCompositionCarrierCharts.chartFace f g plus plus_projection (r, 1)) =
+      SeedOrdinarySheet.cylinder (f ≫ g) (pausedPolynomial f g r, 0)
+  rw [SeedOrdinarySheet.cylinder_zero, pausedPolynomial_attachment]
+
+/-- The original moving-null square before its separately prescribed reassociation correction. -/
+def nullMoving : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  concatSecond (nullMovingFirst f g) (nullMovingSecond f g) (nullMoving_seam f g)
+
+/-- This first half is the selected chart face at the unchanged original clock. -/
+theorem nullMoving_lower (r s : unitInterval) :
+    nullMoving f g (r, lower s) = nullMovingFirst f g (r, s) :=
+  concatSecond_lower _ _ _ r s
+
+/-- This second half is the ordinary cone cylinder over the prescribed paused edge. -/
+theorem nullMoving_upper (r s : unitInterval) :
+    nullMoving f g (r, upper s) = nullMovingSecond f g (r, s) :=
+  concatSecond_upper _ _ _ r s
+
+/-- The full upper height is the same ordinary tip at every composition time. -/
+theorem nullMoving_tip (r : unitInterval) :
+    nullMoving f g (r, 1) = SeedOrdinarySheet.tip (f ≫ g) := by
+  rw [nullMoving, concatSecond_one]
+  exact SeedOrdinarySheet.cylinder_one (f ≫ g) (pausedPolynomial f g r)
+
+
+/-- The actual uncorrected moving-null row, with the ordinary tip fixed. -/
+def movingNullPath (r : unitInterval) :
+    Path (nullMovingFirst f g (r, 0)) (SeedOrdinarySheet.tip (f ≫ g)) where
+  toFun s := nullMoving f g (r, s)
+  continuous_toFun := by fun_prop
+  source' := concatSecond_zero _ _ _ r
+  target' := nullMoving_tip f g r
+
+/-- The entire bottom edge is retained as a path, not replaced by endpoint data. -/
+def nullBottom : Path (nullMovingFirst f g (0, 0)) (nullMovingFirst f g (1, 0)) where
+  toFun r := nullMovingFirst f g (r, 0)
+  continuous_toFun := by fun_prop
+  source' := rfl
+  target' := rfl
+
+/-- The scalar square comes from the explicit Laurent/cylinder construction above. -/
+def movingSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g 0)
+    (movingNullPath f g 1) (nullBottom f g)
+    (Path.refl (SeedOrdinarySheet.tip (f ≫ g))) where
+  parameter := nullMoving f g
+  at_zero _ := rfl
+  at_one _ := rfl
+  left r := concatSecond_zero _ _ _ r
+  right r := nullMoving_tip f g r
+
+/-- The first original half of the last chart row. -/
+def finalChartFirst : Path (nullMovingFirst f g (1, 0))
+    (nullMovingFirst f g (1, lower 1)) where
+  toFun s := nullMovingFirst f g (1, lower s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [lower]))
+  target' := rfl
+
+/-- The second original half of the last chart row; its middle endpoint is exact. -/
+def finalChartSecond : Path (nullMovingFirst f g (1, lower 1))
+    (nullMovingFirst f g (1, 1)) where
+  toFun s := nullMovingFirst f g (1, upper s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [lower, upper]))
+  target' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [upper]))
+
+/-- The last cylinder row, attached at its original scalar seam. -/
+def finalCylinder : Path (nullMovingFirst f g (1, 1))
+    (SeedOrdinarySheet.tip (f ≫ g)) where
+  toFun s := nullMovingSecond f g (1, s)
+  continuous_toFun := by fun_prop
+  source' := (nullMoving_seam f g 1).symm
+  target' := SeedOrdinarySheet.cylinder_one (f ≫ g) (pausedPolynomial f g 1)
+
+/-- Splitting the chart at its original half height recovers the entire original row. -/
+theorem finalChart_halves (s : unitInterval) :
+    ((finalChartFirst f g).trans (finalChartSecond f g)) s =
+      nullMovingFirst f g (1, s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower]
+    rfl
+  · rw [path_upper]
+    rfl
+
+/-- The uncorrected final row has precisely the left-associated three-piece word. -/
+theorem movingNullPath_one :
+    ((finalChartFirst f g).trans (finalChartSecond f g)).trans (finalCylinder f g) =
+      movingNullPath f g 1 := by
+  apply Path.ext
+  funext s
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower, finalChart_halves]
+    exact (nullMoving_lower f g 1 t).symm
+  · rw [path_upper]
+    exact (nullMoving_upper f g 1 t).symm
+
+/-- The prescribed correction is the literal path associator of the three original pieces. -/
+def finalCorrection : (movingNullPath f g 1).Homotopy
+    ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g))) :=
+  (Path.Homotopy.transAssoc (finalChartFirst f g) (finalChartSecond f g)
+    (finalCylinder f g)).cast (movingNullPath_one f g) rfl
+
+/-- The full chosen boundary recipe retains both horizontal compositions and the terminal pause. -/
+def correctedBoundary : (movingNullPath f g 0).Homotopy
+    (((nullBottom f g).trans
+      ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g)))).trans
+        (Path.refl (SeedOrdinarySheet.tip (f ≫ g))).symm) :=
+  (movingSquare f g).toBoundary.trans
+    (((Path.Homotopy.refl (nullBottom f g)).hcomp (finalCorrection f g)).hcomp
+      (Path.Homotopy.refl (Path.refl (SeedOrdinarySheet.tip (f ≫ g))).symm))
+
+/-- The actual corrected scalar square descends the literal boundary recipe. -/
+def correctedSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g 0)
+    ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g)))
+    (nullBottom f g) (Path.refl (SeedOrdinarySheet.tip (f ≫ g))) :=
+  Quillen.CarrierPathSquare.boundarySquare (correctedBoundary f g)
+
+/-- Every collapsed parameter is recovered exactly, preserving the complete correction interior. -/
+theorem correctedSquare_collapse (z : unitInterval × unitInterval) :
+    (correctedSquare f g).parameter (Quillen.ThreeSideSquare.collapse z) =
+      correctedBoundary f g z :=
+  Quillen.CarrierPathSquare.boundaryParameter_collapse (correctedBoundary f g) z
+
+
+/-- Corrected square descent keeps the full scalar seam, not merely its native image. -/
+theorem sourceRail_seam (r : unitInterval) :
+    sourceFirst f g (r, 1) = (correctedSquare f g).parameter (r, 0) := by
+  rw [(correctedSquare f g).left]
+  change SeedOrdinarySheet.laurent (f ≫ g) (sourcePositive f g (r, 1)) =
+    SeedOrdinarySheet.laurent (f ≫ g)
+      (InputCompositionCarrierCharts.chartFace f g plus plus_projection (r, 0))
+  rw [sourcePositive_end, InputCompositionBottomSeams.bottom_plus]
+
+/-- Both original source halves now form an explicit continuous scalar surface. -/
+def sourceRail : C(unitInterval × unitInterval, SeedOrdinarySheet.Sheet (f ≫ g)) :=
+  concatSecond (sourceFirst f g) (correctedSquare f g).parameter (sourceRail_seam f g)
+
+/-- The Laurent half retains its original half-height speed. -/
+theorem sourceRail_lower (r s : unitInterval) :
+    sourceRail f g (r, lower s) = sourceFirst f g (r, s) :=
+  concatSecond_lower _ _ _ r s
+
+/-- The corrected cylinder half retains both original independent clocks. -/
+theorem sourceRail_upper (r s : unitInterval) :
+    sourceRail f g (r, upper s) = (correctedSquare f g).parameter (r, s) :=
+  concatSecond_upper _ _ _ r s
+
+
+/-- The geometric half squares factor before native evaluation. -/
+theorem inclusion_nullMoving (r s : I) :
+    SeedOrdinarySheet.inclusion (f ≫ g) (nullMoving f g (r, s)) =
+      InputNullCompositionPolynomialCarrier.nullMoving f g (r, s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [nullMoving_lower, InputNullCompositionPolynomialCarrier.nullMoving_lower]
+    rfl
+  · rw [nullMoving_upper, InputNullCompositionPolynomialCarrier.nullMoving_upper]
+    rfl
+
+theorem inclusion_finalCorrection (r s : I) :
+    SeedOrdinarySheet.inclusion (f ≫ g) (finalCorrection f g (r, s)) =
+      InputNullCompositionPolynomialCarrier.finalCorrection f g (r, s) := by
+  change SeedOrdinarySheet.inclusion (f ≫ g)
+    (Path.Homotopy.transAssoc (finalChartFirst f g) (finalChartSecond f g)
+      (finalCylinder f g) (r, s)) =
+    Path.Homotopy.transAssoc
+      (InputNullCompositionPolynomialCarrier.finalChartFirst f g)
+      (InputNullCompositionPolynomialCarrier.finalChartSecond f g)
+      (InputNullCompositionPolynomialCarrier.finalCylinder f g) (r, s)
+  exact Path.Evaluation.transAssoc (SeedOrdinarySheet.inclusion (f ≫ g))
+    _ _ _ _ _ _ (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl) r s
+
+/-- Mapping preserves the literal original boundary word, including its associator. -/
+theorem inclusion_correctedBoundary (r s : I) :
+    SeedOrdinarySheet.inclusion (f ≫ g) (correctedBoundary f g (r, s)) =
+      InputNullCompositionPolynomialCarrier.correctedBoundary f g (r, s) := by
+  unfold correctedBoundary InputNullCompositionPolynomialCarrier.correctedBoundary
+  refine Path.Evaluation.comparison_trans (SeedOrdinarySheet.inclusion (f ≫ g))
+    _ _ _ _ ?_ ?_ r s
+  · intro t v
+    exact inclusion_nullMoving f g
+      (Quillen.ThreeSideSquare.collapse (t, v)).1
+      (Quillen.ThreeSideSquare.collapse (t, v)).2
+  · intro t v
+    refine Path.Evaluation.comparison_hcomp (SeedOrdinarySheet.inclusion (f ≫ g))
+      _ _ _ _ ?_ (fun _ _ ↦ rfl) t v
+    intro t' v'
+    exact Path.Evaluation.comparison_hcomp (SeedOrdinarySheet.inclusion (f ≫ g))
+      _ _ _ _ (fun _ _ ↦ rfl) (inclusion_finalCorrection f g) t' v'
+
+/-- Surjectivity of the chosen collapse transfers the entire descended square. -/
+theorem inclusion_correctedSquare (r s : I) :
+    SeedOrdinarySheet.inclusion (f ≫ g) ((correctedSquare f g).parameter (r, s)) =
+      (InputNullCompositionPolynomialCarrier.correctedSquare f g).parameter (r, s) := by
+  obtain ⟨z, hz⟩ := Quillen.ThreeSideSquare.collapse_surjective (r, s)
+  rw [← hz, correctedSquare_collapse,
+    InputNullCompositionPolynomialCarrier.correctedSquare_collapse]
+  exact inclusion_correctedBoundary f g z.1 z.2
+
+/-- The entire original source rail factors through its actual ordinary sheet. -/
+theorem inclusion_sourceRail (r s : I) :
+    SeedOrdinarySheet.inclusion (f ≫ g) (sourceRail f g (r, s)) =
+      InputNullCompositionPolynomialCarrier.sourceRail f g (r, s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [sourceRail_lower, InputNullCompositionPolynomialCarrier.sourceRail_lower]
+    rfl
+  · rw [sourceRail_upper, InputNullCompositionPolynomialCarrier.sourceRail_upper]
+    exact inclusion_correctedSquare f g r t
+
+/-- The entire original target rail factors with the original half-height clock. -/
+theorem inclusion_targetRail (r s : I) :
+    SeedOrdinarySheet.inclusion (f ≫ g) (targetRail f g (r, s)) =
+      InputNullCompositionPolynomialCarrier.targetRail f g (r, s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [targetRail_lower, InputNullCompositionPolynomialCarrier.targetRail_lower]
+    rfl
+  · rw [targetRail_upper, InputNullCompositionPolynomialCarrier.targetRail_upper]
+    rfl
+
+
+open InputIdentitySeedCarrier InputNullCompositionRailEndpoints
+
+/-- The original old null word in the ordinary first sheet. -/
+abbrev oldNull {A B : Scheme.{u}} (h : A ⟶ B) :=
+  (SeedOrdinarySheet.oldPositive h).trans
+    ((SeedOrdinarySheet.positiveMovement h).trans (SeedOrdinarySheet.oldCone h))
+
+/-- The original new null word in the ordinary first sheet. -/
+abbrev newNull {A B : Scheme.{u}} (h : A ⟶ B) :=
+  (SeedOrdinarySheet.newPositive h).trans (SeedOrdinarySheet.newCone h)
+
+theorem sourceFirst_zero (s : I) : sourceFirst f g (0,s) =
+    SeedOrdinarySheet.oldPositive (f ≫ g) s := by
+  change SeedOrdinarySheet.laurent (f ≫ g)
+    (parameter G (InputCompositionCarrierBottom.nodes f g)
+      (Quillen.SimplexGrid.parameter 4 2
+        (binaryPath (k:=4) 0 1 2 s, binaryPath (k:=2) 0 1 2 0))) = _
+  rw [Path.source, Quillen.SimplexGrid.parameter_column]
+  have h := parameter_eq_of_face_nodes G (InputDescSimplex.nodes (f ≫ g))
+    (InputCompositionCarrierBottom.nodes f g) BassH1Join.middleSourceFace
+    (Quillen.SimplexGrid.columnFace 4 2 0)
+    (fun i ↦ (InputCompositionH0BottomSeam.whole_nodes f g i).symm)
+    (binaryPath (k:=4) 0 1 2 s)
+  refine (congrArg (SeedOrdinarySheet.laurent (f ≫ g)) h).trans ?_
+  exact congrArg (fun z ↦ SeedOrdinarySheet.laurent (f ≫ g)
+    (parameter G (InputDescSimplex.nodes (f ≫ g)) z))
+    (map_binaryPath BassH1Join.middleSourceFace 0 1 2 s)
+
+
+theorem targetFirst_zero (s : I) : targetFirst f g (0,s) =
+    SeedOrdinarySheet.newPositive (f ≫ g) s := by
+  change SeedOrdinarySheet.laurent (f ≫ g)
+    (parameter G (InputCompositionTopPieces.middleNodes f g)
+      (Quillen.SimplexGrid.parameter 2 4
+        (binaryPath (k:=2) 0 1 2 0, binaryPath (k:=4) 0 1 2 s))) = _
+  rw [Path.source, Quillen.SimplexGrid.parameter_row]
+  have h := parameter_eq_of_face_nodes G (InputDescSimplex.nodes (f ≫ g))
+    (InputCompositionTopPieces.middleNodes f g) BassH1Join.firstMiddleFace
+    (Quillen.SimplexGrid.rowFace 2 4 0)
+    (fun i ↦ (InputCompositionH0TopMiddleRows.whole_nodes f g i).symm)
+    (binaryPath (k:=4) 0 1 2 s)
+  refine (congrArg (SeedOrdinarySheet.laurent (f ≫ g)) h).trans ?_
+  exact congrArg (fun z ↦ SeedOrdinarySheet.laurent (f ≫ g)
+    (parameter G (InputDescSimplex.nodes (f ≫ g)) z))
+    (map_binaryPath BassH1Join.firstMiddleFace 0 1 2 s)
+
+
+theorem targetSecond_zero (s : I) : targetSecond f g (0,s) =
+    SeedOrdinarySheet.newCone (f ≫ g) s := by
+  change SeedOrdinarySheet.cylinder (f ≫ g) (surface f g (0,1),s) = _
+  rw [polynomial_zero]
+  rfl
+
+
+theorem targetRail_zero (s : I) : targetRail f g (0,s) =
+    newNull (f ≫ g) s := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [targetRail_lower, newNull, path_lower, targetFirst_zero]
+  · rw [targetRail_upper, newNull, path_upper, targetSecond_zero]
+
+
+theorem nullMovingFirst_zero (s : I) : nullMovingFirst f g (0,s) =
+    SeedOrdinarySheet.positiveMovement (f ≫ g) s := by
+  change SeedOrdinarySheet.laurent (f ≫ g)
+    (InputCompositionCarrierCharts.chartFace f g plus plus_projection (0,s)) = _
+  rw [← InputCompositionH0ChartSeams.input_plus]
+  change SeedOrdinarySheet.laurent (f ≫ g)
+    (parameter G (InputDescSimplex.nodes (f ≫ g)) (BassH0Diagram.parameter (s,0))) = _
+  rw [BassH0Diagram.parameter_left]
+  rfl
+
+
+theorem nullMovingSecond_zero (s : I) : nullMovingSecond f g (0,s) =
+    SeedOrdinarySheet.oldCone (f ≫ g) s := by
+  change SeedOrdinarySheet.cylinder (f ≫ g) (pausedPolynomial f g 0,s) = _
+  rw [Path.source]
+  rw [polynomial_zero]
+  rfl
+
+
+theorem sourceRail_zero (s : I) : sourceRail f g (0,s) =
+    oldNull (f ≫ g) s := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [sourceRail_lower, oldNull, path_lower, sourceFirst_zero]
+  · rw [sourceRail_upper, (correctedSquare f g).at_zero,
+      oldNull, path_upper]
+    change nullMoving f g (0,t) = _
+    rcases cover t with ⟨t,rfl⟩ | ⟨t,rfl⟩
+    · rw [nullMoving_lower, path_lower, nullMovingFirst_zero]
+    · rw [nullMoving_upper, path_upper, nullMovingSecond_zero]
+
+theorem sourceRail_tip (r : I) : sourceRail f g (r,1) =
+    SeedOrdinarySheet.tip (f ≫ g) := by
+  have h : upper (1 : I) = 1 := Subtype.ext (by norm_num [upper])
+  have he := sourceRail_upper f g r 1
+  rw [h, (correctedSquare f g).right] at he
+  exact he
+
+
+theorem targetRail_tip (r : I) : targetRail f g (r,1) =
+    SeedOrdinarySheet.tip (f ≫ g) := by
+  have h : upper (1 : I) = 1 := Subtype.ext (by norm_num [upper])
+  have he := targetRail_upper f g r 1
+  rw [h] at he
+  exact he.trans (SeedOrdinarySheet.cylinder_one (f ≫ g) (surface f g (r,1)))
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionOrdinaryRails

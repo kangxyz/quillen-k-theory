@@ -1,0 +1,141 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSourceRows
+
+/-!
+# The complete source boundary of the original target comparison
+
+The ordered source face contains the original two-chart Bass projection path at its unchanged
+four-quarter clock. Its whole coefficient-nerve product is the original source family followed
+by the Laurent coefficient map. The full H0 normalization, projection equality, left whiskering,
+and literal associator are retained in the target anchor before passage to realization.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge BassH1Join CommonReferenceNerve
+attribute [local irreducible] boundedFlatNormalizedPullback
+
+private theorem product_post_reference {V W W' T : Model.{u}}
+    (E : V ⟶ W) (H : W ⟶ W') (K : W ⟶ T) (J : W' ⟶ T)
+    (θ : K.functor ≅ (H ≫ J).functor)
+    (N : CommonReferenceNerve.Node E) (M : CommonReferenceNerve.Node H) :
+    CommonReferenceProduct.node (E ≫ K) E K (Iso.refl _) N (postReferenceNode K J θ M) =
+      postReferenceNode (E ≫ K) J (isoWhiskerLeft E.functor θ)
+        (CommonReferenceProduct.node (E ≫ H) E H (Iso.refl _) N M) := by
+  have h₁ := CommonReferenceProduct.node_second_reanchor (E ≫ K) E K (H ≫ J)
+    θ (Iso.refl _) N (postcompNode J M)
+  have h₂ := CommonReferenceProduct.node_postcomp (E ≫ K) E H J
+    (isoWhiskerLeft E.functor θ) N M
+  simp only [CommonReferenceProduct.postNode, CommonReferenceProduct.reanchor,
+    Iso.refl_trans] at h₁ h₂
+  exact h₁.trans h₂
+
+private theorem parameter_target_map {V W V' W' V'' W'' : Model.{u}}
+    (E : V ⟶ W) (D : V' ⟶ W') (F : V'' ⟶ W'') {q : ℕ}
+    (g : CommonReferenceNerve.Node E → Fin (q + 1) → CommonReferenceNerve.Node D)
+    (h : CommonReferenceNerve.Node D → CommonReferenceNerve.Node F)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|)
+    (z : StdSimplex ℝ (Fin (q + 1))) :
+    mapParameter h (FiniteParameter.parameter E D g (y, z)) =
+      FiniteParameter.parameter E F (fun e i ↦ h (g e i)) (y, z) := by
+  obtain ⟨k, N, w, rfl⟩ := exists_parameter E y
+  rw [FiniteParameter.parameter_characteristic, mapParameter_parameter,
+    FiniteParameter.parameter_characteristic]
+  rfl
+
+/-- The ordered source face retains both distinct raw normalization intermediates. -/
+def sourceFace : ⦋4⦌ ⟶ ⦋30⦌ := SimplexCategory.Hom.mk ⟨sourceRow, by decide⟩
+
+/-- The original Bass clock maps exactly to the reversed positive and forward inverse columns. -/
+theorem source_parameter (t : I) :
+    StdSimplex.map sourceFace.toOrderHom (InputIdentityProjection.parameter t) =
+      ((ProjectionRectangleParameters.D BassH0Diagram.plusFace).symm.trans
+        (ProjectionRectangleParameters.D BassH0Diagram.minusFace)) t :=
+  BassSupportOrder.map_two_binary sourceFace.toOrderHom 0 1 2 3 4 t
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+
+/-- The complete source face has the original five dependent nodes with its exact H0 anchor. -/
+theorem source_row_parameter (z : StdSimplex ℝ (Fin 5)) :
+    CommonReferenceNerve.parameter (InputDescSimplex.reference f) (InputDescSimplex.nodes f)
+      (StdSimplex.map sourceFace.toOrderHom z) =
+    CommonReferenceNerve.parameter (InputDescSimplex.reference f) (fun i ↦
+      postReferenceNode (InputDescSimplex.reference f) (sourcePost f) (h0ProjectionIso f)
+        (InputIdentityProjection.nodes Y i)) z := by
+  rw [CommonReferenceNerve.parameter_face]
+  exact congrArg (fun N ↦ CommonReferenceNerve.parameter (InputDescSimplex.reference f) N z)
+    (funext (source_nodes f))
+
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+
+/-- The entire source boundary anchor retains the H0 reference and literal associator. -/
+def sourceBoundaryAnchor : (reference f E).functor ≅
+    (ProjectionReference.reference Y E ≫ sourcePost f).functor :=
+  isoWhiskerLeft E.functor (h0ProjectionIso f) ≪≫
+    (Functor.associator E.functor (ProjectionReference.source Y).functor
+      (sourcePost f).functor).symm
+
+/-- The original Laurent coefficient map acts on complete nodes in the source reference. -/
+def sourceBoundaryNode (N : CommonReferenceNerve.Node (ProjectionReference.reference Y E)) :
+    CommonReferenceNerve.Node (reference f E) :=
+  postReferenceNode (reference f E) (sourcePost f) (sourceBoundaryAnchor f E) N
+
+/-- The complete product source row agrees before realization or native evaluation. -/
+theorem source_product_nodes (N : CommonReferenceNerve.Node E) (i : Fin 5) :
+    nodes f E N (sourceFace.toOrderHom i) =
+      sourceBoundaryNode f E (ProjectionReference.nodes Y E N i) := by
+  have h := product_post_reference E (ProjectionReference.source Y)
+    (InputDescSimplex.reference f) (sourcePost f) (h0ProjectionIso f) N
+    (InputIdentityProjection.nodes Y i)
+  rw [← source_nodes f i] at h
+  have hη : sourceBoundaryAnchor f E = isoWhiskerLeft E.functor (h0ProjectionIso f) := by
+    change isoWhiskerLeft E.functor (h0ProjectionIso f) ≪≫ Iso.refl _ = _
+    exact Iso.trans_refl _
+  change (⟨N.1 ≫ (InputDescSimplex.nodes f (sourceRow i)).1,
+    (Functor.uncurry.obj (whiskeringLeft _ _ _)).mapIso
+      (N.2.prod (InputDescSimplex.nodes f (sourceRow i)).2)⟩ :
+      CommonReferenceNerve.Node (E ≫ InputDescSimplex.reference f)) =
+    postReferenceNode (E ≫ InputDescSimplex.reference f) (sourcePost f)
+      (sourceBoundaryAnchor f E) (ProjectionReference.nodes Y E N i)
+  simpa only [ProjectionReference.nodes, CommonReferenceProduct.node, hη, Iso.refl_trans] using h
+
+/-- The whole initial overlap is the original source family under its full postcomposition map. -/
+theorem overlap_source (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (t : I) :
+    overlap f E (y, (0, t)) =
+      mapParameter (sourceBoundaryNode f E) (ProjectionReference.family Y E (y, t)) := by
+  calc
+    _ = FiniteParameter.parameter E (reference f E) (nodes f E)
+        (y, ((ProjectionRectangleParameters.D BassH0Diagram.plusFace).symm.trans
+          (ProjectionRectangleParameters.D BassH0Diagram.minusFace)) t) :=
+      overlap_zero f E y t
+    _ = FiniteParameter.parameter E (reference f E)
+        (fun N i ↦ nodes f E N (sourceFace.toOrderHom i))
+        (y, InputIdentityProjection.parameter t) := by
+      rw [FiniteParameter.parameter_restrict, source_parameter]
+    _ = FiniteParameter.parameter E (reference f E)
+        (fun N i ↦ sourceBoundaryNode f E (ProjectionReference.nodes Y E N i))
+        (y, InputIdentityProjection.parameter t) :=
+      congrArg (fun g ↦ FiniteParameter.parameter E (reference f E) g
+        (y, InputIdentityProjection.parameter t))
+        (funext (fun N ↦ funext (source_product_nodes f E N)))
+    _ = _ := (parameter_target_map E (ProjectionReference.reference Y E) (reference f E)
+      (ProjectionReference.nodes Y E) (sourceBoundaryNode f E) y
+        (InputIdentityProjection.parameter t)).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

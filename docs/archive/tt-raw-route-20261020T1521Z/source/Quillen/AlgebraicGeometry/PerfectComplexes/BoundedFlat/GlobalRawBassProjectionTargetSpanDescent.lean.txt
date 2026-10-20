@@ -1,0 +1,219 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSpanPolynomialNative
+/-!
+The continuous global target-span map on the complete four-edge reference tree. Four original
+  double-cylinder descents retain the half-quarter-quarter clock and both separate polynomial
+  summands.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetSpan
+open CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier FourEdgeTree
+
+private theorem descent_left {X Y Z : SSet.{u}} (f : X ⟶ Y) (g : X ⟶ Z)
+    {T : Type u} [TopologicalSpace T] (l : C(|Y|, T)) (r : C(|Z|, T))
+    (H : (l.comp (SSet.toTop.map f).hom).Homotopy (r.comp (SSet.toTop.map g).hom))
+    (y : |Y|) :
+    DoubleCylinder.homotopyDesc _ _ (DoubleCylinder.realized_isPushout f g) l r H
+      (SSet.toTop.map (FourEdgeTree.left f g) y) = l y := by
+  rw [FourEdgeTree.left, SetDescent.eval_realized_left]
+  exact congrArg (fun k : C(|Y|, T) ↦ k y)
+    (DoubleCylinder.homotopyDesc_left _ _ (DoubleCylinder.realized_isPushout f g) l r H)
+
+private theorem descent_right {X Y Z : SSet.{u}} (f : X ⟶ Y) (g : X ⟶ Z)
+    {T : Type u} [TopologicalSpace T] (l : C(|Y|, T)) (r : C(|Z|, T))
+    (H : (l.comp (SSet.toTop.map f).hom).Homotopy (r.comp (SSet.toTop.map g).hom))
+    (y : |Z|) :
+    DoubleCylinder.homotopyDesc _ _ (DoubleCylinder.realized_isPushout f g) l r H
+      (SSet.toTop.map (FourEdgeTree.right f g) y) = r y := by
+  rw [FourEdgeTree.right, SetDescent.eval_realized_right]
+  exact congrArg (fun k : C(|Z|, T) ↦ k y)
+    (DoubleCylinder.homotopyDesc_right _ _ (DoubleCylinder.realized_isPushout f g) l r H)
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "Ja" => InputCompositionTerminalAttach.arrow (projection.app Y)
+local notation "Jb" => InputCompositionTerminalAttach.arrow (projection.app X)
+local notation "T" => FourEdgeTree.space (input f E) Jb
+
+/-- The two distinct target polynomial summands retain the full coefficient node map. -/
+def plusMap : C(|parameterSSet (E ≫ Ja)|, T) :=
+  (SSet.toTop.map (plusVertex (input f E) Jb)).hom.comp (polynomialMap f E)
+/-- Place the postcomposed polynomial reference in the target tree at its minus vertex. -/
+def minusMap : C(|parameterSSet (E ≫ Ja)|, T) :=
+  (SSet.toTop.map (minusVertex (input f E) Jb)).hom.comp (polynomialMap f E)
+
+/-- The same original polynomial square takes values in either distinct target summand. -/
+def plusSquare : C(|parameterSSet E| × I, T) :=
+  (SSet.toTop.map (plusVertex (input f E) Jb)).hom.comp (polynomialSquare f E)
+/-- Place the whole polynomial square at the target tree's minus vertex. -/
+def minusSquare : C(|parameterSSet E| × I, T) :=
+  (SSet.toTop.map (minusVertex (input f E) Jb)).hom.comp (polynomialSquare f E)
+
+/-- The middle term is the entire target overlap after the original coefficient map. -/
+def central : C(|parameterSSet E| × I, T) :=
+  ⟨fun z ↦ FourEdgeTree.overlap (input f E) Jb
+    (mapParameter (postcompNode (InputCompositionTerminalAttach.arrow f)) z.1, z.2), by fun_prop⟩
+
+/-- The central overlap starts at the terminal positive polynomial-square value. -/
+theorem central_zero (y : |parameterSSet E|) :
+    central f E (y, 0) = plusSquare f E (y, 1) := by
+  change FourEdgeTree.overlap _ _ (_, 0) =
+    SSet.toTop.map (plusVertex (input f E) Jb) (polynomialSquare f E (y, 1))
+  rw [FourEdgeTree.overlap_zero, polynomialSquare_one]
+  rfl
+
+/-- The central overlap ends at the terminal inverse polynomial-square value. -/
+theorem central_one (y : |parameterSSet E|) :
+    central f E (y, 1) = minusSquare f E (y, 1) := by
+  change FourEdgeTree.overlap _ _ (_, 1) =
+    SSet.toTop.map (minusVertex (input f E) Jb) (polynomialSquare f E (y, 1))
+  rw [FourEdgeTree.overlap_one, polynomialSquare_one]
+  rfl
+
+/-- The original one vertex lies halfway through the positive polynomial square. -/
+def oneValue : C(|parameterSSet E|, T) :=
+  ⟨fun y ↦ plusSquare f E (y, lower 1), by fun_prop⟩
+/-- The original zero vertex now lies at the positive endpoint of the target overlap. -/
+def zeroValue : C(|parameterSSet E|, T) :=
+  ⟨fun y ↦ plusSquare f E (y, 1), by fun_prop⟩
+/-- The original three vertex lies at the negative endpoint of the target overlap. -/
+def threeValue : C(|parameterSSet E|, T) :=
+  ⟨fun y ↦ minusSquare f E (y, 1), by fun_prop⟩
+
+/-- The first source quarter is the first reversed half of the positive square. -/
+def firstHomotopy :
+    ((oneValue f E).comp (SSet.toTop.map (𝟙 (parameterSSet E))).hom).Homotopy
+      ((plusMap f E).comp (SSet.toTop.map (attachment E Ja)).hom) where
+  toContinuousMap := ⟨fun z ↦ plusSquare f E (z.2, lower (unitInterval.symm z.1)), by fun_prop⟩
+  map_zero_left y := by
+    rw [SSet.toTop.map_id]
+    change plusSquare f E (y, lower (unitInterval.symm 0)) =
+      plusSquare f E (y, lower 1)
+    rw [unitInterval.symm_zero]
+  map_one_left y := by
+    change plusSquare f E (y, lower (unitInterval.symm 1)) = _
+    rw [unitInterval.symm_one]
+    have h : lower (0 : I) = 0 := by apply Subtype.ext; norm_num [lower]
+    rw [h]
+    change SSet.toTop.map (plusVertex (input f E) Jb) (polynomialSquare f E (y, 0)) = _
+    rw [polynomialSquare_zero]
+    rfl
+
+/-- Descend the first target cylinder from its original one-end, plus-end and homotopy data. -/
+def firstValue : C(|FourEdgeTree.first E Ja|, T) :=
+  DoubleCylinder.homotopyDesc _ _ (DoubleCylinder.realized_isPushout (𝟙 _) (attachment E Ja))
+    (oneValue f E) (plusMap f E) (firstHomotopy f E)
+/-- The first descended branch retains its original one-end value. -/
+theorem firstValue_one (y : |parameterSSet E|) :
+    firstValue f E (SSet.toTop.map (firstOne E Ja) y) = oneValue f E y :=
+  descent_left _ _ _ _ _ y
+
+/-- The first descended branch retains the entire positive polynomial summand. -/
+theorem firstValue_plus (y : |parameterSSet (E ≫ Ja)|) :
+    firstValue f E (SSet.toTop.map (firstPlus E Ja) y) = plusMap f E y :=
+  descent_right _ _ _ _ _ y
+
+/-- The second source quarter retains the second reversed half of the positive square. -/
+def secondHomotopy :
+    ((zeroValue f E).comp (SSet.toTop.map (𝟙 (parameterSSet E))).hom).Homotopy
+      ((firstValue f E).comp (SSet.toTop.map (firstOne E Ja)).hom) where
+  toContinuousMap := ⟨fun z ↦ plusSquare f E (z.2, unitInterval.symm (lower z.1)), by fun_prop⟩
+  map_zero_left y := by
+    rw [SSet.toTop.map_id]
+    change plusSquare f E (y, unitInterval.symm (lower 0)) = plusSquare f E (y, 1)
+    have h : lower (0 : I) = 0 := by apply Subtype.ext; norm_num [lower]
+    rw [h, unitInterval.symm_zero]
+  map_one_left y := by
+    change plusSquare f E (y, unitInterval.symm (lower 1)) =
+      firstValue f E (SSet.toTop.map (firstOne E Ja) y)
+    rw [firstValue_one]
+    change plusSquare f E (y, unitInterval.symm (lower 1)) = plusSquare f E (y, lower 1)
+    apply congrArg (fun t ↦ plusSquare f E (y, t))
+    apply Subtype.ext
+    norm_num [lower]
+
+/-- Descend the second target cylinder using the zero-end value and the entire first value. -/
+def secondValue : C(|FourEdgeTree.second E Ja|, T) :=
+  DoubleCylinder.homotopyDesc _ _ (DoubleCylinder.realized_isPushout (𝟙 _) (firstOne E Ja))
+    (zeroValue f E) (firstValue f E) (secondHomotopy f E)
+/-- The second descended branch retains its original zero-end value. -/
+theorem secondValue_zero (y : |parameterSSet E|) :
+    secondValue f E (SSet.toTop.map (secondZero E Ja) y) = zeroValue f E y :=
+  descent_left _ _ _ _ _ y
+
+/-- The second descended branch restricts to the complete first branch. -/
+theorem secondValue_first (y : |FourEdgeTree.first E Ja|) :
+    secondValue f E (SSet.toTop.map (firstInSecond E Ja) y) = firstValue f E y :=
+  descent_right _ _ _ _ _ y
+
+/-- The third source quarter is exactly the complete target overlap at its original speed. -/
+def thirdHomotopy :
+    ((secondValue f E).comp (SSet.toTop.map (secondZero E Ja)).hom).Homotopy
+      ((threeValue f E).comp (SSet.toTop.map (𝟙 (parameterSSet E))).hom) where
+  toContinuousMap := ⟨fun z ↦ central f E (z.2, z.1), by fun_prop⟩
+  map_zero_left y := (central_zero f E y).trans (secondValue_zero f E y).symm
+  map_one_left y := by rw [SSet.toTop.map_id]; exact central_one f E y
+
+/-- Descend the third target cylinder using the entire second value and the three-end value. -/
+def thirdValue : C(|FourEdgeTree.third E Ja|, T) :=
+  DoubleCylinder.homotopyDesc _ _ (DoubleCylinder.realized_isPushout (secondZero E Ja) (𝟙 _))
+    (secondValue f E) (threeValue f E) (thirdHomotopy f E)
+/-- The third descended branch retains its original three-end value. -/
+theorem thirdValue_three (y : |parameterSSet E|) :
+    thirdValue f E (SSet.toTop.map (thirdThree E Ja) y) = threeValue f E y :=
+  descent_right _ _ _ _ _ y
+
+/-- The third descended branch restricts to the complete second branch. -/
+theorem thirdValue_second (y : |FourEdgeTree.second E Ja|) :
+    thirdValue f E (SSet.toTop.map (secondInThird E Ja) y) = secondValue f E y :=
+  descent_left _ _ _ _ _ y
+
+/-- The last source quarter is the complete reversed negative polynomial square. -/
+def fourthHomotopy :
+    ((thirdValue f E).comp (SSet.toTop.map (thirdThree E Ja)).hom).Homotopy
+      ((minusMap f E).comp (SSet.toTop.map (attachment E Ja)).hom) where
+  toContinuousMap := ⟨fun z ↦ minusSquare f E (z.2, unitInterval.symm z.1), by fun_prop⟩
+  map_zero_left y := by
+    change minusSquare f E (y, unitInterval.symm 0) =
+      thirdValue f E (SSet.toTop.map (thirdThree E Ja) y)
+    rw [unitInterval.symm_zero, thirdValue_three]
+    rfl
+  map_one_left y := by
+    change minusSquare f E (y, unitInterval.symm 1) = _
+    rw [unitInterval.symm_one]
+    change SSet.toTop.map (minusVertex (input f E) Jb) (polynomialSquare f E (y, 0)) = _
+    rw [polynomialSquare_zero]
+    rfl
+
+/-- The actual target-tree input for the second half of the original cone map. -/
+def treeMap : C(FourEdgeTree.space E Ja, T) :=
+  DoubleCylinder.homotopyDesc _ _
+    (DoubleCylinder.realized_isPushout (thirdThree E Ja) (attachment E Ja))
+    (thirdValue f E) (minusMap f E) (fourthHomotopy f E)
+
+/-- The whole target-span map restricts to the complete third branch. -/
+theorem treeMap_third (y : |FourEdgeTree.third E Ja|) :
+    treeMap f E (SSet.toTop.map (thirdInTree E Ja) y) = thirdValue f E y :=
+  descent_left _ _ _ _ _ y
+
+/-- The whole target-span map retains the entire inverse polynomial summand. -/
+theorem treeMap_minus (y : |parameterSSet (E ≫ Ja)|) :
+    treeMap f E (SSet.toTop.map (minusVertex E Ja) y) = minusMap f E y :=
+  descent_right _ _ _ _ _ y
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetSpan

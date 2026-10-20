@@ -1,0 +1,160 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSpanPolynomial
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionRectangleSquareRows
+
+/-! Both original terminal polynomial rows with their complete target-oriented anchors. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge BassH1Join CommonReferenceNerve
+
+private theorem reverse_pair {C : Type*} [Category C] {X Y Z : C}
+    (a : X ≅ Y) (b : Z ≅ X) : (a.symm ≪≫ b.symm) ≪≫ (b ≪≫ a) = Iso.refl _ := by
+  simp only [Iso.trans_assoc, Iso.symm_self_id_assoc, Iso.symm_self_id]
+
+private theorem post_terminal_node {A B C D : Model.{u}}
+    (F : A ⟶ D) (U : A ⟶ B) (J : B ⟶ C) (K : C ⟶ D)
+    (S : B ⟶ D) (H : A ⟶ C)
+    (α : F.functor ≅ (U ≫ S).functor) (e : S.functor ≅ (J ≫ K).functor)
+    (θ : (U ≫ J).functor ≅ H.functor) (η : H.functor ≅ (U ≫ J).functor)
+    (h : θ ≪≫ η = Iso.refl _) :
+    postReferenceNode F K
+      (((α ≪≫ isoWhiskerLeft U.functor e) ≪≫
+        (Functor.associator U.functor J.functor K.functor).symm) ≪≫
+          isoWhiskerRight θ K.functor) ⟨U ≫ J, η⟩ =
+      preReferenceNode F U α ⟨J ≫ K, e⟩ := by
+  apply Sigma.ext (Category.assoc U J K)
+  apply heq_of_eq
+  change (((α ≪≫ isoWhiskerLeft U.functor e) ≪≫
+    (Functor.associator U.functor J.functor K.functor).symm) ≪≫
+      isoWhiskerRight θ K.functor) ≪≫ isoWhiskerRight η K.functor =
+    α ≪≫ isoWhiskerLeft U.functor e
+  rw [Iso.trans_assoc, ← isoWhiskerRight_trans, h, isoWhiskerRight_refl]
+  erw [Iso.trans_refl]
+  change (α ≪≫ isoWhiskerLeft U.functor e) ≪≫ Iso.refl _ = _
+  exact Iso.trans_refl _
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+local notation "U" => InputCompositionTerminalAttach.arrow f
+local notation "J" => InputCompositionTerminalAttach.arrow (projection.app X)
+local notation "F" => InputDescSimplex.reference f
+
+/-- The target-oriented polynomial anchor cancels the unchanged original terminal square iso. -/
+theorem polynomialBaseAnchor_terminal :
+    TargetSpan.polynomialSquareBaseAnchor f ≪≫
+      (NativeSquareFiveSimplex.sourceIso
+        (polynomial.map f) (projection.app Y)
+        (projection.app X) f
+        (projection.naturality f) ≪≫
+        BinaryNormalizationSimplex.total (projection.app X) f) =
+      Iso.refl _ :=
+  reverse_pair (BinaryNormalizationSimplex.total (projection.app X) f)
+    (NativeSquareFiveSimplex.sourceIso
+      (polynomial.map f) (projection.app Y)
+      (projection.app X) f
+      (projection.naturality f))
+
+variable (α : laurent ⟶ polynomial)
+  (hb : ∀ Z, α.app Z ≫ projection.app Z = laurentProjection.app Z)
+local notation "K" => InputCompositionTerminalAttach.arrow (α.app X)
+
+/-- The complete target polynomial reference includes both the final chart and square transport. -/
+def terminalPolynomialAnchor : (F).functor ≅
+    (NativeSquareFiveSimplex.source (polynomial.map f) (projection.app Y) ≫ K).functor :=
+  ((terminalBaseAnchor f ≪≫
+    isoWhiskerLeft (U).functor (ProjectionReference.chartEndpoint X α hb)) ≪≫
+      (Functor.associator (U).functor (J).functor (K).functor).symm) ≪≫
+        isoWhiskerRight (TargetSpan.polynomialSquareBaseAnchor f) (K).functor
+
+/-- The terminal full square node is the original target chart endpoint in the H0 reference. -/
+theorem terminal_polynomial_endpoint :
+    postReferenceNode F K (terminalPolynomialAnchor f α hb)
+      (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y) (projection.app X) f
+        (projection.naturality f) 4) =
+      preReferenceNode F U (terminalBaseAnchor f)
+        ⟨projectionMap X ≫ InputCompositionTerminalAttach.arrow (α.app X),
+          ProjectionReference.chartEndpoint X α hb⟩ := by
+  have hs : NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y) (projection.app X) f
+    (projection.naturality f) 4 =
+      (⟨U ≫ J, NativeSquareFiveSimplex.sourceIso
+        (polynomial.map f) (projection.app Y)
+        (projection.app X) f
+        (projection.naturality f) ≪≫
+        BinaryNormalizationSimplex.total (projection.app X) f⟩ :
+        CommonReferenceNerve.Node (NativeSquareFiveSimplex.source (polynomial.map f) (projection.app
+          Y))) := by
+    apply Sigma.ext (Model.Hom.ext rfl)
+    exact heq_of_eq rfl
+  rw [hs]
+  exact post_terminal_node F U J K (InputIdentityProjection.source X)
+    (NativeSquareFiveSimplex.source (polynomial.map f) (projection.app Y)) (terminalBaseAnchor f)
+    (ProjectionReference.chartEndpoint X α hb)
+    (TargetSpan.polynomialSquareBaseAnchor f) _ (polynomialBaseAnchor_terminal f)
+
+/-- All five positive polynomial nodes agree through their complete shared terminal reference. -/
+theorem terminal_polynomial_plus_nodes (i : Fin 5) :
+    InputDescSimplex.chartNodes f plus plus_projection (ProjectionRectangleSquareRows.polynomialRow
+      i) =
+      postReferenceNode F (InputCompositionTerminalAttach.arrow (plus.app X))
+        (terminalPolynomialAnchor f (plus) (plus_projection))
+        (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y) (projection.app X) f
+          (projection.naturality f) i) := by
+  have h (j : Fin 5) := ProjectionRectangleSquareRows.polynomial_row_nodes
+    (projection.app Y) (plus.app Y)
+    (projection.app X) (plus.app X)
+    f (polynomial.map f)
+    (laurent.map f)
+    (projection.naturality f)
+    (plus.naturality f)
+    (laurentProjection.app Y) (plus_projection Y) j
+  have he := (terminal_nodes f 2).trans
+    ((congrArg (preReferenceNode F U (terminalBaseAnchor f))
+      (ProjectionReference.plus_endpoint X)).trans
+        (terminal_polynomial_endpoint f (plus) (plus_projection)).symm)
+  exact post_families_match F (InputCompositionTerminalAttach.arrow (plus.app X))
+    (NativeSquareFiveSimplex.source (polynomial.map f) (projection.app Y))
+      (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y) (projection.app X) f
+      (projection.naturality f))
+    h (fun _ ↦ rfl) 4 he i
+
+/-- The inverse polynomial row retains the separate inverse chart and its source transport. -/
+theorem terminal_polynomial_minus_nodes (i : Fin 5) :
+    InputDescSimplex.chartNodes f minus minus_projection
+      (ProjectionRectangleSquareRows.polynomialRow i) =
+      postReferenceNode F (InputCompositionTerminalAttach.arrow (minus.app X))
+        (terminalPolynomialAnchor f (minus) (minus_projection))
+        (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y) (projection.app X) f
+          (projection.naturality f) i) := by
+  have h (j : Fin 5) := ProjectionRectangleSquareRows.polynomial_row_nodes
+    (projection.app Y) (minus.app Y)
+    (projection.app X) (minus.app X)
+    f (polynomial.map f)
+    (laurent.map f)
+    (projection.naturality f)
+    (minus.naturality f)
+    (laurentProjection.app Y) (minus_projection Y) j
+  have he := (terminal_nodes f 4).trans
+    ((congrArg (preReferenceNode F U (terminalBaseAnchor f))
+      (ProjectionReference.minus_endpoint X)).trans
+        (terminal_polynomial_endpoint f (minus)
+          (minus_projection)).symm)
+  exact post_families_match F (InputCompositionTerminalAttach.arrow (minus.app X))
+    (NativeSquareFiveSimplex.source (polynomial.map f) (projection.app Y))
+      (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y) (projection.app X) f
+      (projection.naturality f))
+    h (fun _ ↦ rfl) 4 he i
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

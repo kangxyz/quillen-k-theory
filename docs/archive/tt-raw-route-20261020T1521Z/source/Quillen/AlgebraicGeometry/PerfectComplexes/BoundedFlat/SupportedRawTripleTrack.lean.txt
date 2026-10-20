@@ -1,0 +1,206 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawNormalizedCoherence
+public import Quillen.Topology.Prespectrum.RelativeHomotopyHorizontal
+public import Quillen.Topology.Prespectrum.RelativeHomotopyComposition
+public import Quillen.Topology.Prespectrum.RelativeHomotopyWhiskering
+
+/-!
+# Original supported triple composition tracks
+
+The actual normalized supported two-route equation produces its original relative pasting.
+Whole-level pre/postwhiskering then identifies its literal normalized tracks. Finally the
+already proved binary composition comparisons recover the original geometric-plus-normalization
+tracks on both sides, retaining every original path, comparison and structure coordinate.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+
+/-- The actual relative pasting of the two whole normalized supported triple routes. -/
+def normalizedTriplePasting {A B C D : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) (h : C ⟶ D) :=
+  show Homotopy.RelHomotopy (E := rawSpectrum D) (F := rawSpectrum A) _ _ from
+  originalPrespectrumPastingHomotopy (boundedFlatPerfectSupportedWaldhausen D.obj.hom)
+    (boundedFlatPerfectSupportedWaldhausen A.obj.hom)
+    (normalizedPullback_exact (f ≫ g ≫ h))
+    ((normalizedPullback_exact (g ≫ h)).comp (normalizedPullback_exact f))
+    ((normalizedPullback_exact h).comp (normalizedPullback_exact (f ≫ g)))
+    ((normalizedPullback_exact h).comp
+      ((normalizedPullback_exact g).comp (normalizedPullback_exact f)))
+    (normalizedPullback_obj_zero _)
+    (by simp only [comp_obj, normalizedPullback_obj_zero])
+    (by simp only [comp_obj, normalizedPullback_obj_zero])
+    (by simp only [comp_obj, normalizedPullback_obj_zero])
+    (normalizedCompositionIso f (g ≫ h)).hom
+    (whiskerRight (normalizedCompositionIso g h).hom (normalizedPullback f) ≫
+      (Functor.associator (normalizedPullback h) (normalizedPullback g)
+        (normalizedPullback f)).hom)
+    (eqToHom (congrArg normalizedPullback (Category.assoc f g h).symm) ≫
+      (normalizedCompositionIso (f ≫ g) h).hom)
+    (whiskerLeft (normalizedPullback h) (normalizedCompositionIso f g).hom)
+    (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen A.obj.hom).weq_iso _ inferInstance)
+    (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen A.obj.hom).weq_iso _ inferInstance)
+    (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen A.obj.hom).weq_iso _ inferInstance)
+    (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen A.obj.hom).weq_iso _ inferInstance)
+    (by simpa only [Category.assoc] using normalizedCompositionIso_two_routes f g h)
+
+/-- First decompose the last two open-pair arrows and then postcompose their actual track. -/
+def normalizedTripleLeftTrack {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :
+    Homotopy (rawMap (f ≫ g ≫ h))
+      ((rawMap h ≫ rawMap g) ≫
+        rawMap f) :=
+  (normalizedCompositionHomotopy f (g ≫ h)).trans
+    ((normalizedCompositionHomotopy g h).postcomp (rawMap f))
+
+/-- The other route retains explicit open-pair and prespectrum associativity transports. -/
+def normalizedTripleRightTrack {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :
+    Homotopy (rawMap (f ≫ g ≫ h))
+      ((rawMap h ≫ rawMap g) ≫
+        rawMap f) :=
+  ((normalizedCompositionHomotopy (f ≫ g) h).trans
+    (Homotopy.precomp (rawMap h)
+      (normalizedCompositionHomotopy f g))).cast
+    (congrArg rawMap (Category.assoc f g h))
+    (Category.assoc _ _ _).symm
+
+/-- Endpoint transport in the original composition track does not change its full levels. -/
+theorem normalizedCompositionHomotopy_level {X Y Z : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) :
+    (normalizedCompositionHomotopy f g).level n =
+      (originalPrespectrumTransformationHomotopy (boundedFlatPerfectSupportedWaldhausen Z.obj.hom)
+        (boundedFlatPerfectSupportedWaldhausen X.obj.hom) (normalizedPullback_exact (f ≫ g))
+        ((normalizedPullback_exact g).comp (normalizedPullback_exact f))
+        (normalizedPullback_obj_zero _)
+        ((congrArg (normalizedPullback f).obj
+          (normalizedPullback_obj_zero g)).trans
+            (normalizedPullback_obj_zero f))
+        (normalizedCompositionIso f g).hom
+        (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen X.obj.hom).weq_iso
+          _ inferInstance)).level n :=
+  rfl
+
+/-- The first route of the genuine geometric comparison is the literal postcomposed track. -/
+theorem normalizedTripleLeftTrack_level {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) (n : ℕ) :
+    (normalizedTripleLeftTrack f g h).level n =
+      ((normalizedTriplePasting f g h).at 0).level n := by
+  rw [Homotopy.RelHomotopy.at_zero]
+  apply ContinuousMap.ext
+  rintro ⟨s, x⟩
+  change ((Homotopy.levelHomotopy _ n).trans (Homotopy.levelHomotopy _ n)) (s, x) =
+    ((Homotopy.levelHomotopy _ n).trans (Homotopy.levelHomotopy _ n)) (s, x)
+  rw [ContinuousMap.HomotopyRel.trans_apply, ContinuousMap.HomotopyRel.trans_apply]
+  split
+  · exact DFunLike.congr_fun (normalizedCompositionHomotopy_level f (g ≫ h) n) _
+  · change (rawMap f).map n
+      ((normalizedCompositionHomotopy g h).level n _) = _
+    rw [normalizedCompositionHomotopy_level]
+    symm
+    exact DFunLike.congr_fun
+      (originalPrespectrumTransformationHomotopy_postcomp_level
+        (normalizedPullback_exact (g ≫ h))
+        ((normalizedPullback_exact h).comp (normalizedPullback_exact g))
+        (normalizedPullback_exact f)
+        (normalizedPullback_obj_zero _) _ (normalizedPullback_obj_zero _)
+        (normalizedCompositionIso g h).hom
+        (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen Y.obj.hom).weq_iso _ inferInstance) n) _
+
+/-- The second route retains the original precomposed track and both associativity transports. -/
+theorem normalizedTripleRightTrack_level {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) (n : ℕ) :
+    (normalizedTripleRightTrack f g h).level n =
+      ((normalizedTriplePasting f g h).at 1).level n := by
+  rw [Homotopy.RelHomotopy.at_one]
+  apply ContinuousMap.ext
+  rintro ⟨s, x⟩
+  change ((Homotopy.levelHomotopy _ n).trans (Homotopy.levelHomotopy _ n)) (s, x) =
+    ((Homotopy.levelHomotopy _ n).trans (Homotopy.levelHomotopy _ n)) (s, x)
+  rw [ContinuousMap.HomotopyRel.trans_apply, ContinuousMap.HomotopyRel.trans_apply]
+  split
+  · exact DFunLike.congr_fun (normalizedCompositionHomotopy_level (f ≫ g) h n) _
+  · change (normalizedCompositionHomotopy f g).level n
+      (_, (rawMap h).map n x) = _
+    rw [normalizedCompositionHomotopy_level]
+    symm
+    exact DFunLike.congr_fun
+      (originalPrespectrumTransformationHomotopy_precomp_level
+        (normalizedPullback_exact h) (normalizedPullback_exact (f ≫ g))
+        ((normalizedPullback_exact g).comp (normalizedPullback_exact f))
+        (normalizedPullback_obj_zero _) (normalizedPullback_obj_zero _) _
+        (normalizedCompositionIso f g).hom
+        (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen X.obj.hom).weq_iso _ inferInstance) n) _
+
+/-- Genuine geometric associativity compares the original whole binary tracks, with their
+literal pre/postcomposition maps. No geometric coherence is supplied as a hypothesis. -/
+def normalizedTripleComparison {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :
+    (normalizedTripleLeftTrack f g h).RelHomotopy
+      (normalizedTripleRightTrack f g h) where
+  level n := {
+    toFun := (normalizedTriplePasting f g h).level n
+    continuous_toFun := ((normalizedTriplePasting f g h).level n).continuous
+    map_zero_left z := by
+      rw [normalizedTripleLeftTrack_level]
+      rfl
+    map_one_left z := by
+      rw [normalizedTripleRightTrack_level]
+      rfl
+    prop' r z hz := by
+      change (normalizedTriplePasting f g h).level n (r, z) = _
+      rw [normalizedTripleLeftTrack_level, Homotopy.RelHomotopy.at_zero]
+      exact ((normalizedTriplePasting f g h).level n).eq_fst r hz }
+  comm n r s x t := (normalizedTriplePasting f g h).comm n r s x t
+
+/-- The left route uses the existing geometric-plus-binary-normalization tracks verbatim. -/
+def tripleLeftTrack {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :
+    Homotopy (rawMap (f ≫ g ≫ h))
+      ((rawMap h ≫ rawMap g) ≫
+        rawMap f) :=
+  (compositionHomotopy f (g ≫ h)).trans
+    ((compositionHomotopy g h).postcomp (rawMap f))
+
+/-- The right route uses the existing tracks and explicitly transports both associations. -/
+def tripleRightTrack {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :
+    Homotopy (rawMap (f ≫ g ≫ h))
+      ((rawMap h ≫ rawMap g) ≫
+        rawMap f) :=
+  ((compositionHomotopy (f ≫ g) h).trans
+    (Homotopy.precomp (rawMap h)
+      (compositionHomotopy f g))).cast
+    (congrArg rawMap (Category.assoc f g h))
+    (Category.assoc _ _ _).symm
+
+/-- The original geometric and binary normalization tracks satisfy genuine whole associativity.
+The only input is the three arbitrary open-pair maps; the relative filler is constructed from the
+proved geometric pseudofunctor equation and actual normalization triangles. -/
+def tripleComparison {X Y Z T : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :
+    (tripleLeftTrack f g h).RelHomotopy
+      (tripleRightTrack f g h) :=
+  ((compositionComparison f (g ≫ h)).hcomp
+    ((compositionComparison g h).postcomp
+      (rawMap f))).symm.trans
+    ((normalizedTripleComparison f g h).trans
+      (((compositionComparison (f ≫ g) h).hcomp
+        (Homotopy.RelHomotopy.precomp (rawMap h)
+          (compositionComparison f g))).cast
+        (congrArg rawMap (Category.assoc f g h))
+        (Category.assoc _ _ _).symm))
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

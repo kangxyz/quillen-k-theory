@@ -1,0 +1,164 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationZero
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawCharts
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedEvaluationInverseModel
+public import Quillen.Waldhausen.SConstruction.Iterated.ZeroNormalizationSquare
+
+/-!
+# The original geometric supported localization null and its evaluation square
+
+The raw composite remains the two independent original normalized geometric pullbacks.
+Its zero transformation is the unique map from the actual chosen geometric zero. The genuine
+evaluation counit and old support-acyclicity prove this transformation weak. A realized weak
+triangle compares its entire reversal with the original section null under both actual
+normalized evaluation edges. The moving boundary is the single track of the pasted
+isomorphism; comparison with the half-clock concatenation of the two original row tracks
+remains separate. This is a base null comparison, not a raw Bass cone null.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization
+open GlobalSectionChangeIndex GlobalSectionChangeIndex.ParameterAuxiliarySupport
+open GlobalSectionChangeIndex.ParameterIdentity SupportedTensorEvaluation
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- The actual source geometric supported Model. -/
+abbrev sourceModel : Model.{u+1} := rawModel (supportOpenPair (unionOpen f T))
+
+/-- The actual intermediate geometric supported Model. -/
+abbrev middleModel : Model.{u+1} := rawModel (supportOpenPair T)
+
+/-- The actual target geometric supported Model. -/
+abbrev targetModel : Model.{u+1} := rawModel (supportOpenPair (inverseOpen f T))
+
+/-- The original normalized support-enlargement pullback. -/
+def rawEnlargement : sourceModel f T ⟶ middleModel T :=
+  evaluationRawMap (enlargementPair f T)
+
+/-- The original normalized supported open restriction. -/
+def rawRestriction : middleModel T ⟶ targetModel f T :=
+  evaluationRawMap (supportRestrictionPair f T)
+
+/-- The raw composite is defined only from the two original geometric pullbacks. -/
+def rawComposite : sourceModel f T ⟶ targetModel f T :=
+  rawEnlargement f T ≫ rawRestriction f T
+
+/-- The unchanged normalized evaluation on the union-supported source. -/
+abbrev sourceEvaluation : sectionSource f T ⟶ sourceModel f T :=
+  evaluationModel (X := op Q) (unionOpen f T).ι
+
+/-- The unchanged normalized evaluation on the inverse-image-supported target. -/
+abbrev targetEvaluation : sectionTarget f T ⟶ targetModel f T :=
+  evaluationModel (X := op P) (inverseOpen f T).ι
+
+/-- Paste two actual Model comparison squares without expanding their underlying categories. -/
+def pasteModelSquares {A B C D E F : Model.{u}}
+    (a : A ⟶ B) (b : B ⟶ C) (n : D ⟶ E) (m : E ⟶ F)
+    (e₀ : A ⟶ D) (e₁ : B ⟶ E) (e₂ : C ⟶ F)
+    (s : (a ≫ e₁).functor ≅ (e₀ ≫ n).functor)
+    (t : (b ≫ e₂).functor ≅ (e₁ ≫ m).functor) :
+    ((a ≫ b) ≫ e₂).functor ≅ (e₀ ≫ (n ≫ m)).functor :=
+  isoSquareRoute s t
+
+/-- Paste the two actual evaluation comparisons, retaining every original associator. -/
+def evaluationIso :
+    (sectionComposite f T ≫ targetEvaluation f T).functor ≅
+      (sourceEvaluation f T ≫ rawComposite f T).functor :=
+  pasteModelSquares (sectionEnlargement f T) (sectionRestriction f T)
+    (rawEnlargement f T) (rawRestriction f T)
+    (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+    (evaluationComparisonIso (enlargementPair f T))
+    (evaluationComparisonIso (supportRestrictionPair f T))
+
+/-- The geometric zero-to-composite map is independent of the evaluation equivalence. -/
+def zeroToRawFull :
+    (zeroHom (sourceModel f T) (targetModel f T)).functor ⟶ (rawComposite f T).functor :=
+  ModelZeroNormalization.zeroToMap (rawComposite f T)
+
+/-- The old support-acyclicity and the actual evaluation counit prove every raw component weak. -/
+theorem zeroToRawFull_weak (S : sourceModel f T) :
+    (targetModel f T).waldhausen.weq ((zeroToRawFull f T).app S) :=
+  ModelZeroNormalization.zeroToMap_weak_of_comparison
+    (sectionComposite f T) (rawComposite f T) (sourceEvaluation f T) (targetEvaluation f T)
+    (evaluationIso f T) (zeroToSectionFull f T) (zeroToSectionFull_weak f T)
+    (evaluationInverseModel (X := op Q) (unionOpen f T).ι).functor
+    (evaluationInverseCounit (X := op Q) (unionOpen f T).ι) S
+
+/-- The raw null reverses precisely the independent geometric chosen-zero transformation. -/
+def rawNull :=
+  prespectrumCompositeZeroNullHomotopy (rawEnlargement f T) (rawRestriction f T)
+    (zeroToRawFull f T) (zeroToRawFull_weak f T)
+
+/-- Every raw null time is its unchanged reversed weak-transformation time. -/
+theorem rawNull_level (n : ℕ) (s : unitInterval)
+    (x : (prespectrum (sourceModel f T)).space n) :
+    (rawNull f T).level n (s, x) =
+      (prespectrumTransformationHomotopy (zeroToRawFull f T) (zeroToRawFull_weak f T)).level n
+        (unitInterval.symm s, x) := rfl
+
+/-- The original section null after the actual target evaluation. -/
+def postSectionNull :=
+  ((sectionNull f T).postcomp (prespectrumMap (targetEvaluation f T))).cast rfl
+    (LoopPrespectrum.zeroHom_comp _)
+
+/-- The geometric null after the actual source evaluation. -/
+def preRawNull :=
+  (LoopPrespectrum.Homotopy.precomp (prespectrumMap (sourceEvaluation f T)) (rawNull f T)).cast
+    rfl (LoopPrespectrum.comp_zeroHom _)
+
+/-- The single pasted-isomorphism track has the original composite prespectrum endpoints. -/
+def evaluationTrack :=
+  (ModelZeroNormalization.comparisonTrack (sectionComposite f T) (rawComposite f T)
+    (sourceEvaluation f T) (targetEvaluation f T) (evaluationIso f T)).cast
+      (congrArg (fun k ↦ k ≫ prespectrumMap (targetEvaluation f T))
+        (prespectrumFunctor.map_comp (sectionEnlargement f T) (sectionRestriction f T)))
+      (congrArg (fun k ↦ prespectrumMap (sourceEvaluation f T) ≫ k)
+        (prespectrumFunctor.map_comp (rawEnlargement f T) (rawRestriction f T)))
+
+/-- The entire original nulls and normalized row edge form a genuine moving square. -/
+def evaluationSquare :
+    (postSectionNull f T).Square (preRawNull f T) (evaluationTrack f T)
+      (LoopPrespectrum.Homotopy.refl
+        (LoopPrespectrum.zeroHom (prespectrum (sectionSource f T))
+          (prespectrum (targetModel f T)))) := by
+  let S := ModelZeroNormalization.normalizationSquare
+    (sectionComposite f T) (rawComposite f T) (sourceEvaluation f T) (targetEvaluation f T)
+    (evaluationIso f T) (zeroToSectionFull f T) (zeroToRawFull f T)
+    (zeroToSectionFull_weak f T) (zeroToRawFull_weak f T)
+  exact {
+    level := S.level
+    at_zero := S.at_zero
+    at_one := S.at_one
+    left := S.left
+    right := S.right
+    at_point := S.at_point
+    comm := S.comm }
+
+/-- The whole realized weak triangle is the selected evaluation-square family. -/
+theorem evaluationSquare_apply (n : ℕ) (r s : unitInterval)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (evaluationSquare f T).level n (r, (s, x)) =
+      prespectrumSimplexFamily
+        (ModelZeroNormalization.normalizationSimplex
+          (sectionComposite f T) (rawComposite f T) (sourceEvaluation f T) (targetEvaluation f T)
+          (evaluationIso f T) (zeroToSectionFull f T) (zeroToSectionFull_weak f T)) n
+        (WeakTriangleSquare.parameter (r, s), x) :=
+  ModelZeroNormalization.normalizationSquare_apply
+    (sectionComposite f T) (rawComposite f T) (sourceEvaluation f T) (targetEvaluation f T)
+    (evaluationIso f T) (zeroToSectionFull f T) (zeroToRawFull f T)
+    (zeroToSectionFull_weak f T) (zeroToRawFull_weak f T) n r s x
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization

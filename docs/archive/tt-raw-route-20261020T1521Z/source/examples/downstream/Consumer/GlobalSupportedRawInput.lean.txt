@@ -1,0 +1,42 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputSeed
+
+/-! Independent clients of the two actual supported row maps and their original forward seeds. -/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes.GlobalSupportedRawBass
+universe u
+namespace Consumer.GlobalSupportedRawInput
+
+/-- Both localization arrows act on the three actual supported first-stage objects. -/
+def twoRowMaps {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+    [CompactSpace U] [CompactSpace X] (T : X.Opens) :
+    (step (Rows.source j T) ⟶ step (Rows.middle T)) ×
+      (step (Rows.middle T) ⟶ step (Rows.target j T)) :=
+  ⟨Rows.enlargementMap j T, Rows.restrictionMap j T⟩
+
+/-- The enlargement input law uses the original source and middle forward seeds. -/
+def enlargementSeed {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+    [CompactSpace X] (T : X.Opens) :
+    Homotopy (transition (Rows.source j T) ≫ Rows.enlargementMap j T)
+      (rawMap (Rows.enlargement j T).hom ≫ transition (Rows.middle T)) :=
+  transitionInputHomotopy _
+
+/-- Every loop and comparison coordinate survives on the actual restriction row. -/
+theorem restriction_seed_coordinates {U X : Scheme.{u}} (j : U ⟶ X)
+    [CompactSpace U] [CompactSpace X] (T : X.Opens) (n : ℕ) (r s : unitInterval)
+    (x : (rawSpectrum (Rows.middle T).obj).space n) :
+    Path.toContinuousMap ((transitionInputHomotopy (Rows.restriction j T)).level n (r, x)) s =
+      (SplitSquare.Input.InputSeed.conjugateComparison (splitInput (Rows.restriction j T))
+        (unitHomotopy (Rows.middle T)) (unitHomotopy (Rows.target j T))
+        (laurentUnitPasting (Rows.restriction j T))).level n (r, (s, x)) :=
+  transitionInputHomotopy_apply _ n r s x
+
+end Consumer.GlobalSupportedRawInput

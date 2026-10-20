@@ -1,0 +1,347 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedEvaluationInputRoutes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedEvaluationWhiskerTransport
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedNormalizedEvaluationInputRoutes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawPullbackTrack
+public import Quillen.Aglib.CategoryTheory.Functor.IsoSquareConjugateComposition
+public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumPastingHomotopy
+
+/-!
+# Original supported evaluation and geometric composition
+
+The original supported evaluation transitions satisfy the geometric composition equation in
+the actual supported categories. Its three raw chosen-zero normalizations, common-universe
+lift and three evaluation normalizations give the complete original Model pasting. Realization
+retains the two actual transformation routes. Identification with the original split geometric
+spectrum track is a separate comparison.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.SupportedTensorEvaluation
+open GlobalSectionChangeIndex
+attribute [local irreducible] globalModel globalEvaluation supportedPairReindexEvaluationIso
+
+private theorem compositionTransport_forget {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) :
+    whiskerRight (eqToHom (congrArg (fun F => F ⋙
+        supportedEvaluation (X := op A.obj.right) A.obj.hom) (supportedReindex_comp f g)))
+        (tensorCoefficientSupportedForget A.obj.hom) =
+      whiskerLeft (supported (X := op C.obj.right) C.obj.hom).ι
+        (eqToHom (congrArg (fun F => F ⋙ globalEvaluation (op A.obj.right))
+          (globalReindex_comp f.hom.right g.hom.right))) := by
+  have he := Functor.eqToHom_whisker_square
+    (supported (X := op C.obj.right) C.obj.hom).ι
+    (tensorCoefficientSupportedForget A.obj.hom)
+    ((supportedPairModelMap (f ≫ g)).functor ⋙
+      supportedEvaluation (X := op A.obj.right) A.obj.hom)
+    (((supportedPairModelMap g).functor ⋙ (supportedPairModelMap f).functor) ⋙
+      supportedEvaluation (X := op A.obj.right) A.obj.hom)
+    ((globalModel.map (f.hom.right ≫ g.hom.right).op).functor ⋙
+      globalEvaluation (op A.obj.right))
+    (((globalModel.map g.hom.right.op).functor ⋙
+      (globalModel.map f.hom.right.op).functor) ⋙ globalEvaluation (op A.obj.right))
+    (congrArg (fun F => F ⋙ supportedEvaluation (X := op A.obj.right) A.obj.hom)
+      (supportedReindex_comp f g))
+    (congrArg (fun F => F ⋙ globalEvaluation (op A.obj.right))
+      (globalReindex_comp f.hom.right g.hom.right)) rfl rfl
+  simpa only [eqToHom_refl, Category.id_comp, Category.comp_id] using he
+
+/-- The actual supported evaluation route retains geometric composition and strict reindexing. -/
+theorem supportedEvaluationComposition_hom {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) :
+    whiskerLeft (supportedEvaluation (X := op C.obj.right) C.obj.hom)
+        (boundedFlatPerfectSupportedPullbackCompIso f g).hom ≫
+        (supportedEvaluationRouteIso f g).hom =
+      (supportedPairReindexEvaluationIso (f ≫ g)).hom ≫
+        eqToHom (congrArg (fun F => F ⋙
+          supportedEvaluation (X := op A.obj.right) A.obj.hom)
+          (supportedReindex_comp f g)) := by
+  let : (tensorCoefficientSupportedForget A.obj.hom).Faithful := by
+    unfold tensorCoefficientSupportedForget
+    infer_instance
+  apply NatTrans.ext
+  funext K
+  apply (tensorCoefficientSupportedForget A.obj.hom).map_injective
+  simp only [NatTrans.comp_app, whiskerLeft_app, Functor.map_comp]
+  rw [supportedEvaluationComp_forget_hom_app,
+    supportedEvaluationRoute_forget_hom_app,
+    supportedPairReindexEvaluationIso_forget_hom_app]
+  rw [show (tensorCoefficientSupportedForget A.obj.hom).map
+      ((eqToHom (congrArg (fun F => F ⋙
+        supportedEvaluation (X := op A.obj.right) A.obj.hom)
+        (supportedReindex_comp f g))).app K) =
+      (eqToHom (congrArg (fun F => F ⋙ globalEvaluation (op A.obj.right))
+        (globalReindex_comp f.hom.right g.hom.right))).app K.obj from
+    NatTrans.congr_app (compositionTransport_forget f g) K]
+  exact NatTrans.congr_app (evaluationPullbackIso_comp_hom f.hom.right g.hom.right) K.obj
+
+private theorem coefficientComposition_hom {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) :
+    (supportedPairReindexEvaluationIso (f ≫ g)).inv ≫
+        whiskerLeft (supportedEvaluation (X := op C.obj.right) C.obj.hom)
+          (boundedFlatPerfectSupportedPullbackCompIso f g).hom =
+      eqToHom (congrArg (fun F => F ⋙
+        supportedEvaluation (X := op A.obj.right) A.obj.hom) (supportedReindex_comp f g)) ≫
+        (isoSquareRoute (supportedPairReindexEvaluationIso g).symm
+          (supportedPairReindexEvaluationIso f).symm).hom := by
+  apply (cancel_mono (supportedEvaluationRouteIso f g).hom).mp
+  rw [Category.assoc, supportedEvaluationComposition_hom]
+  simp only [supportedEvaluationRouteIso, Iso.symm_hom, Category.assoc,
+    Iso.inv_hom_id_assoc, Iso.hom_inv_id, Category.comp_id]
+
+/-- The original target composition after its three specified raw zero normalizations. -/
+def evaluationRawCompIso {A B C : Scheme.OpenPairs.{u}} (f : A ⟶ B) (g : B ⟶ C) :
+    (evaluationRawMap (f ≫ g)).functor ≅
+      (evaluationRawMap g).functor ⋙ (evaluationRawMap f).functor :=
+  GlobalSupportedRawBass.chartNormalizationIso f g (f ≫ g)
+    (boundedFlatPerfectSupportedPullbackCompIso f g)
+
+private theorem composition_app
+    {A B C D E F : Type*} [Category A] [Category B] [Category C]
+    [Category D] [Category E] [Category F]
+    (Sf : A ⥤ B) (Sg : B ⥤ C) (Sfg : A ⥤ C) (hS : Sfg = Sf ⋙ Sg)
+    (U₀ : A ⥤ D) (U₁ : B ⥤ E) (U₂ : C ⥤ F)
+    (Pf : D ⥤ E) (Pg : E ⥤ F) (Pfg : D ⥤ F)
+    (κf : Sf ⋙ U₁ ≅ U₀ ⋙ Pf) (κg : Sg ⋙ U₂ ≅ U₁ ⋙ Pg)
+    (κfg : Sfg ⋙ U₂ ≅ U₀ ⋙ Pfg) (β : Pfg ≅ Pf ⋙ Pg)
+    (h : κfg.hom ≫ whiskerLeft U₀ β.hom =
+      eqToHom (congrArg (fun S => S ⋙ U₂) hS) ≫ (isoSquareRoute κf κg).hom)
+    (x : A) :
+    κfg.hom.app x ≫ β.hom.app (U₀.obj x) =
+      (eqToHom (congrArg (fun S => S ⋙ U₂) hS)).app x ≫
+        κg.hom.app (Sf.obj x) ≫ Pg.map (κf.hom.app x) := by
+  simpa only [isoSquareRoute, Iso.trans_hom, Iso.symm_hom, isoWhiskerLeft_hom,
+    isoWhiskerRight_hom, NatTrans.comp_app, whiskerLeft_app, whiskerRight_app,
+    Functor.associator_hom_app, Functor.associator_inv_app, Category.id_comp,
+    Category.comp_id, Category.assoc] using NatTrans.congr_app h x
+
+private theorem normalizedComposition_app
+    {A B C D E F : Type*} [Category A] [Category B] [Category C]
+    [Category D] [Category E] [Category F]
+    (Sf : A ⥤ B) (Sg : B ⥤ C) (Sfg : A ⥤ C) (hS : Sfg = Sf ⋙ Sg)
+    (U₀ : A ⥤ D) (U₁ : B ⥤ E) (U₂ : C ⥤ F)
+    (Pf Nf : D ⥤ E) (Pg Ng : E ⥤ F) (Pfg Nfg : D ⥤ F)
+    (κf : Sf ⋙ U₁ ≅ U₀ ⋙ Pf) (κg : Sg ⋙ U₂ ≅ U₁ ⋙ Pg)
+    (κfg : Sfg ⋙ U₂ ≅ U₀ ⋙ Pfg) (β : Pfg ≅ Pf ⋙ Pg)
+    (nf : Pf ≅ Nf) (ng : Pg ≅ Ng) (nfg : Pfg ≅ Nfg)
+    (h : ∀ x, κfg.hom.app x ≫ β.hom.app (U₀.obj x) =
+      (eqToHom (congrArg (fun S => S ⋙ U₂) hS)).app x ≫
+        κg.hom.app (Sf.obj x) ≫ Pg.map (κf.hom.app x)) (x : A) :
+    (κfg ≪≫ isoWhiskerLeft U₀ nfg).hom.app x ≫
+        (nfg.symm ≪≫ β ≪≫ isoWhiskerRight nf Pg ≪≫ isoWhiskerLeft Nf ng).hom.app
+          (U₀.obj x) =
+      (eqToHom (congrArg (fun S => S ⋙ U₂) hS)).app x ≫
+        (κg ≪≫ isoWhiskerLeft U₁ ng).hom.app (Sf.obj x) ≫
+        Ng.map ((κf ≪≫ isoWhiskerLeft U₀ nf).hom.app x) := by
+  simp only [Iso.trans_hom, Iso.symm_hom, isoWhiskerLeft_hom, isoWhiskerRight_hom,
+    NatTrans.comp_app, whiskerLeft_app, whiskerRight_app, Functor.map_comp,
+    Category.assoc, Iso.hom_inv_id_app_assoc]
+  have hx := h x
+  rw [reassoc_of% hx, ng.hom.naturality, ng.hom.naturality_assoc]
+
+private theorem normalizedCoefficientComposition_app {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C)
+    (K : (supported (X := op C.obj.right) C.obj.hom).FullSubcategory) :
+    (supportedNormalizedCoefficientIso (f ≫ g)
+      (evaluationRawNormalization (f ≫ g))).hom.app K ≫
+        (GlobalSupportedRawBass.normalizedCompositionIso f g).hom.app
+          ((supportedEvaluation (X := op C.obj.right) C.obj.hom).obj K) =
+      (eqToHom (congrArg (fun F => F ⋙
+        supportedEvaluation (X := op A.obj.right) A.obj.hom) (supportedReindex_comp f g))).app K ≫
+        (supportedNormalizedCoefficientIso f (evaluationRawNormalization f)).hom.app
+          ((supportedPairModelMap g).functor.obj K) ≫
+        (GlobalSupportedRawBass.normalizedPullback f).map
+          ((supportedNormalizedCoefficientIso g (evaluationRawNormalization g)).hom.app K) := by
+  apply normalizedComposition_app
+    (supportedPairReindex g) (supportedPairReindex f) (supportedPairReindex (f ≫ g))
+    (supportedReindex_comp f g)
+    (supportedEvaluation (X := op C.obj.right) C.obj.hom)
+    (supportedEvaluation (X := op B.obj.right) B.obj.hom)
+    (supportedEvaluation (X := op A.obj.right) A.obj.hom)
+    (boundedFlatPerfectSupportedPullback g) (GlobalSupportedRawBass.normalizedPullback g)
+    (boundedFlatPerfectSupportedPullback f) (GlobalSupportedRawBass.normalizedPullback f)
+    (boundedFlatPerfectSupportedPullback (f ≫ g))
+    (GlobalSupportedRawBass.normalizedPullback (f ≫ g))
+    (supportedPairReindexEvaluationIso g).symm (supportedPairReindexEvaluationIso f).symm
+    (supportedPairReindexEvaluationIso (f ≫ g)).symm
+    (boundedFlatPerfectSupportedPullbackCompIso f g)
+    (evaluationRawNormalization g) (evaluationRawNormalization f)
+    (evaluationRawNormalization (f ≫ g))
+  exact composition_app
+    (supportedPairReindex g) (supportedPairReindex f) (supportedPairReindex (f ≫ g))
+    (supportedReindex_comp f g)
+    (supportedEvaluation (X := op C.obj.right) C.obj.hom)
+    (supportedEvaluation (X := op B.obj.right) B.obj.hom)
+    (supportedEvaluation (X := op A.obj.right) A.obj.hom)
+    (boundedFlatPerfectSupportedPullback g) (boundedFlatPerfectSupportedPullback f)
+    (boundedFlatPerfectSupportedPullback (f ≫ g))
+    (supportedPairReindexEvaluationIso g).symm (supportedPairReindexEvaluationIso f).symm
+    (supportedPairReindexEvaluationIso (f ≫ g)).symm
+    (boundedFlatPerfectSupportedPullbackCompIso f g) (coefficientComposition_hom f g)
+
+private theorem evaluationRawMap_functor {A B : Scheme.OpenPairs.{u}} (f : A ⟶ B) :
+    (evaluationRawMap f).functor =
+      smallModelFunctor (GlobalSupportedRawBass.normalizedPullback f) := rfl
+
+private theorem smallCoefficientComposition_app {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C)
+    (K : (supported (X := op C.obj.right) C.obj.hom).FullSubcategory) :
+    (supportedSmallCoefficientIso (f ≫ g) (evaluationRawNormalization (f ≫ g))).hom.app K ≫
+        (evaluationRawCompIso f g).hom.app
+          ((evaluationSmall (X := op C.obj.right) C.obj.hom).obj K) =
+      (eqToHom (congrArg (fun F => F ⋙
+        evaluationSmall (X := op A.obj.right) A.obj.hom) (supportedReindex_comp f g))).app K ≫
+        (supportedSmallCoefficientIso f (evaluationRawNormalization f)).hom.app
+          ((supportedPairModelMap g).functor.obj K) ≫
+        (evaluationRawMap f).functor.map
+          ((supportedSmallCoefficientIso g (evaluationRawNormalization g)).hom.app K) := by
+  have h := congrArg (fun a =>
+    (AsSmall.up.{u, u + 1, 0} : (boundedFlatPerfectSupported A.obj.hom).FullSubcategory ⥤
+      SmallModel ((boundedFlatPerfectSupported A.obj.hom).FullSubcategory)).map a)
+      (normalizedCoefficientComposition_app f g K)
+  simpa only [evaluationRawMap_functor, smallModelFunctor, Functor.comp_obj, Functor.comp_map,
+    supportedSmallCoefficientIso, evaluationRawCompIso,
+    GlobalSupportedRawBass.chartNormalizationIso, GlobalSupportedRawBass.normalizedCompositionIso,
+    evaluationSmall, Iso.trans_hom, Iso.symm_hom, isoWhiskerRight_hom,
+    isoWhiskerLeft_hom, NatTrans.comp_app, whiskerLeft_app, whiskerRight_app,
+    Functor.associator_inv_app, Category.id_comp, Category.comp_id, Functor.map_comp,
+    eqToHom_app, eqToHom_map, AsSmall.down_obj, AsSmall.up_obj_down,
+    AsSmall.down_map, AsSmall.up_map_down] using h
+
+/-- The original supported Model edge retains the actual small coefficient and both zero rebases. -/
+private theorem evaluationComparisonIso_coefficient {A B : Scheme.OpenPairs.{u}} (f : A ⟶ B) :
+    evaluationComparisonIso f =
+      isoSquareConjugate (supportedSmallCoefficientIso f (evaluationRawNormalization f))
+        (evaluationNormalizationIso (X := op B.obj.right) B.obj.hom)
+        (evaluationNormalizationIso (X := op A.obj.right) A.obj.hom) := rfl
+
+/-- Composition retains all three original evaluation zero normalizations on every component. -/
+theorem evaluationComparisonIso_comp_app {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C)
+    (K : (supported (X := op C.obj.right) C.obj.hom).FullSubcategory) :
+    (evaluationComparisonIso (f ≫ g)).hom.app K ≫
+        (evaluationRawCompIso f g).hom.app
+          ((evaluationModel (X := op C.obj.right) C.obj.hom).functor.obj K) =
+      (eqToHom (congrArg (fun F => F ⋙
+        (evaluationModel (X := op A.obj.right) A.obj.hom).functor)
+        (supportedReindex_comp f g))).app K ≫
+        (evaluationComparisonIso f).hom.app ((supportedPairModelMap g).functor.obj K) ≫
+        (evaluationRawMap f).functor.map ((evaluationComparisonIso g).hom.app K) := by
+  rw [evaluationComparisonIso_coefficient, evaluationComparisonIso_coefficient,
+    evaluationComparisonIso_coefficient]
+  exact isoSquareConjugate_comp_app
+    (supportedPairModelMap g).functor (supportedPairModelMap f).functor
+    (supportedPairModelMap (f ≫ g)).functor (supportedReindex_comp f g)
+    (evaluationRawMap g).functor (evaluationRawMap f).functor
+    (evaluationRawMap (f ≫ g)).functor
+    (supportedSmallCoefficientIso g (evaluationRawNormalization g))
+    (supportedSmallCoefficientIso f (evaluationRawNormalization f))
+    (supportedSmallCoefficientIso (f ≫ g) (evaluationRawNormalization (f ≫ g)))
+    (evaluationRawCompIso f g)
+    (evaluationNormalizationIso (X := op C.obj.right) C.obj.hom)
+    (evaluationNormalizationIso (X := op B.obj.right) B.obj.hom)
+    (evaluationNormalizationIso (X := op A.obj.right) A.obj.hom)
+    (smallCoefficientComposition_app f g) K
+
+/-- The unchanged target composition after the actual normalized supported evaluation. -/
+def evaluationCompositionTargetIso {A B C : Scheme.OpenPairs.{u}} (f : A ⟶ B) (g : B ⟶ C) :
+    (evaluationModel (X := op C.obj.right) C.obj.hom ≫ evaluationRawMap (f ≫ g)).functor ≅
+      ((evaluationModel (X := op C.obj.right) C.obj.hom ≫ evaluationRawMap g) ≫
+        evaluationRawMap f).functor :=
+  isoWhiskerLeft (evaluationModel (X := op C.obj.right) C.obj.hom).functor
+    (evaluationRawCompIso f g) ≪≫ (Functor.associator _ _ _).symm
+
+/-- Strict supported reindexing followed by the original second evaluation comparison. -/
+def evaluationCompositionFirstIso {A B C : Scheme.OpenPairs.{u}} (f : A ⟶ B) (g : B ⟶ C) :
+    (supportedPairModelMap (f ≫ g) ≫
+      evaluationModel (X := op A.obj.right) A.obj.hom).functor ≅
+      ((supportedPairModelMap g ≫ evaluationModel (X := op B.obj.right) B.obj.hom) ≫
+        evaluationRawMap f).functor :=
+  eqToIso (congrArg (fun S => S ⋙ (evaluationModel (X := op A.obj.right) A.obj.hom).functor)
+      (supportedReindex_comp f g)) ≪≫
+    Functor.associator (supportedPairModelMap g).functor (supportedPairModelMap f).functor
+      (evaluationModel (X := op A.obj.right) A.obj.hom).functor ≪≫
+    isoWhiskerLeft (supportedPairModelMap g).functor (evaluationComparisonIso f) ≪≫
+    (Functor.associator _ _ _).symm
+
+/-- The first supported evaluation comparison postcomposed by actual normalized pullback. -/
+def evaluationCompositionSecondIso {A B C : Scheme.OpenPairs.{u}} (f : A ⟶ B) (g : B ⟶ C) :
+    ((supportedPairModelMap g ≫ evaluationModel (X := op B.obj.right) B.obj.hom) ≫
+        evaluationRawMap f).functor ≅
+      ((evaluationModel (X := op C.obj.right) C.obj.hom ≫ evaluationRawMap g) ≫
+        evaluationRawMap f).functor :=
+  isoWhiskerRight (evaluationComparisonIso g) (evaluationRawMap f).functor
+
+private theorem comparison_pasting_hom
+    {A B C D E F : Type*} [Category A] [Category B] [Category C]
+    [Category D] [Category E] [Category F]
+    (Sf : A ⥤ B) (Sg : B ⥤ C) (Sfg : A ⥤ C) (hS : Sfg = Sf ⋙ Sg)
+    (U₀ : A ⥤ D) (U₁ : B ⥤ E) (U₂ : C ⥤ F)
+    (Pf : D ⥤ E) (Pg : E ⥤ F) (Pfg : D ⥤ F)
+    (κf : Sf ⋙ U₁ ≅ U₀ ⋙ Pf) (κg : Sg ⋙ U₂ ≅ U₁ ⋙ Pg)
+    (κfg : Sfg ⋙ U₂ ≅ U₀ ⋙ Pfg) (β : Pfg ≅ Pf ⋙ Pg)
+    (h : ∀ x, κfg.hom.app x ≫ β.hom.app (U₀.obj x) =
+      (eqToHom (congrArg (fun S => S ⋙ U₂) hS)).app x ≫
+        κg.hom.app (Sf.obj x) ≫ Pg.map (κf.hom.app x)) :
+    κfg.hom ≫ (isoWhiskerLeft U₀ β ≪≫ (Functor.associator U₀ Pf Pg).symm).hom =
+      (eqToIso (congrArg (fun S => S ⋙ U₂) hS) ≪≫ Functor.associator Sf Sg U₂ ≪≫
+        isoWhiskerLeft Sf κg ≪≫ (Functor.associator Sf U₁ Pg).symm).hom ≫
+        (isoWhiskerRight κf Pg).hom := by
+  apply NatTrans.ext
+  funext x
+  simpa only [Iso.trans_hom, Iso.symm_hom, isoWhiskerLeft_hom,
+    isoWhiskerRight_hom, NatTrans.comp_app, whiskerLeft_app, whiskerRight_app,
+    Functor.associator_hom_app, Functor.associator_inv_app, eqToIso.hom,
+    Category.id_comp, Category.comp_id, Category.assoc] using h x
+
+/-- The actual supported Model pastings agree as whole natural transformations. -/
+theorem evaluationComposition_pasting {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) :
+    (evaluationComparisonIso (f ≫ g)).hom ≫ (evaluationCompositionTargetIso f g).hom =
+      (evaluationCompositionFirstIso f g).hom ≫ (evaluationCompositionSecondIso f g).hom :=
+  comparison_pasting_hom
+    (supportedPairModelMap g).functor (supportedPairModelMap f).functor
+    (supportedPairModelMap (f ≫ g)).functor (supportedReindex_comp f g)
+    (evaluationModel (X := op C.obj.right) C.obj.hom).functor
+    (evaluationModel (X := op B.obj.right) B.obj.hom).functor
+    (evaluationModel (X := op A.obj.right) A.obj.hom).functor
+    (evaluationRawMap g).functor (evaluationRawMap f).functor
+    (evaluationRawMap (f ≫ g)).functor
+    (evaluationComparisonIso g) (evaluationComparisonIso f)
+    (evaluationComparisonIso (f ≫ g)) (evaluationRawCompIso f g)
+    (evaluationComparisonIso_comp_app f g)
+
+/-- Realization supplies the complete original mixed supported evaluation composition pasting. -/
+def evaluationModelCompositionRelHomotopy {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) :=
+  prespectrumPastingHomotopy
+    (V := supportedModel (X := op C.obj.right) C.obj.hom)
+    (W := modelOf (boundedFlatPerfectSupportedWaldhausen A.obj.hom))
+    (F := supportedPairModelMap (f ≫ g) ≫ evaluationModel (X := op A.obj.right) A.obj.hom)
+    (G := evaluationModel (X := op C.obj.right) C.obj.hom ≫ evaluationRawMap (f ≫ g))
+    (G' := (supportedPairModelMap g ≫ evaluationModel (X := op B.obj.right) B.obj.hom) ≫
+      evaluationRawMap f)
+    (H := (evaluationModel (X := op C.obj.right) C.obj.hom ≫ evaluationRawMap g) ≫
+      evaluationRawMap f)
+    (evaluationComparisonIso (f ≫ g)).hom (evaluationCompositionTargetIso f g).hom
+    (evaluationCompositionFirstIso f g).hom (evaluationCompositionSecondIso f g).hom
+    (fun _ => (boundedFlatPerfectSupportedWaldhausen A.obj.hom).smallModel.weq_iso _ inferInstance)
+    (fun _ => (boundedFlatPerfectSupportedWaldhausen A.obj.hom).smallModel.weq_iso _ inferInstance)
+    (fun _ => (boundedFlatPerfectSupportedWaldhausen A.obj.hom).smallModel.weq_iso _ inferInstance)
+    (fun _ => (boundedFlatPerfectSupportedWaldhausen A.obj.hom).smallModel.weq_iso _ inferInstance)
+    (evaluationComposition_pasting f g)
+
+end Quillen.PerfectComplexes.SupportedTensorEvaluation

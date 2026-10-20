@@ -1,0 +1,5 @@
+{
+  "scratch_import_edges": [],
+  "explicit_scratch_path_reference_count": 469,
+  "policy": "Scratch commands retaining old tmp paths need source restoration first; historical evidence and unique drafts are not rewritten. No active production/test/client imports target tmp sources."
+}

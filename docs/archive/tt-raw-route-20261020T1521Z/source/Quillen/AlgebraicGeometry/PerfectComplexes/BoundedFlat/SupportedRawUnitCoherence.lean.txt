@@ -1,0 +1,52 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawStep
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedGlobalUnitIdentityOperation
+
+/-!
+# Original supported scalar coherence with composition
+
+The original supported geometric composition isomorphism intertwines the actual pulled-back
+scalar and the target scalar. Both equalities are of whole natural transformations in the
+supported full subcategories. Scalar preservation is the existing faithful-inclusion theorem.
+-/
+@[expose] public section
+noncomputable section
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.FunctorIdentityAutomorphism
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+
+/-- The original supported composition comparison preserves the actual pulled-back scalar. -/
+theorem pullbackUnitIso_comp {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) (r : (Γ(B.obj.right, ⊤))ˣ) :
+    (boundedFlatPerfectSupportedPullbackCompIso f g).hom ≫
+      whiskerRight (pullbackUnitIso g r).hom (boundedFlatPerfectSupportedPullback f) =
+    (pullbackUnitIso (f ≫ g) (Units.map f.hom.right.appTop.hom.toMonoidHom r)).hom ≫
+      (boundedFlatPerfectSupportedPullbackCompIso f g).hom := by
+  apply NatTrans.ext
+  funext K
+  simp only [NatTrans.comp_app, whiskerRight_app, pullbackUnitIso, onFunctor_hom_app]
+  rw [SupportedGlobalUnitIdentityOperation.pullback_preserves f r]
+  exact (boundedFlatPerfectSupportedGlobalUnitIso A.obj.hom
+    (Units.map f.hom.right.appTop.hom.toMonoidHom r)).hom.naturality _
+
+/-- The target scalar intertwines the whole original supported composition isomorphism. -/
+theorem pullbackUnitIso_comp_target {A B C : Scheme.OpenPairs.{u}}
+    (f : A ⟶ B) (g : B ⟶ C) (r : (Γ(A.obj.right, ⊤))ˣ) :
+    (boundedFlatPerfectSupportedPullbackCompIso f g).hom ≫
+      whiskerLeft (boundedFlatPerfectSupportedPullback g) (pullbackUnitIso f r).hom =
+    (pullbackUnitIso (f ≫ g) r).hom ≫
+      (boundedFlatPerfectSupportedPullbackCompIso f g).hom := by
+  apply NatTrans.ext
+  funext K
+  simp only [NatTrans.comp_app, whiskerLeft_app, pullbackUnitIso, onFunctor_hom_app]
+  exact (boundedFlatPerfectSupportedGlobalUnitIso A.obj.hom r).hom.naturality _
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

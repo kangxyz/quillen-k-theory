@@ -1,0 +1,168 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputNullSquare
+import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroFaces
+import Quillen.Topology.Prespectrum.NativeHomotopyCells
+
+/-! Exact original raw row words and weak-null times in the finite projection square. -/
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open scoped Simplicial Topology unitInterval
+universe u
+namespace QuillenTest.GlobalSupportedRawInputNullSquare
+open GlobalSupportedRawBass
+namespace Rectangle
+variable {A B C A' B' C' : Scheme.OpenPairs.{u}}
+  (f : B ⟶ A) (g : C ⟶ B) (f' : B' ⟶ A') (g' : C' ⟶ B')
+  (a : A' ⟶ A) (b : B' ⟶ B) (c : C' ⟶ C)
+  (hf : f' ≫ a = b ≫ f) (hg : g' ≫ b = c ≫ g)
+
+/-- Both original binary pieces retain their whole literal half-clock. -/
+theorem binary_word (n : ℕ) (t : I) (x : (rawSpectrum A).space n) :
+    prespectrumSimplexFamily (InputBinary.simplex f' a) n
+        (((Quillen.SimplexParameters.edge 0 1).trans
+          (Quillen.SimplexParameters.edge 1 2)) t, x) =
+      (compositionHomotopy f' a).level n (t, x) :=
+  InputBinary.native_path f' a n t x
+
+/-- The first entire Model diagram, not only its endpoints, survives in the merged family. -/
+theorem first_face : (InputRectangle.simplex f g f' g' a b c hf hg).face
+    InputRectangle.firstFace =
+      (InputSquare.simplex f' a b f hf).postcomp (SupportedTensorEvaluation.evaluationRawMap g') :=
+  InputRectangle.first_face f g f' g' a b c hf hg
+
+/-- The second entire Model diagram survives with the original precomposition. -/
+theorem second_face : (InputRectangle.simplex f g f' g' a b c hf hg).face
+    InputRectangle.secondFace =
+      (InputSquare.simplex g' b c g hg).precomp (SupportedTensorEvaluation.evaluationRawMap f) :=
+  InputRectangle.second_face f g f' g' a b c hf hg
+
+/-- The shared middle is a full dependent node, including its original reference anchor. -/
+theorem middle_node : InputRectangle.firstNodes f f' g' a b hf 4 =
+    InputRectangle.secondNodes f g f' g' a b c hf hg 2 :=
+  InputRectangle.middle_node f g f' g' a b c hf hg
+
+/-- Every point of all eight normalization pieces is the original row word. -/
+theorem whole_word (n : ℕ) (r : I) (x : (rawSpectrum A).space n) :
+    prespectrumSimplexFamily (InputRectangle.simplex f g f' g' a b c hf hg) n
+      (InputRectangle.parameter r, x) =
+      (InputRectangle.word f g f' g' a b c hf hg).level n (r, x) :=
+  InputRectangle.native f g f' g' a b c hf hg n r x
+
+/-- The first half remains the original first row square followed by raw restriction. -/
+theorem first_half (n : ℕ) (r : I) (x : (rawSpectrum A).space n) :
+    (InputRectangle.word f g f' g' a b c hf hg).level n
+      (Quillen.NativePathCells.lower r, x) =
+      (rawMap g').map n ((compositionTracks.square f' a b f hf).level n (r, x)) :=
+  Homotopy.trans_lower_cell _ _ n r x
+
+/-- The second half remains the second row square at the original enlarged input. -/
+theorem second_half (n : ℕ) (r : I) (x : (rawSpectrum A).space n) :
+    (InputRectangle.word f g f' g' a b c hf hg).level n
+      (Quillen.NativePathCells.upper r, x) =
+      (compositionTracks.square g' b c g hg).level n (r, (rawMap f).map n x) :=
+  Homotopy.trans_upper_cell _ _ n r x
+
+/-- The whole ordered row block keeps its independent original weak-null height. -/
+theorem first_weak_face
+    (θ : (Quillen.Waldhausen.IteratedS.zeroHom (rawModel A') (rawModel C')).functor ⟶
+      (SupportedTensorEvaluation.evaluationRawMap f' ≫
+        SupportedTensorEvaluation.evaluationRawMap g').functor)
+    (hθ : ∀ X, (rawModel C').waldhausen.weq (θ.app X))
+    (n : ℕ) (s : I) (z : StdSimplex ℝ (Fin 6)) (x : (rawSpectrum A).space n) :
+    CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+      (InputRectangle.nodes f g f' g' a b c hf hg)
+      (InputNullSquare.sourceZero f' g' a θ) (InputNullSquare.sourceZero_weak f' g' a θ hθ) n
+      ((s, StdSimplex.map
+        (CommonReferenceWeakZero.keepInitial InputRectangle.firstFace).toOrderHom z), x) =
+      CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+        ((InputRectangle.nodes f g f' g' a b c hf hg) ∘ InputRectangle.firstFace.toOrderHom)
+        (InputNullSquare.sourceZero f' g' a θ) (InputNullSquare.sourceZero_weak f' g' a θ hθ) n
+        ((s, z), x) :=
+  InputNullSquare.family_face f g f' g' a b c hf hg θ hθ InputRectangle.firstFace n s z x
+
+/-- The whole ordered row block keeps its independent original weak-null height. -/
+theorem second_weak_face
+    (θ : (Quillen.Waldhausen.IteratedS.zeroHom (rawModel A') (rawModel C')).functor ⟶
+      (SupportedTensorEvaluation.evaluationRawMap f' ≫
+        SupportedTensorEvaluation.evaluationRawMap g').functor)
+    (hθ : ∀ X, (rawModel C').waldhausen.weq (θ.app X))
+    (n : ℕ) (s : I) (z : StdSimplex ℝ (Fin 6)) (x : (rawSpectrum A).space n) :
+    CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+      (InputRectangle.nodes f g f' g' a b c hf hg)
+      (InputNullSquare.sourceZero f' g' a θ) (InputNullSquare.sourceZero_weak f' g' a θ hθ) n
+      ((s, StdSimplex.map
+        (CommonReferenceWeakZero.keepInitial InputRectangle.secondFace).toOrderHom z), x) =
+      CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+        ((InputRectangle.nodes f g f' g' a b c hf hg) ∘ InputRectangle.secondFace.toOrderHom)
+        (InputNullSquare.sourceZero f' g' a θ) (InputNullSquare.sourceZero_weak f' g' a θ hθ) n
+        ((s, z), x) :=
+  InputNullSquare.family_face f g f' g' a b c hf hg θ hθ InputRectangle.secondFace n s z x
+
+end Rectangle
+
+namespace Actual
+open AlgebraicGeometry.Scheme.Products
+open Localization.Parameter
+variable {U X S : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+  (p : S ⟶ integerBase) [QuasiCompact p]
+
+/-- The actual translated localization null is retained at every original time. -/
+theorem source_null (n : ℕ) (s : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Projection.square j T p).level n (0, (s, x)) =
+      (rawNull j T p).level n (s, (rawMap (Projection.sourceMap j T p)).map n x) :=
+  (Projection.square j T p).at_zero n s x
+
+/-- The actual base localization null is retained before the original target projection. -/
+theorem target_null (n : ℕ) (s : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Projection.square j T p).level n (1, (s, x)) =
+      (rawMap (Projection.targetMap j T p)).map n ((Localization.rawNull j T).level n (s, x)) :=
+  (Projection.square j T p).at_one n s x
+
+/-- The whole moving edge is the actual eight-piece row normalization word. -/
+theorem moving_edge (n : ℕ) (r : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Projection.square j T p).level n (r, (0, x)) =
+      (Projection.word j T p).level n (r, x) :=
+  (Projection.square j T p).left n r x
+
+/-- Every point of the other complete edge is the original chosen zero. -/
+theorem zero_edge (n : ℕ) (r : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Projection.square j T p).level n (r, (1, x)) =
+      (prespectrum (targetModel j T p)).point n :=
+  (Projection.square j T p).right n r x
+
+/-- The level-zero loop coordinate is independent of both square coordinates. -/
+theorem level_zero (s t : I) (x : (prespectrum (Localization.sourceModel j T)).space 0) :
+    Path.toContinuousMap ((Projection.square j T p).level 0 (0, (s, x))) t =
+      Path.toContinuousMap ((rawNull j T p).level 0
+        (s, (rawMap (Projection.sourceMap j T p)).map 0 x)) t :=
+  congrArg (fun q ↦ Path.toContinuousMap q t) (source_null j T p 0 s x)
+
+/-- The entire weak-null square remains based. -/
+theorem based_line (n : ℕ) (r s : I) :
+    (Projection.square j T p).level n
+      (r, (s, (prespectrum (Localization.sourceModel j T)).point n)) =
+        (prespectrum (targetModel j T p)).point n :=
+  (Projection.square j T p).at_point n r s
+
+/-- The independent prespectrum structure time is retained throughout the full square. -/
+theorem structure_time (n : ℕ) (r s t : I)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (Projection.square j T p).level (n + 1)
+      (r, (s, (prespectrum (Localization.sourceModel j T)).structureMap n x t)) =
+      (prespectrum (targetModel j T p)).structureMap n
+        ((Projection.square j T p).level n (r, (s, x))) t :=
+  (Projection.square j T p).comm n r s x t
+end Actual
+end QuillenTest.GlobalSupportedRawInputNullSquare

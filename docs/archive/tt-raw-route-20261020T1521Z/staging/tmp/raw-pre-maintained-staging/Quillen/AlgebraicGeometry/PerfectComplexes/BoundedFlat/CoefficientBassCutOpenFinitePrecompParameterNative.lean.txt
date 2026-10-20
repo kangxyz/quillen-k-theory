@@ -1,0 +1,59 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompParameters
+public import Quillen.Waldhausen.SConstruction.Iterated.RealizationReverseMixedWeakProduct
+/-! Exact output-first, source-second native evaluation of finite precomposition. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor Convexity
+open scoped Simplicial Topology
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp
+open CutOpenCarrier
+variable {U V W : Model.{u}} (A : U ⟶ V)
+variable {q : ℕ} (M : Fin (q + 1) → Node A)
+
+/-- The full dependent product grid is the original reverse-mixed simplex. -/
+theorem grid_simplex (H : V ⟶ W) {p : ℕ} (N : Fin (p + 1) → Node H) :
+    ModelSimplex.ofIsos (A ≫ H)
+      (fun i ↦ (FiniteParameter.gridNodes H (A ≫ H)
+        (fun N j ↦ node A H (M j) N) N i).1)
+      (fun i ↦ (FiniteParameter.gridNodes H (A ≫ H)
+        (fun N j ↦ node A H (M j) N) N i).2) =
+      ReverseMixedWeakProduct.simplex
+        (ModelSimplex.ofIsos H (fun i ↦ (N i).1) (fun i ↦ (N i).2))
+        A (fun i ↦ (M i).1) (fun i ↦ (M i).2) := by
+  unfold ReverseMixedWeakProduct.simplex
+  rw [ModelSimplex.ofIsos_face, ModelSimplex.diagonalComposition_ofIsos]
+  refine ModelSimplex.ofIsos_nodes_congr
+    (FiniteParameter.gridNodes H (A ≫ H) (fun N j ↦ node A H (M j) N) N)
+    (fun i ↦ ⟨(M (MixedWeakProduct.secondProjection p q i)).1 ≫
+      (N ((MixedWeakProduct.firstProjection p q).toOrderHom i)).1,
+      (Functor.uncurry.obj (whiskeringLeft _ _ _)).mapIso
+        ((M (MixedWeakProduct.secondProjection p q i)).2.prod
+          (N ((MixedWeakProduct.firstProjection p q).toOrderHom i)).2)⟩) ?_
+  intro i
+  simp only [FiniteParameter.gridNodes, node, CommonReferenceProduct.node,
+    Iso.refl_trans]
+  rfl
+
+/-- Every whole output point and finite input parameter retain independent native inputs. -/
+theorem parameter_native (H : V ⟶ W) (n : ℕ) (y : |parameterSSet H|)
+    (w : StdSimplex ℝ (Fin (q + 1))) (x : (prespectrum U).space n) :
+    pointwisePrespectrumFamily (A ≫ H) n (parameter A M H (y, w)) x =
+      pointwisePrespectrumFamily H n y (prespectrumFamily A M n (w, x)) := by
+  obtain ⟨p, N, z, rfl⟩ := exists_parameter H y
+  rw [parameter_characteristic, pointwisePrespectrumFamily_parameter,
+    pointwisePrespectrumFamily_parameter, prespectrumFamily_eq, prespectrumFamily_eq,
+    prespectrumFamily_eq, grid_simplex]
+  exact ReverseMixedWeakProduct.prespectrum_comp _ A (fun i ↦ (M i).1)
+    (fun i ↦ (M i).2) n x z w
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp

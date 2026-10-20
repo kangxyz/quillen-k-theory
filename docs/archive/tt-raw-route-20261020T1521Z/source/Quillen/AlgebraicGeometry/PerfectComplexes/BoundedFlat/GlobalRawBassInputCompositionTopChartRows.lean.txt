@@ -1,0 +1,107 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0TopRows
+
+/-!
+# Complete actual composition-top and chart side nodes
+
+The original polynomial composition triangle is retained between the actual source projection
+and target chart map. Both reference routes agree at their proved direct-input corner, so
+cancellation identifies all three full nodes for either original chart independently.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTopChartRows
+open InputCompositionTopPieces
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- The exact original polynomial binary composition source. -/
+abbrev binarySource := BinaryNormalizationSimplex.sourceMap (polynomial.map f) (polynomial.map g)
+
+/-- All original polynomial binary nodes, including the raw normalization intermediate. -/
+abbrev binaryFamily := binaryNodes (polynomial.map f) (polynomial.map g)
+
+/-- The polynomial target-side row retains its original final-triple source isomorphism. -/
+def movingBaseAnchor := DoubleSquareCommonSimplex.lastSourceIso
+  g f (polynomial.map g) (polynomial.map f)
+  (projection.app Z) (projection.app Y) (projection.app X)
+  (projection.naturality g).symm (projection.naturality f).symm ≪≫
+    NormalizedTripleSimplex.rightFirst (polynomial.map f) (polynomial.map g) (projection.app Z)
+
+/-- The actual moving side retains its whole chart postmap reference. -/
+def movingSideAnchor := movingAnchor f g k hk ≪≫
+  isoWhiskerRight (movingBaseAnchor f g) (chartMap (X := X) k).functor
+
+/-- The original chart side retains its whole polynomial projection premap reference. -/
+def chartSideAnchor := InputCompositionCarrierCharts.chartReferenceIso f g k hk ≪≫
+  isoWhiskerLeft (InputCompositionCarrierCharts.projectionMap (Z := Z)).functor
+    (BinaryNormalizationSimplex.total (k.app X) (polynomial.map f ≫ polynomial.map g))
+
+/-- Every moving side node keeps the entire binary family between both fixed actual maps. -/
+theorem moving_row (i : Fin 3) :
+    movingNodes f g k hk (CoefficientMovingSquareRows.targetSide i) =
+      prePostNodes (InputCompositionCarrierCharts.source f g)
+        (InputCompositionCarrierCharts.projectionMap (Z := Z)) (chartMap (X := X) k)
+        (binarySource f g) (binaryFamily f g) (movingSideAnchor f g k hk) i := by
+  have h := congrArg (postReferenceNode (InputCompositionCarrierCharts.source f g)
+    (chartMap (X := X) k) (movingAnchor f g k hk))
+    (CoefficientMovingSquareRows.target_side_nodes
+      g f (polynomial.map g) (polynomial.map f)
+      (projection.app Z) (projection.app Y) (projection.app X)
+      (projection.naturality g).symm (projection.naturality f).symm i)
+  exact h.trans (post_pre_node (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierCharts.projectionMap (Z := Z)) (chartMap (X := X) k)
+    (binarySource f g) (binaryFamily f g) (movingBaseAnchor f g) (movingAnchor f g k hk) i)
+
+/-- Every chart side node keeps that same complete original polynomial triangle. -/
+theorem chart_row (i : Fin 3) :
+    InputCompositionCarrierCharts.chartNodes f g k hk (CoefficientMovingSquareRows.sourceSide i) =
+      prePostNodes (InputCompositionCarrierCharts.source f g)
+        (InputCompositionCarrierCharts.projectionMap (Z := Z)) (chartMap (X := X) k)
+        (binarySource f g) (binaryFamily f g) (chartSideAnchor f g k hk) i := by
+  have h := congrArg (preReferenceNode (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierCharts.projectionMap (Z := Z))
+    (InputCompositionCarrierCharts.chartReferenceIso f g k hk))
+    (CoefficientMovingSquareRows.source_side_nodes
+      (polynomial.map g) (polynomial.map f) (laurent.map g) (laurent.map f)
+      (k.app Z) (k.app Y) (k.app X) (k.naturality g).symm (k.naturality f).symm i)
+  exact h.trans (pre_post_node (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierCharts.projectionMap (Z := Z)) (chartMap (X := X) k)
+    (binarySource f g) (binaryFamily f g)
+    (BinaryNormalizationSimplex.total (k.app X) (polynomial.map f ≫ polynomial.map g))
+    (InputCompositionCarrierCharts.chartReferenceIso f g k hk) i)
+
+/-- Both original side reference families meet at their actual direct-input polynomial corner. -/
+theorem corner_node : movingNodes f g k hk 15 =
+    InputCompositionCarrierCharts.chartNodes f g k hk 2 :=
+  (InputCompositionH0TopRows.row_nodes f g k hk 2).symm.trans
+    (InputCompositionH0ChartRows.row_nodes f g k hk 4)
+
+/-- All complete side nodes agree, with the original chosen source reference and fixed maps. -/
+theorem row_nodes (i : Fin 3) :
+    movingNodes f g k hk (CoefficientMovingSquareRows.targetSide i) =
+      InputCompositionCarrierCharts.chartNodes f g k hk
+        (CoefficientMovingSquareRows.sourceSide i) :=
+  prePost_families_match (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierCharts.projectionMap (Z := Z)) (chartMap (X := X) k)
+    (binarySource f g) (binaryFamily f g) (moving_row f g k hk) (chart_row f g k hk)
+    0 (corner_node f g k hk) i
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTopChartRows

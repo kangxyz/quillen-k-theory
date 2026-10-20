@@ -1,0 +1,135 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedShiftedSheet
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionOrdinaryRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCorrectedNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedOrdinarySheet
+public import Quillen.Topology.Prespectrum.CarrierSquareDescentEvaluation
+public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionBottomSeams
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPositiveFactor
+
+/-! The explicit corrected scalar square and source rail with all original clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH1Join
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionShiftedRails
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+local notation "F" => InputIdentitySeedCarrier.polyRef (f ≫ g)
+local notation "G" => InputIdentitySeedCarrier.laurentRef (f ≫ g)
+local notation "J" => InputIdentitySeedCarrier.chart (X := X)
+local notation "ε" => InputIdentitySeedCarrier.ordinary (f ≫ g)
+local notation "ε'" => InputIdentitySeedCarrier.shifted (f ≫ g)
+open Quillen.SimplexParameters Quillen.ScalarRectangle Quillen.NativePathCells
+
+
+open InputNullCompositionPolynomialCarrier
+
+
+/-- The whole original source rail on the shifted attachment, with both clocks retained. -/
+def shiftedSourceRail : C(I × I, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  (SeedShiftedSheet.inclusion (f ≫ g)).comp
+    (InputNullCompositionOrdinaryRails.sourceRail f g)
+
+/-- The whole original target rail on the shifted attachment. -/
+def shiftedTargetRail : C(I × I, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  (SeedShiftedSheet.inclusion (f ≫ g)).comp
+    (InputNullCompositionOrdinaryRails.targetRail f g)
+
+theorem sourceRail_native_eq (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (shiftedSourceRail f g (r, s)) x =
+      CutOpenCarrier.nativeEval F J G ε ε' n
+        (InputNullCompositionPolynomialCarrier.sourceRail f g (r, s)) x := by
+  change CutOpenCarrier.nativeEval F J G ε ε' n
+    (SeedShiftedSheet.inclusion (f ≫ g) _) x = _
+  rw [SeedShiftedSheet.inclusion_native, InputNullCompositionOrdinaryRails.inclusion_sourceRail]
+
+theorem targetRail_native_eq (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (shiftedTargetRail f g (r, s)) x =
+      CutOpenCarrier.nativeEval F J G ε ε' n
+        (InputNullCompositionPolynomialCarrier.targetRail f g (r, s)) x := by
+  change CutOpenCarrier.nativeEval F J G ε ε' n
+    (SeedShiftedSheet.inclusion (f ≫ g) _) x = _
+  rw [SeedShiftedSheet.inclusion_native, InputNullCompositionOrdinaryRails.inclusion_targetRail]
+
+theorem sourceRail_zero (s : I) : shiftedSourceRail f g (0, s) =
+    InputIdentitySeedNull.oldNull (f ≫ g) true s := by
+  change SeedShiftedSheet.inclusion (f ≫ g) _ = _
+  rw [InputNullCompositionOrdinaryRails.sourceRail_zero]
+  exact SeedShiftedSheet.inclusion_oldNull (f ≫ g) s
+
+theorem targetRail_zero (s : I) : shiftedTargetRail f g (0, s) =
+    InputIdentitySeedNull.newNull (f ≫ g) true s := by
+  change SeedShiftedSheet.inclusion (f ≫ g) _ = _
+  rw [InputNullCompositionOrdinaryRails.targetRail_zero]
+  exact SeedShiftedSheet.inclusion_newNull (f ≫ g) s
+
+theorem sourceRail_tip (r : I) : shiftedSourceRail f g (r, 1) =
+    InputIdentitySeedCone.tip (f ≫ g) true := by
+  change SeedShiftedSheet.inclusion (f ≫ g) _ = _
+  rw [InputNullCompositionOrdinaryRails.sourceRail_tip]
+  exact SeedShiftedSheet.inclusion_tip (f ≫ g)
+
+theorem targetRail_tip (r : I) : shiftedTargetRail f g (r, 1) =
+    InputIdentitySeedCone.tip (f ≫ g) true := by
+  change SeedShiftedSheet.inclusion (f ≫ g) _ = _
+  rw [InputNullCompositionOrdinaryRails.targetRail_tip]
+  exact SeedShiftedSheet.inclusion_tip (f ≫ g)
+
+/-- The shifted source recovers the whole original cone-composition source rail. -/
+theorem sourceRail_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (shiftedSourceRail f g (r, s)) x =
+      InputCompositionPositive.sourceRail f g n (r, (s, x)) :=
+  (sourceRail_native_eq f g n r s x).trans
+    (InputNullCompositionPolynomialCarrier.sourceRail_native f g n r s x)
+
+/-- The shifted target recovers the whole original base-composition target rail. -/
+theorem targetRail_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (shiftedTargetRail f g (r, s)) x =
+      (InputIdentityPositive.sourceNull X).level n
+        (s, (boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r, x)) :=
+  (targetRail_native_eq f g n r s x).trans
+    (InputNullCompositionPolynomialCarrier.targetRail_native f g n r s x)
+
+/-- At height zero the entire source Laurent rail is shifted by the chosen common unit. -/
+theorem sourceRail_bottom (r : I) : shiftedSourceRail f g (r, 0) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (BassH0Merge.anchorNode (InputIdentitySeedCarrier.commonUnit (f ≫ g)))
+        (sourcePositive f g (r, 0))) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (InputNullCompositionOrdinaryRails.sourceRail f g (r, 0)) = _
+  rw [InputNullCompositionOrdinaryRails.sourceRail, concatSecond_zero]
+  exact SeedShiftedSheet.inclusion_laurent (f ≫ g) _
+
+/-- At height zero the target retains its original base-positive product and unit anchor. -/
+theorem targetRail_bottom (r : I) : shiftedTargetRail f g (r, 0) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (BassH0Merge.anchorNode (InputIdentitySeedCarrier.commonUnit (f ≫ g)))
+        (targetPositive f g (r, 0))) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (InputNullCompositionOrdinaryRails.targetRail f g (r, 0)) = _
+  rw [InputNullCompositionOrdinaryRails.targetRail, concatSecond_zero]
+  exact SeedShiftedSheet.inclusion_laurent (f ≫ g) _
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionShiftedRails

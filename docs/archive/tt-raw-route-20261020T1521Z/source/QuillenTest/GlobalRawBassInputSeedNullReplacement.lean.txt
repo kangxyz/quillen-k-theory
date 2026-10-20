@@ -1,0 +1,39 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionSeedReplacement
+
+/-! Regression of replacing only the selected null input of the original direct-arrow seed. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputSeedNullReplacement
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputNullCompositionSeedReplacement
+
+/-- The two comparison faces are the original seed input law and its null-only replacement. -/
+theorem original_seed_faces (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    ((seedInputComparison f g).level n (0,(r,x)) =
+      (transitionInputHomotopy (f ≫ g)).level n (r,x)) ∧
+    ((seedInputComparison f g).level n (1,(r,x)) =
+      (alternateSeedInputHomotopy f g).level n (r,x)) :=
+  ⟨((seedInputComparison f g).level n).map_zero_left _,
+    ((seedInputComparison f g).level n).map_one_left _⟩
+
+/-- Varying the chosen null leaves the entire original source seed map fixed. -/
+theorem fixed_source_seed (n : ℕ) (q : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (seedInputComparison f g).level n (q,(0,x)) =
+      (transitionInputHomotopy (f ≫ g)).level n (0,x) :=
+  ((seedInputComparison f g).level n).eq_fst q (Or.inl rfl)
+
+end QuillenTest.GlobalRawBassInputSeedNullReplacement

@@ -1,0 +1,63 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionMap
+public import Quillen.Topology.Path.ScalarRectangleConcatenation
+/-! Literal source-map half words for prewhiskering the chosen first-stage composition. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+/-- The original raw cone cylinder, with its actual native span input. -/
+abbrev cylinder (W : Scheme.{u}) (n : ℕ) :=
+  ReducedMappingCone.cylinder ((span W).point n)
+    ((originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj W))).point n)
+    ((comparison W).map n)
+
+/-- The lower half of the source cone map is exactly its original input-comparison surface. -/
+theorem map_lower (n : ℕ) (s : I) (y : (span W).space n) :
+    (GlobalRawBass.coneMap c).map n (cylinder W n (lower s, y)) =
+      (mappingConeInclusion (comparison Z)).map n
+        ((inputComparisonHomotopy c).level n (s, y)) := by
+  rw [GlobalRawBass.coneMap_cylinder, Homotopy.trans_lower_cell]
+  rfl
+
+/-- The upper half of the source cone map is the original target cylinder and span map. -/
+theorem map_upper (n : ℕ) (s : I) (y : (span W).space n) :
+    (GlobalRawBass.coneMap c).map n (cylinder W n (upper s, y)) =
+      cylinder Z n (s, (spanMap c).map n y) := by
+  rw [GlobalRawBass.coneMap_cylinder, Homotopy.trans_upper_cell]
+  rfl
+
+/-- Prewhiskering retains the entire selected source-map first-half track. -/
+theorem composition_lower (n : ℕ) (r s : I) (y : (span W).space n) :
+    (InputComposition.coneHomotopy f g).level n
+      (r, (GlobalRawBass.coneMap c).map n (cylinder W n (lower s, y))) =
+    (mappingConeInclusion (comparison X)).map n
+      ((InputCompositionCharts.laurentComposition f g).level n
+        (r, (inputComparisonHomotopy c).level n (s, y))) := by
+  rw [map_lower]
+  exact InputComposition.coneHomotopy_inclusion f g n r _
+
+/-- Prewhiskering retains the unchanged chosen null square in the whole second half. -/
+theorem composition_upper (n : ℕ) (r s : I) (y : (span W).space n) :
+    (InputComposition.coneHomotopy f g).level n
+      (r, (GlobalRawBass.coneMap c).map n (cylinder W n (upper s, y))) =
+    (InputComposition.comparisonConeNullSquare f g).level n
+      (r, (s, (spanMap c).map n y)) := by
+  rw [map_upper]
+  exact InputComposition.coneHomotopy_cylinder f g n r s _
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

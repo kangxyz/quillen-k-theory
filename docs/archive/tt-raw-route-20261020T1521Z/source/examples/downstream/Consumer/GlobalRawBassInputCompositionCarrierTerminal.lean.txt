@@ -1,0 +1,48 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTerminal
+
+/-! Independent downstream use of the actual terminal carrier and its original inverse clock. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+universe u
+namespace Consumer.GlobalRawBassInputCompositionCarrierTerminal
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The whole terminal carrier recovers both comparison times, without an additional filler. -/
+theorem native_family (n : ℕ) (s t : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CommonReferenceNerve.compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierTerminal.face f g) n ((s, t), x) =
+      (InputCompositionCharts.compositeComparison f g).level n
+        (s, HomotopyPushout.cylinder (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z)) n (t, x)) :=
+  InputCompositionCarrierTerminal.face_native f g n s t x
+
+/-- The final original overlap quarter retains the inverse product's exact reversal. -/
+theorem inverse_clock (s t : unitInterval) :
+    InputCompositionCarrierTerminal.face f g (upper s, upper (upper t)) =
+      InputCompositionTerminalProducts.face f g minus minus_projection
+        (s, unitInterval.symm t) := by
+  rw [InputCompositionCarrierTerminal.face_upper, InputCompositionTerminalSecond.face_minus]
+
+/-- The based point is retained in particular on the complete first/second join. -/
+theorem based_join (n : ℕ) (t : unitInterval) :
+    CommonReferenceNerve.compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierTerminal.face f g) n
+        ((lower 1, t), (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).point n) =
+      (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj X))).point n :=
+  InputCompositionCarrierTerminal.face_point f g n (lower 1) t
+
+end Consumer.GlobalRawBassInputCompositionCarrierTerminal

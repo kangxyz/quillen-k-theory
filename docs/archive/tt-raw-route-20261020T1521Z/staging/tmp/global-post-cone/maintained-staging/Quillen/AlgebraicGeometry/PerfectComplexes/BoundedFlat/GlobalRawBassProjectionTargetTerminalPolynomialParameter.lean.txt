@@ -1,0 +1,91 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalPolynomialNodes
+
+/-! The entire original polynomial target words on their four ordered primitive edges. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge CommonReferenceNerve
+
+private theorem parameter_polynomial_row {V W V' W' : Model.{u}}
+    (E : V ⟶ W) (F : V' ⟶ W') {k : ℕ}
+    (g : CommonReferenceNerve.Node E → Fin (k + 1) → CommonReferenceNerve.Node F)
+    (α : ⦋17⦌ ⟶ ⦋k⦌) (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (t : I) :
+    FiniteParameter.parameter E F g (y, ProjectionRectangleParameters.Ppath α t) =
+      FiniteParameter.parameter E F
+        (fun N i ↦ g N (α.toOrderHom (ProjectionRectangleSquareRows.polynomialRow i)))
+        (y, NativeSquareFiveSimplex.parameter t) := by
+  rw [← ProjectionRectangleSquareRows.polynomial_parameter]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in t
+  rw [← hz, ← StdSimplex.map_comp]
+  let row := α.toOrderHom ∘ ProjectionRectangleSquareRows.polynomialRow
+  have hm : Monotone (row ∘ (BassH1Support.edgeFace i).toOrderHom) :=
+    α.toOrderHom.monotone.comp (ProjectionRectangleSquareRows.primitive_rows_monotone 1 i)
+  let h : ⦋1⦌ ⟶ ⦋k⦌ := SimplexCategory.Hom.mk ⟨row ∘
+    (BassH1Support.edgeFace i).toOrderHom, hm⟩
+  exact (FiniteParameter.parameter_restrict E F g h y z).symm.trans
+    (FiniteParameter.parameter_restrict E F (fun N j ↦ g N (row j))
+      (BassH1Support.edgeFace i) y z)
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "U" => InputCompositionTerminalAttach.arrow f
+
+/-- The complete polynomial square attachment preserves its original five-node parameter. -/
+theorem terminal_polynomial_attached_parameter
+    (α : laurent ⟶ polynomial)
+    (hb : ∀ Z, α.app Z ≫ projection.app Z = laurentProjection.app Z)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (t : I) :
+    mapParameter (terminalBoundaryNode f E)
+      (mapParameter (ProjectionReference.chartNode X α hb (E ≫ U))
+        (TargetSpan.polynomialSquare f E (y, t))) =
+    FiniteParameter.parameter E (reference f E)
+      (fun N i ↦ terminalBoundaryNode f E
+        (ProjectionReference.chartNode X α hb (E ≫ U) (TargetSpan.polynomialSquareNodes f E N i)))
+      (y, NativeSquareFiveSimplex.parameter t) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter E y
+  rw [TargetSpan.polynomialSquare_characteristic, mapParameter_parameter,
+    mapParameter_parameter, FiniteParameter.parameter_characteristic]
+  rfl
+
+/-- The whole positive target row is the target chart applied to the original polynomial square. -/
+theorem terminal_polynomial_plus_parameter
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (t : I) :
+    FiniteParameter.parameter E (reference f E) (nodes f E)
+      (y, ProjectionRectangleParameters.Ppath BassH0Diagram.plusFace t) =
+    mapParameter (terminalBoundaryNode f E)
+      (mapParameter (ProjectionReference.chartNode X plus plus_projection (E ≫ U))
+        (TargetSpan.polynomialSquare f E (y, t))) := by
+  rw [parameter_polynomial_row, terminal_polynomial_attached_parameter]
+  apply congrArg (fun g ↦ FiniteParameter.parameter E (reference f E) g
+    (y, NativeSquareFiveSimplex.parameter t))
+  exact funext (fun N ↦ funext (terminal_polynomial_plus_product f E N))
+
+/-- The entire inverse target row retains the same square clock and its separate chart anchor. -/
+theorem terminal_polynomial_minus_parameter
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (t : I) :
+    FiniteParameter.parameter E (reference f E) (nodes f E)
+      (y, ProjectionRectangleParameters.Ppath BassH0Diagram.minusFace t) =
+    mapParameter (terminalBoundaryNode f E)
+      (mapParameter (ProjectionReference.chartNode X minus minus_projection (E ≫ U))
+        (TargetSpan.polynomialSquare f E (y, t))) := by
+  rw [parameter_polynomial_row, terminal_polynomial_attached_parameter]
+  apply congrArg (fun g ↦ FiniteParameter.parameter E (reference f E) g
+    (y, NativeSquareFiveSimplex.parameter t))
+  exact funext (fun N ↦ funext (terminal_polynomial_minus_product f E N))
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

@@ -1,0 +1,134 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionAlternateCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentBoundary
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCorrectedNative
+/-! Whole native recovery of the literal selected alternate comparison. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionAlternateCarrier
+open CommonReferenceNerve InputIdentitySeedCarrier
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open InputNullCompositionCompositeCarrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+private theorem comparisonTrans_native {V : Type*} [TopologicalSpace V]
+    {v w : V} {p q t : Path v w} {E T : LoopPrespectrum.{u}} {i j : E ⟶ T}
+    {H K L : Homotopy i j} (n : ℕ) (x : E.space n) (ev : V → T.space n)
+    (P : p.Homotopy q) (Q : q.Homotopy t)
+    (P' : H.RelHomotopy K) (Q' : K.RelHomotopy L)
+    (hp : ∀ r s, ev (P (r, s)) = P'.level n (r, (s, x)))
+    (hq : ∀ r s, ev (Q (r, s)) = Q'.level n (r, (s, x))) (r s : unitInterval) :
+    ev (P.trans Q (r, s)) = (P'.trans Q').level n (r, (s, x)) := by
+  rw [Homotopy.RelHomotopy.trans_apply_path]
+  exact Path.Evaluation.comparison_trans ev P Q (P'.path n x) (Q'.path n x) hp hq r s
+
+private theorem comparisonHcomp_native {V : Type*} [TopologicalSpace V]
+    {v w z : V} {p q : Path v w} {t u : Path w z}
+    {E T : LoopPrespectrum.{u}} {i j k : E ⟶ T}
+    {H H' : Homotopy i j} {K K' : Homotopy j k}
+    (n : ℕ) (x : E.space n) (ev : V → T.space n)
+    (P : p.Homotopy q) (Q : t.Homotopy u)
+    (P' : H.RelHomotopy H') (Q' : K.RelHomotopy K')
+    (hp : ∀ r s, ev (P (r, s)) = P'.level n (r, (s, x)))
+    (hq : ∀ r s, ev (Q (r, s)) = Q'.level n (r, (s, x))) (r s : unitInterval) :
+    ev (P.hcomp Q (r, s)) = (P'.hcomp Q').level n (r, (s, x)) := by
+  rw [Homotopy.RelHomotopy.hcomp_apply_path]
+  exact Path.Evaluation.comparison_hcomp ev P Q (P'.path n x) (Q'.path n x) hp hq r s
+
+
+/-- The entire scalar source square recovers the original native source rail. -/
+theorem source_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x ((sourceSquare f g).parameter (r,s)) =
+      (InputCompositionNull.sourceSquare f g).level n (r,(s,x)) :=
+  InputNullCompositionPolynomialCarrier.sourceRail_original f g n r s x
+
+/-- The scalar left edge recovers the original Laurent composition path. -/
+theorem left_native (n : ℕ) (s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (sourceLeft f g s) =
+      (InputCompositionNull.oldLeft f g).level n (s,x) :=
+  (source_native f g n s 0 x).trans ((InputCompositionNull.sourceSquare f g).left n s x)
+
+/-- The ordinary scalar tip evaluates to the original native basepoint. -/
+theorem tip_native (n : ℕ)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (InputIdentitySeedCone.tip (f ≫ g) false) =
+      (mappingCone (comparison X)).point n := by
+  change (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval _ _ _ _ _ n (CutOpenCarrier.tipMinus _ _ _ _ _) x) = _
+  rw [CutOpenCarrier.nativeEval_tipMinus]
+  exact (InputIdentityPositive.inclusion X).map_point n
+
+/-- The complete target-null rail recovers its original native interchange. -/
+theorem targetRail_original (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (InputNullCompositionPolynomialCarrier.targetRail f g (r,s)) =
+      (InputCompositionNull.targetSquare f g).level n (r,(s,x)) := by
+  unfold evaluate
+  rw [InputNullCompositionPolynomialCarrier.targetRail_native]
+  exact DFunLike.congr_fun (InputIdentityPositive.sourceNull_factor X n)
+    (s, (boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r,x))
+
+/-- The full target-word square recovers the literal original native pasting. -/
+theorem target_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x ((targetSquare f g).parameter (r,s)) =
+      (InputCompositionNull.targetWordSquare f g).level n (r,(s,x)) := by
+  change evaluate f g n x (targetParameter f g (r,s)) = _
+  unfold InputCompositionNull.targetWordSquare Homotopy.Square.pastePaths
+  dsimp only
+  change _ = ContinuousMap.Homotopy.trans _ _ (s,(r,x))
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [targetParameter, concatSecond_lower, homotopy_lower]
+    exact InputNullCompositionLaurentCarrier.face_native f g n r t x
+  · rw [targetParameter, concatSecond_upper, homotopy_upper]
+    exact targetRail_original f g n r t x
+
+/-- Boundary collapse preserves the entire original source-square parameter. -/
+theorem sourceBoundary_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x ((sourceSquare f g).toBoundary (r,s)) =
+      (InputCompositionNull.sourceSquare f g).toBoundary.level n (r,(s,x)) :=
+  source_native f g n (Quillen.ThreeSideSquare.collapse (r,s)).1
+    (Quillen.ThreeSideSquare.collapse (r,s)).2 x
+
+/-- Boundary collapse preserves the entire original target-word parameter. -/
+theorem targetBoundary_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x ((targetSquare f g).toBoundary (r,s)) =
+      (InputCompositionNull.targetWordSquare f g).toBoundary.level n (r,(s,x)) :=
+  target_native f g n (Quillen.ThreeSideSquare.collapse (r,s)).1
+    (Quillen.ThreeSideSquare.collapse (r,s)).2 x
+
+/-- Every scalar alternate value is the specified original native alternate comparison. -/
+theorem alternate_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (alternate f g (r,s)) =
+      (InputCompositionNull.alternateComparison f g).level n (r,(s,x)) := by
+  unfold alternate InputCompositionNull.alternateComparison
+  apply comparisonTrans_native n x (evaluate f g n x)
+  · exact fun r s ↦ sourceBoundary_native f g n r s x
+  · intro r s
+    apply comparisonTrans_native n x (evaluate f g n x)
+    · intro r s
+      apply comparisonHcomp_native n x (evaluate f g n x)
+      · intro r s
+        apply comparisonHcomp_native n x (evaluate f g n x)
+        · exact fun _ s ↦ left_native f g n s x
+        · exact fun r s ↦ surface_native f g n r s x
+      · exact fun _ _ ↦ tip_native f g n x
+    · exact fun r s ↦ targetBoundary_native f g n (unitInterval.symm r) s x
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionAlternateCarrier

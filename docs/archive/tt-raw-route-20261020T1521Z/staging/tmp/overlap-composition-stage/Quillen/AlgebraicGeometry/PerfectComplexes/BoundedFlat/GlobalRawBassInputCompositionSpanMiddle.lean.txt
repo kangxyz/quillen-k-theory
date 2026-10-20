@@ -1,0 +1,70 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpanScalarNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionFourEdgeNative
+/-! The complete original middle product as the full four-edge Laurent attachment. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces
+open Quillen.PerfectComplexes.BassH0Merge
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "E" => baseSource f g
+
+/-- The selected binary nodes retain their complete original references. -/
+theorem binaryNode_eq (i : Fin 3) :
+    binaryNodes f g i = (⟨baseVertices f g i, baseReferences f g i⟩ : Node E) := by
+  fin_cases i <;> rfl
+
+/-- Every full projection-family grid node is the original middle-product node. -/
+theorem middle_grid_nodes (i : Fin 15) :
+    reanchor (middleAnchor f g)
+      (FiniteParameter.gridNodes E (ProjectionReference.reference X E)
+        (ProjectionReference.nodes X E) (binaryNodes f g) i) = middleNodes f g i := by
+  unfold FiniteParameter.gridNodes
+  rw [binaryNode_eq]
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  change (middleAnchor f g) ≪≫ ((Iso.refl _) ≪≫ _) = (middleAnchor f g) ≪≫ _
+  rw [Iso.refl_trans]
+  rfl
+
+/-- The complete family retains the independent base and Bass-path parameters. -/
+theorem middle_family_parameter (r t : I) :
+    mapParameter (reanchor (middleAnchor f g))
+      (ProjectionReference.family X E
+        (parameter E (binaryNodes f g) (binaryPath (k := 2) 0 1 2 r), t)) =
+      middleFace f g (r,t) := by
+  rw [ProjectionReference.family_characteristic]
+  have h := mapParameter_parameter (reanchor (middleAnchor f g))
+    (FiniteParameter.gridNodes E (ProjectionReference.reference X E)
+      (ProjectionReference.nodes X E) (binaryNodes f g))
+    (Quillen.SimplexGrid.parameter 2 4
+      (binaryPath (k := 2) 0 1 2 r, InputIdentityProjection.parameter t))
+  refine h.trans ?_
+  exact congrArg (fun N ↦ parameter (InputCompositionCarrierCharts.source f g) N
+    (Quillen.SimplexGrid.parameter 2 4
+      (binaryPath (k := 2) 0 1 2 r, InputIdentityProjection.parameter t)))
+    (funext (middle_grid_nodes f g))
+
+/-- The whole overlap attaches to the original scalar middle product. -/
+theorem middle_overlap_beta (r t : I) :
+    mapParameter (reanchor (middleAnchor f g))
+      (SSet.toTop.map (ProjectionReference.FourEdge.beta X E)
+        (FourEdgeTree.overlap E (ProjectionReference.projectionMap X)
+          (parameter E (binaryNodes f g) (binaryPath (k := 2) 0 1 2 r),t))) =
+      middleFace f g (r,t) := by
+  rw [ProjectionReference.FourEdge.beta_overlap]
+  exact middle_family_parameter f g r t
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar

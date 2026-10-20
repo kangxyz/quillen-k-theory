@@ -1,0 +1,132 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0ChartRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopInternalNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionMiddleNormalNode
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0SourceNode
+
+/-!
+# Actual direct-input and vertex-source polynomial rows
+
+Both original five-node polynomial rows retain their complete chart postmaps. Their full
+central nodes agree by the original projection naturality equality; cancellation then identifies
+all nodes, including the two raw normalization intermediates and the actual functor-map casts.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0TopRows
+open InputCompositionTopPieces
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- The actual direct polynomial square keeps its unchanged native source. -/
+abbrev squareSource := NativeSquareFiveSimplex.source (polynomial.map (f ≫ g)) (projection.app Z)
+
+/-- The five original direct polynomial nodes include the prescribed naturality equality. -/
+abbrev squareNodes := NativeSquareFiveSimplex.nodes (polynomial.map (f ≫ g)) (projection.app Z)
+  (projection.app X) (f ≫ g) (projection.naturality (f ≫ g))
+
+/-- The whole direct input row keeps its original middle-triple reference. -/
+abbrev inputAnchor := ProjectionRectangleSquareRows.polynomialAnchor
+  (projection.app Z) (k.app Z) (k.app X) (polynomial.map (f ≫ g)) (laurent.map (f ≫ g))
+  (k.naturality (f ≫ g)) (laurentProjection.app Z) (hk Z)
+
+/-- The original outer polynomial source is transported only by projection naturality. -/
+def outerIso : (polynomialSource f g).functor ≅ (squareSource f g).functor :=
+  eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+    (congrArg boundedFlatNormalizedPullback (projection.naturality (f ≫ g)).symm))
+
+/-- The moving outer row retains its actual chart postanchor and composite-source transport. -/
+def movingRowAnchor := movingAnchor f g k hk ≪≫
+  isoWhiskerRight (outerIso f g) (chartMap (X := X) k).functor
+
+/-- The direct input polynomial row keeps all five original dependent nodes. -/
+theorem input_row (i : Fin 5) :
+    InputDescSimplex.chartNodes (f ≫ g) k hk (ProjectionRectangleSquareRows.polynomialRow i) =
+      postReferenceNode (InputCompositionCarrierCharts.source f g) (chartMap (X := X) k)
+        (inputAnchor f g k hk) (squareNodes f g i) :=
+  ProjectionRectangleSquareRows.polynomial_row_nodes
+    (projection.app Z) (k.app Z) (projection.app X) (k.app X)
+    (f ≫ g) (polynomial.map (f ≫ g)) (laurent.map (f ≫ g))
+    (projection.naturality (f ≫ g)) (k.naturality (f ≫ g))
+    (laurentProjection.app Z) (hk Z) i
+
+/-- The full moving outer row preserves the actual polynomial functor-map composition cast. -/
+theorem moving_row (i : Fin 5) :
+    movingNodes f g k hk (CoefficientMovingSquareRows.outerRow i) =
+      postReferenceNode (InputCompositionCarrierCharts.source f g) (chartMap (X := X) k)
+        (movingRowAnchor f g k hk) (squareNodes f g i) := by
+  have h := congrArg (postReferenceNode (InputCompositionCarrierCharts.source f g)
+    (chartMap (X := X) k) (movingAnchor f g k hk))
+    (CoefficientMovingSquareRows.outer_row_nodes_cast
+      g f (polynomial.map g) (polynomial.map f)
+      (projection.app Z) (projection.app Y) (projection.app X)
+      (projection.naturality g).symm (projection.naturality f).symm
+      (f ≫ g) (polynomial.map (f ≫ g)) rfl (polynomial.map_comp f g)
+      (projection.naturality (f ≫ g)) i)
+  exact h.trans (post_anchor_node (InputCompositionCarrierCharts.source f g)
+    (chartMap (X := X) k) (movingAnchor f g k hk) (outerIso f g) (squareNodes f g i))
+
+include hk in
+/-- The whole moving reference has the literal chart and polynomial-total factorization. -/
+theorem movingReferenceEq : (InputCompositionCarrierCharts.source f g).functor =
+    (BinaryNormalizationSimplex.sourceMap (k.app X) (projection.app X ≫ f ≫ g)).functor :=
+  congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+    (congrArg boundedFlatNormalizedPullback (moving_total f g k hk).symm)
+
+/-- The moving central node is the actual binary normalization of that geometric total. -/
+theorem moving_center : movingNodes f g k hk 0 =
+    binaryTargetNode (InputCompositionCarrierCharts.source f g) (k.app X)
+      (projection.app X ≫ f ≫ g) (movingReferenceEq f g k hk) := by
+  have hf : (movingNodes f g k hk 0).1.functor =
+      (BinaryNormalizationSimplex.targetMap (k.app X)
+        (projection.app X ≫ f ≫ g)).functor := rfl
+  apply Sigma.ext (Model.Hom.ext hf)
+  apply heq_of_eq
+  change movingAnchor f g k hk ≪≫ isoWhiskerRight (Iso.refl (polynomialSource f g).functor)
+    (chartMap (X := X) k).functor = _
+  rw [isoWhiskerRight_refl]
+  refine (Iso.trans_refl (movingAnchor f g k hk)).trans ?_
+  change smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
+    (moving_total f g k hk).symm) ≪≫ boundedFlatNormalizedPullbackCompIso
+      (k.app X) (projection.app X ≫ f ≫ g)) = _
+  rw [smallIso_trans, smallIso_eqToIso]
+  rfl
+
+/-- Original naturality identifies the full central nodes before any native evaluation. -/
+theorem center_node : InputDescSimplex.chartNodes (f ≫ g) k hk 5 =
+    movingNodes f g k hk 0 := by
+  rw [moving_center]
+  have h := projection_middle_normal (projection.app Z) (k.app Z)
+    (projection.app X) (k.app X) (f ≫ g) (polynomial.map (f ≫ g))
+    (laurent.map (f ≫ g)) (projection.naturality (f ≫ g)) (k.naturality (f ≫ g))
+    (laurentProjection.app Z) (hk Z)
+  exact h.trans (binaryTargetNode_congr (InputCompositionCarrierCharts.source f g)
+    rfl (projection.naturality (f ≫ g)) _ _)
+
+/-- Every original direct-input and moving-source polynomial node agrees in the whole carrier. -/
+theorem row_nodes (i : Fin 5) :
+    InputDescSimplex.chartNodes (f ≫ g) k hk (ProjectionRectangleSquareRows.polynomialRow i) =
+      movingNodes f g k hk (CoefficientMovingSquareRows.outerRow i) :=
+  post_families_match (InputCompositionCarrierCharts.source f g) (chartMap (X := X) k)
+    (squareSource f g) (squareNodes f g) (input_row f g k hk) (moving_row f g k hk)
+    0 (center_node f g k hk) i
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0TopRows

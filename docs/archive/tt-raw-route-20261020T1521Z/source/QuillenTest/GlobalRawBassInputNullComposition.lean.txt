@@ -1,0 +1,55 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullPasting
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPositiveFactor
+
+/-! Regression of the original global null rails and the prescribed alternate comparison. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputNullComposition
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The same original whole source square has an actual positive-cone representative. -/
+theorem source_square_positive_support (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (InputCompositionPositive.sourceRail f g n (r, (s, x))) =
+        (InputCompositionNull.sourceSquare f g).level n (r, (s, x)) :=
+  (InputCompositionPositive.sourceRail_factor f g n r s x).trans
+    (InputCompositionNull.sourceSquare_apply f g n r s x).symm
+
+/-- Both source and target rails recover the original direct nulls at the same initial clock. -/
+theorem direct_null_boundaries (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputCompositionNull.sourceSquare f g).level n (0, (s, x)) =
+        (InputNull.originalOldNull (f ≫ g)).level n (s, x) ∧
+      (InputCompositionNull.targetSquare f g).level n (0, (s, x)) =
+        (InputNull.originalNewNull (f ≫ g)).level n (s, x) :=
+  ⟨(InputCompositionNull.sourceSquare f g).at_zero n s x,
+    (InputCompositionNull.targetSquare f g).at_zero n s x⟩
+
+/-- Alternate pasting retains the original direct endpoints without asserting equality of surfaces. -/
+theorem alternate_original_boundaries (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputCompositionNull.alternateComparison f g).level n (0, (s, x)) =
+        (InputNull.originalOldNull (f ≫ g)).level n (s, x) ∧
+      (InputCompositionNull.alternateComparison f g).level n (1, (s, x)) =
+        ((InputNull.laurentMovement (f ≫ g)).trans
+          (InputNull.originalNewNull (f ≫ g))).level n (s, x) :=
+  ⟨((InputCompositionNull.alternateComparison f g).level n).apply_zero (s, x),
+    ((InputCompositionNull.alternateComparison f g).level n).apply_one (s, x)⟩
+
+end QuillenTest.GlobalRawBassInputNullComposition

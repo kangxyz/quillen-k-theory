@@ -1,0 +1,105 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionFourEdgeMap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgePrecompReferences
+/-! Full source-domain precomposition of both charts and all four original reference edges. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits MonoidalCategory
+open AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge.Precomp
+open BassH0Merge CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier
+open BassProjectionPath.WholeReference.FourEdge (descend descend_left descend_right
+  descend_cylinder)
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable (X : Scheme.{u})
+variable {U V : Model.{u + 1}} (A : U ⟶ V)
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen X))
+local notation "J" => ProjectionReference.projectionMap X
+
+/-- Change only the source model, retaining the entire specified reference isomorphism. -/
+def onReference {W : Model.{u + 1}} (F : V ⟶ W) :
+    parameterSSet F ⟶ parameterSSet (A ≫ F) :=
+  nerveMap (Codiscrete.functorOfFun (precompNode A))
+
+/-- Source whiskering commutes with the complete polynomial attachment node. -/
+theorem polynomial_node (e : CommonReferenceNerve.Node E) :
+    postcompNode J (precompNode A e) = precompNode A (postcompNode J e) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext X
+  rfl
+
+/-- Every one of the original five reference nodes keeps its full anchor under precomposition. -/
+theorem reference_node (e : CommonReferenceNerve.Node E) (j : Fin 5) :
+    nodes X (A ≫ E) (precompNode A e) j = precompNode A (nodes X E e j) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext X
+  rfl
+
+variable (α : laurent ⟶ polynomial)
+  (ha : ∀ Y, α.app Y ≫ projection.app Y = laurentProjection.app Y)
+
+/-- Both charts retain their separate original geometric and normalization isomorphisms. -/
+theorem chart_node (e : CommonReferenceNerve.Node (polynomialReference X E)) :
+    ProjectionReference.chartNode X α ha (A ≫ E) (precompNode A e) =
+      precompNode A (ProjectionReference.chartNode X α ha E e) := by
+  exact BassProjectionPath.WholeReference.FourEdge.Precomp.chart_whiskering A E J
+    (InputCompositionTerminalAttach.arrow (α.app X))
+    (ProjectionReference.source X) (ProjectionReference.chartEndpoint X α ha) e
+
+/-- The whole polynomial attachment commutes before realization. -/
+theorem attachment :
+    FourEdgeTree.attachment E J ≫ onReference A (E ≫ J) =
+      onReference A E ≫ FourEdgeTree.attachment (A ≫ E) J := by
+  have h : (fun e : CommonReferenceNerve.Node E ↦ precompNode A (postcompNode J e)) =
+      (fun e ↦ postcompNode J (precompNode A e)) :=
+    funext fun e ↦ (polynomial_node X A E e).symm
+  exact congrArg (fun f ↦ nerveMap (Codiscrete.functorOfFun f)) h
+
+/-- Both entire polynomial chart maps commute with the unchanged source-domain map. -/
+theorem chart :
+    chartMap X E α ha ≫ onReference A (reference X E) =
+      onReference A (E ≫ J) ≫ chartMap X (A ≫ E) α ha := by
+  have h :
+      (fun e : CommonReferenceNerve.Node (polynomialReference X E) ↦
+        precompNode A (ProjectionReference.chartNode X α ha E e)) =
+      (fun e ↦ ProjectionReference.chartNode X α ha (A ≫ E) (precompNode A e)) :=
+    funext fun e ↦ (chart_node X A E α ha e).symm
+  exact congrArg (fun f ↦ nerveMap (Codiscrete.functorOfFun f)) h
+
+/-- All five whole-nerve vertex maps retain their original full references. -/
+theorem vertex (j : Fin 5) :
+    vertexMap X E j ≫ onReference A (reference X E) =
+      onReference A E ≫ vertexMap X (A ≫ E) j := by
+  have h : (fun e : CommonReferenceNerve.Node E ↦ precompNode A (nodes X E e j)) =
+      (fun e ↦ nodes X (A ≫ E) (precompNode A e) j) :=
+    funext fun e ↦ (reference_node X A E e j).symm
+  exact congrArg (fun f ↦ nerveMap (Codiscrete.functorOfFun f)) h
+
+/-- Each complete original cylinder commutes with source precomposition at its unchanged time. -/
+theorem edge (i j : Fin 5) :
+    edgeMap X E i j ≫ onReference A (reference X E) =
+      onReference A E ▷ Δ[1] ≫ edgeMap X (A ≫ E) i j := by
+  have h : (fun (e : CommonReferenceNerve.Node E) (k : Fin 2) ↦
+        precompNode A (nodes X E e (![i, j] k))) =
+      (fun e k ↦ nodes X (A ≫ E) (precompNode A e) (![i, j] k)) :=
+    funext fun e ↦ funext fun k ↦ (reference_node X A E e (![i, j] k)).symm
+  exact congrArg (FiniteParameter.simplicial E (reference X (A ≫ E))) h
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge.Precomp

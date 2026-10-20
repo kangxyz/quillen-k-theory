@@ -120,5 +120,7 @@ These class squares identify the unchanged current and fine negative
 comparisons. Their boundary consequences, the first boundary from K₀, and
 the normalized basic and auxiliary rows are in
 [geometric connecting maps](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md#original-negative-classes-and-boundaries).
-They do not identify the separate raw geometric all-stage tower or its
-classical forward transitions.
+Comparison with a separately prescribed raw geometric all-stage tower
+remains distinct from these class formulas. The direct tensor/Bass realization
+and original TT 7.4 localization theorem are recorded in
+[row interfaces](RowInterfaces.md#returned-tensor-action-and-the-forward-operation).

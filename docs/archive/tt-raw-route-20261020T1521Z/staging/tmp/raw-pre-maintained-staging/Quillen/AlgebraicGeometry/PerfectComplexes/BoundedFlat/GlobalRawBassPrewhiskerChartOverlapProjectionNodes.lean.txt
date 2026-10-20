@@ -1,0 +1,48 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOverlapProjectionSeam
+/-!
+Attachment agrees on every full source-square polynomial node, not only its terminal vertex.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionTopPieces.chartMap (X := X) k
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+
+/-- Attachment agrees on every full source-square polynomial node, not only its terminal vertex. -/
+theorem projectionSeam_attachment_node (N : Node (S ≫ P)) :
+    reanchor (projectionLaurentSeamAnchor f g c k hk)
+      (attachPostcompNode (S ≫ P) K (S ≫ G) (CutOpenPrecomp.anchor S P K G ε) N) =
+      ProjectionReference.chartNode X k hk (A ≫ E)
+        (reanchor (projectionSeamAnchor f g c) N) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  change projectionLaurentSeamAnchor f g c k hk ≪≫
+      (CutOpenPrecomp.anchor S P K G ε ≪≫ isoWhiskerRight N.2 (K).functor) =
+    ProjectionReference.chartAnchor X k hk (A ≫ E) ≪≫
+      isoWhiskerRight (projectionSeamAnchor f g c ≪≫ N.2) (K).functor
+  rw [isoWhiskerRight_trans, ← Iso.trans_assoc, projectionSeam_attachment, Iso.trans_assoc]
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

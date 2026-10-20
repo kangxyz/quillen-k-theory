@@ -1,0 +1,1152 @@
+{
+  "state": "integrated source; independent ordinary review and qualified scoped native validation complete",
+  "base_commit": "25387c653f01abc24bf25cc166dee33cc63b67a2",
+  "incoming": {
+    "active_archive": "quillen-0.10.0-ACTIVE-20261020T1557Z.tar.xz",
+    "active_sha256": "15a709ae530a1610ec156e47068605d275afede1d7399231552e138ae8a6020f",
+    "research_archive": "quillen-0.10.0-RESEARCH-20261020T1557Z.tar.xz",
+    "research_sha256": "b9dc6c66aaedbcfba372230496eb02b58ea0a1ad8859255053b40ca0fc61b989",
+    "package_label": "0.10.0",
+    "manifest_verification": {
+      "active_members": 7625,
+      "research_members": 11556,
+      "missing": 0,
+      "unlisted": 0,
+      "mismatches": 0
+    }
+  },
+  "active_source": {
+    "providers": [
+      "Quillen.Aglib.Topology.Path.AssociatorEvaluationComparison",
+      "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FineBassK",
+      "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReturnedTensorFamily",
+      "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReturnedTensorGeneratedTrace",
+      "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReturnedTensorGenerators",
+      "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReturnedTensorRecursiveCoordinates",
+      "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReturnedTensorRecursiveRecognition",
+      "Quillen.KTheory.Bass.ConeGeneratorRecognition",
+      "Quillen.KTheory.Bass.GeneratedTensorStep",
+      "Quillen.KTheory.Bass.GeneratedTensorTrace",
+      "Quillen.KTheory.Bass.GeneratedTensorTraceProof",
+      "Quillen.Topology.Path.CarrierSquareCorrectionNaturality",
+      "Quillen.Topology.Prespectrum.ContravariantCompositionTracks",
+      "Quillen.Topology.Prespectrum.RelativeSurfaceValue",
+      "Quillen.Topology.Prespectrum.SplitSquareInput",
+      "Quillen.Topology.Prespectrum.SplitSquareSeed",
+      "Quillen.Topology.Prespectrum.SplitSquareSourceNull",
+      "Quillen.Topology.Prespectrum.StrictSquareSplitEvaluation",
+      "Quillen.Topology.Prespectrum.StrictSquareSplitNull",
+      "Quillen.Topology.Prespectrum.StrictSquareSplitSeed",
+      "Quillen.Topology.Realization.SimplexWeakZeroGrid",
+      "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenChosenNullExtension",
+      "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenFold",
+      "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenFoldWholeCells",
+      "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveGridSwap",
+      "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroFaces",
+      "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroVertex",
+      "Quillen.Waldhausen.SConstruction.Iterated.MixedWeakZeroGrid",
+      "Quillen.Waldhausen.SConstruction.Iterated.MixedWeakZeroProductConeComparison",
+      "Quillen.Waldhausen.SConstruction.Iterated.ModelZeroNormalization",
+      "Quillen.Waldhausen.SConstruction.Iterated.OriginalTriangleSurfaceValue",
+      "Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoSquareRoute",
+      "Quillen.Waldhausen.SConstruction.Iterated.RealizationReverseMixedWeakProduct",
+      "Quillen.Waldhausen.SConstruction.Iterated.ReverseMixedWeakZeroGrid",
+      "Quillen.Waldhausen.SConstruction.Iterated.ReverseMixedWeakZeroProductConeComparison",
+      "Quillen.Waldhausen.SConstruction.Iterated.SimplexReverseMixedWeakProduct",
+      "Quillen.Waldhausen.SConstruction.Iterated.SimplexWeakTriangleSquare",
+      "Quillen.Waldhausen.SConstruction.Iterated.WeakZeroProductConeParameter",
+      "Quillen.Waldhausen.SConstruction.Iterated.ZeroNormalizationSquare"
+    ],
+    "tests": [
+      "QuillenTest.FineBassK",
+      "QuillenTest.MixedWeakZeroGrid",
+      "QuillenTest.ReverseMixedWeakProduct",
+      "QuillenTest.ReverseMixedWeakZeroGrid",
+      "QuillenTest.TargetOverlapReanchor",
+      "QuillenTest.TensorBassConstruction",
+      "QuillenTest.WeakZeroProductConeComparison"
+    ],
+    "clients": [
+      "Consumer.FineBassK",
+      "Consumer.MixedWeakZeroGrid",
+      "Consumer.TargetOverlapReanchor",
+      "Consumer.TensorBassConstruction",
+      "Consumer.WeakZeroProductConeComparison"
+    ],
+    "input_sha256": {
+      "Quillen/Aglib/Topology/Path/AssociatorEvaluationComparison.lean": "66aaeb995c334e8a1a87f01b5e46b1b90351a7c50db55e5ac85b887debd662fc",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FineBassK.lean": "2070dc67843257c87c6f12dc0de35d09d81736bbeb21f65931cdcb8e011f5143",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorFamily.lean": "12e2a7868695da651b316d3ac71c8fa41d2b3e13e9e206b7b1f2fb2402aa4324",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorGeneratedTrace.lean": "1cff489a151f55f29b90f6c86f01ad992e6fac24a5d572f2b23dac68c7ba6531",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorGenerators.lean": "8e8a9af8382372c8d272dd32c8fbdcd87182117032fd09a59cfb127b605804e8",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorRecursiveCoordinates.lean": "a3aaa47d5d72a0b2b0e1817769edf8141b4cd4a4064ddff76fc3e7bead502156",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorRecursiveRecognition.lean": "d693e428fbc12b5e7ee2f949fca3f0466b2904de73b6cd2ab9a2c7f21632832c",
+      "Quillen/KTheory/Bass/ConeGeneratorRecognition.lean": "1b97156d191ee74f4e8b335b9b2da0516658fe00e460f050f8a35725058772cf",
+      "Quillen/KTheory/Bass/GeneratedTensorStep.lean": "21f156532214bdce279eb13788ab3295fe027aa9110b9e0480d6b9a1afee22d6",
+      "Quillen/KTheory/Bass/GeneratedTensorTrace.lean": "2ea0e349e65e1b75ec44674ee1fb76f38501d78f70df027f63b1ff4e8efa3a59",
+      "Quillen/KTheory/Bass/GeneratedTensorTraceProof.lean": "d05db187edbcb2c62914ab65199987ee6803d05f0b5466cd8902832efc373435",
+      "Quillen/Topology/Path/CarrierSquareCorrectionNaturality.lean": "acc77b986095ebfe14ccb04d9074565ff849b5e8b1b792f745cd72949e74dfa6",
+      "Quillen/Topology/Prespectrum/ContravariantCompositionTracks.lean": "f19c432f17ea074878c63ef736f4127cb589be1a4bb03705e1312d27e828b30f",
+      "Quillen/Topology/Prespectrum/RelativeSurfaceValue.lean": "7d1feb1ffe32a604a969957b5edfd47ea88cb3e58374147dd39a1f0bfff6e83a",
+      "Quillen/Topology/Prespectrum/SplitSquareInput.lean": "a6e49d31f6050e251eb6c4bb66e957a95a70c091e6429861d922781fcdfa5460",
+      "Quillen/Topology/Prespectrum/SplitSquareSeed.lean": "9c62ac877bb771e60374873b84d502fb6776e79d93aacf857f638be63b554f7f",
+      "Quillen/Topology/Prespectrum/SplitSquareSourceNull.lean": "b37599e26e41537f482a2cbb2c0f53e860e8afecec4cfa9d3fcfd3123f3e4eb1",
+      "Quillen/Topology/Prespectrum/StrictSquareSplitEvaluation.lean": "a18ef96c6435e205d2c47caa6de19930bb3fa404ded6db94b623d59a5d390636",
+      "Quillen/Topology/Prespectrum/StrictSquareSplitNull.lean": "e2989c2f9bce166dd19a3dca99a87ccb942e0139014cf6e2919f1ef0b2b68f10",
+      "Quillen/Topology/Prespectrum/StrictSquareSplitSeed.lean": "bb75839c7364e504b04d252edb20d176a585230e42f8e283e2b84c9cbc5754ef",
+      "Quillen/Topology/Realization/SimplexWeakZeroGrid.lean": "e79dd2029824920fa2256e55fff25b1852175ed7632c9f081f274fdd856f1111",
+      "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenChosenNullExtension.lean": "a9ba3b4eb06bad2607d5343125b492069eb75c492cf803c3425b315d2b47fb67",
+      "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenFold.lean": "2d8168800e761e6077c421720f28d4e44fca67678b96ac18056c57c08e8bc842",
+      "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenFoldWholeCells.lean": "4794a622b6021e1cbe3cc66771f27681d0bf016deebb33ddb8b6792dad565281",
+      "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveGridSwap.lean": "f4efc2ef93fad841633b3e12effb7c106acc98f9606db1dd6ad1773c81b7251a",
+      "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceWeakZeroFaces.lean": "44a903a2278d335ee4e1de4e63f0b49d7eaae3bd20488e924f95b7ee388b7276",
+      "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceWeakZeroVertex.lean": "0f34b3dc33b607cb1b56c4413f463543867b0869c93a9db5d254c8c1e7a064a9",
+      "Quillen/Waldhausen/SConstruction/Iterated/MixedWeakZeroGrid.lean": "7249487cd5623527a44b8cfed158eecee622e73db9fe7b8a9f5ab1e9a125e643",
+      "Quillen/Waldhausen/SConstruction/Iterated/MixedWeakZeroProductConeComparison.lean": "4ac1c75e9c6cef34f26bb36271ea1729e58c619a3ac2c911bab13b5afec019ff",
+      "Quillen/Waldhausen/SConstruction/Iterated/ModelZeroNormalization.lean": "ef39853381eb190cecc35e526667c7408c41514b13b0af64355c1795fe77d038",
+      "Quillen/Waldhausen/SConstruction/Iterated/OriginalTriangleSurfaceValue.lean": "4943f69caf3b53ff670ff72fb42a73591a02e60dbd8d4cbcb392c2814a098c6a",
+      "Quillen/Waldhausen/SConstruction/Iterated/PrespectrumIsoSquareRoute.lean": "acf2cb1af0531aa2d1f3aabcbe5c140ca0ad1a10c91567a6bc54238fa7ebc2b5",
+      "Quillen/Waldhausen/SConstruction/Iterated/RealizationReverseMixedWeakProduct.lean": "8020aae5997d2a4249805ca82dd1031f1959a09671527bc1b8a403cead19dfb0",
+      "Quillen/Waldhausen/SConstruction/Iterated/ReverseMixedWeakZeroGrid.lean": "e92a8590ac7e8313e34643f866dd0061a207f10443964a0b99ef939155b2cede",
+      "Quillen/Waldhausen/SConstruction/Iterated/ReverseMixedWeakZeroProductConeComparison.lean": "7bad949990aa4b9d528ed9174fe7ab732aff9f71c38064ec69c5f16c2551a93d",
+      "Quillen/Waldhausen/SConstruction/Iterated/SimplexReverseMixedWeakProduct.lean": "0496fbef0e1e8f51efd3e7048235239802f4d8cbfc6f728d973ceaad63353189",
+      "Quillen/Waldhausen/SConstruction/Iterated/SimplexWeakTriangleSquare.lean": "ff7f588c00cc4c8882976e375dd586a0ade15d97fb76889774b0fa17666be091",
+      "Quillen/Waldhausen/SConstruction/Iterated/WeakZeroProductConeParameter.lean": "247f68dc5b4975f18960a94564683ebff47094b9c3fb776f9f9f3dc330f296eb",
+      "Quillen/Waldhausen/SConstruction/Iterated/ZeroNormalizationSquare.lean": "ea93f5a1ef1b4bd4287817b11ab6f7bc86d6868aea934caca27d0dbcc49c98b6",
+      "QuillenTest/FineBassK.lean": "af959bea910c7c82fced5b2efb6041ec032e3dd64879bd3d6cca11fdadbe9d7f",
+      "QuillenTest/MixedWeakZeroGrid.lean": "7193e4ea2106007b74dd7c731cef10ebf92e7ea9c0b1fa2455efff97a58f41d4",
+      "QuillenTest/ReverseMixedWeakProduct.lean": "0280c7ac64ef486fc00b74646dabf94158086d8957ab1016307f964e990e4c72",
+      "QuillenTest/ReverseMixedWeakZeroGrid.lean": "79be43e477d1b94abe0c2b200b9a6651996520338ba35a9d2a95eb6b7b45a611",
+      "QuillenTest/TargetOverlapReanchor.lean": "7f0e1985c40337724d47c472ae0271ec1a1b8d95d18262cdaa6123400276241b",
+      "QuillenTest/TensorBassConstruction.lean": "ac4f9ce2fc10b98504d5badc96de7499dd1852ec8739e915a38df366f79ad7f8",
+      "QuillenTest/WeakZeroProductConeComparison.lean": "6780527845d80c6b9a2d0e88d6b274aa4be0a9a9afca701b68cb6c73ee9b65cf",
+      "examples/downstream/Consumer/FineBassK.lean": "2f81542c946296e7f1e49b9f90b8d30df810bbc1a28217a0441d31293510bc0d",
+      "examples/downstream/Consumer/MixedWeakZeroGrid.lean": "e23529d41d80381fda930fc3d457a8cea5e444263a27b66077a6d61205179054",
+      "examples/downstream/Consumer/TargetOverlapReanchor.lean": "4f8622224fd2bff30ee2b8dc2a2ea1467f5a2947db9fce40e15c5f8070c37913",
+      "examples/downstream/Consumer/TensorBassConstruction.lean": "0b94f9ed13cd7bfada1318c809384fb4fb387463e82ddaf5f05aec001e04e7d7",
+      "examples/downstream/Consumer/WeakZeroProductConeComparison.lean": "10f3148ae4b8cf373bd2812b369ebc374af23fa2f9105c3d185dcd5bfa38393f"
+    }
+  },
+  "mathematical_scope": {
+    "accepted": [
+      "Actual represented left-[T] tensor input",
+      "Independent four-generator cone law and uniform transformed-diagram recursion",
+      "Specified stable comparison roof",
+      "Basic and auxiliary original-null fiber lifts stable in every integer degree under qcqs/compact-open hypotheses"
+    ],
+    "remaining": "Additional full multiplicative module API and comparison to another prescribed raw point-set implementation, including its chosen class/boundary conventions. These are separate goals, not missing premises of original TT 7.4.",
+    "completion": "Original TT 7.4: basic and auxiliary canonical-null stable fiber sequences for qcqs X, quasi-compact U, and closed auxiliary support with quasi-compact complement, in every integer degree, with resulting long exact sequences. The Bass realization is identified directly through the actual perfect K-model, constant-overlap looped cone, inherited forward left-[T] recursion, specified stable roof, support maps and whole null."
+  },
+  "independent_review": {
+    "purpose": "ordinary complex mathematical and source-correspondence review; not an established-status assignment",
+    "input_source": "fixed ACTIVE extraction identified above",
+    "report_sha256": "7bd04dd1ac2ac4e90ce25f03d93045f2424966b1ba84ba42af17570c71c57001",
+    "report": "# Independent ordinary review of the imported TT 7.4 construction\n\nReview date: 2026-10-21. This is an ordinary mathematical/source-correspondence review, not an established-status verdict. The review-local identifiers below are not maintained exposé identifiers.\n\n## Question, source identity, and evidence boundary\n\nThe question is what the new tensor/generator construction supports about Thomason–Trobaugh 7.4, including basic and auxiliary support, the actual arrows and nullhomotopies, and every signed degree.\n\nInspected source root:\n\n`/private/tmp/r5-investigations/quillen-tt74-integration-20261021/root/inputs/active/current-e7ef308-20261019T2125`\n\nThe brief fixes this extraction by original ACTIVE archive SHA256 `15a709ae530a1610ec156e47068605d275afede1d7399231552e138ae8a6020f`, with apparent mathematical base `e7ef308d6747dd422f1a713cb95c35dced477ba3`. This review is on the extracted source, not a claim that that base commit alone contains the additions.\n\nThe supplied accepted baseline is `/Users/kang/Documents/New project/tmp/output/quillen-ci-fix-20261020` at `25387c653f01abc24bf25cc166dee33cc63b67a2`. Direct byte comparison against that commit found the two final localization files, `ParameterFullCurrentNull.lean`, `ParameterFullFiberComparison.lean`, and the ambient/supported `ParameterTensor...ReturnedStrictification.lean` files unchanged. This is a scoped identity check, not a claim about every transitive dependency.\n\nThe primary paper is R. W. Thomason and T. Trobaugh, *Higher Algebraic K-Theory of Schemes and of Derived Categories* (1990), §§6.3–6.4, printed pp.357–360, and Theorem 7.4, printed p.365. The theorem and its proof are on p.365; p.366 continues 7.5. I read the relevant text and inspected rendered pp.358–360 and 365 from the supplied copy of the [primary PDF](https://www.sas.rochester.edu/mth/sites/doug-ravenel/otherpapers/Thomason-Trobaugh.pdf).\n\nNo fresh compilation, replay, or axiom audit was run. This review inspects the mathematical content of the new construction, the actual endpoint hypotheses, and their connection to the supplied accepted fine-localization and stable-homotopy infrastructure. It does not independently reprove that entire infrastructure or certify the whole library. Version-matched build/audit evidence remains separate evidence. Repository, input, and Git files were not changed.\n\n## Result-specific verdicts\n\n### TT74-import#tensor-recipe — ACCEPTED for the specified represented recipe\n\nThe actual input is left tensoring by the rank-one coefficient row, with the forward Laurent unit. It is not merely a chosen self-map having the desired effect on groups.\n\nDecisive source locations, relative to the inspected root:\n\n- `Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterTensorEvaluationRow.lean:43` defines evaluation, geometric pullback, and the genuine tensor first row. `TensorUnitCoefficientRow.lean` has the actual entries `0 ⊗ K, O ⊗ K, 0 ⊗ K`; `TensorUnitCoefficientAutomorphism.lean` applies the original coefficient multiplication.\n- `ParameterTensorCell.lean:32` and `:65` construct the finite simplicial cylinder and its realization. The positive/zero formulas at `:86` and `:96` keep coefficient-row time, automorphism time, and the original loop coordinate separate.\n- `ParameterTensorReturnedModel.lean` constructs the exact evaluation return and proves the intertwining square. `ReturnedTensorFamily.lean:26` uses these data, and `ReturnedTensorGenerators.lean:27` retains the whole moving-endpoint prism.\n- `ParameterLaurentUnit.projectedLaurentScalar`, through `GlobalSchemeLaurentTrack.laurentScalar`, pulls back the forward `laurentGlobalUnit`. `TensorUnitCoefficientKOne.lean` identifies the same coefficient square with the original forward rank-one K1 class. That class theorem corroborates the convention; it is not the proof of the action on arbitrary inputs.\n\nThe construction agrees with the represented, fixed left-[T] action needed for the displayed recipe. This does not certify a full K(X)-module spectrum API or all multiplicative assertions of TT 6.3(c)/6.5.\n\n### TT74-import#generated-recursion — ACCEPTED\n\n`Quillen/KTheory/Bass/ConeGeneratorRecognition.lean:24` specifies independent values on the Laurent inclusion, upper cone cylinder, lower cone cylinder, and overlap cylinder. Both existing quotient heights are preserved independently of the action time. The uniqueness proof at `:55` eliminates both quotients; it covers every point, not just selected representatives or homotopy groups.\n\n`GeneratedTensorStep.lean:43` then fixes the geometric index map, forward row strength, parameter looping, and explicit loop/row inverse. Its level-map condition does not refer to the final iterator. `GeneratedTensorTrace.lean:27` recursively chooses such a successor on the transformed diagram. In `GeneratedTensorTraceProof.lean:27`, the induction generalizes the starting diagram and dependent data; its successor invokes the hypothesis on `((strictDiagramFunctor Q).obj F)` with the actual next family. This closes the concern that only the original stage-zero diagram was covered.\n\nThe concrete theorem `ReturnedTensorGeneratedTrace.lean:24` instantiates these data and targets the original `strictifiedIteratedCell Q i`, for every scheme Q and natural i. No external recognition certificate is a hypothesis of this theorem.\n\nThere is an important logical qualification: `DiagramRowCell.Family` includes naturality and the existing whole-time comparison with `NaturalTrack.Track A`. Thus `GeneratedTrace` is not independent of all existing Track structure. Those fields are proved for the actual tensor input and successors, and the generator law determines the underlying maps independently, so this is not a circular proof of the stated internal generation theorem. It is also not a theorem about an independently specified external tower.\n\n`ReturnedTensorRecursiveCoordinates.lean:45` states the actual left recursion. The raw successor at an arbitrarily regrouped stage is not asserted to be definitionally the next stored family. The uniform trace supplies the relevant recursive coverage without that false definitional-equality claim.\n\n### TT74-import#specified-roof — ACCEPTED\n\nThe normalized tensor cell is followed by the actual Laurent cone inclusion. `DiagramRowNormalizedBoundary.normalizedBoundary` defines this composite before comparison with the current transition. `ReturnedTensorRecursiveRecognition.lean:103` supplies its whole-spectrum homotopy to the current transition followed by the specified backward leg.\n\nThe backward map is fixed: suspension unit, successor-object transport, and the actual counit/row refinement. `ModelDiagramRowStabilizedTarget.unit_refinement` proves the exact triangle; `ModelRowZigzagSequentialization.backward_eq` and `backward_stable` identify and prove stability of that map. The sequentialization theorem uses the actual whole forward homotopy and finite-model topology. An arbitrary stable inverse is not being substituted.\n\nThis matches the role of the forward and backward arrows in TT 6.4 at the represented stable-model level. It does not assert levelwise homotopy equivalence of the localization lifts. `IsStableEquivalence` is explicitly an isomorphism on stable homotopy in every integer degree (`Quillen/Topology/Prespectrum/StableEquivalence.lean:27`).\n\n### TT74-import#basic-current — ACCEPTED on the supplied baseline\n\nFor an open immersion `f : P ⟶ Q`, with `CompactSpace P`, `CompactSpace Q`, and `QuasiSeparatedSpace Q`,\n\n`ParameterFullCurrentNull.currentLift f (op integerBase)`\n\nis a stable equivalence. Consequently its image under `stableHomotopyFunctor d` is an isomorphism for every `d : ℤ`, including zero and all negative degrees.\n\nExact endpoints are `ParameterCurrentFullFiber.lean:37` and `:55`. The lift itself is the actual homotopy-fiber lift at `ParameterFullFiberComparison.lean:32`, using the current support-forgetting map, full-open restriction, and `ParameterFullCurrentNull.currentNull`.\n\nThe null comes from acyclicity after open restriction: `GlobalOpenPairNull.pairZeroToOpen_weak` and `pairSupportedOpenNull` realize the original weak zero-to-object transformation in reverse. `ParameterFullCurrentNull.fullNull` postcomposes it with the actual restriction. The current/normalized/twisted/iterated/fine comparisons retain the two arrows and every null time. They do not replace the support model with a homotopy-fiber definition.\n\n### TT74-import#auxiliary-current — ACCEPTED on the supplied baseline\n\nUnder the same assumptions, and for `T : Q.Opens` with `CompactSpace T`,\n\n`ParameterAuxiliaryCurrentFiber.currentLift f T (op integerBase)`\n\nis a stable equivalence in every integer degree. Exact endpoints are `ParameterAuxiliaryCurrentLocalization.lean:61` and `:80`; projection onto the actual enlargement is recorded at `:87`.\n\nWith `U = image(f)`, `Y = Q \\ U`, and `Z = Q \\ T`, the three acyclicity opens are `U ∪ T`, `T`, and `f⁻¹(T)`. Therefore the three support objects are precisely the intended `(Q,Y ∩ Z)`, `(Q,Z)`, and `(P,P ∩ Z)`. See `ParameterAuxiliarySupportMaps.lean:91` onward. Compactness of T is retained.\n\nThe supported tensor input is constructed inside the original full subcategory (`ParameterTensorSupportedRow`); it has an exact return and proved all-stage strictification (`ParameterTensorSupportedReturnedStrictification.lean:33–93`). The supported forget rectangle and six basic/auxiliary map/null action compatibilities are present. The named new `tensor_generated_trace` entry is ambient; the generic induction is not restricted to ambient Models, and the supported strictification supplies its corresponding data. I have not counted a separate named supported-trace declaration as having been exported.\n\n`ParameterAuxiliarySupportNull.lean:61–104` proves actual acyclicity and constructs the selected whole null. `ParameterAuxiliaryTelescopeNull` and `ParameterAuxiliaryCurrentFiber` transport that null through the three-object comparisons. No affine or noetherian premise appears in these endpoints.\n\n## Classical correspondence and the remaining boundary\n\nThe new material resolves a real construction obligation: the displayed finite operations are generated by genuine tensor input and independent cone formulas, with a uniform transformed-diagram induction. The old conclusion “only Bass stability and group comparisons are available” would be wrong for this source. A full general multiplicative API, raw R2 associativity, and a calculation that a Laurent boundary sends [T] to +1 are not necessary additions to the accepted represented localization statement.\n\nTwo different completion claims must nevertheless be separated:\n\n1. **Choosing the displayed represented realization as the model:** the reviewed material supports recognition of its fixed left-[T], cone/loop, and stable-roof recipe, and the basic/auxiliary TT-shaped localization statements above. This is substantially more than an arbitrary internal spectrum with matching groups.\n2. **Identifying a separately fixed raw classical construction:** the review does not find a new comparison to the preselected raw perfect/bounded-flat tower demanded by `Development.md:134–178`. The new theorem starts from the existing section Model, row data, and Track. It does not quantify over that raw tower or prove a comparison to it.\n\nFor the second claim, the precise remaining obligation is an identified model-recognition or comparison argument: show that the independently chosen raw forward action satisfies these generator formulas after the specified evaluation, index, row, and loop transports at every stage, then carry the resulting comparison to the chosen homotopy colimit and the basic/auxiliary three-object diagrams, preserving the actual acyclicity null. If original-class or connecting-map correspondence is part of that stronger target, its chosen boundary convention must also be checked; the trace theorem does not remove that obligation. This could be discharged by a suitably justified recognition argument; it does not require literal equality with an unspecified point-set implementation.\n\nAccordingly, `TensorBassConstruction.md` is defensible when read as recognition of the **displayed represented recipe**. It should not be used to erase the stronger raw-diagram boundary in `Development.md`. `FineBassK.md` remains correct about what its earlier facade alone supplied.\n\n## Admissible completion wording\n\n“For the explicit tensor-generated Bass realization, Quillen proves the basic and auxiliary localization statements of TT 7.4: on qcqs schemes with the specified quasi-compact opens, the actual canonical-null homotopy-fiber lifts are stable equivalences in every signed degree. The finite operations are recognized by the forward left-[T] construction recipe through the specified stable roof. A separate comparison with a prescribed raw classical implementation, including any additional original-class and boundary conventions, is not asserted.”\n\nNo contradiction was found in the selected new derivations. The unresolved stronger claim is a target-correspondence obligation, not a failure of the proved current-model localization theorems.\n\n## Coverage\n\nFull reads included the assignment's new generator/trace/recursive files, both integration consumers, both final localization files, and the load-bearing tensor return, supported return, normalization, cone/loop step, stable-roof, support-map, and whole-null comparison passages identified above. The primary paper supplied the target definitions and hypotheses; its entire proof dependency chain was not independently revalidated, and this review makes no global errata claim.\n\nAn exact baseline identity check can be reproduced with, for example:\n\n```sh\ngit -C '/Users/kang/Documents/New project/tmp/output/quillen-ci-fix-20261020' show \\\n  25387c653f01abc24bf25cc166dee33cc63b67a2:Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentFullFiber.lean\n```\n\nCompare those bytes with the file of the same relative name under the inspected root. This reproduces source identity only, not the mathematical verdict.\n\n## Increment: generic weak-zero, grid, path, and split-square interfaces\n\nThe follow-up extends the question on the **same fixed ACTIVE extraction**. It does not replace its mathematical input or retract any verdict above. The additional source identity is the `providers`/`input_sha256` selection in `/private/tmp/r5-investigations/quillen-tt74-integration-20261021/root/selected-incoming.json`. I checked that all 29 generic production files covered below match their selected SHA256 values. The principal reports identical copies in the isolated candidate; this increment directly inspected the ACTIVE files, not a separately supplied candidate checkout.\n\nAll 29 additional files were read in full, with selected nearby definitions used to check conventions and applicability. Existing infrastructure was reused; no new build, axiom audit, paper lookup, source repair, or Git mutation was performed. This remains ordinary source-adoption review.\n\n### TT74-import#weak-zero-normalization — ACCEPTED as stated\n\nCoverage: `Quillen/Waldhausen/SConstruction/Iterated/ModelZeroNormalization.lean`, `ZeroNormalizationSquare.lean`, `SimplexWeakTriangleSquare.lean`, `CommonReferenceWeakZeroVertex.lean`, and `CommonReferenceWeakZeroFaces.lean`.\n\n`ModelZeroNormalization.zeroToMap_weak_of_comparison` (`:33`) proves weakness of the independently defined chosen-zero arrow using exact target transport, the supplied comparison isomorphism, and the actual counit `d ⋙ a.functor ≅ 𝟭 U`. It does not invert the weak zero arrow or infer that an acyclic object is isomorphic to zero. Post/prewhiskering retains the literal chosen-zero transports.\n\n`ZeroNormalizationSquare.normalizationSquare` (`:71`) has the two reversed weak-zero tracks as whole opposite faces, the supplied normalization isomorphism as the moving endpoint, and the constant zero face. `WeakTriangleSquare.square` is obtained from the genuine directed weak triangle. Reference-vertex recovery uses zero-source uniqueness, while `CommonReferenceWeakZero.coneFamily_face` (`:75`) preserves complete ordered faces and the separate null clock. The comparison/counit and componentwise weakness premises are indispensable and explicit.\n\n### TT74-import#directed-product-grids — ACCEPTED as stated\n\nCoverage: `Quillen/Topology/Realization/SimplexWeakZeroGrid.lean`; and, under `Quillen/Waldhausen/SConstruction/Iterated/`, `MixedWeakZeroGrid.lean`, `ReverseMixedWeakZeroGrid.lean`, `SimplexReverseMixedWeakProduct.lean`, `RealizationReverseMixedWeakProduct.lean`, and `CommonReferenceNerveGridSwap.lean`.\n\nThe lexicographic grid's first projection is monotone and carries the weak chain. The resetting second coordinate is used only to select members of an isomorphism-anchored chain. Thus the reverse-product construction does not reverse a noninvertible weak arrow. Its realization proof uses the actual simplicial product symmetry, and `prespectrum_comp` separately handles level zero by evaluating the original loop at an arbitrary old loop time.\n\n`MixedWeakZeroGrid.simplex_eq` (`:114`) and its reverse counterpart (`:89`) identify the **whole** Model grid with an ordered face of the weak-zero simplex. The positive row retains its anchored transformations; maps out of the zero row are identified by actual zero-source uniqueness. The geometric collapse sends the initial row to zero and preserves each positive-row index after the retained reference vertex. `native`/`native_null` use the genuine realization-product parameter.\n\n`CommonReferenceNerve.GridSwap.parameter_swap` (`:69`) is an equality in the common-reference nerve, proved with the full dependent nodes. It is not interchange of arbitrary native evaluations and does not permit arbitrary weak chains to be reordered.\n\n### TT74-import#product-cone-comparison — ACCEPTED as stated\n\nCoverage: `WeakZeroProductConeParameter.lean`, `MixedWeakZeroProductConeComparison.lean`, and `ReverseMixedWeakZeroProductConeComparison.lean`, under the same Iterated directory.\n\nThe original product parameter and the separately defined affine cone are not equated in their interiors. A specified simplex interpolation compares them. Along a path P between normalization vertices, all four boundary paths agree at their original times; after realization, the two comparison surfaces and the other four complete cube faces are proved explicitly.\n\nThe forward face applies the normalization family **after** the original reversed weak-null track; the reverse face applies it **before** that track. Independently supplied endpoint weak-zero transformations are recovered by uniqueness from the chosen zero. Pointedness and the structure coordinate hold throughout the interpolation, with the original input at every level. These are local comparisons, not an assembled localization-overlap cube.\n\n### TT74-import#cut-open-fold-extension — ACCEPTED with the displayed boundary premises\n\nCoverage: `CommonReferenceNerveCutOpenFold.lean`, `CommonReferenceNerveCutOpenFoldWholeCells.lean`, and `CommonReferenceNerveCutOpenChosenNullExtension.lean`.\n\nThe fold `CutOpenFold.map` (`:83`) uses **equal attaching isomorphisms** `ε, ε`. Given l, c, q and the two full endpoint equalities h0/h1, two actual pushout descents extend l and carry both complete cylinders to c. The separate carrier tips have the same image q; the theorem does not identify the tips in the carrier or cover arbitrary different attachments with that single cylinder.\n\n`ChosenNullSurfaces` (`:25`) permits arbitrary fixed source/target points, but requires two supplied continuous route surfaces with identical full endpoint paths and constant seed endpoints. Its twelve edge equations are proved; `extension_face` (`:108`) retains all six supplied faces. Extension uses the existing contractibility theorem for the actual two-tip carrier, rather than assuming an interior filler. Compact native evaluation on the three-interval parameter space supplies joint continuity, pointedness, and an independent structure coordinate (`joint`, `joint_point`, `joint_structure`, `:153–167`).\n\nThe extension is chosen, not unique, and this interface does not construct application-specific carrier surfaces or prove their recovery of particular geometric routes. That application obligation remains explicit. It also does not assume a globally jointly continuous native evaluator on the unrestricted carrier.\n\n### TT74-import#composition-and-split-adapters — ACCEPTED as conditional reusable interfaces\n\nCoverage: `Quillen/Topology/Prespectrum/ContravariantCompositionTracks.lean`, `SplitSquareInput.lean`, `SplitSquareSourceNull.lean`, `SplitSquareSeed.lean`, `StrictSquareSplitEvaluation.lean`, `StrictSquareSplitNull.lean`, and `StrictSquareSplitSeed.lean`.\n\n`ContravariantCompositionTracks` requires the whole binary composition tracks **and supplied relative associativity cells**. Three such cells produce the double-square/projection comparison (`projectionComparison`, `:291`). There is no hidden identity law, no derived associativity from merely pointwise map equalities, and no assertion of higher coherent functoriality.\n\n`SplitSquare.Input` (`SplitSquareInput.lean:103`) requires the positive and negative chart-pasting comparisons Jp/Jm. These give the moving overlap, pushout comparison, cone map, and looped step map with the displayed cylinder formulas. `SplitSquareSourceNull.originalNullComparison` (`:210`) compares the particular positive-split/cone source nulls. `SplitSquareSeed.transitionInputHomotopy` (`:107`) additionally requires the complete unit-intertwining comparison JU.\n\n`StrictSquare.SplitEvaluation` (`StrictSquareSplitEvaluation.lean:31`) keeps distinct source chart objects and distinct projection tracks. It requires its own two chart pastings. Its source null is the original **undelayed** strict cone cylinder; after evaluation the mapped cylinder follows the positive moving edge and the target cone contraction. The proved comparison retains that original source and the prescribed split-target null. `StrictSquareSplitSeed.seedHomotopy` (`:80`) also depends on JU and compares the actual null/unit/null seeds. These adapters assert neither stable equivalence nor a localization acyclicity null nor a higher Bass-tower application.\n\n### TT74-import#whole-path-surface-evaluation — ACCEPTED as stated\n\nCoverage: `Quillen/Aglib/Topology/Path/AssociatorEvaluationComparison.lean`; `Quillen/Topology/Path/CarrierSquareCorrectionNaturality.lean`; `Quillen/Topology/Prespectrum/RelativeSurfaceValue.lean`; and Iterated `OriginalTriangleSurfaceValue.lean`, `PrespectrumIsoSquareRoute.lean`.\n\n`Path.Evaluation.associator_evaluations` (`:26`) compares the literal associator through an arbitrary function f and a continuous target evaluator g, under equality on all points of the three constituent paths. Continuity of f is not needed for this value equality. The corrected-square adapter retains the whole supplied moving square, three path pieces, the exact associator clocks, and the collapse-surjectivity descent; endpoint agreement alone is not its premise.\n\n`RelativeSurfaceValue` simply exposes the supplied two-time relative surface. `OriginalTriangleSurfaceValue` preserves that surface under the specified transformation equality. `IsoSquareRoute.comparison` uses the actual weak transformation-composition triangle to compare the single pasted isomorphism track with the precomposed second edge followed by the postcomposed first edge, retaining its binary half-clock and whole relative family. None of these statements manufactures a geometric comparison from equality only of homotopy classes.\n\n### Incremental consumer coverage and adoption boundary\n\nI also read the selected regressions `MixedWeakZeroGrid`, `ReverseMixedWeakProduct`, `ReverseMixedWeakZeroGrid`, `WeakZeroProductConeComparison`, and `TargetOverlapReanchor`, plus downstream consumers `MixedWeakZeroGrid`, `WeakZeroProductConeComparison`, and `TargetOverlapReanchor`. They retain the original composite-zero nulls, arbitrary old level-zero loop input, complete chart rows, and successive reference placements. They are interface instantiations, not independent execution evidence or new geometric closure. The existing geometric provider of `TargetOverlapReanchor` was not re-reviewed.\n\nNo concrete mathematical defect was found in this additional coherent family. Adoption is supported **with the explicit premises and scopes above**. No prior tensor/TT verdict is withdrawn or strengthened into a raw-classical correspondence verdict. In particular, the chart-pasting, unit-intertwining, and carrier-face recovery interfaces are reusable tools; their existence does not establish those data for the prescribed raw classical tower.\n\nThis increment covers the 29 generic providers enumerated above. It does not reopen the retained tensor/Bass derivations, expand the separate `FineBassK` facade review, or certify the entire 2039-source dependency closure.\n",
+    "fresh_execution": "not performed by reviewer",
+    "new_production_files_covered": 39,
+    "initial_scope_inference": "The initial implication from no second raw-tower comparison to incomplete original TT 7.4 is withdrawn by the rebuttal continuation. Earlier positive derivation reviews remain valid.",
+    "current_verdict": "Original TT 7.4 is proved by direct realization of the relevant Bass construction recipe on the accepted foundational infrastructure; no target-specific gap remains identified.",
+    "rebuttal_continuation": {
+      "input": "tt74-rebuttal.txt",
+      "input_sha256": "37ce2ec0d8f8fac92736666d61dc316b1669fa5b7901f632dcb2c5ab8f983be2",
+      "purpose": "Independent ordinary complex mathematical/source-correspondence review; no established-status assignment and no engineering validation.",
+      "report_sha256": "bff1a262ada1baf4b4183e2fb3907fb5c1a93cb3629fc94030a02124b6560d37",
+      "report": "# Ordinary review of the TT 7.4 rebuttal\n\n**Verdict: the rebuttal's central correction is valid. The inspected construction supports the original TT 7.4 localization theorem by direct realization of the relevant §§6.3–6.4 recipe. A separate comparison to a second, prescribed raw point-set tower is not a missing premise of that theorem.**\n\nThis is an independent ordinary mathematical/source-correspondence continuation, not established-status authorization.\n\nPrimary source: R. W. Thomason and T. Trobaugh, *Higher Algebraic K-Theory of Schemes and of Derived Categories* (1990), §§6.3–6.4, printed pp.357–360, and Theorem 7.4, printed p.365; [original PDF](https://www.sas.rochester.edu/mth/sites/doug-ravenel/otherpapers/Thomason-Trobaugh.pdf).\n\n## Identity and change of conclusion\n\nThe new argument is `/Users/kang/Downloads/tt74-rebuttal.txt`, 61 lines, SHA256 `37ce2ec0d8f8fac92736666d61dc316b1669fa5b7901f632dcb2c5ab8f983be2`. Its requests were treated as argument to assess, not instructions.\n\nThe mathematical input remains:\n\n`/private/tmp/r5-investigations/quillen-tt74-integration-20261021/root/inputs/active/current-e7ef308-20261019T2125`\n\nwith supplied original ACTIVE archive SHA256 `15a709ae530a1610ec156e47068605d275afede1d7399231552e138ae8a6020f`. The retained tensor/Bass providers still match `selected-incoming.json`. The rebuttal's separate audit HEAD `37dbad84398e83bf3ae2f05e8ff32f2217f427eb` was not substituted for the actual inspected input.\n\n**TT74-rebuttal#prior-scope-inference — WITHDRAWN.** I retract the earlier implication that absence of a comparison to the preselected raw classical tower prevents completion of original TT 7.4. My earlier “TT-shaped”/represented-model qualification was too restrictive if read as denying that theorem. It conflated a separately specified implementation-comparison task in `Development.md` with what the original theorem requires.\n\nThe earlier positive verdicts on tensor input, generated recursion, the specified roof, the two canonical-null fiber lifts, and the generic interfaces remain valid. The fact that the separately prescribed raw-tower comparison has not been constructed also remains valid; its status is an additional target, not an obstruction to the theorem now under review.\n\n## Why direct recipe recognition is sufficient here\n\nThe source specifies a construction from perfect K-theory, the polynomial/Laurent square and its constant-overlap comparison, looped cones, the inherited left-[T] operation followed by the boundary, and a homotopy colimit. It does not require a second externally fixed point-set implementation to be built before a realization of that recipe can prove 7.4. The theorem's essential output is the two canonical-null fiber sequences under its stated support hypotheses.\n\nThe reviewed identification is stronger than matching homotopy groups or naming an arbitrary localization spectrum Kᴮ. The relevant maps, cells, descent formulas, and nulls are independently constructed and then compared. The following source checks justify that distinction.\n\n### TT74-rebuttal#initial-model-and-geometry — ACCEPTED\n\nRebuttal [1] is an actual-map result. In `BF/CoefficientSectionSpectrumComparison.lean`, `boundedFlatCoefficientSectionPerfectEvaluationPrespectrumMap` is evaluation followed by the original bounded-flat-to-perfect inclusion; its stability theorem retains the quasi-compactness premise. The proof uses the actual K-map, including degree zero, and connectivity in negative degrees.\n\nThat file's pointwise assertion alone would not settle geometric naturality. The separately supplied data are present:\n\n- `BF/GlobalSectionChangeIndex.lean`, `globalModel`, is the strict section Model of the actual `boundedFlatPerfectPseudofunctor`, with geometric exact pullback and its chosen zero family.\n- `BF/GlobalEvaluationNaturality.lean`, `evaluationComparisonIso` and `evaluationComparison`, compare the actual section reindex map with normalized geometric pullback by a full functor isomorphism and whole prespectrum homotopy. They do not falsely declare raw pullback squares strict.\n- `BF/GlobalEvaluationStableComparison.lean`, `evaluationModel_isStableEquivalence` and `evaluationLocalizedNatIso`, supplies the actual stable evaluation and its naturality. Thus the current parameter construction is not justified merely by the unrelated coefficient comparison [1].\n- `BF/GlobalSupportedPairModel.lean`, `supportedPairReindexEvaluationIso`, retains genuine supported geometric pullback. `GlobalSupportedPairDiagram.lean` constructs the strict supported diagram and support-forgetting transformation. `GlobalOpenPairDiagram.lean` constructs the actual restriction and its relative-open factorization.\n- `BF/SupportedEvaluationInverseModel.lean` gives the exact supported evaluation equivalence, inverse, unit, and counit. `BF/SupportComparison.lean:68–125` proves approximation for the literal bounded-flat-to-perfect supported inclusion on quasi-compact ambient schemes. Its relative replacements preserve the support condition. These are the supported starting-model data required for the same construction.\n\nHere and below `BF/` abbreviates `Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/`, and `Bass/` abbreviates `Quillen/KTheory/Bass/`.\n\nThe original integer-base projection identifications in `GlobalParameterIdentityModels` preserve the support-forgetting and restriction maps. Consequently evaluating the parameter model at `op integerBase` has the intended scheme and support meaning. No new geometric rectification premise is being left to an external tower.\n\n### TT74-rebuttal#bass-recipe — ACCEPTED\n\nRebuttal [2] identifies the actual operation. `Quillen/Topology/Prespectrum/StrictSquareCone.lean` defines the double-cylinder span, its constant track from the strict square equation, and its comparison to the Laurent corner. `Bass/StrictDiagram.lean:31–47` applies precisely `parameterLooping (mappingCone comparison)`. The input is the strict geometric section diagram above.\n\nFor [3]–[4], I retain the earlier full source review. The initial operation uses genuine **left** tensoring by the coefficient row with the forward Laurent scalar, followed by the exact evaluation return. The whole tensor/evaluation prism, rather than its K1-class consequence alone, identifies the resulting cell. The cone law prescribes the action on all four quotient generators with the old heights independent of the action time. This is the inherited cone action; the explicit row/index/loop transports fix its representation.\n\n`GeneratorStep` is defined without the iterator target. `iterateFamily_generated` uniformly changes the starting diagram to its actual Bass successor, with all dependent data, and `tensor_generated_trace` instantiates this with the actual tensor family. The earlier observation that `Family` packages a proved Track comparison does not create a missing original-theorem premise: the concrete family and each successor are constructed, and their comparison properties are proved. They are not external recognition certificates assumed by the final theorem.\n\nThe supported exact return and `ParameterTensorSupportedReturnedStrictification` supply the same actual starting data and all-stage comparison inside the support category. The generic generated-trace theorem applies to these data; absence of a duplicate named supported wrapper is not a mathematical gap.\n\nA full general K(X)-module spectrum API would cover additional structure in the paper. It is unnecessary as an additional gate here because the specific inherited [T] action used in this recursion is constructed directly and checked at every stage.\n\n### TT74-rebuttal#roof-and-hocolimit — ACCEPTED\n\nRebuttal [5] uses specified maps. `tensorStageBoundaryCurrentHomotopy` relates the independently normalized tensor action followed by the original Laurent boundary to the current transition followed by the specified backward map. The latter is the suspension unit with successor transport and counit/row refinement. Its triangle identity and stable equivalence were checked previously.\n\nI additionally checked `Bass/SchemeModelRowSeed.lean`: `forward` is constructed from the iterated cell and original source null; `forward_eq_current`, `factorization`, `presentation`, `comparison`, and `comparison_stable` instantiate the generic roof comparison on these actual inputs. `SchemeCurrentStageTelescope.currentTelescope` is the telescope of the actual finite Bass vertices and current transitions. `ModelRowZigzagSequentialization.telescopeMap_stable` and `targetReplacementMap_stable` use proved Model topology/finite-growth facts and the specified whole forward homotopy.\n\nThus the telescope is linked to the represented roof/homotopy-colimit construction by actual maps. The proof does not select an arbitrary stable inverse, replace a transition by its effect on groups, or identify a loop transposition with the identity. Stable equivalence is the appropriate spectral assertion here; no levelwise homotopy-equivalence claim is added.\n\n### TT74-rebuttal#basic-and-auxiliary-localization — ACCEPTED\n\nThe checks of [6]–[8] are retained and reconciled to this original-theorem question.\n\nFor an open immersion `f : P ⟶ Q`, with P and Q quasi-compact and Q quasi-separated,\n\n`ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`\n\nproves stability of the actual support-to-fiber map. With an additional quasi-compact open `T : Q.Opens`,\n\n`ParameterAuxiliaryCurrentFiber.currentLift_integer_isStableEquivalence`\n\nproves the supported counterpart. The corresponding `currentLift_integer_signed_isIso` theorems cover every integer degree.\n\nTaking `U = image(f)`, `Y = Q \\ U`, and `Z = Q \\ T`, the auxiliary acyclicity opens are `U ∪ T`, `T`, and `f⁻¹(T)`, giving exactly the support objects for `Y ∩ Z`, `Z`, and `U ∩ Z`. The arrows are support enlargement/forgetting and geometric open restriction. The source object is not defined to be a fiber.\n\nThe localization null is the realized acyclicity-to-zero transformation after restriction; all its times are preserved through the finite stages and telescope comparisons. It is separate from the cone source-null used to form the Bass transition. The six compatibility statements in `ParameterTensorPresentationActions` and the three-object whole-null comparisons were inspected in the prior cycle. They meet the actual map/null requirement of 7.4.\n\nThe long exact sequences follow from these canonical-null fiber identifications. The library also has `Quillen/Topology/Prespectrum/FiberSequence.lean:150`, `stableFiberLongExactSequence`, with the actual loop-to-fiber connecting map in every signed degree and no Omega-spectrum hypothesis. Extra equality with a separately fixed boundary presentation, or a particular Laurent-symbol boundary calculation, is not an omitted clause of 7.4.\n\n## Strongest admissible completion wording\n\n> The implementation directly realizes the Bass construction recipe of Thomason–Trobaugh §§6.3–6.4 and proves the original Theorem 7.4: for a qcqs scheme X and a quasi-compact open U, the basic canonical-null homotopy-fiber map is a stable equivalence; for a closed support Z with quasi-compact complement, so is the auxiliary supported map. Both conclusions hold in every integer degree and give the corresponding long exact sequences. The construction uses the actual perfect K-model, inherited forward left-[T] action, specified stable roof, support maps, and whole acyclicity null.\n\nThe remaining full multiplicative API and comparison to another prescribed point-set implementation are separate tasks. They do not qualify the two localization conclusions as incomplete.\n\n## Relabeling the older raw-comparison scope\n\n`Development.md` may retain the unconstructed stronger task, but its owner should label it **“Comparison with the prescribed raw point-set implementation”**, rather than present it as a remaining premise of original TT 7.4. Its scope can say:\n\n> The direct tensor-generated realization proves TT 7.4. The additional task below asks for a comparison with the separately fixed raw implementation, retaining its chosen raw cells, reference class maps, and boundary conventions.\n\nThis wording neither asserts that those raw coherences have been constructed nor counts them against the direct theorem.\n\n## Coverage and remaining assumptions\n\nI read the 61-line rebuttal; checked [1] and [2] in full; retained unchanged coverage of [3], [4], [6]–[8]; checked the actual instantiation behind [5]; and examined the separate global/supported evaluation and geometric naturality owners needed to connect the starting models. I revisited primary §§6.3–6.4, printed pp.357–360, and reused the already inspected printed p.365 statement/proof of 7.4.\n\n**No target-specific mathematical gap remains identified for original TT 7.4 on this input basis.** The verdict reuses the previously accepted approximation, K-theory, realization, and stable-homotopy infrastructure. It is not an independent reproof or axiom audit of the entire library. No compiler or CI command was run in this continuation; engineering validation remains separate and is not the ground for this mathematical conclusion.\n\nThe rebuttal's archival-test discussion supplies no mathematical premise and does not affect this verdict. No old runtime output has been relabeled as new validation. Only this scratch report was written.\n"
+    }
+  },
+  "research_archive": {
+    "path": "docs/archive/tt-raw-route-20261020T1521Z",
+    "source_files": 322,
+    "production": 268,
+    "tests": 27,
+    "clients": 27,
+    "duplicate_staging": 188,
+    "historical_files_preserved": 529,
+    "current_library_production_deletions": 0,
+    "boundary": "This group was already excluded by the incoming research package and was absent from the accepted253 source tree. Historical manifests and counts keep their original meaning.",
+    "historical_source_manifest_sha256": "f9320b39ab821894de5298002fe934602ed4487251543ebeb574c82c7189124f",
+    "historical_staging_manifest_sha256": "d850376ea08ff68d327f38e4fef0b979b0f07e7f0c40ff47562f3a9d4805fff1",
+    "storage_map": "docs/archive/tt-raw-route-20261020T1521Z/STORAGE.json",
+    "physical_lean_payloads": "Historical archive_path plus .txt, with exact original bytes; original manifest paths unchanged."
+  },
+  "redundancy_review": {
+    "exact_source_duplicate_groups": 0,
+    "zero_internal_consumer_leaves": 127,
+    "full_source_reviewed_leaves": 12,
+    "remaining_leaves_retained": 126,
+    "known_external_consumers": [
+      "lean/R5Lab/KTheory/Quillen/NativeClosedSupport.lean -> FinitePointAssembly",
+      "lean/R5Lab/KTheory/Quillen/ArithmeticModelGeometry.lean -> GlobalComparison"
+    ],
+    "implementation_archive": "docs/archive/terminal-chart-clients-20261021/MANIFEST.json",
+    "public_aliases_retained": 10,
+    "review_sha256": "0e43a6c47ac1a4d43e3fc4e4bf4e0012e6b4a2372ac1836951bfb5a1ea4bca95",
+    "report": "# Bounded mathematical redundancy assessment\n\n**Result:** content-preserving archival is supported for one exact forwarding-only implementation, provided its published module path and all ten identifiers remain as thin deprecated aliases to the unchanged canonical owner. Retain the other 126 assessed leaves under the user's conservative value criterion. This is a scoped content/use assessment, with no wrapper implementation, compilation or proof-validity verdict.\n\n**Changed assignment:** the principal's follow-up replaces deletion of the public client module with archival of its old115-line body plus a compatibility wrapper. The earlier suggestion to remove its three generated aggregate imports is superseded. The fixed source basis and exact comparison evidence remain unchanged. The incoming recovery label `0.10.0` is provenance; no package-version or global package/CI-control change is supported by this assessment.\n\n## Fixed basis and scope\n\n- ACTIVE root: `/private/tmp/r5-investigations/quillen-tt74-integration-20261021/root/inputs/active/current-e7ef308-20261019T2125`.\n- Supplied ACTIVE archive SHA-256: `15a709ae530a1610ec156e47068605d275afede1d7399231552e138ae8a6020f`.\n- Accepted library: `25387c653f01abc24bf25cc166dee33cc63b67a2`, `/Users/kang/Documents/New project/tmp/output/quillen-ci-fix-20261020`; HEAD matched and status was clean at final report creation.\n- Diagnostic starting set: the 127 `production+test+client` rows of `archive-diff/zero_consumer_implementation_leaves.tsv`. The supplied graph counts direct imports after excluding facades/generated aggregators; it does not establish mathematical uselessness or absence of outside consumers. The supplied byte/comment-normalized duplicate checks found no groups.\n- Known downstream scan: current read-only `/Users/kang/Documents/New project/lean/R5Lab` and `lean/Essays`, at entry checkout HEAD `f8a3314ddecffcada2ec721d26d56a937bed9690`; unrelated dirty work was preserved.\n\nAll relative Quillen locators below refer to the fixed ACTIVE root. Counts are diagnostic. No source, Git/index, uploaded script, or compiler/runtime state was changed; only assigned scratch was written.\n\n## Exact candidate\n\n`Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeNerveTerminalChartComparisonClients.lean`\n\nThis is **previously maintained**, not incoming-new: its 115 lines are byte-identical to accepted HEAD, SHA-256 `c02fddb1a148dba35f7fc7033f62599a1a1a9f162718ccd48487958ed9995bf7`.\n\nIts complete mathematical product is ten theorems in namespace `Quillen.PerfectComplexes.BassMWholeNerve.TerminalComparisonClients` (lines 34,43,52,58,64,74,84,94,104,110). Every theorem `client_terminal_chart_comparison_SUFFIX` has the identical statement and assumptions as the existing `Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_SUFFIX`, and its entire proof is `exact` that existing theorem with the same arguments. Full source and shared variable contexts were read; mechanical whitespace-normalized header comparison matched all ten pairs.\n\nThe retained mathematical owner is `Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeNerveTerminalChartComparison.lean`, SHA-256 `b250eadd004fb16c94d45315a6f542c371773f0af980973fd9438d53f8ef2bb7`, also byte-identical to accepted HEAD. It constructs `terminalChartComparison` at line 32. Its existing theorem line pairs (client → owner) are:\n\n| Suffix | Client line | Owner line |\n|---|---:|---:|\n| zero | 34 | 42 |\n| one | 43 | 51 |\n| plus_one | 52 | 60 |\n| minus_one | 58 | 67 |\n| source | 64 | 74 |\n| target | 74 | 84 |\n| left | 84 | 94 |\n| right | 94 | 104 |\n| plus_laurent | 104 | 115 |\n| minus_laurent | 110 | 121 |\n\nThe owner preserves the original ninety-node terminal cube, every scalar coordinate, the two chart signs, the supplied coefficient/projection equality and the varying lateral faces. The client introduces no construction, instance, theorem attribute, extra consequence, altered hypotheses, or new proof method. Its separate mathematical role is exhausted by renamed aliases of those exact existing interfaces; the underlying reusable mathematics remains in the owner.\n\nA full ACTIVE text scan for the client module, namespace and theorem prefix returned only its own namespace/theorems and three generated aggregate imports: `Quillen.lean:2973`, `Quillen/AlgebraicGeometry.lean:1954`, `Quillen/AlgebraicGeometry/PerfectComplexes.lean:1953`. There was no guide/source/test/client use. The same exact-name scan over both known downstream directories returned no matches. These searches are recorded in `terminal-comparison-reference-scan.json`.\n\n**Action supported under the follow-up:** archive the old115-line body and keep `MWholeNerveTerminalChartComparisonClients.lean` as a public compatibility module importing `MWholeNerveTerminalChartComparison.lean`, with the ten existing fully qualified identifiers preserved as deprecated aliases. Retain the current three aggregate imports, the canonical owner and its aggregate entries. `alias-map.tsv` gives the exact old-public-identifier → canonical-owner-identifier map; no neighboring client module is included.\n\nThis preserves every mathematical statement, free coordinate, chart sign, hypothesis and original Model/reference input. Each old statement already has exactly the canonical type, including its existing universe/binder context; it is not merely logically equivalent to a more general proposition. No independent construction, consequence, proof method or theorem attribute is lost from the old implementation. Deprecation metadata may generate intended warnings when old names are used; it does not change their mathematics.\n\nThe implementation acceptance conditions are: keep all ten old fully qualified names, the original module path and public import behavior; preserve full canonical constant types and argument/universe binder shape; target each alias exactly as mapped; leave the canonical construction and all ten original owner theorems active; keep neighboring derived endpoint identities active. The principal owns the Lean alias/deprecation syntax, incremental compilation and any coupled repair. This report does not assert that the proposed wrapper has already been implemented or checked.\n\n## Conservative keeps and actual uses\n\nThe following two leaves have direct R5 consumers outside the supplied graph:\n\n- `Quillen/AlgebraicGeometry/Scheme/Coherent/ClosedImmersion/FinitePointAssembly.lean` → `lean/R5Lab/KTheory/Quillen/NativeClosedSupport.lean:8`. Actual `fieldSupportExactFunctor` uses occur at lines 103/113; `fieldK1AssemblyEquiv`/`fieldAssemblyKEquiv` occur at lines 129–155. The public source interfaces are at lines 388,487,573. This is useful native closed-support assembly.\n- `Quillen/AlgebraicGeometry/Scheme/Regular/GlobalComparison.lean` → `lean/R5Lab/KTheory/Quillen/ArithmeticModelGeometry.lean:2`, with actual `KToGRegularEquiv` use at line 72. Its resolution-property hypothesis remains material.\n\nOther fully read plausible cases remain:\n\n- `MWholeNervePolynomialInitialFaceClients.lean:79,87` and `MWholeNerveProductPauseTerminalChartClients.lean:79,88` add physical pause-endpoint identities obtained by composing/reparametrizing upstream faces. Their files are not wholly exact alias lists; no exact retained interface for every exported statement was established.\n- `SupportedEvaluationEqualityTransport.lean:27,38`, `SupportedPullbackEqualityTransport.lean:28`, and `SupportedReindexEqualityTransport.lean:30` expose component-level support/equality transport. Whole-transform interfaces remain in `SupportedEvaluationWhiskerTransport.lean` and `SupportedReindexWhiskerTransport.lean`, but a shorter derivation alone does not eliminate component-API value.\n- `SupportedRawPullbackCoherence.lean:36` proves the supported associativity equation through faithful forgetting. It is explicitly described in `RawEvaluation.md:399–404` and listed in `BassComparison.md:721`; the ambient equation has a different supported interface.\n- `CoefficientBassSeedChosenCubeNative.lean:24,34` and `MWholeNerveTripleCompactNative.lean:28,44,54` expose actual selected-carrier/native-evaluation identities. No complete identical live API replacement was established.\n- `OriginalTriangleSurfaceValue.lean:36` is a general exact-functor/weak-transformation surface-value interface explicitly advertised in `Quillen/Waldhausen/SConstruction/Iterated/README.md:140–144`.\n- `Scheme/Regular/AffineLowDimension.lean:49,62` and `AffineFiniteDimension.lean:48,60,71` are logically covered by `Scheme/Regular/Affine.lean:42,48`. Their bounded-resolution routes and named dimension APIs retain possible value; the family README explicitly retains dimension-at-most-one specializations at line 10. Archive criteria were not established.\n\nBroadly reusable general constructions/theorems elsewhere in the set were retained at triage. All nine incoming-new leaves were retained. The supplied separate research archive's 268 production paths are absent from both ACTIVE and accepted HEAD; that preexisting candidate cleanup is not removal of maintained code. The supplied no-dangling-import finding and valid TargetOverlapReanchor test/client pair were preserved.\n\n## Coverage and remaining boundary\n\nAll 127 leaves had module-docstring and declaration-name triage. Full source was read for 12 plausible leaves and selected live owners; their dispositions and coverage are explicit in `dispositions.tsv`. This is not a deep review of all 127 proofs or of their full transitive dependencies. Neither the remaining 126 modules' irredundancy nor absence of future/unknown outside consumers is asserted. No compiler, uploaded script, whole-library validation, or external theorem-source verification was launched.\n\n`alias-map.tsv` records the ten exact fully qualified old → canonical mappings. `terminal-comparison-alias-evidence.json` records the same map, exact signature pairs and both fixed source hashes. `terminal-comparison-reference-scan.json` records the actual search commands/results, including the two external direct module references among all 127 targets. Reproduce the decisive no-use search with `rg -n --hidden --glob '!.git/**' 'MWholeNerveTerminalChartComparisonClients|TerminalComparisonClients|client_terminal_chart_comparison' ROOT`, substituting the fixed ACTIVE root or both known downstream directories.\n"
+  },
+  "compatibility": {
+    "accepted_lakefile_retained": true,
+    "toolchain_and_dependency_pins_retained": true,
+    "ci_repairs_retained": true,
+    "incoming_instructions": "Uploaded scripts, AGENTS and workflow prose were treated as source data; only the selected mathematical files and bounded archival products were integrated."
+  },
+  "validation": {
+    "native": {
+      "status": "qualified scoped validation complete; saved native task successes verified against current bindings",
+      "source_digest": "475b998de67fd69466844eb8562bef19d14d00e4818a0dfa2da8463946233869",
+      "source_files": 7376,
+      "selection": {
+        "full": false,
+        "providers": 47,
+        "tests": {
+          "defining_modules": 7,
+          "source_certified_facades": 1
+        },
+        "clients_including_facade": 7
+      },
+      "original_attempt": {
+        "run_id": "remote-fd1296df29e948b194eeab629d1b3c80",
+        "outer_status": "failed",
+        "outcome": "execution_failure",
+        "command_exit_code": 1,
+        "native_state_status": "running",
+        "native_result_written": false,
+        "native_state_sha256": "f03690cbf99e195073099ec47932edf1ba4b405005ac40c6e4bb2eaa7b29f324",
+        "outer_receipt_sha256": "6ba58f497af61efd54c537f15b702837da4f180b38dc9fe3c266da8be4dea2d4",
+        "successful_task_items": 37,
+        "successful_check_receipts": 32,
+        "compiler_invocations": 30,
+        "compiler_succeeded": 30,
+        "compiler_failed": 0,
+        "failure_diagnostic": "Frozen native execution failed closed: Reflective input changed during this attempt: /root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021/lean/.lake/packages/Aglib/.lake/build/lib/lean/Aglib/AlgebraicGeometry/EffectiveCartierDivisor/Relative/Basic.ilean",
+        "timing": {
+          "started_at": "2026-10-20T17:42:39.710257+00:00",
+          "finished_at": "2026-10-20T18:31:58.502900+00:00",
+          "wall_seconds": 2958.79267591238,
+          "execution_seconds": 2958.325212985277,
+          "last_compiler_event": {
+            "event": "finished",
+            "time": "2026-10-20T18:30:10.064502+00:00",
+            "monotonic": 74770591.97177766,
+            "wrapper_pid": 278229,
+            "pgid": 278087,
+            "compiler_pid": 278282,
+            "slot": 0,
+            "exit_code": 0
+          },
+          "native_json_mtime_utc": "2026-10-20T18:30:45.726214+00:00",
+          "reflective_input": {
+            "path": "/root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021/lean/.lake/packages/Aglib/.lake/build/lib/lean/Aglib/AlgebraicGeometry/EffectiveCartierDivisor/Relative/Basic.ilean",
+            "sha256": "7a8b381a2e3ac1ccc5a1ac3dfaee59420c50f98b730a03f226803f4eed342309",
+            "ctime_utc": "2026-10-20T18:31:44.194490+00:00",
+            "nlink": 4
+          },
+          "build_log_mtime_utc": "2026-10-20T18:31:57.414552+00:00",
+          "outer_receipt_mtime_utc": "2026-10-20T18:31:58.502557+00:00",
+          "last_task_id": "client-audit/24",
+          "last_client_audit_id": "client-audit/24",
+          "last_client_audit_duration_seconds": 6.0992011576890945,
+          "last_client_audit_exit_code": 0,
+          "last_client_audit_generated_input_mtime_utc": "2026-10-20T18:31:08.718323+00:00",
+          "last_client_audit_generated_input_sha256": "d63be0cb2d15053d098a87589a68e0093f0b64d156c41c6c69906d6c2c8b6c7f",
+          "last_client_audit_absolute_completion_time_recorded": false
+        },
+        "qualification": "The original final temporal guard failed. Observed current bytes, hardlink identity and timing support metadata drift; the original in-memory file stamp is unavailable. The failed attempt remains failed."
+      },
+      "tasks": [
+        {
+          "id": "prepare",
+          "specification_sha256": "75be25bbcca9955461dd48045881e14c2db5558cdefb3d5c8e8cd0a40f77b29d",
+          "mode": "successful-resource-receipt"
+        },
+        {
+          "id": "root/build",
+          "specification_sha256": "d9db4203a94900af1754e7c99ce3ba3494697e07c281ea47406465656d80fa8c",
+          "mode": "successful-resource-receipt",
+          "mapping_sha256": "4493766c4348389dc6b56416d7dcb636985cab52d9ccfef85ff9de8333f70e5b"
+        },
+        {
+          "id": "root/environment",
+          "specification_sha256": "a81865e923879d0738b5b50734da165465ece53e234d0093b5c4cf957ad16297",
+          "mode": "successful-resource-receipt"
+        },
+        {
+          "id": "full-native-lint",
+          "specification_sha256": "8731291003013a72c72eba0b32eb3b9c0ae5b52abf84cfc9f70b1dd9753146dc",
+          "mode": "performed",
+          "success_binding_key": "47e545acd778b1da829421d73961ca33d047f08dd4d89e8dbba3c481e8b2c6b3"
+        },
+        {
+          "id": "full-native-style",
+          "specification_sha256": "3aabada301f26cd2db3c2c42ebdc7a19046ff147ecfe589ecd8828c8599cab40",
+          "mode": "performed",
+          "success_binding_key": "f134ac7c5f9cc4e9f56badd0d84a8c692166194b74bcb7f73e832d907b40e652"
+        },
+        {
+          "id": "axioms",
+          "specification_sha256": "2785437ea562e288f3ff1d902844a2e6248bf36567d38cc4370471ea7df9d8df",
+          "mode": "performed",
+          "success_binding_key": "0f92e6bd5ff18d9aa2287208c432aa5d56fe01c9a0e337e3c232a74e5855653e"
+        },
+        {
+          "id": "test-lint/0",
+          "specification_sha256": "65c60f8484cb6669347ab82afe4ea1267c64b0863924fc3e5cc9a2031d835312",
+          "mode": "performed",
+          "success_binding_key": "b3d60b86dce8af7406da20ce70e1cfac06fe206680f99692e60e7dd87dd650e9"
+        },
+        {
+          "id": "test-facade-text",
+          "specification_sha256": "a480141310ad1ebe6434f03aa3794d088d1706cc6500280ab79aeb41406e3360",
+          "mode": "performed",
+          "success_binding_key": "08874b00243cf70865d3c69ca3e681ea0fa3267fecb9d0bfc8aa2f7ebf16eebb"
+        },
+        {
+          "id": "client/build",
+          "specification_sha256": "b8dc3d15aa78cccbb6076964bc376b33a2e76f3f9c72c8ddc9b703542575dfa6",
+          "mode": "successful-resource-receipt",
+          "mapping_sha256": "1cc9f70c47ff96e890a6bf1b8946b8fac81ea92918cc13e4cb186232dc69e94b"
+        },
+        {
+          "id": "client/environment",
+          "specification_sha256": "f52e9182434b07e15921796d705ae5100aee3d60b6f0aaf4e0e51639f35cb490",
+          "mode": "successful-resource-receipt"
+        },
+        {
+          "id": "client-lint/0",
+          "specification_sha256": "d8fb2e1a85ffdde7722eba66a3aa7bfe446427309b95d3bf0bcf85bafe486477",
+          "mode": "performed",
+          "success_binding_key": "d78856175038966cdd13280db8e40732a68aa4a297a7081de7c90b57e0166d62"
+        },
+        {
+          "id": "client-facade-text",
+          "specification_sha256": "3198b5c7a814aaa0fb8459b8bd4db786924907e5d5f148af34a63576ab3b6fd2",
+          "mode": "performed",
+          "success_binding_key": "5c885fd865df7eb2a9d9a603879d72b57ccfd166cab68dd5ae6d58372aa9196b"
+        },
+        {
+          "id": "client-audit/0",
+          "specification_sha256": "670166003cbeadfe6bee22c834b771c429f99648e20c2e8b41bc7905171d5b1e",
+          "mode": "performed",
+          "success_binding_key": "30c103408018265d960b8793b4f8b1a73b4e04405ed710209166ad67b3e2d4f8"
+        },
+        {
+          "id": "client-audit/1",
+          "specification_sha256": "96633422a72a5e972efb527a7c764a73d493a2ab34e8bbae3d7dc6dc542a0561",
+          "mode": "performed",
+          "success_binding_key": "b403b99cbaf0f1446889de689f88375417dc226eea9961748a9b0283df3cf08f"
+        },
+        {
+          "id": "client-audit/2",
+          "specification_sha256": "a2a66516ca30ba8c8718bec0ae44b7628d575e3753e7428ae3c7f562166af02e",
+          "mode": "performed",
+          "success_binding_key": "a81ba9c34452add0720b5bd46ff2aa0bb30d8f85d0eea2ae1f03ba76a673fde4"
+        },
+        {
+          "id": "client-audit/3",
+          "specification_sha256": "17a4eef17ae7bf185b9a11ef1992cb57240d3a4740e1a7c09218f5d9ddda04d1",
+          "mode": "performed",
+          "success_binding_key": "899b90bf0d1a2685bd40694f48c4369583e95c28e2b16250d326835ea5150e30"
+        },
+        {
+          "id": "client-audit/4",
+          "specification_sha256": "a7235b3be261f97622bc0bf2613d3bc78b3d9f3d4d656544939bbfab28c05aea",
+          "mode": "performed",
+          "success_binding_key": "ac9dd125cff1a1a5d5c58a332d589de0dc74dd0ec1f248b584c331d13387f721"
+        },
+        {
+          "id": "client-audit/5",
+          "specification_sha256": "5ba7d1c9202058b4f82717de0c7f8c9c0d3a08eaff00e81b63f36d570c686732",
+          "mode": "performed",
+          "success_binding_key": "f8a7a1011b4066d4bcc3daf1339b3f548336c291b1bf33f38a7ec4e38eaf8d42"
+        },
+        {
+          "id": "client-audit/6",
+          "specification_sha256": "765fdb52ebb3a9b604125bb51d0c260af9a545f597db3e1f0a74a6f5ffaaeea5",
+          "mode": "performed",
+          "success_binding_key": "cc757d0697af37e48ebf97cdf215b01db8531c174149feb7f54b21ee38d96136"
+        },
+        {
+          "id": "client-audit/7",
+          "specification_sha256": "31a810f9c1571d9bfcaed91272972ecf5087931858e0e6b5f80bc4eb5fd85522",
+          "mode": "performed",
+          "success_binding_key": "91dcdaadf4acfe6b200715b7c574b7276e29f7e5e33c7f518b03d11ad93c4546"
+        },
+        {
+          "id": "client-audit/8",
+          "specification_sha256": "e4478947c6a32c26b33d24d0a16f9e4c9469027fa2fe34122f300276b0231b7b",
+          "mode": "performed",
+          "success_binding_key": "c93503fb08351669a15f97ef78dfa57ad9909706415e8034d073c321bb990e4b"
+        },
+        {
+          "id": "client-audit/9",
+          "specification_sha256": "f248770707830d2325f2637e672f5cf624df654d6cbfdc9492e3a5a5656c196c",
+          "mode": "performed",
+          "success_binding_key": "a5816eba7284156146d6534c12af49416797044abb2879af1776b0ca66951b00"
+        },
+        {
+          "id": "client-audit/10",
+          "specification_sha256": "1792066e9c9207d518ef7cead16b6190b8b36aab7b6e1f16acbe7b6aaae5d14d",
+          "mode": "performed",
+          "success_binding_key": "afb5da4fef91c353096c9c6ccbb831752ac1f0f96ce14f1671078a45e960c04a"
+        },
+        {
+          "id": "client-audit/11",
+          "specification_sha256": "0d56c31e8d99905505fa8948ade7e5662d699513d9f4e3c3188d1b9a1f0cf6b6",
+          "mode": "performed",
+          "success_binding_key": "c7f5871c0f2ca0b147bc31089f030acecdd800412e230abced554c7c13d99d96"
+        },
+        {
+          "id": "client-audit/12",
+          "specification_sha256": "57cc110d7a52b2f944c10765bd4af25a61acdd35dbbd47fef00b3396956c3653",
+          "mode": "performed",
+          "success_binding_key": "09a056597ec0edfdf8a41c95e60093da1a5c56e40576387c96a5f3ed54777d1b"
+        },
+        {
+          "id": "client-audit/13",
+          "specification_sha256": "791a77e88d95679fe1f75e3abc894725d1afa345175f8be8e7777bdfc447fe50",
+          "mode": "performed",
+          "success_binding_key": "8a937cc86262d1f641c28efa8fbcbb6e5e5e42d9668234c8b93321d0103ecb56"
+        },
+        {
+          "id": "client-audit/14",
+          "specification_sha256": "ba9aa4f0d0483c129eaeac6f342b0beac320cdec422856f4d168b1ade7aa6af8",
+          "mode": "performed",
+          "success_binding_key": "3fcf1ee459961e8f2c2ab4bcaf391b34ede72a7921cfcbf205161c4b97bd98cc"
+        },
+        {
+          "id": "client-audit/15",
+          "specification_sha256": "c514d57e73245a0c6956f64493d2956db6738e548e276e09cb24ce2989d39edb",
+          "mode": "performed",
+          "success_binding_key": "2cbd5e4dee0820805d6deb15fa65f976463b169538eda1f4041cb5a36bc017ba"
+        },
+        {
+          "id": "client-audit/16",
+          "specification_sha256": "3a897213cfcce40127fd96eea6e8101347d8070ccf0e6d84888c7fe5953a704e",
+          "mode": "performed",
+          "success_binding_key": "fddd4af08de9ada17b16e199db5862b2278d6288ee7c5e20ce86ef78bf6df961"
+        },
+        {
+          "id": "client-audit/17",
+          "specification_sha256": "6f879fbd95ff3cc964bd212a75f570114bc0fc9fe31de199af087df6a6413abe",
+          "mode": "performed",
+          "success_binding_key": "20dfcffca42126696a1528516415eac488b547d31bd997b224a1b8df6646a0f8"
+        },
+        {
+          "id": "client-audit/18",
+          "specification_sha256": "7b93abe93fb1898bcc36a87afa6fca577119574fe05c10a5d6409b5e42cb890e",
+          "mode": "performed",
+          "success_binding_key": "e5a4f527f4ffa0de40d3d92812b56375c6237d6efacf823c80c2153f22d54670"
+        },
+        {
+          "id": "client-audit/19",
+          "specification_sha256": "f8c80e18d3fef25a2705fa038e3c5ce09c3079aac4b58663b8f63c88774d976f",
+          "mode": "performed",
+          "success_binding_key": "ec9b84e2f175f94565612b62056418e9250987a2d8cecbd2b0d83db9f2ad6b41"
+        },
+        {
+          "id": "client-audit/20",
+          "specification_sha256": "79d431d471f8eb384c4076ccfe2dc6251126976110b85c1b58d8847f647c2543",
+          "mode": "performed",
+          "success_binding_key": "9518eb0fc34d4f16ffeb538389ab5ae7a1dccef7e2c4e4aa8b3d7b851a79d42e"
+        },
+        {
+          "id": "client-audit/21",
+          "specification_sha256": "55ed6e72d383ab8ffc6a5167636aa55a7f433c5a11986b099a218c894307498c",
+          "mode": "performed",
+          "success_binding_key": "a79fee779df10abb3be62eee7bacd5a2858e56fdbd1fd02383c05051872ec86f"
+        },
+        {
+          "id": "client-audit/22",
+          "specification_sha256": "85cc15bc74174ecb716be3ef0aa9b51b183eeff23cf19db4279a1bbc11520980",
+          "mode": "performed",
+          "success_binding_key": "e8e16ff5fa95fd671d11404861b0f7dd8421e09bbc34b43b4b11bddaa72a0d71"
+        },
+        {
+          "id": "client-audit/23",
+          "specification_sha256": "12f9a96604e62bf6812145a326bd9476bd7a8c8ada784af218536f5b2e51141f",
+          "mode": "performed",
+          "success_binding_key": "a64e82461e88aec99d562b1a7d4f5c03ce37374690574e32415335a72cb88801"
+        },
+        {
+          "id": "client-audit/24",
+          "specification_sha256": "327d85bb472bd6cec32ff226d24ed8fc480034b7e886c914b86a1807b89ad068",
+          "mode": "performed",
+          "success_binding_key": "9f9fe30ea1886dff8a0177a7c0444f945217be0521354266f49f8816e58b883b"
+        }
+      ],
+      "production_wide_checks": [
+        "full-native-lint",
+        "full-native-style",
+        "axioms"
+      ],
+      "native_text_sources": 7340,
+      "foundation_declarations": 89762,
+      "downstream_audit": {
+        "successful_batches": 25,
+        "defining_origin_union": 200,
+        "origin_union_sha256": "cf70755ce7a1b4daa4fbf53bb2d48c7f73f4976cb401bdd31eeeb39ea982d72a"
+      },
+      "source_checks": "Separate completed local/source checks; no hosted CI result is claimed for this integration.",
+      "receipt_reverification": {
+        "outer_run_id": "remote-58f370c32c6f485d8ec494fd058a586a",
+        "outer_status": "succeeded",
+        "outer_command_exit_code": 0,
+        "group_closed": true,
+        "compiler_invocations": 0,
+        "duration_seconds": 859.0598600506783,
+        "peak_rss_bytes": 545927168,
+        "outer_receipt_sha256": "6da09cd061fb48703efd9d82fb70a9cf6dc005c074947bfe1f434095b1b1ed82",
+        "witness_sha256": "acc6febfe4e2efa4e95f42cc943319daa0b78d5645accd846a9dce82097b86a1",
+        "witness": {
+          "check_success_count": 32,
+          "claim_boundary": "Current byte bindings and fresh temporal stability; original failed temporal attempt remains failed; no new checks or mathematical proofs executed",
+          "client_audit_origin_count": 200,
+          "current_outer_profile": "{\"jobs\": 1, \"lean\": \"/root/autodl-tmp/lean-build/logs/remote-58f370c32c6f485d8ec494fd058a586a/toolchain/bin/lean\", \"lean_memory_mib\": 12800, \"rss_limit_mib\": 32768, \"schema_version\": 1, \"threads\": 4}",
+          "executions": "none; process creation/exec/spawn denied; original task receipts only",
+          "fresh_temporal_file_count": 125988,
+          "fresh_temporal_hash_count": 125988,
+          "implementation": {
+            "__init__.py": "3868ebea3761908a46678490847815974425b323a86690885c6b7c2a3804f73d",
+            "__main__.py": "d240a28939151c947f5cfc64a569d6e8ad8132dcd747cb61844c62fb517cc4f5",
+            "build.py": "403052b5e19f7c77a6a689da6e649e34fd378d0c8cb3abec782e3d9eb08af0b2",
+            "cli.py": "fa977da14cde20245a029a60c737c2c9ad68c93042d6a3c688981c1e40d59a2a",
+            "engine.py": "c01c6b46c9c058a03a9e364e9df1db2c9a3dd7cfe7ff3eabbb7486dba53fbfd5",
+            "execution.py": "c18840573faee23b878f0bf12952337e22883216437da8adbe8d6f1bb7d6ae35",
+            "frozen.py": "80806de1992ace1d0538ed97ac67796ed5e0f85c5b769553be749f07b6d9af1e",
+            "github.py": "51876eadb7d891c902b376e25c7cd4accd9653b2853f99d3df3256cfd3c22df9",
+            "local.py": "0aa804ec79887b02d2ae98f33248c3fcbaddb68dc725c0950df48380216efe8b",
+            "mappings.py": "cf55d2c89235fd128e98791fd2868e40761d01c40dbe54a2ca6eab1d502a9594",
+            "recipe.py": "4afc568b4c5508c3221616bba1e47521ecf1d570d8ed873a3dc1de95432d6ae3",
+            "resources.py": "5fc841c4da719be2e10f0178633693ff5d13177422ef42257f6c03a320f709b1",
+            "runtime.py": "c68d2ff3cbd81cd8bbd496ba51fa07ecb063933649da455f7d5eebb6f018c108",
+            "source.py": "aca3ae29f06f436895af36adc6f048f70985f7b3e6305d585bed09fa0515f50b",
+            "state.py": "cf2ad5b5bec7a106efdbcfb0148f47db2d68ce2ae6ea5dad74165654315dcdb8"
+          },
+          "kind": "posthoc-receipt-reverification",
+          "original_attempt_status": "failed-preserved",
+          "original_native_state": "/root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021/validation-state/native.json",
+          "original_native_state_sha256": "f03690cbf99e195073099ec47932edf1ba4b405005ac40c6e4bb2eaa7b29f324",
+          "original_outer": "/root/autodl-tmp/lean-build/logs/remote-fd1296df29e948b194eeab629d1b3c80/receipt.json",
+          "original_outer_sha256": "6ba58f497af61efd54c537f15b702837da4f180b38dc9fe3c266da8be4dea2d4",
+          "original_task_directory": "/root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021/validation-state/runs/native-b22357104f7941ecbbf44d9abc7c2ae8",
+          "recorded_identity_toolchain": {
+            "execution_environment": {
+              "AGLIB_BUILD_THREADS": null,
+              "AGLIB_LEAN_MEMORY_MB": null,
+              "AGLIB_RSS_LIMIT_MB": null,
+              "ELAN_TOOLCHAIN": null,
+              "LAKE_ARGS": null,
+              "LAKE_OVERRIDE_LEAN": "1",
+              "LEAN": "/root/autodl-tmp/lean-build/logs/remote-fd1296df29e948b194eeab629d1b3c80/toolchain/bin/lean",
+              "LEAN_ARGS": null,
+              "LEAN_OPTIONS": null,
+              "LEAN_OPTS": null,
+              "LEAN_PATH": null,
+              "LEAN_SYSROOT": "/root/autodl-tmp/lean-build/logs/remote-fd1296df29e948b194eeab629d1b3c80/toolchain",
+              "PATH": "/root/autodl-tmp/lean-build/logs/remote-fd1296df29e948b194eeab629d1b3c80/toolchain/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+              "QUILLEN_BUILD_THREADS": null,
+              "QUILLEN_LEAN_MEMORY_MB": null,
+              "QUILLEN_REMOTE_PROFILE": null,
+              "QUILLEN_RSS_LIMIT_MB": null,
+              "R5_LEAN_REMOTE_PROFILE": "{\"jobs\": 8, \"lean\": \"/root/autodl-tmp/lean-build/logs/remote-fd1296df29e948b194eeab629d1b3c80/toolchain/bin/lean\", \"lean_memory_mib\": 12800, \"rss_limit_mib\": 110592, \"schema_version\": 1, \"threads\": 4}"
+            },
+            "lake": "6f53827dab18010d6c690d14c8401cacabc1db958edb3552a877ed4cf1dd995d",
+            "lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+            "libLake_shared.so": "ef0eb8942cd68ffb61ae573850a7181f70860580959e296c6e1a0e31ec50a38a",
+            "libleanshared.so": "6b30cc963d065fc9d2f87f7e9cbe0682b23000ae5425bccd769c5d477fa74f13",
+            "libleanshared_1.so": "69e900c025f40bf05c14f5b9ec48071b3130e34c96a7c45ee2eb5b6f307e19e6",
+            "libleanshared_2.so": "38d0a03750b2e8d51161885ad597a8b4f6d3b85215c5a52aecd2b3753273cf3f",
+            "managed_profile": {
+              "jobs": 8,
+              "lean": "/root/autodl-tmp/lean-build/logs/remote-fd1296df29e948b194eeab629d1b3c80/toolchain/bin/lean",
+              "lean_memory_mib": 12800,
+              "rss_limit_mib": 110592,
+              "schema_version": 1,
+              "threads": 4
+            },
+            "managed_wrapper": "3cb9b50d85a0f892d9f07d75da887dc8ddf8eb504a0374dce8e49704e37ca4bb",
+            "resource_configuration": {
+              "build_thread_keys": [
+                "AGLIB_BUILD_THREADS"
+              ],
+              "memory_keys": [
+                "AGLIB_LEAN_MEMORY_MB"
+              ],
+              "prefix": "QUILLEN",
+              "profile_keys": [
+                "R5_LEAN_REMOTE_PROFILE"
+              ],
+              "rss_keys": [
+                "AGLIB_RSS_LIMIT_MB"
+              ]
+            }
+          },
+          "request_sha256": "b138c3fa25cf011c3e378c7df5eb53f8902f2a3d2cf5c7c6c25c4f498d63747e",
+          "schema": 1,
+          "source_basis": {
+            "content_sha256": "475b998de67fd69466844eb8562bef19d14d00e4818a0dfa2da8463946233869",
+            "git_head_metadata": "25387c653f01abc24bf25cc166dee33cc63b67a2",
+            "kind": "transport-snapshot",
+            "source_manifest": "/root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021/SOURCE.json",
+            "source_receipt_sha256": "ed7f5b5047767c4798ef2cee7b270f566d23ce454e171a5150ea9b3d50f01b60",
+            "workspace": "/root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021/lean"
+          },
+          "status": "verified-current-bindings",
+          "verified_tasks": [
+            {
+              "id": "prepare",
+              "kind": "process",
+              "specification": "75be25bbcca9955461dd48045881e14c2db5558cdefb3d5c8e8cd0a40f77b29d"
+            },
+            {
+              "id": "root/build",
+              "kind": "graph-build",
+              "specification": "d9db4203a94900af1754e7c99ce3ba3494697e07c281ea47406465656d80fa8c"
+            },
+            {
+              "id": "root/environment",
+              "kind": "environment",
+              "specification": "a81865e923879d0738b5b50734da165465ece53e234d0093b5c4cf957ad16297"
+            },
+            {
+              "id": "full-native-lint",
+              "kind": "check",
+              "specification": "8731291003013a72c72eba0b32eb3b9c0ae5b52abf84cfc9f70b1dd9753146dc"
+            },
+            {
+              "id": "full-native-style",
+              "kind": "check",
+              "specification": "3aabada301f26cd2db3c2c42ebdc7a19046ff147ecfe589ecd8828c8599cab40"
+            },
+            {
+              "id": "axioms",
+              "kind": "check",
+              "specification": "2785437ea562e288f3ff1d902844a2e6248bf36567d38cc4370471ea7df9d8df"
+            },
+            {
+              "id": "test-lint/0",
+              "kind": "check",
+              "specification": "65c60f8484cb6669347ab82afe4ea1267c64b0863924fc3e5cc9a2031d835312"
+            },
+            {
+              "id": "test-facade-text",
+              "kind": "check",
+              "specification": "a480141310ad1ebe6434f03aa3794d088d1706cc6500280ab79aeb41406e3360"
+            },
+            {
+              "id": "client/build",
+              "kind": "build",
+              "specification": "b8dc3d15aa78cccbb6076964bc376b33a2e76f3f9c72c8ddc9b703542575dfa6"
+            },
+            {
+              "id": "client/environment",
+              "kind": "environment",
+              "specification": "f52e9182434b07e15921796d705ae5100aee3d60b6f0aaf4e0e51639f35cb490"
+            },
+            {
+              "id": "client-lint/0",
+              "kind": "check",
+              "specification": "d8fb2e1a85ffdde7722eba66a3aa7bfe446427309b95d3bf0bcf85bafe486477"
+            },
+            {
+              "id": "client-facade-text",
+              "kind": "check",
+              "specification": "3198b5c7a814aaa0fb8459b8bd4db786924907e5d5f148af34a63576ab3b6fd2"
+            },
+            {
+              "id": "client-audit/0",
+              "kind": "check",
+              "specification": "670166003cbeadfe6bee22c834b771c429f99648e20c2e8b41bc7905171d5b1e"
+            },
+            {
+              "id": "client-audit/1",
+              "kind": "check",
+              "specification": "96633422a72a5e972efb527a7c764a73d493a2ab34e8bbae3d7dc6dc542a0561"
+            },
+            {
+              "id": "client-audit/2",
+              "kind": "check",
+              "specification": "a2a66516ca30ba8c8718bec0ae44b7628d575e3753e7428ae3c7f562166af02e"
+            },
+            {
+              "id": "client-audit/3",
+              "kind": "check",
+              "specification": "17a4eef17ae7bf185b9a11ef1992cb57240d3a4740e1a7c09218f5d9ddda04d1"
+            },
+            {
+              "id": "client-audit/4",
+              "kind": "check",
+              "specification": "a7235b3be261f97622bc0bf2613d3bc78b3d9f3d4d656544939bbfab28c05aea"
+            },
+            {
+              "id": "client-audit/5",
+              "kind": "check",
+              "specification": "5ba7d1c9202058b4f82717de0c7f8c9c0d3a08eaff00e81b63f36d570c686732"
+            },
+            {
+              "id": "client-audit/6",
+              "kind": "check",
+              "specification": "765fdb52ebb3a9b604125bb51d0c260af9a545f597db3e1f0a74a6f5ffaaeea5"
+            },
+            {
+              "id": "client-audit/7",
+              "kind": "check",
+              "specification": "31a810f9c1571d9bfcaed91272972ecf5087931858e0e6b5f80bc4eb5fd85522"
+            },
+            {
+              "id": "client-audit/8",
+              "kind": "check",
+              "specification": "e4478947c6a32c26b33d24d0a16f9e4c9469027fa2fe34122f300276b0231b7b"
+            },
+            {
+              "id": "client-audit/9",
+              "kind": "check",
+              "specification": "f248770707830d2325f2637e672f5cf624df654d6cbfdc9492e3a5a5656c196c"
+            },
+            {
+              "id": "client-audit/10",
+              "kind": "check",
+              "specification": "1792066e9c9207d518ef7cead16b6190b8b36aab7b6e1f16acbe7b6aaae5d14d"
+            },
+            {
+              "id": "client-audit/11",
+              "kind": "check",
+              "specification": "0d56c31e8d99905505fa8948ade7e5662d699513d9f4e3c3188d1b9a1f0cf6b6"
+            },
+            {
+              "id": "client-audit/12",
+              "kind": "check",
+              "specification": "57cc110d7a52b2f944c10765bd4af25a61acdd35dbbd47fef00b3396956c3653"
+            },
+            {
+              "id": "client-audit/13",
+              "kind": "check",
+              "specification": "791a77e88d95679fe1f75e3abc894725d1afa345175f8be8e7777bdfc447fe50"
+            },
+            {
+              "id": "client-audit/14",
+              "kind": "check",
+              "specification": "ba9aa4f0d0483c129eaeac6f342b0beac320cdec422856f4d168b1ade7aa6af8"
+            },
+            {
+              "id": "client-audit/15",
+              "kind": "check",
+              "specification": "c514d57e73245a0c6956f64493d2956db6738e548e276e09cb24ce2989d39edb"
+            },
+            {
+              "id": "client-audit/16",
+              "kind": "check",
+              "specification": "3a897213cfcce40127fd96eea6e8101347d8070ccf0e6d84888c7fe5953a704e"
+            },
+            {
+              "id": "client-audit/17",
+              "kind": "check",
+              "specification": "6f879fbd95ff3cc964bd212a75f570114bc0fc9fe31de199af087df6a6413abe"
+            },
+            {
+              "id": "client-audit/18",
+              "kind": "check",
+              "specification": "7b93abe93fb1898bcc36a87afa6fca577119574fe05c10a5d6409b5e42cb890e"
+            },
+            {
+              "id": "client-audit/19",
+              "kind": "check",
+              "specification": "f8c80e18d3fef25a2705fa038e3c5ce09c3079aac4b58663b8f63c88774d976f"
+            },
+            {
+              "id": "client-audit/20",
+              "kind": "check",
+              "specification": "79d431d471f8eb384c4076ccfe2dc6251126976110b85c1b58d8847f647c2543"
+            },
+            {
+              "id": "client-audit/21",
+              "kind": "check",
+              "specification": "55ed6e72d383ab8ffc6a5167636aa55a7f433c5a11986b099a218c894307498c"
+            },
+            {
+              "id": "client-audit/22",
+              "kind": "check",
+              "specification": "85cc15bc74174ecb716be3ef0aa9b51b183eeff23cf19db4279a1bbc11520980"
+            },
+            {
+              "id": "client-audit/23",
+              "kind": "check",
+              "specification": "12f9a96604e62bf6812145a326bd9476bd7a8c8ada784af218536f5b2e51141f"
+            },
+            {
+              "id": "client-audit/24",
+              "kind": "check",
+              "specification": "327d85bb472bd6cec32ff226d24ed8fc480034b7e886c914b86a1807b89ad068"
+            }
+          ],
+          "verifier": "/root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021/final-recovery/reverify_receipts.py",
+          "verifier_sha256": "43f686affbd0b0a4b19ecdbbfdf2e1ef4c7930bf472aecc46a53cfa5e9b6c7ef"
+        },
+        "verifier_source": "\"\"\"Posthoc receipt verification only; never executes a native task.\n\nPreserves the original failed outer/native attempt. Uses the pinned official\nadmission, task construction, and verification APIs with fresh temporal inputs.\n\"\"\"\nimport argparse\nfrom contextlib import contextmanager\nimport hashlib\nimport importlib.util\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nimport uuid\n\nCONTAINER = Path('/root/autodl-tmp/lean-build/workspaces/quillen-tt74-integration-20261021')\nEXPECTED_SOURCE = '475b998de67fd69466844eb8562bef19d14d00e4818a0dfa2da8463946233869'\nEXPECTED_NATIVE = 'f03690cbf99e195073099ec47932edf1ba4b405005ac40c6e4bb2eaa7b29f324'\nEXPECTED_OUTER = '6ba58f497af61efd54c537f15b702837da4f180b38dc9fe3c266da8be4dea2d4'\nOLD_RUN = Path('/root/autodl-tmp/lean-build/logs/remote-fd1296df29e948b194eeab629d1b3c80')\nORIGINAL_DIRECTORY = CONTAINER / 'validation-state/runs/native-b22357104f7941ecbbf44d9abc7c2ae8'\n\n\ndef require(condition, message):\n    if not condition:\n        raise ValueError(message)\n\n\ndef install_fence(scratch):\n    \"\"\"Deny process creation/execution and file mutations outside scratch.\n\n    Python's ordinary code execution/imports remain enabled for admitted policy.\n    No original managed compiler wrapper or expired resource lease can run.\n    \"\"\"\n    process_events = {'subprocess.Popen', 'os.system', 'os.exec', 'os.posix_spawn',\n                      'os.fork', 'os.forkpty', 'pty.spawn'}\n\n    def writable(path):\n        require(isinstance(path, (str, bytes, os.PathLike)), 'Unidentified write pathname')\n        path = Path(os.fsdecode(path)).absolute().resolve()\n        require(path == scratch or path.is_relative_to(scratch),\n                'Write outside dedicated verification scratch: ' + str(path))\n\n    def audit(event, args):\n        if event in process_events or event.startswith('os.spawn'):\n            raise RuntimeError('Receipt-only verification forbids process execution: ' + event)\n        if event == 'open':\n            path, mode, flags = args\n            if flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND):\n                writable(path)\n        elif event in {'os.remove', 'os.rmdir', 'os.mkdir', 'os.chmod', 'os.chown', 'os.utime', 'os.truncate'}:\n            writable(args[0])\n        elif event == 'os.rename':\n            writable(args[0])\n            writable(args[1])\n        elif event in {'os.link', 'os.symlink'}:\n            raise RuntimeError('Receipt-only verification creates no links')\n\n    sys.addaudithook(audit)\n\n\n@contextmanager\ndef identity_environment(values):\n    \"\"\"Recorded environment is for hashing identities, never for execution.\"\"\"\n    previous = {name: os.environ.get(name) for name in values}\n    for name, value in values.items():\n        if value is None:\n            os.environ.pop(name, None)\n        else:\n            os.environ[name] = value\n    try:\n        yield\n    finally:\n        for name, value in previous.items():\n            if value is None:\n                os.environ.pop(name, None)\n            else:\n                os.environ[name] = value\n\n\ndef rebase(value, temporary, original):\n    \"\"\"Translate only the task constructor's directory argument.\"\"\"\n    if isinstance(value, str):\n        if value == str(temporary):\n            return str(original)\n        if value.startswith(str(temporary) + '/'):\n            return str(original) + value[len(str(temporary)):]\n        return value\n    if isinstance(value, list):\n        return [rebase(item, temporary, original) for item in value]\n    if isinstance(value, dict):\n        return {key: rebase(item, temporary, original) for key, item in value.items()}\n    return value\n\n\ndef execute(scratch):\n    sys.dont_write_bytecode = True\n    require(scratch.is_absolute() and scratch.resolve() == scratch,\n            'Scratch must be an absolute canonical pathname')\n    require(scratch.is_relative_to(CONTAINER / 'final-recovery') and not scratch.exists(),\n            'Use a fresh attempt below the authorized container/final-recovery')\n    require(scratch.parent.is_dir(), 'Create the authorized final-recovery parent before launch')\n    install_fence(scratch)\n    scratch.mkdir()\n\n    from lean_ci.engine import Application\n    from lean_ci.frozen import admit, policy_loading\n    from lean_ci.state import TemporalInputs, digest, read_json\n\n    observations = TemporalInputs()\n    verifier_path = Path(__file__).resolve()\n    verifier_sha256 = observations.hash_file(verifier_path)\n    workspace = CONTAINER / 'lean'\n    native_path = CONTAINER / 'validation-state/native.json'\n    outer_path = OLD_RUN / 'receipt.json'\n    request_path = workspace / 'tmp/inputs/quillen-tt74-native/native-request.json'\n    require(os.environ.get('LEAN_CI_EXPECTED_SOURCE') == EXPECTED_SOURCE\n            and os.environ.get('LEAN_CI_SOURCE_MANIFEST') == str(CONTAINER / 'SOURCE.json'),\n            'Fresh managed outer phase must own the same SOURCE snapshot')\n    require(observations.hash_file(native_path) == EXPECTED_NATIVE, 'Original native evidence changed')\n    require(observations.hash_file(outer_path) == EXPECTED_OUTER, 'Original failed outer receipt changed')\n    record, outer = read_json(native_path), read_json(outer_path)\n    require(record['status'] == 'running' and outer['status'] == 'failed'\n            and outer['command_exit_code'] == 1, 'Original failure qualification changed')\n    require(outer['expected_source'] == EXPECTED_SOURCE, 'Original outer SOURCE basis differs')\n    manifest_path, manifest, request, adapter, root, package, admitted = admit(\n        request_path, CONTAINER / 'SOURCE.json', EXPECTED_SOURCE, observations)\n    basis = dict(kind='transport-snapshot', content_sha256=EXPECTED_SOURCE,\n                 workspace=manifest['workspace'], source_manifest=str(manifest_path),\n                 source_receipt_sha256=observations.hash_file(manifest_path),\n                 git_head_metadata=manifest.get('git_head'))\n    require(record['source_basis'] == basis, 'Current admitted SOURCE differs from original evidence basis')\n    require(record['implementation'] == request['implementation'], 'Original implementation differs')\n    require(record['request_sha256'] == observations.hash_file(request_path), 'Original request SHA differs')\n    require(Path(record['directory']) == ORIGINAL_DIRECTORY, 'Original task directory differs')\n    invocation = ORIGINAL_DIRECTORY.name.removeprefix('native-')\n    require(uuid.UUID(hex=invocation).hex == invocation, 'Invalid evidenced original invocation')\n    plan = dict(request['payload'], schema=1, invocation=invocation, repository=str(root),\n                implementation=request['implementation'], source_files=manifest['files'], source_basis=basis)\n    plan['id'] = digest(plan)\n    require(len(record['tasks']) == 37, 'Expected the original complete 37 task items')\n\n    check_items = [item for item in record['tasks'] if 'success' in item['result']]\n    require(check_items, 'Missing recorded individual successes')\n    recorded_toolchain = check_items[0]['result']['success']['binding']['execution']['toolchain']\n    environment = {}\n\n    def merge(values):\n        for key, value in values.items():\n            require(key not in environment or environment[key] == value,\n                    'Conflicting recorded identity environment: ' + key)\n            environment[key] = value\n\n    merge(recorded_toolchain['execution_environment'])\n    for item in check_items:\n        binding = item['result']['success']['binding']\n        require(binding['execution']['toolchain'] == recorded_toolchain,\n                'Mixed recorded native toolchain identities')\n        merge(binding['environment'])\n        merge(binding['python_runtime']['environment'])\n        merge(binding['execution']['declared_environment'])\n    current_outer_profile = os.environ.get('R5_LEAN_REMOTE_PROFILE')\n    require(current_outer_profile is not None, 'Run inside a fresh managed outer phase')\n    verified = []\n    with identity_environment(environment), policy_loading(admitted, workspace, observations, scratch):\n        spec = importlib.util.spec_from_file_location('_lean_ci_posthoc_' + uuid.uuid4().hex, adapter)\n        require(spec is not None and spec.loader is not None, 'Admitted adapter cannot load')\n        module = importlib.util.module_from_spec(spec)\n        sys.modules[spec.name] = module\n        exec(compile(adapter.read_bytes(), str(adapter), 'exec'), module.__dict__)\n        factory = getattr(module, 'create_native_application', None)\n        app = (factory(root, package, request['coordinates']['source_mapping'])\n               if factory else module.create_application(root))\n        require(isinstance(app, Application) and app.root == root and app.package_cwd == package,\n                'Wrong admitted application coordinates')\n        # Never invoke app.run_tasks/runtime.run/Lean/Lake. Compiler identity in\n        # the recorded managed environment hashes the wrapper and physical libs.\n        toolchain = app.runtime.compiler_identity(observations.hash_file, cwd=package)\n        require({k: v for k, v in toolchain.items() if k != 'installation'} == recorded_toolchain,\n                'Current wrapper/physical runtime bytes differ from recorded identity')\n        temporary = scratch / 'constructed-tasks'\n        required = rebase(app._tasks(plan, 'native', temporary), temporary, ORIGINAL_DIRECTORY)\n        require(len(required) == len(record['tasks']), 'Reconstructed task count differs')\n        for task, item in zip(required, record['tasks']):\n            require(task.get('native') is not False, 'Unexpected source-only task')\n            require(task['id'] == item['id'] and digest(task) == item['specification'],\n                    'Rebased task specification differs: ' + task['id'])\n            if task.get('generated'):\n                generated = Path(task['generated_path'])\n                require(observations.hash_file(generated) ==\n                        hashlib.sha256(task['generated'].encode()).hexdigest(),\n                        'Original generated task input differs: ' + task['id'])\n        print('Exact original 37 task specifications reconstructed; verifying saved receipts.', flush=True)\n        app.verify_tasks(plan, required, record['tasks'], toolchain, observations, observe_toolchain=True)\n        require(app.runtime.compiler_identity(observations.hash_file, cwd=package) == toolchain,\n                'Identity runtime drifted during posthoc verification')\n        observations.assert_stable()\n        verified = [dict(id=task['id'], specification=digest(task), kind=task['kind']) for task in required]\n        audit_origins = sum(len(task.get('modules', ())) for task in required\n                            if task['id'].startswith('client-audit/'))\n    observations.assert_stable()\n    require(observations.hash_file(native_path) == EXPECTED_NATIVE, 'Original evidence changed during verification')\n    require(observations.hash_file(outer_path) == EXPECTED_OUTER, 'Old outer changed during verification')\n    observations.assert_stable()\n    witness = dict(schema=1, kind='posthoc-receipt-reverification', status='verified-current-bindings',\n                   verifier=str(verifier_path), verifier_sha256=verifier_sha256,\n                   original_attempt_status='failed-preserved', original_outer=str(outer_path),\n                   original_outer_sha256=EXPECTED_OUTER, original_native_state=str(native_path),\n                   original_native_state_sha256=EXPECTED_NATIVE, original_task_directory=str(ORIGINAL_DIRECTORY),\n                   source_basis=basis, request_sha256=record['request_sha256'],\n                   implementation=request['implementation'], verified_tasks=verified,\n                   check_success_count=len(check_items), client_audit_origin_count=audit_origins,\n                   fresh_temporal_file_count=len(observations.files), fresh_temporal_hash_count=observations.hash_count,\n                   current_outer_profile=current_outer_profile, recorded_identity_toolchain=recorded_toolchain,\n                   executions='none; process creation/exec/spawn denied; original task receipts only',\n                   claim_boundary='Current byte bindings and fresh temporal stability; original failed temporal attempt remains failed; no new checks or mathematical proofs executed')\n    (scratch / 'receipt-reverification.json').write_text(json.dumps(witness, indent=2, sort_keys=True) + '\\n')\n    print(json.dumps({key: value for key, value in witness.items()\n                      if key in ('kind', 'status', 'check_success_count', 'client_audit_origin_count', 'fresh_temporal_file_count')},\n                     sort_keys=True), flush=True)\n    print('Witness: ' + str(scratch / 'receipt-reverification.json'), flush=True)\n\n\nif __name__ == '__main__':\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--scratch', required=True, type=Path)\n    arguments = parser.parse_args()\n    try:\n        execute(arguments.scratch)\n    except Exception as error:\n        print('Receipt reverification failed closed: ' + str(error), file=sys.stderr)\n        raise SystemExit(1)\n",
+        "method": "Pinned official admit, exact original task/specification reconstruction and Application.verify_tasks with fresh TemporalInputs. No checker, resource guard or admission rule was waived; original failed attempt retained."
+      }
+    },
+    "restore_helper": {
+      "tests_passed": 10,
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s docs/archive -p test_restore_sources.py -v",
+      "real_archive_dry_run": {
+        "default_selected": 322,
+        "staging_selected": 188,
+        "created": 0,
+        "exit_code": 0
+      },
+      "storage_layout": "archive_path + .txt",
+      "historical_manifest_hashes_verified": true
+    },
+    "local_source": {
+      "status": "completed",
+      "state_sha256": "2d7051ac04ad1d2e616183999adf47462b503c2ee97f63a1303d7f07ee6f981c",
+      "checks": [
+        {
+          "id": "source/imports",
+          "mode": "performed",
+          "success": "success"
+        },
+        {
+          "id": "source/layout",
+          "mode": "performed",
+          "success": "success"
+        },
+        {
+          "id": "source/placeholders",
+          "mode": "performed",
+          "success": "success"
+        }
+      ]
+    },
+    "maintained_links": {
+      "maintained_pages": 165,
+      "local_links_checked": 1383,
+      "fragments_checked": 121,
+      "errors": [],
+      "excluded": "Frozen historical archive prose is provenance data, not maintained link targets."
+    },
+    "preserved_ci_inputs": {
+      "base_commit": "25387c653f01abc24bf25cc166dee33cc63b67a2",
+      "ci_repaired_files_unchanged": 36,
+      "controls_unchanged": [
+        "lean-toolchain",
+        "lakefile.toml",
+        "lake-manifest.json",
+        "examples/downstream/lakefile.toml",
+        "examples/downstream/lake-manifest.json",
+        "examples/downstream/lean-toolchain",
+        ".github/workflows/ci.yml",
+        "scripts/check_scope.py",
+        "scripts/check_run.py",
+        "scripts/ci_adapter.py",
+        "scripts/ci_policy.py",
+        "scripts/library_sources.py",
+        "scripts/generate_imports.py",
+        "Tools/LintScoped.lean",
+        "Tools/LintStyle.lean",
+        "QuillenTest/Axioms.lean",
+        "examples/downstream/Audit.lean"
+      ],
+      "mismatches": 0
+    },
+    "accepted_base_hosted_ci": {
+      "head": "25387c653f01abc24bf25cc166dee33cc63b67a2",
+      "conclusion": "success",
+      "jobs": [
+        "library",
+        "publish-cache"
+      ],
+      "url": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39440213812"
+    },
+    "archive_preservation": {
+      "original_research_archive_files": 529,
+      "sha256_mismatches": 0,
+      "renamed_lean_payloads": 510,
+      "byte_preservation": "Every original research-group member matches its verified incoming bytes after applying only the .txt storage mapping."
+    },
+    "native_resource_qualification": {
+      "failed_module": "QuillenTest",
+      "content": "Generator-certified import-only root; zero defining declarations.",
+      "observed_error": "std::bad_alloc, frontend exit 134; no cgroup OOM events",
+      "host_vm_max_map_count": 65530,
+      "replacement": "Compile actual selected defining modules; source-certify the generated zero-origin aggregate and apply unchanged native text rules without importing its declaration environment. Whole-library environment lint and both axiom audits remain enabled.",
+      "scope_limit": "The aggregate QuillenTest.olean is not produced on this host. This is separately qualified local/remote validation, not a hosted CI receipt."
+    },
+    "cache_warmup_qualification": {
+      "attempt": "remote-49a16b2f35274c599a6cfb79cea6eeeb",
+      "source_digest": "17d28dbdc816f38a9a94fba96a1cf27ea8245e592b6535635eba4d8c41573861",
+      "completed_code_checks": [
+        "production build",
+        "full library Batteries environment lint",
+        "native text style for7340 sources",
+        "89762 project declaration foundation audit",
+        "selected7 test lint",
+        "source-certified test facade text lint",
+        "all selected downstream source builds"
+      ],
+      "failure": "The temporal guard observed dependency library-directory mutation from first-time downstream cache/artifact creation. No compiler failed in this attempt. This attempt did not seal a final result; the final witness uses the warmed artifact basis."
+    },
+    "staged_file_checks": {
+      "staged_owned_paths": 646,
+      "all_other_live_source_and_document_whitespace": "passed",
+      "retained_incoming_eof_notice": {
+        "path": "Quillen/Waldhausen/SConstruction/Iterated/OriginalTriangleSurfaceValue.lean",
+        "sha256": "4943f69caf3b53ff670ff72fb42a73591a02e60dbd8d4cbcb392c2814a098c6a",
+        "diagnostic": "Quillen/Waldhausen/SConstruction/Iterated/OriginalTriangleSurfaceValue.lean:47: new blank line at EOF.",
+        "reason": "Preserve the exact independently reviewed incoming source bytes. The required native source-style checker already passed this unchanged file; this optional Git diagnostic adds no semantic or native-style failure."
+      },
+      "frozen_archive": "Exact byte preservation checked, not reformatted."
+    }
+  },
+  "publication": {
+    "pushed": false
+  },
+  "documentation_audit": {
+    "maintained_markdown_read": 165,
+    "changed_or_added": 45,
+    "changed_pages": [
+      "CONTRIBUTING.md",
+      "Quillen/Aglib/Algebra/Category/ModuleCat/README.md",
+      "Quillen/Aglib/Algebra/Homology/CochainComplex/SplitFactorization/README.md",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/BaseChange/Derived/README.md",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/README.md",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/README.md",
+      "Quillen/Aglib/KTheory/MilnorK/README.md",
+      "Quillen/Aglib/README.md",
+      "Quillen/Aglib/RingTheory/RegularLocalRing/README.md",
+      "Quillen/Aglib/Topology/Path/README.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Affine/README.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Bass/README.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FineBassK.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/RawEvaluation.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Development.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Localization.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/README.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/README.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/README.md",
+      "Quillen/AlgebraicGeometry/Scheme/Coherent/README.md",
+      "Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/README.md",
+      "Quillen/AlgebraicGeometry/Scheme/README.md",
+      "Quillen/AlgebraicGeometry/Scheme/Regular/README.md",
+      "Quillen/GTheory/DVR/README.md",
+      "Quillen/KTheory/Bass/README.md",
+      "Quillen/KTheory/Bass/RowInterfaces.md",
+      "Quillen/KTheory/Bass/SignComparisons.md",
+      "Quillen/KTheory/GrothendieckComparison/README.md",
+      "Quillen/KTheory/README.md",
+      "Quillen/Topology/HomotopyEquiv/README.md",
+      "Quillen/Topology/Prespectrum/README.md",
+      "Quillen/Waldhausen/Additivity/README.md",
+      "Quillen/Waldhausen/QuillenComparison/README.md",
+      "Quillen/Waldhausen/SConstruction/Iterated/README.md",
+      "README.md",
+      "docs/ARCHITECTURE.md",
+      "docs/COMPATIBILITY.md",
+      "docs/DEVELOPMENT.md",
+      "docs/README.md",
+      "docs/RESEARCH_ARCHIVE.md",
+      "docs/SCOPE.md",
+      "docs/evidence/README.md"
+    ],
+    "reading_coverage": {
+      "operations": 9,
+      "aglib": 93,
+      "perfect_complexes": 9,
+      "other_mathematical_guides": 49,
+      "principal_guides_and_registry": 4,
+      "governance_routes": 1
+    },
+    "document_sha256": {
+      "AGENTS.md": "6d7710b13ad4f1196eda8322cd3468dfc59082aaf3fc92d8095d01c8860061e3",
+      "CONTRIBUTING.md": "3f088fe8f93365103564510b7682a0e1a75f40c1e67838982349f2362912c98c",
+      "Quillen/Aglib/Algebra/Category/CommRingCat/README.md": "a2cd3223861f7bd0893041d5e973cfe2d36be1cdfbd7228737edbf8a3fcd7e3e",
+      "Quillen/Aglib/Algebra/Category/FGModuleCat/README.md": "ca2fbaae86ca7ad07a42b4e176ae896bbda0e0e323aa53302b72e33dad9dee19",
+      "Quillen/Aglib/Algebra/Category/ModuleCat/README.md": "1ea25b1c6ec63b8a0a8c9d0acfea819ad2f3ea11f0a45c5d5e8b627aeab7e6f1",
+      "Quillen/Aglib/Algebra/Category/Ring/README.md": "eb0bbd922dd8895143be4e8295a843d86a54eecbfae600de91d6c43631f2954b",
+      "Quillen/Aglib/Algebra/Group/Hom/README.md": "fe029da7c5b0a197a9983624e26b2ca400d0e338036608a5414f82acc66ac407",
+      "Quillen/Aglib/Algebra/Group/Perm/AdjacentPresentation/README.md": "37159da9b4f491663064debf12e75cee759bf73d1389d9a3ff9936d6e5c8618c",
+      "Quillen/Aglib/Algebra/Group/README.md": "2ed8716a7e48517fb055c488af38edcac3daa9c23362eabab75ca0a20dd7281a",
+      "Quillen/Aglib/Algebra/Homology/CochainComplex/ExactSubcategory/README.md": "5bbf65c950bf32150cffe3be6ddbf0c9d88a797fc88e9ea4312d02e8402dec3b",
+      "Quillen/Aglib/Algebra/Homology/CochainComplex/SplitFactorization/README.md": "bb05e345f9a1f2b08dacc4c6eb37191f49fdf0ae1a7b0a45a6f80c0a3103a822",
+      "Quillen/Aglib/Algebra/Homology/DerivedCategory/README.md": "78b5fe061c09897dfce76a258103c4d613738588a2a76127898fc8f01f90ad99",
+      "Quillen/Aglib/Algebra/Homology/HomotopyPullback/README.md": "8f5724548b5a53605ea4893a65bbcc83f29c80f55cc70bb7c805a7d634f97cb1",
+      "Quillen/Aglib/Algebra/Homology/HomotopyPushout/README.md": "18dbc6de5847257d26b2aad61d8537545f7988125696f0a336bfe4672e9caadb",
+      "Quillen/Aglib/Algebra/Homology/MappingCone/README.md": "abc54f6c2e028e2a9172c525c0c0b6468baa4c17e48d07cb94edb95f8e91eceb",
+      "Quillen/Aglib/Algebra/Homology/ModuleCat/README.md": "980d0e0a11402074a665623072a3439f56f8ca8d8c8479da331e22dcebf05ca8",
+      "Quillen/Aglib/Algebra/Module/README.md": "8b70170b6e30234ec0bbd61d69fe25db707d8caff496f8e95769dda24eaf45b3",
+      "Quillen/Aglib/Algebra/Polynomial/Laurent/README.md": "602cfd2b8bd97e65c4bcb0e2116fcbf1527763c5020d6940e455a99b58a3baac",
+      "Quillen/Aglib/AlgebraicGeometry/Cohomology/Affine/README.md": "e5a26c276a17cd1d9fff7ce7180a40a53d7ee15b49e25839044bf2ad0b7c825a",
+      "Quillen/Aglib/AlgebraicGeometry/Cohomology/Cech/README.md": "6e8e5f02bf4d83d1f96dc55ddf5f2afe1e9f27be6b929bb66b770b1eb6ac901f",
+      "Quillen/Aglib/AlgebraicGeometry/Cohomology/MayerVietoris/README.md": "2057e67b30a4c898042a1cfc8e8d71f6ab3f88ac111a3855e56aaefd81cb3814",
+      "Quillen/Aglib/AlgebraicGeometry/Cover/README.md": "20648fa7e43dce919ffe62f791a318830ac5f4070b915e6b1aa70ecc68fb7c67",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/BaseChange/Affine/README.md": "8a91a0365c298dcf1497a89a3a24c2d77d396028ecbbefd272183d607d71bc1b",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/BaseChange/Cartesian/README.md": "032ae4aada55830de99f319ef81027e8e1fcf41ae6fbe64173e92700f649836f",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/BaseChange/Derived/README.md": "3da5a28773ecb7716c8227c157856cc0ffbb5eba12fd56d35dc84eaf0e06ec59",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/BaseChange/OpenImmersion/README.md": "75c4b39b812c200a60ceaab212efd073fc75659d8d7b879876d32d8525d3f54c",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Coherent/Affine/README.md": "0ed4e99839ab8eecacdb04d377742d521ccf98d4c0db1699fff088e532c2ec48",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Coherent/Pullback/README.md": "2f3e38f8e2758a94651aae57ed05dc1133b3ed52d69a699083a5014667047e8c",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Coherent/Pushforward/ClosedImmersion/README.md": "fbb0fa964322e26c95879cc26bdcdca168092dcbdd9593d6a89903fce887d57d",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Coherent/README.md": "7693701d4f9d795494810b73bb82ffea97e79c0906e100ec73736599905a936c",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Coherent/Support/README.md": "a53d8674e52c150f6d18e06f252085d38be1b3c31a0eed9279a4c6843ac038e5",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Complex/Affine/README.md": "1fbda25b3f1ee10dce191e278876eb82be42861347322e40adadc20854941ed4",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Complex/OpenGluing/README.md": "abbeca270af7abbb9196289689bc5c6b99b4701bc1d84788b43809f4e31216df",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Complex/README.md": "7f002aa6f061c4d97b6969b47fb45309f949394cd24e6a73336403580953bd27",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/Affine/README.md": "aedeacb6401d0009a64a6dc2fdf506a0a6629f39860ceec417e96fe3689724bd",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/DerivedHom/README.md": "491b868e843935d5cc7fb7d770b51118149056879a6cf843e9c156a85f9dede5",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/Plus/README.md": "7f45e1b0954aa65bbb94be008778941ddf851707a37fa155da32ff9f4bc32ab7",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/Pushforward/README.md": "0f2366d52a19b646897d64b8470dd07de6125f274f20b898161beca37773317f",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/README.md": "be452001c9356140c471efd4ab07cdd549d3e0d2c08a5d460add671e647e8e28",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Flat/README.md": "4f07d7e25c8cefa563d453458436ade0c761f963c8dc70a4938de308dbacabe1",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/LocallyFree/Affine/README.md": "9dbb5381053b9898ffa726dbd911942f8ec07a9061c20ac336c772b08fe61c68",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/LocallyFree/Pushforward/README.md": "11af1d01744064d88030d98397913c5d1255feca431e2d7ef03011f90bb477f3",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/LocallyFree/README.md": "254028aca62fe85903d83c685cc868f344c0ce5f901ea4f04e5be55fcd7bfbb5",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/LocallyFree/Resolution/README.md": "3805fc23a037ade69c025b2310c21019b5ed800233e4ef5eb5d03a3b9eaf36f8",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/Affine/README.md": "a0442251cf550a2f661a5f5d73081efd81f95f4e359519a9e3a362c60caf87c9",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/BoundedBelow/README.md": "09ae138d5219a866c207053fdcd5f6cdcd7f316d7ee4fb60df4a0db86a7ddb09",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/BoundedFlat/README.md": "3418a39e3478486df00507ae55cecfa372e8148f369b7bcc5810388ad6e0d59d",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/FlasqueBoundedBelow/README.md": "4e4a8096c6c6e9330a8ea09d0b5760aa468a7cbddcaaa92bb3ca2f66cb0c6087",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/OpenDerivedImage/README.md": "02ae67d90c8b45777f80fc6787d2fbafe8226ed94f0f4470c4657ebd7806ae6b",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/OpenGluing/README.md": "7bdac99fe01148fde3211386d69554a27f037fb1927eaf6591c8b75c09adb1b5",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/README.md": "528357352169ba74dec20f20b048d63edb036b836ba03d77e8740e1737eeae2c",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/Support/README.md": "ff43f1fb11e6a14b3a09d160cd514c51f02bcba3fa5e6660acf82ff9166b4827",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/SupportedOpenDerivedImage/README.md": "648638b1642321d00d00d5b2d9e8d6e29819f209216b9ea9fa63175d03ce86ac",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/QuasiCoherent/Affine/README.md": "c727e2ffda04efbfca40160909dc5db2bb9b5a96c668e8e5141dcff5c7732d6e",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/QuasiCoherent/README.md": "5e60e2488fe615f054602470d49c65931742d230124acf09b35688989a731c4e",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/README.md": "cb4f83fe64f6680937b46e44ac97ce8f8ce07460735435e54a64ca7d5819277e",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/RankOne/README.md": "04a297884fefb4b2e9423f907c9fbbd1a03a7bcc89d7a380861fe198cc4bb339",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Restriction/README.md": "bd7aa622a4aa77373609b69e03f82ed1b947122cde17637c8111a39c532285c1",
+      "Quillen/Aglib/AlgebraicGeometry/Modules/Scalar/README.md": "1c455e6ac94fb6c9875a55c5d674c4a0b1fe8616f0b54878706797001a949792",
+      "Quillen/Aglib/AlgebraicGeometry/Morphisms/ClosedImmersion/README.md": "d66e4c706c387f5edc1c9442a9caa6c10a9b5f97b54525541b304917281270e7",
+      "Quillen/Aglib/AlgebraicGeometry/Morphisms/Finite/README.md": "724a0d72d0ce15762326b7da8ea6eeb825449d29dee3c1abc0b270e0d53c0861",
+      "Quillen/Aglib/AlgebraicGeometry/Morphisms/FiniteFlat/README.md": "08bb5f213941c73e730541deefd2f486aa71b21b55b7d4c99a2c706d7aad8c3e",
+      "Quillen/Aglib/AlgebraicGeometry/Morphisms/Flat/README.md": "5a5f95c53a1da979d68243a8b2bf00833908c5f3fed2f49b91bcb3a294a68a91",
+      "Quillen/Aglib/AlgebraicGeometry/Morphisms/OpenImmersion/Pair/README.md": "dcbdcab1a19e8de960ff7db6e7fb5265b14726f2bea5469030e5de89a8ec6f87",
+      "Quillen/Aglib/AlgebraicGeometry/Morphisms/OpenImmersion/README.md": "7322bf60f31d39916510471db7361f64b4883b2c24942a0366d840c7473f8e3a",
+      "Quillen/Aglib/AlgebraicGeometry/Products/README.md": "99389e88049f406c13f57a96e2536d046c2269e41f8fd1823a78d444c57470d5",
+      "Quillen/Aglib/AlgebraicGeometry/Properties/README.md": "882182ffc5fe3d6ab8823c00a3695e80804f0ed99a7582ab6233ff290ffe2898",
+      "Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/README.md": "706e31e054547e6b9ac2c0d3ae68a6bf17c2bf95180b3c3647bedefbc464949d",
+      "Quillen/Aglib/CategoryTheory/Abelian/SerreClass/README.md": "b5f08a6555c581ff2579343e9c1c1d0c1a7023e54a200c0d7d97dd1986bc206c",
+      "Quillen/Aglib/CategoryTheory/Comma/README.md": "62dc22079ebdfae022ed799049ce67e1555c53e096964669ab2f367f2d428caa",
+      "Quillen/Aglib/CategoryTheory/Endofunctor/README.md": "59c261e307e15d3f085655feb0d6c36b960b25177e394ea467f1edc7dd2a6463",
+      "Quillen/Aglib/CategoryTheory/ExactCategory/Extensions/README.md": "fa2221525c917ecc7e55cb705cf022878f3f87a54a5eac4e14acc45b38469f28",
+      "Quillen/Aglib/CategoryTheory/ExactCategory/Filtration/README.md": "19f99417c6f1a2e1cd0d0949785419b3508df26567fef4af2266c4cb41a1eeaf",
+      "Quillen/Aglib/CategoryTheory/ExactCategory/Quotient/README.md": "e8be76e5c62ee828296f99e035cd052b002ec736472182670891f5d4b575846a",
+      "Quillen/Aglib/CategoryTheory/ExactCategory/README.md": "1ee4b72c895066c9be3a32577c9e99482854b1bf1bc133d985d72477b06b7d37",
+      "Quillen/Aglib/CategoryTheory/ExactCategory/Resolution/README.md": "3b700a6f6231066e67bf0e3b39bc7f4885966915d14ecd3602bd047154ef194d",
+      "Quillen/Aglib/CategoryTheory/FiberedCategory/README.md": "8a0738f9b722151df39a57de7768d4535b861bfa24a0eb4978ae5d5a72d24542",
+      "Quillen/Aglib/CategoryTheory/Functor/README.md": "0583e0f03f95c6ab1b2495e58bc522a53ff994cc833c8b8435cb89039af64ffd",
+      "Quillen/Aglib/CategoryTheory/Limits/README.md": "978044482ae027661bc72f7cfa253fcd5bb166ee2762ce91853b3993698ded6e",
+      "Quillen/Aglib/CategoryTheory/Limits/Shapes/README.md": "994dfd5f23fe1cc619d0a32e045f63b0769ab7e058a030dec18aad20267b4943",
+      "Quillen/Aglib/CategoryTheory/Linear/README.md": "a56820e1481c663ba326938f7ee2109501b618ca9824518688fa37a11bb27340",
+      "Quillen/Aglib/CategoryTheory/Monoidal/TensorFunctor/README.md": "b9d4fd2fc59b95b0cbf769c3afca39bbd1f5e24cf52e867c4bc0fcc4f309456b",
+      "Quillen/Aglib/CategoryTheory/NaturalTransformation/README.md": "1fd326cda7543f2a435585341eb7de00c28e8d71596c57778176ed3dea5da260",
+      "Quillen/Aglib/CategoryTheory/Pi/README.md": "064188512a56498452b7473fa3e0df41637c3834b19aa60f2a765a5c7f07e2b8",
+      "Quillen/Aglib/CategoryTheory/ShortComplex/README.md": "9e195f0396c43b47e92f2d45b057deb3a7a3bb3738e6522c08e0730b753508d8",
+      "Quillen/Aglib/CategoryTheory/SmallModel/README.md": "83a261c8c440e22149501ac15d8c4c5646ce939e190675861759cf855ad5a35f",
+      "Quillen/Aglib/KTheory/MilnorK/README.md": "ab4de84b0b37964aaf21cb4e60af390afe98918f4e199d88c619857ed1ebcaf1",
+      "Quillen/Aglib/LinearAlgebra/Matrix/Bruhat/README.md": "4f7823b9c56b4d0c70a55ffea0a7607bac651c794ae66db03fda45bc90346f74",
+      "Quillen/Aglib/LinearAlgebra/Matrix/GeneralLinearGroup/SignedSection/README.md": "cb47cc3b5ceb6ae5372c4658310cf79d576dd8ad8f3b0d6e42554b8ef54a7c3b",
+      "Quillen/Aglib/LinearAlgebra/Matrix/README.md": "b95f961bed620cc911868b33cd3bc5679064b7a31c360d09e4dbf7a07e447a2f",
+      "Quillen/Aglib/README.md": "78321ddae19f70d8d1475d85fd84bf6f7fdac1c952ebfa999e3604c0742278ed",
+      "Quillen/Aglib/RepresentationTheory/Homological/GroupHomology/README.md": "98d9039a74a2ac83825553dc650185285a0fef934817a7d057fce85bb13cebdd",
+      "Quillen/Aglib/RingTheory/Polynomial/README.md": "e3b2460d67d5f3c124a673c7cbf8daa961592fc35a6f7389e6de7372e0d96205",
+      "Quillen/Aglib/RingTheory/RegularLocalRing/README.md": "223cfaf6a79c9c3e577496915580fb2dd6b15b8d68beacba98b7241992ba683a",
+      "Quillen/Aglib/Topology/Path/README.md": "89acf47fba4ea9f8b68eac3ab40b1308b02f4ecf72a2f00a95341401187402aa",
+      "Quillen/Algebra/Group/README.md": "1fa778caeab4f2f8345657590ad1e5d7dccd97809462865de5d00eb26f6b7972",
+      "Quillen/Algebra/Group/StableSteinberg/Matsumoto/README.md": "79cf07e474c495b2f66d5536dd20a85d5de5889071f736a66fe2f49f55ac0cd9",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Affine/README.md": "48d8fe3b18c136d705790c13cbd4700a3d773f25ef7b1718f215375f4ca4c38e",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Bass/README.md": "21fd68fb0c717f04f62726bcb133850be3eaa120fe6af397dea1886f19ac8087",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md": "b02b3770a06d919c869670e29ab23fe02ab52f708f3f67c45d4670164ebd0bdf",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FineBassK.md": "12555c5d7a8dc0555ddd2b4cf28d7fe0602665b8a572caf36ca7fb28cac334d5",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md": "a1e5ba36dac07d91426ea23def7614133959cfba4e7678d93b5ee3240849c080",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/RawEvaluation.md": "c58b36e903f01dede9dc51488bc90cdaed78aea3c277221d407b6fb9336798fe",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md": "9d8c4b78cb0e058d59f03fcfc821ba439e87a1b87e55d89f8759ee6452aa4e74",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Development.md": "35ae42488d2e7eb13cfc3eb7d0c70ff5f472bfc64a336ad8a7876ef6b5724cc7",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/Localization.md": "5933e529f9c782c7129360131bf9c3d1a4e5d9ea4ca3741f35395884239921ac",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/README.md": "d2fd23a4343ee13c18c804e5cbf68976a819db34e40e59795d675e51b11ebd3e",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/README.md": "d1d47cbf7369b26793774ea21eb80d914b252cabcd6f0ddb68a2adee1c770bac",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/README.md": "8d62013a1bb8182eceb264563d69904afdc204eeb1de540a8e432766d6af45a8",
+      "Quillen/AlgebraicGeometry/Scheme/Coherent/README.md": "e06e42f3f065471365dc9523c6e6c1b8b8023b74070ed0b7543a680f48162be1",
+      "Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/README.md": "43f333f33fff115886d73c147ae37e5d680bc4d098dee500abdd0cb0d057a214",
+      "Quillen/AlgebraicGeometry/Scheme/README.md": "cc3d8f60f80a417cdc336026ff6926a2dd42d588457661280bee0d4d6ea2759c",
+      "Quillen/AlgebraicGeometry/Scheme/Regular/README.md": "0696006026d61eafaf44dff708199e1e8a9f15a8ad71f160bd8f524945f89036",
+      "Quillen/CategoryTheory/QConstruction/README.md": "4824cb0d182873c49db2900aef95a1bd674b71191eeaf618b566f50de8cccc5b",
+      "Quillen/CategoryTheory/SmallModel/README.md": "c034c097566a0e79b600a1e451bb6b9a3ef97984aa97c830f1557f49d43036c8",
+      "Quillen/Devissage/README.md": "fbda2527fce4b1bede453443041ee6163b872b7b9a068e6f56e2b56d4de3a087",
+      "Quillen/GTheory/DVR/README.md": "b9f0ef6771fde38c23d8e64d450e57580d83c6d6720b4709e6e9fb9c65ee063b",
+      "Quillen/GTheory/Dedekind/README.md": "6aa4ce2e7c9a278512248b45469b660b94fb5e578d934ed9c50d5cc7cda1542f",
+      "Quillen/GTheory/FiniteModules/README.md": "1b866366eadaf07b3bb3a848c29f78056c729eb868f2c781c76a5010f216c79c",
+      "Quillen/KTheory/Bass/README.md": "cf18e81e84bbf021e2b7c74935dc4282809e3a643ce4bec8b2c7ac037f09be2a",
+      "Quillen/KTheory/Bass/RowInterfaces.md": "54c468f7696ec75deb5a4ecec0c6a21009f939cdfa954e897be9893bb840ec36",
+      "Quillen/KTheory/Bass/SignComparisons.md": "9204617a4670c02b6da2357586a83c9a8652f6ba807fef4424ac3c46945fc5d8",
+      "Quillen/KTheory/Field/README.md": "b204f43aab64cb724e0e6d91308d91091a98be7717fd58170e29fd85ad217775",
+      "Quillen/KTheory/FiniteSupport/README.md": "e6e392e26858fc7217b5c49f405f5d979cad7edc37296802ec2396182a237e7e",
+      "Quillen/KTheory/GrothendieckComparison/README.md": "38e6df293292f8f084adaccb95685453d51cc635aeaa30f27bdb03882fad0531",
+      "Quillen/KTheory/LowDegreeScalarAction/README.md": "6534ffbf5d3735d0ec56b63bd3109099b1089360da0d30a3b993be47c65b0290",
+      "Quillen/KTheory/Plus/README.md": "16ff0f0f7c8aa35dd290427facc4fa5e04686031b60871b320185e7763a91924",
+      "Quillen/KTheory/Plus/StandardComparison.md": "4fe9b7b7e3215b30ac7098b064e08bd28b0c78e935ec1518bd129a0fbba1151d",
+      "Quillen/KTheory/README.md": "0d3c987b4fccd398a76af537df801a0a7a40bd1a905601ca004a69f12c946d5e",
+      "Quillen/Localization/Serre/README.md": "e76e2c6de15d7480ff0e558bc25ff40c7e1201044d7e6f4009b8b39f1776291f",
+      "Quillen/README.md": "1b6eb6a9e37a8dd001c780a0b5c3491467ef01e565c14f36638cab7e0e648b5b",
+      "Quillen/Resolution/README.md": "5cc920fa8b07297eacf00ed5e83b40bca98d2f0ad1c872bff0d016a5fc7ebf1a",
+      "Quillen/Topology/CWComplex/README.md": "fc06b19d6728c92d125bd4c94086723bea8f3162ff46214b181645e6e5bf11a2",
+      "Quillen/Topology/Covering/README.md": "345a14d701aebc3af315675cbf5bdf1da3330a565c6e551faa1f96cf63a504be",
+      "Quillen/Topology/HELP/README.md": "19f7bdc0c304876b764326cf5ed93aff2fc89c142a6cf02a96f028e15221fd29",
+      "Quillen/Topology/HomotopyCofiber/README.md": "782eaa9fc72943c215fec3f7755d9837b90db5f523ca2382e439ab30537dd31a",
+      "Quillen/Topology/HomotopyEquiv/README.md": "447f9b84bba28b6b26c1c0cc7941a75a00dafa358427c23b5d85218a52c0f73c",
+      "Quillen/Topology/HomotopyGroups/README.md": "1fd028c03fbfc727ca8d62a66b9a3e0eac43a9feaeb1f94cdf8df16dd69bc194",
+      "Quillen/Topology/LocalCoefficients/README.md": "e98ddc5261263765bfd7392050bc5299a711605f347ee53d31827a0ebf678f0e",
+      "Quillen/Topology/LocalEquiconnection/README.md": "43951c8c8cab92d85bd3f5f606f5ecb4a26726fa1a716b0ff664a87a07f20551",
+      "Quillen/Topology/MetricOrderComplex/README.md": "5542d1a390720409e9090adc3cce36ea5dc539454afd8831acceff5c91011c4e",
+      "Quillen/Topology/PathSpace/README.md": "1f52afbbf7b4339b381f7fc128a4d10d288901a775c3437de9d842136cf4be98",
+      "Quillen/Topology/PlusConstruction/ClassicalCW.md": "9ebf2d93c1f68e78b367744ee92ce9cc552fdba7d508e0d40230203d58f8a8ec",
+      "Quillen/Topology/Prespectrum/README.md": "deade789befbc48799173985f10bb9f300e2cbd0f9738f95b020b881d0b18213",
+      "Quillen/Topology/README.md": "8676c1bd0efad0f2ac08344ddc1fac9a466396b9bd14f093a1176e131dbd94ca",
+      "Quillen/Topology/Realization/README.md": "fd6e16b3d191352684d1c965c56f95108bb4ed75a3bc399fa85aa088d8ff77c0",
+      "Quillen/Waldhausen/Additivity/README.md": "7d7d877d2af48d2cd805077afeb72512c48127985d98897424626beb6eb29ea9",
+      "Quillen/Waldhausen/Approximation/README.md": "31c50abcc13ac6d256882a4c18638ee11f8d76a2d77d9ebe01d80c7f78d4a07b",
+      "Quillen/Waldhausen/Cofinality/README.md": "aac079b21243ea7c3f3714d5bc440c9cc15ef1ca9527d24f9c30bf5c0babbb2d",
+      "Quillen/Waldhausen/Fibration/README.md": "6eda8dca1a7f421a2aa76629051e68a8539cfab2a06a5b28667295c047e14691",
+      "Quillen/Waldhausen/GilletWaldhausen/README.md": "10addd4d94f23be830bb484fd092f93349b19cc4d91fadbd3b61216e183fe436",
+      "Quillen/Waldhausen/GrothendieckComparison/README.md": "1a975021a54473b106d1bb19edde7ece5021585855cac64b456b1f5993200d02",
+      "Quillen/Waldhausen/QuillenComparison/README.md": "07435bd51a17ae2ce45e8548247d12274e3e3edf3799a897026e3609cb95aced",
+      "Quillen/Waldhausen/README.md": "197360092a587e93bbc223352d1a5d0e9fc03dd5d6652e7112283e4d9149a8cc",
+      "Quillen/Waldhausen/SConstruction/Iterated/README.md": "9be54d50628a0d542bb027f957d13fa922bba3c9a88222d024082e8fa5869c40",
+      "QuillenTest/Algebra/Group/StableSteinberg/Matsumoto/README.md": "8aaa67828e29e11b61ad9878b5b6fe40a47027b408f27f42b4a24c9be83e97db",
+      "README.md": "873d1c7100521de2d6888d86182c7fc573e5566e1fb0b19c13b6572180754063",
+      "docs/ARCHITECTURE.md": "e06eefc62a64fb07d9ebb88a808fee30a9173d43a2e58e064281d9b1b4b04d89",
+      "docs/COMPATIBILITY.md": "50cbcd0034e72bde31d729fc5a4886762a985ffc2e6709bf90309a3009474d18",
+      "docs/DEVELOPMENT.md": "1079cc1037fcfd3b93da3dcfcaf184ae3feab7a1eea02f334c6594ce160b1018",
+      "docs/PERFORMANCE.md": "48d209a6b9f353c09e3d4579d69154c1d5ab6db8e56065c852da38c517743de8",
+      "docs/README.md": "d20952c7d36c1b6cc58a2c52f8cd473ab57e05ad78841f07d28e1ffdff4093f2",
+      "docs/RESEARCH_ARCHIVE.md": "363150d6c10b7cfb9f847258531f82f0fefca71bcdef91eac27ba820c7b4bae8",
+      "docs/SCOPE.md": "c2e8c1da7a0301ac2f9983e73ff5761e8a5a491e941b82d1b16470f0f51881e2",
+      "docs/evidence/README.md": "6d4f88865ef145bdb196eea160a836dd9a80bd14a4bd2a662563628f11f0af98"
+    },
+    "local_link_targets": 1383,
+    "fragments_checked": 121,
+    "confirmed_local_failures": 0,
+    "contextual_inline_locator_candidates": 44,
+    "frozen_markdown_metadata_matches": 10,
+    "external_url_entries": 61,
+    "external_network_targets": 60,
+    "reachable_url_entries": 60,
+    "uncertain_external_url": {
+      "url": "https://doi.org/10.1007/978-0-8176-4576-2_10",
+      "reason": "Springer cookie/redirect loop; not a dead-link finding. The linked original PDF is reachable."
+    },
+    "remaining_dead_link_candidates": 0,
+    "repairs": [
+      "Reconcile original TT7.4 completion and separate raw implementation targets",
+      "Correct migrated namespaces, module owners and stale native API frontiers",
+      "Correct CI command selection and documentation-only check scope",
+      "Repair semantic navigation and broken external candidate-policy URL",
+      "Remove unlocated external research proposal status from library API guides",
+      "Preserve exact hypotheses, signs, class maps, historical records and frozen archive bytes"
+    ],
+    "scope_limit": "Full Markdown reading and documentation/source correspondence, with bounded current API/command checks and mechanical links. This is not an independent reproof of all library mathematics or fresh acceptance of every historical external source."
+  }
+}

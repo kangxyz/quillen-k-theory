@@ -1,0 +1,250 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionJ1Seams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedPositiveSeam
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedSurfaceTransport
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPolynomialCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullPasting
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedNull
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0TopRows
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCompactPrecompAttachment
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenMap
+
+/-! The exact scalar composite comparison with its original terminal inverse associator. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor AlgebraicGeometry
+open Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionCompositeCarrier
+open CommonReferenceNerve InputIdentitySeedCarrier
+open Quillen.NativePathCells Quillen.ScalarRectangle
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Both entire middle null words coincide with all their original half heights. -/
+theorem middle_word (s : I) : SeedSurfaceTransport.newNull f g s =
+    InputNullCompositionPrecomp.oldNull f g s := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower, path_lower]
+    exact SeedPositiveSeam.newPositive_oldPositive f g t
+  · rw [path_upper, path_upper]
+    exact InputNullCompositionJ1Seams.cone_middle f g t
+
+/-- The exact Laurent endpoints follow from the complete positive-path seam. -/
+theorem middle_start : SeedSurfaceTransport.laurentMovement f g 1 =
+    InputNullCompositionPrecomp.laurentMovement f g 0 := by
+  calc
+    _ = SeedSurfaceTransport.newPositive f g 0 :=
+      (SeedSurfaceTransport.laurentMovement f g).target.trans
+        (SeedSurfaceTransport.newPositive f g).source.symm
+    _ = InputNullCompositionPrecomp.oldPositive f g 0 :=
+      SeedPositiveSeam.newPositive_oldPositive f g 0
+    _ = _ := (InputNullCompositionPrecomp.oldPositive f g).source.trans
+      (InputNullCompositionPrecomp.laurentMovement f g).source.symm
+
+/-- The first Laurent word is held fixed during the second comparison. -/
+def firstLaurent : C(I × I, Carrier (f ≫ g)) :=
+  ⟨fun z ↦ SeedSurfaceTransport.laurentMovement f g z.2, by fun_prop⟩
+
+/-- The fixed Laurent end attaches to the whole second comparison at its original source. -/
+theorem second_seam (r : I) : firstLaurent f g (r, 1) =
+    InputNullCompositionPrecomp.surface f g (r, 0) := by
+  exact (middle_start f g).trans
+    ((InputNullCompositionPrecomp.laurentMovement f g).source.trans
+      ((InputNullCompositionPrecomp.comparison f g).source r).symm)
+
+/-- The second comparison keeps the first Laurent half and the original second half. -/
+def secondWhiskered : C(I × I, Carrier (f ≫ g)) :=
+  concatSecond (firstLaurent f g) (InputNullCompositionPrecomp.surface f g) (second_seam f g)
+
+/-- The actual target of the first surface is the entire source of the whiskered second one. -/
+theorem first_seam (s : I) : SeedSurfaceTransport.surface f g (1, s) =
+    secondWhiskered f g (0, s) := by
+  rw [SeedSurfaceTransport.comparison_target]
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower, secondWhiskered, concatSecond_lower]
+    rfl
+  · rw [path_upper, secondWhiskered, concatSecond_upper,
+      InputNullCompositionPrecomp.comparison_source]
+    exact middle_word f g t
+
+/-- Only endpoints are cast; every value and original clock of the first Laurent word is kept. -/
+def firstPath := (SeedSurfaceTransport.laurentMovement f g).cast
+  (SeedSurfaceTransport.laurentMovement f g).source
+  (SeedSurfaceTransport.laurentMovement f g).target
+
+/-- The second Laurent path uses the proved scalar middle endpoint, not native injectivity. -/
+def secondPath := (InputNullCompositionPrecomp.laurentMovement f g).cast
+  ((middle_start f g).trans (InputNullCompositionPrecomp.laurentMovement f g).source)
+  (InputNullCompositionPrecomp.laurentMovement f g).target
+
+/-- The final null word keeps its complete original two-piece parameter. -/
+def finalPath := (InputNullCompositionPrecomp.newNull f g).cast
+  (InputNullCompositionPrecomp.laurentMovement f g).target
+  (InputNullCompositionPrecomp.newNull f g).target
+
+/-- The final correction is literally the prescribed inverse path associator. -/
+def reassociation : C(I × I, Carrier (f ≫ g)) :=
+  (Path.Homotopy.transAssoc (firstPath f g) (secondPath f g) (finalPath f g)).symm.toContinuousMap
+
+/-- The original right-associated target is exactly the source of the inverse associator. -/
+theorem reassociation_seam (s : I) : secondWhiskered f g (1, s) =
+    reassociation f g (0, s) := by
+  have hr : reassociation f g (0, s) =
+      ((firstPath f g).trans ((secondPath f g).trans (finalPath f g))) s :=
+    (Path.Homotopy.transAssoc (firstPath f g) (secondPath f g)
+      (finalPath f g)).symm.map_zero_left s
+  rw [hr]
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [secondWhiskered, concatSecond_lower, path_lower]
+    rfl
+  · rw [secondWhiskered, concatSecond_upper, path_upper,
+      InputNullCompositionPrecomp.comparison_target]
+    rfl
+
+/-- The second comparison and inverse associator retain their selected time association. -/
+def tail : C(I × I, Carrier (f ≫ g)) :=
+  concatFirst (secondWhiskered f g) (reassociation f g) (reassociation_seam f g)
+
+/-- The first comparison meets the whole prescribed two-piece tail. -/
+theorem tail_seam (s : I) : SeedSurfaceTransport.surface f g (1, s) = tail f g (0, s) := by
+  rw [tail, concatFirst_zero]
+  exact first_seam f g s
+
+/-- The actual scalar J1, retaining firstComparison → (whiskered second → inverse associator). -/
+def surface : C(I × I, Carrier (f ≫ g)) :=
+  concatFirst (SeedSurfaceTransport.surface f g) (tail f g) (tail_seam f g)
+
+/-- First comparison keeps precisely the original lower half. -/
+theorem surface_lower (r s : I) : surface f g (lower r, s) =
+    SeedSurfaceTransport.surface f g (r, s) :=
+  concatFirst_lower _ _ _ r s
+
+/-- Second comparison keeps precisely the first quarter of the original upper half. -/
+theorem surface_upper_lower (r s : I) : surface f g (upper (lower r), s) =
+    secondWhiskered f g (r, s) := by
+  rw [surface, concatFirst_upper, tail, concatFirst_lower]
+
+/-- The final inverse associator keeps precisely the last quarter. -/
+theorem surface_upper_upper (r s : I) : surface f g (upper (upper r), s) =
+    reassociation f g (r, s) := by
+  rw [surface, concatFirst_upper, tail, concatFirst_upper]
+
+/-- Evaluate the fixed scalar carrier in the original global target. -/
+def evaluate (n : ℕ)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n)
+    (z : Carrier (f ≫ g)) :=
+  (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval (polyRef (f ≫ g)) (chart (X := X)) (laurentRef (f ≫ g))
+      (ordinary (f ≫ g)) (shifted (f ≫ g)) n z x)
+
+/-- The complete first Laurent word is recovered from the original first comparison target. -/
+theorem firstLaurent_native (n : ℕ) (s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (SeedSurfaceTransport.laurentMovement f g s) =
+      (InputCompositionNull.firstLaurent f g).level n (s, x) := by
+  have h := SeedSurfaceTransport.surface_native f g n 1 (lower s) x
+  rw [SeedSurfaceTransport.comparison_target, path_lower] at h
+  exact h.trans
+    ((((InputCompositionNull.firstComparison f g).level n).map_one_left (lower s, x)).trans
+      (Homotopy.trans_lower_cell _ _ n s x))
+
+/-- The second Laurent word is recovered with its original precomposed input. -/
+theorem secondLaurent_native (n : ℕ) (s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (InputNullCompositionPrecomp.laurentMovement f g s) =
+      (InputCompositionNull.secondLaurent f g).level n (s, x) := by
+  have h := InputNullCompositionPrecomp.surface_native f g n 1 (lower s) x
+  rw [InputNullCompositionPrecomp.comparison_target, path_lower] at h
+  exact h.trans
+    ((((InputCompositionNull.secondComparison f g).level n).map_one_left (lower s, x)).trans
+      (Homotopy.trans_lower_cell _ _ n s x))
+
+/-- The whole final null path is recovered at its unchanged target half. -/
+theorem finalPath_native (n : ℕ) (s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (finalPath f g s) =
+      (InputCompositionNull.newComposite f g).level n (s, x) := by
+  have h := InputNullCompositionPrecomp.surface_native f g n 1 (upper s) x
+  rw [InputNullCompositionPrecomp.comparison_target, path_upper] at h
+  exact h.trans
+    ((((InputCompositionNull.secondComparison f g).level n).map_one_left (upper s, x)).trans
+      (Homotopy.trans_upper_cell _ _ n s x))
+
+/-- The inverse associator is recovered at the literal reversed original comparison clock. -/
+theorem reassociation_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (reassociation f g (r, s)) =
+      (Homotopy.RelHomotopy.transAssoc (InputCompositionNull.firstLaurent f g)
+        (InputCompositionNull.secondLaurent f g) (InputCompositionNull.newComposite f g)).symm.level
+        n
+        (r, (s, x)) := by
+  change evaluate f g n x
+    (Path.Homotopy.transAssoc (firstPath f g) (secondPath f g) (finalPath f g)
+      (unitInterval.symm r, s)) =
+    (Homotopy.RelHomotopy.transAssoc (InputCompositionNull.firstLaurent f g)
+      (InputCompositionNull.secondLaurent f g) (InputCompositionNull.newComposite f g)).level n
+      (unitInterval.symm r, (s, x))
+  rw [Homotopy.RelHomotopy.transAssoc_apply_path]
+  exact Path.Evaluation.transAssoc (evaluate f g n x) _ _ _ _ _ _
+    (fun t ↦ firstLaurent_native f g n t x)
+    (fun t ↦ secondLaurent_native f g n t x)
+    (fun t ↦ finalPath_native f g n t x) (unitInterval.symm r) s
+
+/-- The entire whiskered second surface recovers the prescribed original horizontal composite. -/
+theorem secondWhiskered_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (secondWhiskered f g (r, s)) =
+      ((Homotopy.RelHomotopy.refl (InputCompositionNull.firstLaurent f g)).hcomp
+        (InputCompositionNull.secondComparison f g)).level n (r, (s, x)) := by
+  unfold Homotopy.RelHomotopy.hcomp
+  dsimp only
+  change _ = ContinuousMap.Homotopy.trans _ _ (s, (r, x))
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [secondWhiskered, concatSecond_lower, homotopy_lower]
+    exact firstLaurent_native f g n t x
+  · rw [secondWhiskered, concatSecond_upper, homotopy_upper]
+    exact InputNullCompositionPrecomp.surface_native f g n r t x
+
+/-- Evaluation of a relative concatenation retains its literal lower comparison half. -/
+private theorem relative_lower {E T : LoopPrespectrum.{u}} {a b : E ⟶ T}
+    {H K L : Homotopy a b} (P : H.RelHomotopy K) (Q : K.RelHomotopy L)
+    (n : ℕ) (r s : I) (x : E.space n) :
+    (P.trans Q).level n (lower r, (s, x)) = P.level n (r, (s, x)) :=
+  homotopy_lower (P.level n).toHomotopy (Q.level n).toHomotopy r (s, x)
+
+/-- Evaluation of a relative concatenation retains its literal upper comparison half. -/
+private theorem relative_upper {E T : LoopPrespectrum.{u}} {a b : E ⟶ T}
+    {H K L : Homotopy a b} (P : H.RelHomotopy K) (Q : K.RelHomotopy L)
+    (n : ℕ) (r s : I) (x : E.space n) :
+    (P.trans Q).level n (upper r, (s, x)) = Q.level n (r, (s, x)) :=
+  homotopy_upper (P.level n).toHomotopy (Q.level n).toHomotopy r (s, x)
+
+/-- Every scalar J1 value is the whole original composite comparison, including its associator. -/
+theorem surface_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (surface f g (r, s)) =
+      (InputCompositionNull.compositeComparison f g).level n (r, (s, x)) := by
+  unfold InputCompositionNull.compositeComparison
+  rcases cover r with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [surface_lower, relative_lower]
+    exact SeedSurfaceTransport.surface_native f g n t s x
+  · rcases cover t with ⟨v, rfl⟩ | ⟨v, rfl⟩
+    · rw [surface_upper_lower, relative_upper, relative_lower]
+      exact secondWhiskered_native f g n v s x
+    · rw [surface_upper_upper, relative_upper, relative_upper]
+      exact reassociation_native f g n v s x
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionCompositeCarrier

@@ -1,0 +1,31 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionChosenCube
+
+/-! Independent consumer of whole seed composition with four separate coordinates. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalRawBassInputSeedComposition
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputSeedCompositionChosenCube
+
+/-- Composition, seed-comparison, output-loop and structure time all remain independent. -/
+theorem independent_loop_structure (n : ℕ) (q r s t : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((seedSquare f g).level (n+1)
+      (q,(r,(originalPrespectrum (boundedFlatPerfectWaldhausen Z)).structureMap n x t))) s =
+      (mappingCone (GlobalRawBass.comparison X)).structureMap n
+        (Path.toContinuousMap ((seedSquare f g).level n (q,(r,x))) s) t :=
+  congrArg (fun p ↦ Path.toContinuousMap p s) ((seedSquare f g).comm n q r x t)
+
+end Consumer.GlobalRawBassInputSeedComposition

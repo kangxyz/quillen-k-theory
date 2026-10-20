@@ -1,0 +1,94 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportReference
+/-! Actual chart-relative transport references for unrestricted polynomial source models. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport
+open CommonReferenceNerve BassH1Join
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y : Scheme.{u}} (a : X ⟶ Y) (k : laurent ⟶ polynomial)
+  {V : Model.{u + 1}} (P : V ⟶ modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Y)))
+  (G : V ⟶ modelOf (boundedFlatPerfectWaldhausen (laurent.obj Y)))
+local notation "JY" => InputCompositionTerminalAttach.arrow (k.app Y)
+local notation "JX" => InputCompositionTerminalAttach.arrow (k.app X)
+local notation "A" => InputCompositionTerminalAttach.arrow (polynomial.map a)
+local notation "L" => InputCompositionTerminalAttach.arrow (laurent.map a)
+variable (eps : G.functor ≅
+  (P ≫ InputCompositionTerminalAttach.arrow (k.app Y)).functor)
+
+theorem chartNode_column (N : Node P) (i : Fin 5) : chartNode a k P N i =
+    postReferenceNode (targetLaurent a k P)
+      (InputCompositionTerminalProducts.chartNodes a k i).1
+      (isoWhiskerLeft P.functor (InputCompositionTerminalProducts.chartNodes a k i).2) N := by
+  apply congrArg (fun e ↦ (⟨N.1 ≫ (InputCompositionTerminalProducts.chartNodes a k i).1, e⟩ :
+    Node (targetLaurent a k P)))
+  simpa only [Iso.refl_trans] using product_column_reference_iso N.2
+    (InputCompositionTerminalProducts.chartNodes a k i).2 (Iso.refl _)
+
+theorem chartNode_zero (N : Node P) : chartNode a k P N 2 =
+    laurentNode a k P G eps (attachPostcompNode P JY G eps N) := by
+  rw [chartNode_column]
+  change _ = postReferenceNode _ L (sourceAnchor a k P G eps)
+    (postReferenceNode G JY eps N)
+  rw [post_post_node]
+  apply congrArg (fun e ↦ postReferenceNode (targetLaurent a k P) (JY ≫ L) e N)
+  simp only [sourceAnchor, ← isoWhiskerRight_symm, Iso.trans_assoc, Iso.symm_self_id,
+    Iso.trans_refl]
+
+theorem chartNode_one (N : Node P) : chartNode a k P N 4 =
+    attachPostcompNode (targetPolynomial a P) JX (targetLaurent a k P)
+      (targetAnchor a k P) (polynomialNode a P N) := by
+  rw [chartNode_column]
+  change _ = postReferenceNode _ JX (targetAnchor a k P)
+    (postReferenceNode (targetPolynomial a P) A (Iso.refl _) N)
+  rw [post_post_node]
+  rw [isoWhiskerRight_refl]
+  exact congrArg (fun e ↦ postReferenceNode (targetLaurent a k P) (A ≫ JX) e N)
+    (Iso.trans_refl (targetAnchor a k P)).symm
+
+
+/-- The comparison clock is the original five-node path, with no flattening. -/
+def chartParameter : C(I × |CutOpenCarrier.parameterSSet P|,
+    |CutOpenCarrier.parameterSSet (targetLaurent a k P)|) :=
+  (FiniteParameter.parameter P (targetLaurent a k P) (chartNode a k P)).comp
+    ⟨fun z ↦ (z.2, NativeSquareFiveSimplex.parameter z.1), by fun_prop⟩
+
+/-- Map the whole polynomial reference nerve by the actual polynomial postcomposition. -/
+def polynomialParameter := mapParameter (polynomialNode a P)
+/-- Map the whole Laurent reference nerve using its full transported attachment isomorphism. -/
+def laurentParameter := mapParameter (laurentNode a k P G eps)
+
+theorem chartParameter_zero (y : |CutOpenCarrier.parameterSSet P|) :
+    chartParameter a k P (0, y) = laurentParameter a k P G eps
+      (mapParameter (attachPostcompNode P JY G eps) y) := by
+  change FiniteParameter.parameter P _ _ (y, NativeSquareFiveSimplex.parameter 0) = _
+  rw [Path.source, FiniteParameter.parameter_vertex]
+  obtain ⟨m, N, z, rfl⟩ := exists_parameter P y
+  rw [mapParameter_parameter, laurentParameter, mapParameter_parameter, mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter (targetLaurent a k P) ns z)
+    (funext fun i ↦ chartNode_zero a k P G eps (N i))
+
+theorem chartParameter_one (y : |CutOpenCarrier.parameterSSet P|) :
+    chartParameter a k P (1, y) =
+      mapParameter (attachPostcompNode (targetPolynomial a P) JX (targetLaurent a k P)
+        (targetAnchor a k P)) (polynomialParameter a P y) := by
+  change FiniteParameter.parameter P _ _ (y, NativeSquareFiveSimplex.parameter 1) = _
+  rw [Path.target, FiniteParameter.parameter_vertex]
+  obtain ⟨m, N, z, rfl⟩ := exists_parameter P y
+  rw [mapParameter_parameter, polynomialParameter, mapParameter_parameter, mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter (targetLaurent a k P) ns z)
+    (funext fun i ↦ chartNode_one a k P (N i))
+end Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport

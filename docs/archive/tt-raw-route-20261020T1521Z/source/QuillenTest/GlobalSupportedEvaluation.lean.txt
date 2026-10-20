@@ -1,0 +1,96 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedEvaluationSeed
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawRows
+
+/-! Regression clients for original supported parameter-stage evaluation and specified seeds. -/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes.GlobalSupportedEvaluation
+open Quillen.PerfectComplexes.GlobalSupportedRawBass
+universe u
+namespace QuillenTest.GlobalSupportedEvaluation
+
+/-- The actual old supported parameter R1 is the source, with no substituted strict diagram. -/
+def originalParameterEvaluation (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    ((Quillen.KTheory.Bass.strictDiagramFunctor
+      AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex.squareFunctor).obj
+      (Quillen.PerfectComplexes.GlobalSectionChangeIndex.ParameterModels.supported A.obj.obj.hom ⋙
+        Quillen.Waldhausen.IteratedS.prespectrumFunctor)).obj
+      (op AlgebraicGeometry.Scheme.Products.integerBase) ⟶ step A :=
+  stepEvaluation A
+
+/-- The actual source recovery keeps every original strict cone time unchanged. -/
+theorem original_null_clock (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (s : unitInterval) (x : (Source.parameterSquare A).left.left.space n) :
+    (Source.sourceConeIso A).hom.map n
+        ((StrictSquare.sourceNullHomotopy (Source.parameterSquare A)).level n (s, x)) =
+      (StrictSquare.sourceNullHomotopy (Source.sectionSquare A)).level n
+        (s, (Quillen.Waldhausen.IteratedS.prespectrumMap
+          (Quillen.PerfectComplexes.GlobalSectionChangeIndex.ParameterIdentity.supportedIso
+            A.obj.obj.hom).inv).map n x) :=
+  Source.sourceNull_recovery A n s x
+
+/-- The two independent moving overlap coordinates remain present on actual evaluation. -/
+theorem comparison_cylinder (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (r s : unitInterval) (x : (Source.sectionSquare A).left.left.space n) :
+    (comparisonHomotopy A).level n
+      (r, HomotopyPushout.cylinder (Source.sectionSquare A).left.hom
+        (Source.sectionSquare A).hom.left n (s, x)) =
+      (splitEvaluation A).descPasting.toSquare.level n (r, (s, x)) :=
+  comparisonHomotopy_cylinder A n r s x
+
+/-- Whole source-null evaluation preserves its independent structure coordinate. -/
+theorem source_null_structure (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (r s t : unitInterval) (x : (Source.sectionSquare A).left.left.space n) :
+    (sourceNullComparison A).level (n + 1)
+        (r, (s, (Source.sectionSquare A).left.left.structureMap n x t)) =
+      (mappingCone (comparison A)).structureMap n
+        ((sourceNullComparison A).level n (r, (s, x))) t :=
+  (sourceNullComparison A).comm n r s x t
+
+/-- The original scheme seed is the full source of the actual raw evaluation homotopy. -/
+def originalSchemeSeed (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Homotopy
+      ((Quillen.KTheory.Bass.SchemeNaturalSeed.seed
+        (Quillen.PerfectComplexes.ParameterLaurentTrack.supportedTrack A.obj.obj.hom)).app
+          (op AlgebraicGeometry.Scheme.Products.integerBase) ≫ stepEvaluation A)
+      (baseEvaluation A ≫ transition A) :=
+  seedHomotopy A
+
+/-- Comparison, output-loop and structure times remain independent on the original source. -/
+theorem seed_structure (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (r s t : unitInterval) (x : (Source.parameterSquare A).left.left.space n) :
+    Path.toContinuousMap ((seedHomotopy A).level (n + 1)
+        (r, (Source.parameterSquare A).left.left.structureMap n x t)) s =
+      Path.toContinuousMap ((step A).structureMap n
+        ((seedHomotopy A).level n (r, x)) t) s :=
+  congrArg (fun p ↦ Path.toContinuousMap p s) ((seedHomotopy A).comm n r x t)
+
+/-- The actual union-support row has its original scheme-parameter seed comparison. -/
+def sourceRowSeed {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+    [CompactSpace X] (T : X.Opens) :
+    Homotopy (parameterSeed (Rows.source j T) ≫ stepEvaluation (Rows.source j T))
+      (baseEvaluation (Rows.source j T) ≫ transition (Rows.source j T)) :=
+  seedHomotopy _
+
+/-- The actual restricted row uses its own unchanged support pair and parameter source. -/
+def targetRowSeed {U X : Scheme.{u}} (j : U ⟶ X) [CompactSpace U] (T : X.Opens) :
+    Homotopy (parameterSeed (Rows.target j T) ≫ stepEvaluation (Rows.target j T))
+      (baseEvaluation (Rows.target j T) ≫ transition (Rows.target j T)) :=
+  seedHomotopy _
+
+/-- Nested actual polynomial/Laurent products retain the original parameter-source evaluation. -/
+def nestedEvaluation (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    let B := AlgebraicGeometry.Scheme.Bass.pairLaurentFunctor.obj
+      (AlgebraicGeometry.Scheme.Bass.pairPolynomialFunctor.obj A)
+    strictSquareLoopedConeFunctor.obj (Source.parameterSquare B) ⟶ step B :=
+  stepEvaluation _
+
+end QuillenTest.GlobalSupportedEvaluation

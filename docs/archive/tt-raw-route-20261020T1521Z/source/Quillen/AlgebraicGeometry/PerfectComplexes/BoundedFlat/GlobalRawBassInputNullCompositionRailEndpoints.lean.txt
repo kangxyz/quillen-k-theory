@@ -1,0 +1,306 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionJ1Seams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCorrectedCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0BottomSeam
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1BottomSeam
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0TopMiddleRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopMiddleRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0ChartSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1ChartSeams
+/-! Whole endpoint and tip identities for the scalar null-comparison rails,
+with the original binary path clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+attribute [local irreducible] Quillen.PerfectComplexes.boundedFlatNormalizedPullback
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionRailEndpoints
+open CommonReferenceNerve InputIdentitySeedCarrier InputNullCompositionPolynomialCarrier
+open Quillen.NativePathCells
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+theorem sourceFirst_zero (s : I) : sourceFirst f g (0,s) =
+    InputIdentitySeedRectangle.oldPositive (f ≫ g) false s := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G (InputCompositionCarrierBottom.nodes f g)
+      (Quillen.SimplexGrid.parameter 4 2
+        (binaryPath (k:=4) 0 1 2 s, binaryPath (k:=2) 0 1 2 0))) = _
+  rw [Path.source, Quillen.SimplexGrid.parameter_column]
+  have h := parameter_eq_of_face_nodes G (InputDescSimplex.nodes (f ≫ g))
+    (InputCompositionCarrierBottom.nodes f g) BassH1Join.middleSourceFace
+    (Quillen.SimplexGrid.columnFace 4 2 0)
+    (fun i ↦ (InputCompositionH0BottomSeam.whole_nodes f g i).symm)
+    (binaryPath (k:=4) 0 1 2 s)
+  refine (congrArg (CutOpenCarrier.laurentInclusion F J G ε ε') h).trans ?_
+  exact congrArg (fun z ↦ CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G (InputDescSimplex.nodes (f ≫ g)) z))
+    (map_binaryPath BassH1Join.middleSourceFace 0 1 2 s)
+
+theorem sourceFirst_one (s : I) : sourceFirst f g (1,s) =
+    SeedSurfaceTransport.oldPositive f g s := by
+  change _ = SeedSurfaceTransport.transport f g
+    (SeedOrdinarySheet.laurent g (parameter (laurentRef g) (InputDescSimplex.nodes g)
+      (ProjectionRectangleParameters.D BassH0Diagram.plusFace s)))
+  rw [SeedSurfaceTransport.transport_laurent]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G (InputCompositionCarrierBottom.nodes f g)
+      (Quillen.SimplexGrid.parameter 4 2 (binaryPath (k:=4) 0 1 2 s, binaryPath (k:=2) 0 1 2 1))) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (InputCompositionTerminalAttach.postNode f g) _)
+  rw [Path.target, Quillen.SimplexGrid.parameter_column, mapParameter_parameter]
+  have h := parameter_eq_of_face_nodes G
+    (fun i ↦ InputCompositionTerminalAttach.postNode f g (InputDescSimplex.nodes g i))
+    (InputCompositionCarrierBottom.nodes f g) BassH1Join.middleSourceFace
+    (Quillen.SimplexGrid.columnFace 4 2 2)
+    (fun i ↦ (InputCompositionH1BottomSeam.whole_nodes f g i).symm)
+    (binaryPath (k:=4) 0 1 2 s)
+  refine (congrArg (CutOpenCarrier.laurentInclusion F J G ε ε') h).trans ?_
+  exact congrArg (fun z ↦ CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G
+      ((fun i ↦ InputCompositionTerminalAttach.postNode f g (InputDescSimplex.nodes g i))) z))
+    (map_binaryPath BassH1Join.middleSourceFace 0 1 2 s)
+
+theorem targetFirst_zero (s : I) : targetFirst f g (0,s) =
+    InputIdentitySeedRectangle.newPositive (f ≫ g) false s := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G (InputCompositionTopPieces.middleNodes f g)
+      (Quillen.SimplexGrid.parameter 2 4
+        (binaryPath (k:=2) 0 1 2 0, binaryPath (k:=4) 0 1 2 s))) = _
+  rw [Path.source, Quillen.SimplexGrid.parameter_row]
+  have h := parameter_eq_of_face_nodes G (InputDescSimplex.nodes (f ≫ g))
+    (InputCompositionTopPieces.middleNodes f g) BassH1Join.firstMiddleFace
+    (Quillen.SimplexGrid.rowFace 2 4 0)
+    (fun i ↦ (InputCompositionH0TopMiddleRows.whole_nodes f g i).symm)
+    (binaryPath (k:=4) 0 1 2 s)
+  refine (congrArg (CutOpenCarrier.laurentInclusion F J G ε ε') h).trans ?_
+  exact congrArg (fun z ↦ CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G (InputDescSimplex.nodes (f ≫ g)) z))
+    (map_binaryPath BassH1Join.firstMiddleFace 0 1 2 s)
+
+theorem targetFirst_one (s : I) : targetFirst f g (1,s) =
+    InputNullCompositionPrecomp.newPositive f g s := by
+  change _ = InputNullCompositionPrecomp.transport f g
+    (SeedOrdinarySheet.laurent f (parameter (laurentRef f) (InputDescSimplex.nodes f)
+      (ProjectionRectangleParameters.K BassH0Diagram.plusFace s)))
+  rw [InputNullCompositionPrecomp.transport_laurent]
+  have hn : InputNullCompositionPrecomp.laurentNode f g =
+      InputCompositionTerminalAttach.preNode f g :=
+    funext (InputNullCompositionPrecomp.laurent_node f g)
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G (InputCompositionTopPieces.middleNodes f g)
+      (Quillen.SimplexGrid.parameter 2 4 (binaryPath (k:=2) 0 1 2 1, binaryPath (k:=4) 0 1 2 s))) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (InputNullCompositionPrecomp.laurentNode f g) _)
+  rw [hn, Path.target, Quillen.SimplexGrid.parameter_row, mapParameter_parameter]
+  have h := parameter_eq_of_face_nodes G
+    (fun i ↦ InputCompositionTerminalAttach.preNode f g (InputDescSimplex.nodes f i))
+    (InputCompositionTopPieces.middleNodes f g) BassH1Join.firstMiddleFace
+    (Quillen.SimplexGrid.rowFace 2 4 2)
+    (fun i ↦ (InputCompositionH1TopMiddleRows.whole_nodes f g i).symm)
+    (binaryPath (k:=4) 0 1 2 s)
+  refine (congrArg (CutOpenCarrier.laurentInclusion F J G ε ε') h).trans ?_
+  exact congrArg (fun z ↦ CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G
+      ((fun i ↦ InputCompositionTerminalAttach.preNode f g (InputDescSimplex.nodes f i))) z))
+    (map_binaryPath BassH1Join.firstMiddleFace 0 1 2 s)
+
+private theorem reanchor_symm_anchor {V W : Model.{u}} {A B : V ⟶ W}
+    (e : A.functor ≅ B.functor) (N : Node B) :
+    CommonReferenceProduct.reanchor e.symm (BassH0Merge.anchorNode e N) = N := by
+  rcases N with ⟨H,a⟩
+  change (⟨H,e.symm ≪≫ (e ≪≫ a)⟩ : Node B) = ⟨H,a⟩
+  rw [← Iso.trans_assoc, Iso.symm_self_id, Iso.refl_trans]
+
+theorem polynomial_outer_nodes (i : Fin 5) :
+    InputNullCompositionPolynomialCarrier.polynomialNode f g
+      (InputCompositionTopPieces.polynomialNodes f g (CoefficientMovingSquareRows.outerRow i)) =
+      polynomialNodes (f ≫ g) i := by
+  have h := congrArg (CommonReferenceProduct.reanchor (InputCompositionH0TopRows.outerIso f g).symm)
+    (CoefficientMovingSquareRows.outer_row_nodes_cast
+      g f (polynomial.map g) (polynomial.map f)
+      (projection.app Z) (projection.app Y) (projection.app X)
+      (projection.naturality g).symm (projection.naturality f).symm
+      (f ≫ g) (polynomial.map (f ≫ g)) rfl (polynomial.map_comp f g)
+      (projection.naturality (f ≫ g)) i)
+  exact h.trans (reanchor_symm_anchor (InputCompositionH0TopRows.outerIso f g)
+    (polynomialNodes (f ≫ g) i))
+
+theorem polynomial_zero (s : I) : surface f g (0,s) = movement (f ≫ g) s := by
+  change parameter _ _ (DoubleSquareScalarPaths.coefficientMovingSquareParameter (0,s)) = _
+  rw [CoefficientMovingSquareRows.moving_zero_row]
+  obtain ⟨i,z,hz⟩ := BassH1Support.square_path_in s
+  change _ = parameter F (polynomialNodes (f ≫ g)) (NativeSquareFiveSimplex.parameter s)
+  rw [← hz]
+  exact (parameter_supported F (polynomialNodes (f ≫ g))
+    (fun i ↦ InputNullCompositionPolynomialCarrier.polynomialNode f g
+      (InputCompositionTopPieces.polynomialNodes f g i))
+    CoefficientMovingSquareRows.outerRow (polynomial_outer_nodes f g)
+    (BassH1Support.edgeFace i)
+    (CoefficientMovingSquareRows.primitive_rows_monotone 0 i) z)
+
+theorem polynomial_one_lower (s : I) : surface f g (1,lower s) =
+    SeedSurfaceTransport.polynomialParameter f g (movement g s) := by
+  change parameter _ _ (DoubleSquareScalarPaths.coefficientMovingSquareParameter (1,lower s)) =
+    mapParameter _ (parameter _ _ (NativeSquareFiveSimplex.parameter s))
+  rw [CoefficientMovingSquareRows.moving_one_lower_row, mapParameter_parameter]
+  obtain ⟨i,z,hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact (parameter_supported F
+    (fun i ↦ SeedSurfaceTransport.polynomialNode f g (polynomialNodes g i))
+    (fun i ↦ InputNullCompositionPolynomialCarrier.polynomialNode f g
+      (InputCompositionTopPieces.polynomialNodes f g i))
+    CoefficientMovingSquareRows.firstRow (InputNullCompositionJ1Seams.polynomial_first_nodes f g)
+    (BassH1Support.edgeFace i)
+    (CoefficientMovingSquareRows.primitive_rows_monotone 1 i) z)
+
+theorem polynomial_one_upper (s : I) : surface f g (1,upper s) =
+    InputNullCompositionPrecomp.polynomial f g (movement f s) := by
+  change parameter _ _ (DoubleSquareScalarPaths.coefficientMovingSquareParameter (1,upper s)) =
+    mapParameter _ (parameter _ _ (NativeSquareFiveSimplex.parameter s))
+  rw [CoefficientMovingSquareRows.moving_one_upper_row, mapParameter_parameter]
+  obtain ⟨i,z,hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact (parameter_supported F
+    (fun i ↦ InputNullCompositionPrecomp.polynomialNode f g (polynomialNodes f i))
+    (fun i ↦ InputNullCompositionPolynomialCarrier.polynomialNode f g
+      (InputCompositionTopPieces.polynomialNodes f g i))
+    CoefficientMovingSquareRows.secondRow (InputNullCompositionPrecomp.polynomial_second_nodes f g)
+    (BassH1Support.edgeFace i)
+    (CoefficientMovingSquareRows.primitive_rows_monotone 2 i) z)
+
+theorem targetSecond_zero (s : I) : targetSecond f g (0,s) =
+    InputIdentitySeedRectangle.newCone (f ≫ g) false s := by
+  change CutOpenCarrier.cylinderMinus F J G ε ε' (surface f g (0,1),s) = _
+  rw [polynomial_zero]
+  rfl
+
+theorem targetSecond_one (s : I) : targetSecond f g (1,s) =
+    InputNullCompositionPrecomp.newCone f g s := by
+  rw [InputNullCompositionPrecomp.newCone_apply]
+  change CutOpenCarrier.cylinderMinus F J G ε ε' (surface f g (1,1),s) = _
+  have hu : upper (1 : I) = 1 := Subtype.ext (by norm_num [upper])
+  exact congrArg (fun y ↦ CutOpenCarrier.cylinderMinus F J G ε ε' (y,s))
+    (by simpa only [hu] using polynomial_one_upper f g 1)
+
+theorem targetRail_zero (s : I) : targetRail f g (0,s) =
+    InputIdentitySeedNull.newNull (f ≫ g) false s := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [targetRail_lower, InputIdentitySeedNull.newNull, path_lower, targetFirst_zero]
+  · rw [targetRail_upper, InputIdentitySeedNull.newNull, path_upper, targetSecond_zero]
+
+theorem targetRail_one (s : I) : targetRail f g (1,s) =
+    InputNullCompositionPrecomp.newNull f g s := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [targetRail_lower, InputNullCompositionPrecomp.newNull, path_lower, targetFirst_one]
+  · rw [targetRail_upper, InputNullCompositionPrecomp.newNull, path_upper, targetSecond_one]
+
+theorem nullMovingFirst_zero (s : I) : nullMovingFirst f g (0,s) =
+    InputIdentitySeedRectangle.positiveMovement (f ≫ g) false s := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionCarrierCharts.chartFace f g plus plus_projection (0,s)) = _
+  rw [← InputCompositionH0ChartSeams.input_plus]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (parameter G (InputDescSimplex.nodes (f ≫ g)) (BassH0Diagram.parameter (s,0))) = _
+  rw [BassH0Diagram.parameter_left]
+  rfl
+
+theorem nullMovingSecond_zero (s : I) : nullMovingSecond f g (0,s) =
+    InputIdentitySeedRectangle.oldCone (f ≫ g) false s := by
+  change CutOpenCarrier.cylinderMinus F J G ε ε' (pausedPolynomial f g 0,s) = _
+  rw [Path.source]
+  rw [polynomial_zero]
+  rfl
+
+theorem sourceRail_zero (s : I) : sourceRail f g (0,s) =
+    InputIdentitySeedNull.oldNull (f ≫ g) false s := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [sourceRail_lower, InputIdentitySeedNull.oldNull, path_lower, sourceFirst_zero]
+  · rw [sourceRail_upper, (correctedSquare f g).at_zero,
+      InputIdentitySeedNull.oldNull, path_upper]
+    change nullMoving f g (0,t) = _
+    rcases cover t with ⟨t,rfl⟩ | ⟨t,rfl⟩
+    · rw [nullMoving_lower, path_lower, nullMovingFirst_zero]
+    · rw [nullMoving_upper, path_upper, nullMovingSecond_zero]
+theorem finalChartFirst_eq (s : I) : finalChartFirst f g s =
+    SeedSurfaceTransport.positiveMovement f g s := by
+  change _ = SeedSurfaceTransport.transport f g
+    (SeedOrdinarySheet.laurent g (parameter (laurentRef g) (InputDescSimplex.nodes g)
+      (ProjectionRectangleParameters.L BassH0Diagram.plusFace s)))
+  rw [SeedSurfaceTransport.transport_laurent]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionCarrierCharts.chartFace f g plus plus_projection (1,lower s)) = _
+  rw [← InputCompositionH1ChartSeams.first_plus]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (mapParameter _ (parameter _ _ (BassH0Diagram.parameter (s,0)))) = _
+  rw [BassH0Diagram.parameter_left]
+  rfl
+
+theorem finalChartSecond_eq (s : I) : finalChartSecond f g s =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (SeedSurfaceTransport.chartParameter f g (s,movement g 0)) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionCarrierCharts.chartFace f g plus plus_projection (1,upper s)) = _
+  rw [← InputCompositionH1ChartSeams.second_plus,
+    InputCompositionTerminalSecond.face, Quillen.ScalarRectangle.concatSecond_zero,
+    SeedSurfaceTransport.chartParameter_movement]
+
+theorem finalCylinder_eq (s : I) : finalCylinder f g s =
+    CutOpenCarrier.cylinderMinus F J G ε ε'
+      (SeedSurfaceTransport.polynomialParameter f g (movement g 0),s) := by
+  change CutOpenCarrier.cylinderMinus F J G ε ε' (pausedPolynomial f g 1,s) = _
+  rw [Path.target]
+  have hl : lower (0 : I) = 0 := Subtype.ext (by norm_num [lower])
+  exact congrArg (fun y ↦ CutOpenCarrier.cylinderMinus F J G ε ε' (y,s))
+    (by simpa only [hl] using polynomial_one_lower f g 0)
+
+theorem finalCone_eq (s : I) : ((finalChartSecond f g).trans (finalCylinder f g)) s =
+    SeedSurfaceTransport.oldCone f g s := by
+  rw [SeedSurfaceTransport.oldCone_apply]
+  change _ = ((SeedSurfaceTransport.chartHomotopy f g).trans
+    (SeedSurfaceTransport.cylinderHomotopy f g)) (s,movement g 0)
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [path_lower, Quillen.ScalarRectangle.homotopy_lower, finalChartSecond_eq]
+    rfl
+  · rw [path_upper, Quillen.ScalarRectangle.homotopy_upper, finalCylinder_eq]
+    rfl
+
+theorem sourceRail_one (s : I) : sourceRail f g (1,s) =
+    SeedSurfaceTransport.oldNull f g s := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [sourceRail_lower, SeedSurfaceTransport.oldNull, path_lower, sourceFirst_one]
+  · rw [sourceRail_upper, (correctedSquare f g).at_one,
+      SeedSurfaceTransport.oldNull, path_upper]
+    rcases cover t with ⟨t,rfl⟩ | ⟨t,rfl⟩
+    · rw [path_lower, path_lower, finalChartFirst_eq]
+    · rw [path_upper, path_upper, finalCone_eq]
+
+theorem sourceRail_tip (r : I) : sourceRail f g (r,1) =
+    InputIdentitySeedCone.tip (f ≫ g) false := by
+  have h : upper (1 : I) = 1 := Subtype.ext (by norm_num [upper])
+  have he := sourceRail_upper f g r 1
+  rw [h, (correctedSquare f g).right] at he
+  exact he
+
+theorem targetRail_tip (r : I) : targetRail f g (r,1) =
+    InputIdentitySeedCone.tip (f ≫ g) false := by
+  have h : upper (1 : I) = 1 := Subtype.ext (by norm_num [upper])
+  have he := targetRail_upper f g r 1
+  rw [h] at he
+  exact he.trans (CutOpenCarrier.cylinderMinus_one F J G ε ε' (surface f g (r,1)))
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionRailEndpoints

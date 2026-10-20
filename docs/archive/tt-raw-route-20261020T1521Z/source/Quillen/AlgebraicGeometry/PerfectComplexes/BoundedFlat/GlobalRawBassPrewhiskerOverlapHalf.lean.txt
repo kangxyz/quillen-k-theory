@@ -1,0 +1,85 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerMiddleHalf
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOuterHalfHeight
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerUpperSpan
+/-!
+The unchanged first half occupies the common Laurent sector.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "J" => ProjectionReference.projectionMap X
+local notation "L" => ProjectionReference.reference X (A ≫ E)
+local notation "β" => ProjectionReference.FourEdge.beta X (A ≫ E)
+local notation "Q" => ProjectionReference.FourEdge.scalarCone X (A ≫ E)
+
+/-- The unchanged first half occupies the common Laurent sector. -/
+def overlapLower : C((I × I) × I, Q) :=
+  (FourEdgeTree.laurentInclusion (A ≫ E) J L β).comp (anchoredLowerLaurent f g c)
+
+/-- Every original overlap coordinate has the same full scalar half-height value. -/
+theorem overlap_half_height (r t : I) :
+    overlapLower f g c ((r, 1), t) = upperSpan f g c ((r, 0), t) := by
+  rcases cover t with ⟨v, rfl⟩ | ⟨v, rfl⟩
+  · rw [upperSpan_lower]
+    exact outer_halfHeight_plus f g c r v
+  · rcases cover v with ⟨w, rfl⟩ | ⟨w, rfl⟩
+    · rw [upperSpan_middle]
+      exact middle_halfHeight f g c r w
+    · rw [upperSpan_upper]
+      exact outer_halfHeight_minus f g c r w
+
+/-- Fix only the cone height; composition and source-span time remain independent. -/
+def overlapHeightSlice (F : C((I × I) × I, Q)) (s : I) : C(I × I, Q) :=
+  ⟨fun z ↦ F ((z.1, s), z.2), by fun_prop⟩
+
+/-- The complete lower half ends at the proved actual upper boundary. -/
+def overlapLowerTrack : ContinuousMap.Homotopy
+    (overlapHeightSlice f g c (overlapLower f g c) 0)
+    (overlapHeightSlice f g c (upperSpan f g c) 0) where
+  toFun z := overlapLower f g c ((z.2.1, z.1), z.2.2)
+  continuous_toFun := by fun_prop
+  map_zero_left _ := rfl
+  map_one_left z := overlap_half_height f g c z.1 z.2
+
+/-- The complete original upper span retains its chosen correction interiors. -/
+def overlapUpperTrack : ContinuousMap.Homotopy
+    (overlapHeightSlice f g c (upperSpan f g c) 0)
+    (overlapHeightSlice f g c (upperSpan f g c) 1) where
+  toFun z := upperSpan f g c ((z.2.1, z.1), z.2.2)
+  continuous_toFun := by fun_prop
+  map_zero_left _ := rfl
+  map_one_left _ := rfl
+
+/-- The entire overlap-cylinder prewhiskering with both original half clocks. -/
+def overlapPrewhisker : C((I × I) × I, Q) :=
+  ⟨fun z ↦ ((overlapLowerTrack f g c).trans (overlapUpperTrack f g c))
+    (z.1.2, (z.1.1, z.2)), by fun_prop⟩
+
+/-- The first half retains the full original Laurent family. -/
+theorem overlapPrewhisker_lower (r s t : I) :
+    overlapPrewhisker f g c ((r, lower s), t) = overlapLower f g c ((r, s), t) :=
+  homotopy_lower (overlapLowerTrack f g c) (overlapUpperTrack f g c) s (r, t)
+
+/-- The second half retains the full original three-piece span word. -/
+theorem overlapPrewhisker_upper (r s t : I) :
+    overlapPrewhisker f g c ((r, upper s), t) = upperSpan f g c ((r, s), t) :=
+  homotopy_upper (overlapLowerTrack f g c) (overlapUpperTrack f g c) s (r, t)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

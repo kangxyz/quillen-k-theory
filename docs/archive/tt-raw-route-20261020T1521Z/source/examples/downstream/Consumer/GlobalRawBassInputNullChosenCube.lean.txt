@@ -1,0 +1,31 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionChosenCube
+
+/-! Independent consumer of the exact selected-null comparison and independent structure time. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalRawBassInputNullChosenCube
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputNullCompositionChosenCube
+
+/-- A downstream client varies structure time independently of all three comparison coordinates. -/
+theorem independent_structure (n : ℕ) (q r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) (t : unitInterval) :
+    chosenComparison f g (n+1)
+      (q,(r,(s,(originalPrespectrum (boundedFlatPerfectWaldhausen Z)).structureMap n x t))) =
+      (mappingCone (comparison X)).structureMap n
+        (chosenComparison f g n (q,(r,(s,x)))) t :=
+  chosenComparison_structure f g n q r s x t
+
+end Consumer.GlobalRawBassInputNullChosenCube

@@ -1,0 +1,69 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerZeroChart
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerZeroOverlap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerPolynomialHalf
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerOverlapHalf
+/-!
+The complete polynomial branch starts at the unchanged actual source comparison.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct CutOpenCarrier
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "J" => ProjectionReference.projectionMap X
+local notation "L" => ProjectionReference.reference X (A ≫ E)
+local notation "β" => ProjectionReference.FourEdge.beta X (A ≫ E)
+
+/-- The complete polynomial branch starts at the unchanged actual source comparison. -/
+theorem polynomialPrewhisker_zero (k : laurent ⟶ polynomial) (r : I) :
+    polynomialPrewhisker f g c k (r, 0) =
+      laurentInclusion
+        (MC ≫ InputCompositionPolynomialScalar.polynomialReference f g)
+        (InputCompositionPolynomialScalar.chart (X := X) k)
+        (MC ≫ InputCompositionPolynomialScalar.laurentReference f g k)
+        (CutOpenPrecomp.anchor MC _ _ _ (InputCompositionPolynomialScalar.anchor f g k))
+        (CutOpenPrecomp.anchor MC _ _ _ (InputCompositionPolynomialScalar.anchor f g k))
+        (mapParameter (reanchor (lowerChartAnchor f g c k))
+          (mapParameter (reanchor (zeroChartAnchor f g c k))
+            (mapParameter (precompNode (BassH0Merge.normalizedMap (k.app W)))
+              (zeroLaurent f g c r)))) := by
+  have hz := ((polynomialLowerTrack f g c k).trans
+    (polynomialUpperTrack f g c k)).map_zero_left r
+  change polynomialPrewhisker f g c k (r, 0) = polynomialLower f g c k (r, 0) at hz
+  rw [hz]
+  change laurentInclusion _ _ _ _ _
+    (mapParameter (reanchor (lowerChartAnchor f g c k)) (lowerChart f g c k (r, 0))) = _
+  rw [lowerChart_zero]
+
+/-- The complete overlap branch starts at the full original five-node source comparison path. -/
+theorem overlapPrewhisker_zero (r t : I) :
+    overlapPrewhisker f g c ((r, 0), t) =
+      FourEdgeTree.laurentInclusion (A ≫ E) J L β
+        (mapParameter (reanchor (lowerLaurentAnchor f g c))
+          (mapParameter (reanchor (zeroOverlapAnchor f g c))
+            (FinitePrecomp.parameter (InputIdentityProjection.source W)
+              (InputIdentityProjection.nodes W) (zeroLaurentReference f g c)
+              (zeroLaurent f g c r, InputIdentityProjection.parameter t)))) := by
+  have hz := ((overlapLowerTrack f g c).trans (overlapUpperTrack f g c)).map_zero_left (r, t)
+  change overlapPrewhisker f g c ((r, 0), t) = overlapLower f g c ((r, 0), t) at hz
+  rw [hz]
+  change FourEdgeTree.laurentInclusion (A ≫ E) J L β
+    (mapParameter (reanchor (lowerLaurentAnchor f g c)) (lowerLaurent f g c ((r, 0), t))) = _
+  rw [lowerLaurent_zero]
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

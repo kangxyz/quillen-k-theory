@@ -1,0 +1,151 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedOrdinarySheet
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveReanchorFamily
+/-! The explicit shifted inclusion of the ordinary sheet, with its original cylinder clock. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.SeedShiftedSheet
+open CommonReferenceNerve InputIdentitySeedCarrier
+variable {X Y : Scheme.{u}} (g : X ⟶ Y)
+local notation "F" => polyRef g
+local notation "J" => chart (X := X)
+local notation "G" => laurentRef g
+local notation "ε" => ordinary g
+local notation "ε'" => shifted g
+
+/-- Reanchor the Laurent parameter space by the original common unit. -/
+def laurentMap : C(|CutOpenCarrier.parameterSSet G|, Carrier g) :=
+  (CutOpenCarrier.laurentInclusion F J G ε ε').comp
+    (mapParameter (BassH0Merge.anchorNode (commonUnit g)))
+
+/-- Send the ordinary tip to the distinct positive tip of the full carrier. -/
+def tipMap : C(|CutOpenCarrier.tipSSet.{u + 1}|, Carrier g) :=
+  ContinuousMap.const _ (CutOpenCarrier.tipPlus F J G ε ε')
+
+/-- The positive cylinder joins the reanchored Laurent attachment to its chosen tip. -/
+def cylinderTrack : ((laurentMap g).comp
+    (SSet.toTop.map (CutOpenCarrier.attaching F J G ε)).hom).Homotopy
+    ((tipMap g).comp (SSet.toTop.map (CutOpenCarrier.erase F)).hom) where
+  toContinuousMap := ⟨fun z ↦ CutOpenCarrier.cylinderPlus F J G ε ε' (z.2, z.1),
+    by fun_prop⟩
+  map_zero_left y := by
+    change CutOpenCarrier.cylinderPlus F J G ε ε' (y, 0) =
+      CutOpenCarrier.laurentInclusion F J G ε ε'
+        (mapParameter (BassH0Merge.anchorNode (commonUnit g))
+          (mapParameter (attachPostcompNode F J G ε) y))
+    rw [CutOpenCarrier.cylinderPlus_zero]
+    exact congrArg (CutOpenCarrier.laurentInclusion F J G ε ε')
+      (reanchor_attach_parameter F J G (commonUnit g) ε y).symm
+  map_one_left y := CutOpenCarrier.cylinderPlus_one F J G ε ε' y
+
+/-- The shifted attachment map changes only the Laurent anchor and the chosen tip. -/
+def inclusion : C(SeedOrdinarySheet.Sheet g, Carrier g) :=
+  DoubleCylinder.homotopyDesc
+    (SSet.toTop.map (CutOpenCarrier.attaching F J G ε))
+    (SSet.toTop.map (CutOpenCarrier.erase F))
+    (CutOpenCarrier.first_isPushout F J G ε)
+    (laurentMap g) (tipMap g) (cylinderTrack g)
+
+theorem inclusion_cylinder (y : |CutOpenCarrier.parameterSSet F|) (s : I) :
+    inclusion g (SeedOrdinarySheet.cylinder g (y, s)) =
+      CutOpenCarrier.cylinderPlus F J G ε ε' (y, s) :=
+  DoubleCylinder.homotopyDesc_apply_cylinder _ _ _ _ _ _ s y
+
+theorem inclusion_laurent (y : |CutOpenCarrier.parameterSSet G|) :
+    inclusion g (SeedOrdinarySheet.laurent g y) = laurentMap g y := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.first_isPushout F J G ε).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack g))
+      (DoubleCylinder.homotopyEndMap (laurentMap g) (tipMap g))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack g))) (Sum.inl y)
+  exact (congrArg (inclusion g)
+    (FourEdgeTree.SetDescent.eval_realized_left _ _ y)).trans h
+
+theorem inclusion_tip : inclusion g (SeedOrdinarySheet.tip g) =
+    CutOpenCarrier.tipPlus F J G ε ε' := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.first_isPushout F J G ε).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack g))
+      (DoubleCylinder.homotopyEndMap (laurentMap g) (tipMap g))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack g)))
+        (Sum.inr (default : |CutOpenCarrier.tipSSet.{u + 1}|))
+  exact (congrArg (inclusion g)
+    (FourEdgeTree.SetDescent.eval_realized_right _ _ _)).trans h
+
+/-- Every ordinary sheet point is in one of its three actual cells. -/
+theorem exists_cell (y : SeedOrdinarySheet.Sheet g) :
+    (∃ z, SeedOrdinarySheet.laurent g z = y) ∨
+    (∃ z c, SeedOrdinarySheet.cylinder g (z, c) = y) ∨
+    SeedOrdinarySheet.tip g = y := by
+  rcases Types.eq_or_eq_of_isPushout
+      ((CutOpenCarrier.first_isPushout F J G ε).map (forget TopCat)) y with
+    ⟨⟨w, c⟩, hw⟩ | ⟨w | w, hw⟩
+  · exact Or.inr (Or.inl ⟨w, c.down, hw⟩)
+  · exact Or.inl ⟨w,
+      (FourEdgeTree.SetDescent.eval_realized_left _ _ w).trans hw⟩
+  · exact Or.inr (Or.inr ((congrArg (SSet.toTop.map (CutOpenCarrier.right₀ F J G ε))
+      (Subsingleton.elim (default : |CutOpenCarrier.tipSSet.{u + 1}|) w)).trans
+        ((FourEdgeTree.SetDescent.eval_realized_right _ _ w).trans hw)))
+
+/-- The entire shifted sheet has the same native value as the ordinary sheet. -/
+theorem inclusion_native (n : ℕ) (y : SeedOrdinarySheet.Sheet g)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Y)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (inclusion g y) x =
+      CutOpenCarrier.nativeEval F J G ε ε' n (SeedOrdinarySheet.inclusion g y) x := by
+  rcases exists_cell g y with ⟨z, rfl⟩ | ⟨z, c, rfl⟩ | rfl
+  · rw [inclusion_laurent, SeedOrdinarySheet.inclusion_laurent]
+    change CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.laurentInclusion F J G ε ε'
+        (mapParameter (CommonReferenceProduct.reanchor (commonUnit g)) z)) x = _
+    rw [CutOpenCarrier.nativeEval_laurentInclusion,
+      CutOpenCarrier.nativeEval_laurentInclusion, pointwise_reanchor]
+  · rw [inclusion_cylinder, SeedOrdinarySheet.inclusion_cylinder,
+      CutOpenCarrier.nativeEval_cylinderPlus, CutOpenCarrier.nativeEval_cylinderMinus]
+  · rw [inclusion_tip, SeedOrdinarySheet.inclusion_tip,
+      CutOpenCarrier.nativeEval_tipPlus, CutOpenCarrier.nativeEval_tipMinus]
+
+theorem inclusion_sheetMap (z : Convexity.StdSimplex ℝ (Fin 31)) :
+    inclusion g (SeedOrdinarySheet.sheetMap g z) =
+      InputIdentitySeedRectangle.sheetMap g true z :=
+  inclusion_laurent g _
+
+theorem inclusion_oldCone (s : I) :
+    inclusion g (SeedOrdinarySheet.oldCone g s) =
+      InputIdentitySeedRectangle.oldCone g true s :=
+  inclusion_cylinder g _ s
+
+theorem inclusion_newCone (s : I) :
+    inclusion g (SeedOrdinarySheet.newCone g s) =
+      InputIdentitySeedRectangle.newCone g true s :=
+  inclusion_cylinder g _ s
+
+/-- The whole original old null path, not merely its endpoints, shifts exactly. -/
+theorem inclusion_oldNull (s : I) :
+    inclusion g (((SeedOrdinarySheet.oldPositive g).trans
+      ((SeedOrdinarySheet.positiveMovement g).trans (SeedOrdinarySheet.oldCone g))) s) =
+      InputIdentitySeedNull.oldNull g true s := by
+  exact Path.Evaluation.path_trans (inclusion g) _ _ _ _
+    (fun t ↦ inclusion_sheetMap g _) (fun t ↦
+      Path.Evaluation.path_trans (inclusion g) _ _ _ _
+        (fun v ↦ inclusion_sheetMap g _) (inclusion_oldCone g) t) s
+
+/-- The whole original new null path uses the same shifted attachment and clock. -/
+theorem inclusion_newNull (s : I) :
+    inclusion g (((SeedOrdinarySheet.newPositive g).trans (SeedOrdinarySheet.newCone g)) s) =
+      InputIdentitySeedNull.newNull g true s := by
+  exact Path.Evaluation.path_trans (inclusion g) _ _ _ _
+    (fun t ↦ inclusion_sheetMap g _) (inclusion_newCone g) s
+
+end Quillen.PerfectComplexes.GlobalRawBass.SeedShiftedSheet

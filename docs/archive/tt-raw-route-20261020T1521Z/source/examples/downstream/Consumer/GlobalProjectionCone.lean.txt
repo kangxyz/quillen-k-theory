@@ -1,0 +1,28 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionCone
+
+/-! # Finite scalar cubes retain independent original loop and structure coordinates -/
+@[expose] public noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalProjectionCone
+
+/-- An arbitrary finite scalar cube keeps two old parameters separate from native structure time. -/
+theorem independent_parameters (X : Scheme.{u}) {V : Model.{u + 1}}
+    (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen X)) (d n : ℕ)
+    (p : C((Fin d → I) × (I × I), scalarCone X E))
+    (z : Fin d → I) (v t r : I) (x : (prespectrum V).space n) :
+    compactConeFamily X E p (n + 1)
+        ((z, (v, t)), (prespectrum V).structureMap n x r) =
+      (nativeBassCone X).structureMap n (compactConeFamily X E p n ((z, (v, t)), x)) r :=
+  coneEval_structure X E n (p (z, (v, t))) x r
+
+end Consumer.GlobalProjectionCone

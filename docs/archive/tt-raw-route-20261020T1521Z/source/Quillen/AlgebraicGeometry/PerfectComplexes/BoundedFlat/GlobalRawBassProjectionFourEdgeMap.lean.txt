@@ -1,0 +1,192 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionReference
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeTree
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameter
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeMap
+
+/-!
+# The actual global five-node Laurent map on the whole four-edge tree
+
+Four original double-cylinder pushouts glue the unchanged global projection edges.
+Both exterior chart maps act on arbitrary polynomial-reference nodes. The resulting
+Laurent map retains every original edge and both entire polynomial summands.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits MonoidalCategory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge
+open CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier
+-- Only the hypothesis-free displayed-pushout helper is used from this owner.
+open BassProjectionPath.WholeReference.FourEdge
+  (descend descend_left descend_right descend_cylinder)
+
+variable (X : Scheme.{u}) {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen X))
+local notation "J" => projectionMap X
+local notation "F" => reference X E
+
+/-- Each intermediate vertex is the corresponding complete original global projection node. -/
+def vertexMap (j : Fin 5) : parameterSSet E ⟶ parameterSSet F :=
+  nerveMap (Codiscrete.functorOfFun (fun N ↦ ProjectionReference.nodes X E N j))
+
+/-- The whole original two-node edge, with both full node references. -/
+def edgeMap (i j : Fin 5) : parameterSSet E ⊗ Δ[1] ⟶ parameterSSet F :=
+  FiniteParameter.simplicial E F (fun N k ↦ ProjectionReference.nodes X E N (![i, j] k))
+
+@[reassoc]
+theorem edgeMap_zero (i j : Fin 5) : SSet.ι₀ ≫ edgeMap X E i j = vertexMap X E i :=
+  FiniteParameter.simplicial_zero E F (fun N k ↦ ProjectionReference.nodes X E N (![i, j] k))
+
+@[reassoc]
+theorem edgeMap_one (i j : Fin 5) : SSet.ι₁ ≫ edgeMap X E i j = vertexMap X E j :=
+  FiniteParameter.simplicial_one E F (fun N k ↦ ProjectionReference.nodes X E N (![i, j] k))
+
+/-- The actual global chart map is defined before restricting polynomial nodes to base inputs. -/
+def chartMap (k : laurent ⟶ polynomial)
+    (hk : ∀ Y, k.app Y ≫ projection.app Y = laurentProjection.app Y) :
+    parameterSSet (E ≫ J) ⟶ parameterSSet F :=
+  nerveMap (Codiscrete.functorOfFun (chartNode X k hk E))
+
+/-- A proved full-node attachment gives the entire actual simplicial chart attachment. -/
+theorem attachment_chartMap (k : laurent ⟶ polynomial)
+    (hk : ∀ Y, k.app Y ≫ projection.app Y = laurentProjection.app Y)
+    (j : Fin 5) (hj : ∀ N, chartNode X k hk E (polynomialNode X E N) =
+      ProjectionReference.nodes X E N j) :
+    FourEdgeTree.attachment E J ≫ chartMap X E k hk = vertexMap X E j := by
+  apply NatTrans.ext
+  funext n
+  apply ConcreteCategory.hom_ext
+  intro c
+  refine CategoryTheory.Functor.ext (fun i ↦ ?_) ?_
+  · exact congrArg Codiscrete.mk (hj (c.obj i).as)
+  · intro i j g
+    apply Subsingleton.elim
+
+/-- The positive normalization branch on its entire original pushout. -/
+def firstMap : FourEdgeTree.first E J ⟶ parameterSSet F :=
+  descend (𝟙 _) (FourEdgeTree.attachment E J)
+    (vertexMap X E 1) (chartMap X E plus plus_projection) (edgeMap X E 1 2)
+    (by simpa only [Category.id_comp] using edgeMap_zero X E 1 2)
+    ((edgeMap_one X E 1 2).trans
+      (attachment_chartMap X E plus plus_projection 2 (plus_attachment X E)).symm)
+
+theorem firstMap_one : FourEdgeTree.firstOne E J ≫ firstMap X E = vertexMap X E 1 :=
+  descend_left _ _ _ _ _ _ _
+
+theorem firstMap_plus : FourEdgeTree.firstPlus E J ≫ firstMap X E =
+    chartMap X E plus plus_projection :=
+  descend_right _ _ _ _ _ _ _
+
+theorem firstMap_edge :
+    DoubleCylinder.simplicialCylinder (𝟙 _) (FourEdgeTree.attachment E J) ≫ firstMap X E =
+      edgeMap X E 1 2 :=
+  descend_cylinder _ _ _ _ _ _ _
+
+/-- Attach the positive geometric cylinder to the complete first branch. -/
+def secondMap : FourEdgeTree.second E J ⟶ parameterSSet F :=
+  descend (𝟙 _) (FourEdgeTree.firstOne E J)
+    (vertexMap X E 0) (firstMap X E) (edgeMap X E 0 1)
+    (by simpa only [Category.id_comp] using edgeMap_zero X E 0 1)
+    ((edgeMap_one X E 0 1).trans (firstMap_one X E).symm)
+
+theorem secondMap_zero :
+    FourEdgeTree.secondZero E J ≫ secondMap X E = vertexMap X E 0 :=
+  descend_left _ _ _ _ _ _ _
+
+theorem secondMap_first :
+    FourEdgeTree.firstInSecond E J ≫ secondMap X E = firstMap X E :=
+  descend_right _ _ _ _ _ _ _
+
+theorem secondMap_edge :
+    DoubleCylinder.simplicialCylinder (𝟙 _) (FourEdgeTree.firstOne E J) ≫ secondMap X E =
+      edgeMap X E 0 1 :=
+  descend_cylinder _ _ _ _ _ _ _
+
+/-- Attach the inverse geometric cylinder without collapsing either preceding branch. -/
+def thirdMap : FourEdgeTree.third E J ⟶ parameterSSet F :=
+  descend (FourEdgeTree.secondZero E J) (𝟙 _)
+    (secondMap X E) (vertexMap X E 3) (edgeMap X E 0 3)
+    ((edgeMap_zero X E 0 3).trans (secondMap_zero X E).symm)
+    (by simpa only [Category.id_comp] using edgeMap_one X E 0 3)
+
+theorem thirdMap_second :
+    FourEdgeTree.secondInThird E J ≫ thirdMap X E = secondMap X E :=
+  descend_left _ _ _ _ _ _ _
+
+theorem thirdMap_three :
+    FourEdgeTree.thirdThree E J ≫ thirdMap X E = vertexMap X E 3 :=
+  descend_right _ _ _ _ _ _ _
+
+theorem thirdMap_edge :
+    DoubleCylinder.simplicialCylinder (FourEdgeTree.secondZero E J) (𝟙 _) ≫ thirdMap X E =
+      edgeMap X E 0 3 :=
+  descend_cylinder _ _ _ _ _ _ _
+
+/-- The actual Laurent map glues all four unchanged original reference edges. -/
+def beta : FourEdgeTree.simplicial E J ⟶ parameterSSet F :=
+  descend (FourEdgeTree.thirdThree E J) (FourEdgeTree.attachment E J)
+    (thirdMap X E) (chartMap X E minus minus_projection) (edgeMap X E 3 4)
+    ((edgeMap_zero X E 3 4).trans (thirdMap_three X E).symm)
+    ((edgeMap_one X E 3 4).trans
+      (attachment_chartMap X E minus minus_projection 4 (minus_attachment X E)).symm)
+
+theorem beta_third : FourEdgeTree.thirdInTree E J ≫ beta X E = thirdMap X E :=
+  descend_left _ _ _ _ _ _ _
+
+theorem beta_second : FourEdgeTree.secondInTree E J ≫ beta X E = secondMap X E := by
+  rw [FourEdgeTree.secondInTree, Category.assoc, beta_third, thirdMap_second]
+theorem beta_first : FourEdgeTree.firstInTree E J ≫ beta X E = firstMap X E := by
+  rw [FourEdgeTree.firstInTree, Category.assoc, beta_second, secondMap_first]
+
+@[reassoc]
+theorem beta_plus : FourEdgeTree.plusVertex E J ≫ beta X E =
+    chartMap X E plus plus_projection := by
+  rw [FourEdgeTree.plusVertex, Category.assoc, beta_first, firstMap_plus]
+
+@[reassoc]
+theorem beta_minus : FourEdgeTree.minusVertex E J ≫ beta X E =
+    chartMap X E minus minus_projection :=
+  descend_right _ _ _ _ _ _ _
+
+@[reassoc]
+theorem beta_zero : FourEdgeTree.zeroVertex E J ≫ beta X E = vertexMap X E 0 := by
+  rw [FourEdgeTree.zeroVertex, Category.assoc, beta_second, secondMap_zero]
+
+@[reassoc]
+theorem beta_one : FourEdgeTree.oneVertex E J ≫ beta X E = vertexMap X E 1 := by
+  rw [FourEdgeTree.oneVertex, Category.assoc, beta_first, firstMap_one]
+
+@[reassoc]
+theorem beta_three : FourEdgeTree.threeVertex E J ≫ beta X E = vertexMap X E 3 := by
+  rw [FourEdgeTree.threeVertex, Category.assoc, beta_third, thirdMap_three]
+
+@[reassoc]
+theorem beta_edge12 : FourEdgeTree.edge12 E J ≫ beta X E = edgeMap X E 1 2 := by
+  rw [FourEdgeTree.edge12, Category.assoc, beta_first, firstMap_edge]
+
+@[reassoc]
+theorem beta_edge01 : FourEdgeTree.edge01 E J ≫ beta X E = edgeMap X E 0 1 := by
+  rw [FourEdgeTree.edge01, Category.assoc, beta_second, secondMap_edge]
+
+@[reassoc]
+theorem beta_edge03 : FourEdgeTree.edge03 E J ≫ beta X E = edgeMap X E 0 3 := by
+  rw [FourEdgeTree.edge03, Category.assoc, beta_third, thirdMap_edge]
+
+@[reassoc]
+theorem beta_edge34 : FourEdgeTree.edge34 E J ≫ beta X E = edgeMap X E 3 4 :=
+  descend_cylinder _ _ _ _ _ _ _
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge

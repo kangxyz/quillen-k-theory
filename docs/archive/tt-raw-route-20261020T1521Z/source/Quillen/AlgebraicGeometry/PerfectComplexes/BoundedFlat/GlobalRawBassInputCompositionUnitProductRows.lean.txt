@@ -1,0 +1,128 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitProductAnchors
+/-! The four full reference rows of the actual source/target unit products. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductRows
+open CommonReferenceNerve BassH0Merge BassH1Join
+open InputCompositionUnitProducts InputCompositionUnitProductAnchors
+open GlobalBassEvaluation.InputSeedEvaluationProduct
+open InputCompositionCarrierBottom InputCompositionTopPieces
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+private theorem laurent_node (i : Fin 3) :
+    (⟨laurentVertices f g i, laurentReferences f g i⟩ : Node (laurentSource f g)) =
+      binaryNodes (laurent.map f) (laurent.map g) i := by
+  fin_cases i <;> rfl
+
+private theorem base_node (i : Fin 3) :
+    (⟨baseVertices f g i, baseReferences f g i⟩ : Node (baseSource f g)) =
+      binaryNodes f g i := by
+  fin_cases i <;> rfl
+
+/-- The source unit's lower row is the exact entire old-left Laurent composition row. -/
+theorem source_lower (i : Fin 3) :
+    sourceNodes f g (Quillen.SimplexGrid.index 1 2 (0, i)) =
+      InputNullCompositionLaurentCarrier.nodes f g (CoefficientMovingSquareRows.targetSide i) := by
+  have h := product_row_nodes (InputCompositionCarrierCharts.source f g)
+    (unitMap Z) (unitVertices Z) (unitAnchors Z)
+    (laurentSource f g) (laurentVertices f g) (laurentReferences f g) (sourceAnchor f g) 0 i
+  change sourceNodes f g (Quillen.SimplexGrid.index 1 2 (0, i)) =
+    preReferenceNode _ (unitMap Z)
+      (sourceAnchor f g ≪≫ isoWhiskerRight (Iso.refl _) (laurentSource f g).functor)
+        ⟨laurentVertices f g i, laurentReferences f g i⟩ at h
+  have ha : sourceAnchor f g ≪≫ isoWhiskerRight (Iso.refl _) (laurentSource f g).functor =
+      sourceAnchor f g := by
+    rw [isoWhiskerRight_refl]
+    exact Iso.trans_refl (sourceAnchor f g)
+  refine h.trans ((congrArg (fun η ↦ preReferenceNode
+    (InputCompositionCarrierCharts.source f g) (unitMap Z) η
+      ⟨laurentVertices f g i, laurentReferences f g i⟩) ha).trans ?_)
+  exact (congrArg (preReferenceNode (InputCompositionCarrierCharts.source f g)
+    (unitMap Z) (sourceAnchor f g)) (laurent_node f g i)).trans
+      (InputNullCompositionLaurentCarrier.left_row f g i).symm
+
+/-- The source unit's upper row is the actual common-unit shift of every lower full node. -/
+theorem source_upper (i : Fin 3) :
+    sourceNodes f g (Quillen.SimplexGrid.index 1 2 (1, i)) =
+      anchorNode (InputIdentitySeedCarrier.commonUnit (f ≫ g))
+        (InputNullCompositionLaurentCarrier.nodes f g (CoefficientMovingSquareRows.targetSide i)) :=
+          by
+  have h := product_row_nodes (InputCompositionCarrierCharts.source f g)
+    (unitMap Z) (unitVertices Z) (unitAnchors Z)
+    (laurentSource f g) (laurentVertices f g) (laurentReferences f g) (sourceAnchor f g) 1 i
+  change sourceNodes f g (Quillen.SimplexGrid.index 1 2 (1, i)) =
+    preReferenceNode _ (unitMap Z)
+      (sourceAnchor f g ≪≫ isoWhiskerRight (unitIso Z) (laurentSource f g).functor)
+        ⟨laurentVertices f g i, laurentReferences f g i⟩ at h
+  rw [laurent_node] at h
+  refine h.trans ?_
+  rw [InputNullCompositionLaurentCarrier.left_row]
+  apply congrArg (fun a ↦ (⟨unitMap Z ≫ (binaryNodes (laurent.map f) (laurent.map g) i).1, a⟩ :
+    Node (InputIdentitySeedCarrier.laurentRef (f ≫ g))))
+  change (sourceAnchor f g ≪≫ isoWhiskerRight (unitIso Z) (laurentSource f g).functor) ≪≫
+    isoWhiskerLeft (unitMap Z).functor (binaryNodes (laurent.map f) (laurent.map g) i).2 =
+      InputIdentitySeedCarrier.commonUnit (f ≫ g) ≪≫
+        (sourceAnchor f g ≪≫ isoWhiskerLeft (unitMap Z).functor
+          (binaryNodes (laurent.map f) (laurent.map g) i).2)
+  rw [← source_anchor_unit, Iso.trans_assoc]
+
+/-- The target unit's lower column is the exact entire new-left base composition row. -/
+theorem target_lower (i : Fin 3) :
+    targetNodes f g (Quillen.SimplexGrid.index 2 1 (i, 0)) =
+      InputNullCompositionLaurentCarrier.nodes f g (CoefficientMovingSquareRows.sourceSide i) := by
+  have h := product_column_nodes (InputCompositionCarrierCharts.source f g)
+    (baseSource f g) (baseVertices f g) (baseReferences f g)
+    (unitMap X) (unitVertices X) (unitAnchors X) (targetAnchor f g) i 0
+  change targetNodes f g (Quillen.SimplexGrid.index 2 1 (i, 0)) =
+    postReferenceNode _ (unitMap X)
+      (targetAnchor f g ≪≫ isoWhiskerLeft (baseSource f g).functor (Iso.refl _))
+        ⟨baseVertices f g i, baseReferences f g i⟩ at h
+  have ha : targetAnchor f g ≪≫ isoWhiskerLeft (baseSource f g).functor (Iso.refl _) =
+      targetAnchor f g := by
+    rw [isoWhiskerLeft_refl]
+    exact Iso.trans_refl (targetAnchor f g)
+  refine h.trans ((congrArg (fun η ↦ postReferenceNode
+    (InputCompositionCarrierCharts.source f g) (unitMap X) η
+      ⟨baseVertices f g i, baseReferences f g i⟩) ha).trans ?_)
+  exact (congrArg (postReferenceNode (InputCompositionCarrierCharts.source f g)
+    (unitMap X) (targetAnchor f g)) (base_node f g i)).trans
+      (InputNullCompositionLaurentCarrier.right_row f g i).symm
+
+/-- The target unit's upper column retains the actual common-unit shift of the entire base row. -/
+theorem target_upper (i : Fin 3) :
+    targetNodes f g (Quillen.SimplexGrid.index 2 1 (i, 1)) =
+      anchorNode (InputIdentitySeedCarrier.commonUnit (f ≫ g))
+        (InputNullCompositionLaurentCarrier.nodes f g (CoefficientMovingSquareRows.sourceSide i)) :=
+          by
+  have h := product_column_nodes (InputCompositionCarrierCharts.source f g)
+    (baseSource f g) (baseVertices f g) (baseReferences f g)
+    (unitMap X) (unitVertices X) (unitAnchors X) (targetAnchor f g) i 1
+  change targetNodes f g (Quillen.SimplexGrid.index 2 1 (i, 1)) =
+    postReferenceNode _ (unitMap X)
+      (targetAnchor f g ≪≫ isoWhiskerLeft (baseSource f g).functor (unitIso X))
+        ⟨baseVertices f g i, baseReferences f g i⟩ at h
+  rw [base_node] at h
+  refine h.trans ?_
+  rw [InputNullCompositionLaurentCarrier.right_row]
+  apply congrArg (fun a ↦ (⟨(binaryNodes f g i).1 ≫ unitMap X, a⟩ :
+    Node (InputIdentitySeedCarrier.laurentRef (f ≫ g))))
+  change (targetAnchor f g ≪≫ isoWhiskerLeft (baseSource f g).functor (unitIso X)) ≪≫
+    isoWhiskerRight (binaryNodes f g i).2 (unitMap X).functor =
+      InputIdentitySeedCarrier.commonUnit (f ≫ g) ≪≫
+        (targetAnchor f g ≪≫ isoWhiskerRight (binaryNodes f g i).2 (unitMap X).functor)
+  rw [← target_anchor_unit, Iso.trans_assoc]
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductRows

@@ -1,0 +1,135 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentityBoundaryNodes
+
+/-!
+# The actual terminal middle path and final top-product row
+
+The original base-arrow precomposition and split base-composition endpoint give the same two
+fixed maps. The already proved polynomial endpoints identify the positive and inverse reference
+rows separately, yielding all five complete nodes of the original middle path.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopMiddleRows
+open InputCompositionTopPieces InputCompositionTerminalAttach
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- The original direct first-arrow target reference, before its actual base premap. -/
+def targetAnchor := rightRowReference (InputDescSimplex.reference f)
+  (k.app X) (projection.app X) f
+  (nativeLastReference (projection.app Y) (k.app Y) (projection.app X) (k.app X)
+    f (polynomial.map f) (laurent.map f) (projection.naturality f) (k.naturality f)
+    (laurentProjection.app Y) (hk Y))
+
+/-- The terminal target row retains both unchanged actual base maps. -/
+abbrev premap := arrow g ≫ arrow f
+
+/-- The complete terminal middle anchor includes the original direct target reference. -/
+def inputAnchor := preAnchor f g ≪≫ isoWhiskerLeft (arrow g).functor (targetAnchor f k hk)
+
+/-- All terminal target projection nodes retain the same full composite premap. -/
+theorem input_row (i : Fin 3) :
+    preNode f g (InputDescSimplex.chartNodes f k hk
+      (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i))) =
+      preReferenceNode (InputCompositionCarrierCharts.source f g) (premap f g)
+        (H := BinaryNormalizationSimplex.sourceMap (k.app X) (projection.app X))
+        (inputAnchor f g k hk) (binaryNodes (k.app X) (projection.app X) i) := by
+  have h := congrArg (preNode f g)
+    (native_target_row (projection.app Y) (k.app Y) (projection.app X) (k.app X)
+      f (polynomial.map f) (laurent.map f) (projection.naturality f) (k.naturality f)
+      (laurentProjection.app Y) (hk Y) i)
+  exact h.trans (pre_pre_node (InputCompositionCarrierCharts.source f g) (arrow g) (arrow f)
+    (BinaryNormalizationSimplex.sourceMap (k.app X) (projection.app X))
+    (targetAnchor f k hk) (preAnchor f g) (binaryNodes (k.app X) (projection.app X) i))
+
+/-- The final original base-composition reference anchors the whole product target row. -/
+def productAnchor := middleAnchor f g ≪≫
+  isoWhiskerRight (baseReferences f g 2) (InputIdentityProjection.source X).functor
+
+/-- Every full product target node retains both actual base maps and the split-composition iso. -/
+theorem product_row (j : Fin 5) :
+    middleNodes f g (Quillen.SimplexGrid.index 2 4 (2, j)) =
+      preReferenceNode (InputCompositionCarrierCharts.source f g) (premap f g)
+        (productAnchor f g) (InputIdentityProjection.nodes X j) :=
+  product_row_nodes (InputCompositionCarrierCharts.source f g)
+    (baseSource f g) (baseVertices f g) (baseReferences f g)
+    (InputIdentityProjection.source X) (fun i ↦ (InputIdentityProjection.nodes X i).1)
+    (fun i ↦ (InputIdentityProjection.nodes X i).2) (middleAnchor f g) 2 j
+
+/-- The positive target product retains the original positive projection normalization. -/
+theorem product_plus_row (i : Fin 3) :
+    middleNodes f g (Quillen.SimplexGrid.index 2 4 (2, ![0, 1, 2] i)) =
+      preReferenceNode (InputCompositionCarrierCharts.source f g) (premap f g)
+        (productAnchor f g) (binaryNodes (plus.app X) (projection.app X) i) := by
+  rw [product_row, InputIdentityBoundaryNodes.projection_plus_row]
+
+/-- The whole positive terminal middle row is fixed by its original polynomial endpoint. -/
+theorem plus_nodes (i : Fin 3) :
+    preNode f g (InputDescSimplex.chartNodes f plus plus_projection
+      (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i))) =
+      middleNodes f g (Quillen.SimplexGrid.index 2 4 (2, ![0, 1, 2] i)) := by
+  apply pre_families_match (InputCompositionCarrierCharts.source f g) (premap f g)
+    (BinaryNormalizationSimplex.sourceMap (plus.app X) (projection.app X))
+    (binaryNodes (plus.app X) (projection.app X))
+    (input_row f g plus plus_projection) (product_plus_row f g) 2 ?_ i
+  exact (InputCompositionH1TopRows.plus_second_nodes f g 4).symm.trans
+    (InputCompositionTopInternalNodes.plus_internal_nodes f g 2)
+
+/-- The inverse product target retains its separate original projection reference. -/
+theorem product_minus_row (i : Fin 3) :
+    middleNodes f g (Quillen.SimplexGrid.index 2 4 (2, ![0, 3, 4] i)) =
+      preReferenceNode (InputCompositionCarrierCharts.source f g) (premap f g)
+        (productAnchor f g ≪≫ isoWhiskerLeft (premap f g).functor
+          (InputIdentityProjection.sourceIso X))
+        (binaryNodes (minus.app X) (projection.app X) i) := by
+  rw [product_row, InputIdentityBoundaryNodes.projection_minus_row]
+  exact pre_anchor_node _ _ _ _ _
+
+/-- Every inverse terminal middle node agrees through its own actual polynomial endpoint. -/
+theorem minus_nodes (i : Fin 3) :
+    preNode f g (InputDescSimplex.chartNodes f minus minus_projection
+      (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i))) =
+      middleNodes f g (Quillen.SimplexGrid.index 2 4 (2, ![0, 3, 4] i)) := by
+  apply pre_families_match (InputCompositionCarrierCharts.source f g) (premap f g)
+    (BinaryNormalizationSimplex.sourceMap (minus.app X) (projection.app X))
+    (binaryNodes (minus.app X) (projection.app X))
+    (input_row f g minus minus_projection) (product_minus_row f g) 2 ?_ i
+  exact (InputCompositionH1TopRows.minus_second_nodes f g 4).symm.trans
+    (InputCompositionTopInternalNodes.minus_internal_nodes f g 2)
+
+/-- The complete five-node terminal target-middle path is the original final product row. -/
+theorem whole_nodes (i : Fin 5) :
+    preNode f g (InputDescSimplex.nodes f (firstMiddleFace.toOrderHom i)) =
+      middleNodes f g ((Quillen.SimplexGrid.rowFace 2 4 2).toOrderHom i) := by
+  have hp (j : Fin 3) := (congrArg (preNode f g) (InputDescSimplex.plus_nodes f
+    (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex j)))).trans (plus_nodes f g j)
+  have hm (j : Fin 3) := (congrArg (preNode f g) (InputDescSimplex.minus_nodes f
+    (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex j)))).trans (minus_nodes f g j)
+  fin_cases i
+  · exact hp 0
+  · exact hp 1
+  · exact hp 2
+  · exact hm 1
+  · exact hm 2
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopMiddleRows

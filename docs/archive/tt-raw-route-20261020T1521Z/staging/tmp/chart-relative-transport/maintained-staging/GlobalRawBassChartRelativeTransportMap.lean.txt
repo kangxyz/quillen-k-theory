@@ -1,0 +1,177 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportNodes
+/-! Whole chart-relative posttransport with both literal chart/cylinder half clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport
+open CommonReferenceNerve
+variable {X Y : Scheme.{u}} (a : X ⟶ Y) (k : laurent ⟶ polynomial)
+  {V : Model.{u + 1}} (P : V ⟶ modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Y)))
+  (G : V ⟶ modelOf (boundedFlatPerfectWaldhausen (laurent.obj Y)))
+local notation "JY" => InputCompositionTerminalAttach.arrow (k.app Y)
+local notation "JX" => InputCompositionTerminalAttach.arrow (k.app X)
+variable (eps : G.functor ≅
+  (P ≫ InputCompositionTerminalAttach.arrow (k.app Y)).functor)
+local notation "F'" => targetPolynomial a P
+local notation "G'" => targetLaurent a k P
+local notation "η" => targetAnchor a k P
+local notation "T" => targetCarrier a k P
+
+/-- The realized ordinary source sheet before attaching the distinct second tip. -/
+abbrev firstSheet := |CutOpenCarrier.firstSimplicial P JY G eps|
+
+/-- The whole Laurent reference nerve follows the actual Laurent postcomposition anchor. -/
+def laurentMap : C(|CutOpenCarrier.parameterSSet G|, T) :=
+  (CutOpenCarrier.laurentInclusion F' JX G' η η).comp (laurentParameter a k P G eps)
+
+/-- The exact shared Laurent boundary between the original chart and cylinder stages. -/
+def middle : C(|CutOpenCarrier.parameterSSet P|, T) :=
+  (CutOpenCarrier.laurentInclusion F' JX G' η η).comp
+    ((mapParameter (attachPostcompNode F' JX G' η)).comp (polynomialParameter a P))
+
+/-- Choose the corresponding distinct target tip without identifying the two tips. -/
+def tipMap (b : Bool) : C(|CutOpenCarrier.tipSSet.{u + 1}|, T) :=
+  ContinuousMap.const _ (if b then CutOpenCarrier.tipPlus F' JX G' η η
+    else CutOpenCarrier.tipMinus F' JX G' η η)
+
+/-- The original five-node comparison acts on every genuine polynomial nerve point. -/
+def chartHomotopy : ((laurentMap a k P G eps).comp
+    (SSet.toTop.map (CutOpenCarrier.attaching P JY G eps)).hom).Homotopy (middle a k P) where
+  toContinuousMap := (CutOpenCarrier.laurentInclusion F' JX G' η η).comp (chartParameter a k P)
+  map_zero_left y := congrArg (CutOpenCarrier.laurentInclusion F' JX G' η η)
+    (chartParameter_zero a k P G eps y)
+  map_one_left y := congrArg (CutOpenCarrier.laurentInclusion F' JX G' η η)
+    (chartParameter_one a k P y)
+
+/-- The final cylinder stage retains its full independent original height. -/
+def cylinderHomotopy (b : Bool) : (middle a k P).Homotopy
+    ((tipMap a k P b).comp (SSet.toTop.map (CutOpenCarrier.erase P)).hom) where
+  toContinuousMap := if b then
+    ⟨fun z ↦ CutOpenCarrier.cylinderPlus F' JX G' η η
+      (polynomialParameter a P z.2, z.1), by fun_prop⟩
+    else ⟨fun z ↦ CutOpenCarrier.cylinderMinus F' JX G' η η
+      (polynomialParameter a P z.2, z.1), by fun_prop⟩
+  map_zero_left y := by
+    cases b
+    · exact CutOpenCarrier.cylinderMinus_zero F' JX G' η η _
+    · exact CutOpenCarrier.cylinderPlus_zero F' JX G' η η _
+  map_one_left y := by
+    cases b
+    · exact CutOpenCarrier.cylinderMinus_one F' JX G' η η _
+    · exact CutOpenCarrier.cylinderPlus_one F' JX G' η η _
+
+/-- Original comparison followed by the entire independent cylinder height. -/
+def cylinderTrack (b : Bool) := (chartHomotopy a k P G eps).trans (cylinderHomotopy a k P b)
+
+/-- Descend the original chart-then-cylinder track over the entire first scalar sheet. -/
+def firstTransport : C(firstSheet k P G eps, T) :=
+  DoubleCylinder.homotopyDesc (SSet.toTop.map (CutOpenCarrier.attaching P JY G eps))
+    (SSet.toTop.map (CutOpenCarrier.erase P)) (CutOpenCarrier.first_isPushout P JY G eps)
+    (laurentMap a k P G eps) (tipMap a k P false) (cylinderTrack a k P G eps false)
+
+theorem firstTransport_laurent (y : |CutOpenCarrier.parameterSSet G|) :
+    firstTransport a k P G eps (SSet.toTop.map (CutOpenCarrier.left₀ P JY G eps) y) =
+      laurentMap a k P G eps y := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.first_isPushout P JY G eps).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack a k P G eps false))
+      (DoubleCylinder.homotopyEndMap (laurentMap a k P G eps) (tipMap a k P false))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack a k P G eps false))) (Sum.inl y)
+  exact (congrArg (firstTransport a k P G eps)
+    (FourEdgeTree.SetDescent.eval_realized_left _ _ y)).trans h
+
+/-- The second attachment retains the same original chart track after first-sheet descent. -/
+def secondChartHomotopy : ((firstTransport a k P G eps).comp
+    (SSet.toTop.map (CutOpenCarrier.secondAttaching P JY G eps eps)).hom).Homotopy
+      (middle a k P) where
+  toContinuousMap := (CutOpenCarrier.laurentInclusion F' JX G' η η).comp (chartParameter a k P)
+  map_zero_left y := by
+    change CutOpenCarrier.laurentInclusion F' JX G' η η (chartParameter a k P (0, y)) = _
+    rw [chartParameter_zero a k P G eps]
+    rw [CutOpenCarrier.secondAttaching, Functor.map_comp]
+    exact (firstTransport_laurent a k P G eps _).symm
+  map_one_left y := congrArg (CutOpenCarrier.laurentInclusion F' JX G' η η)
+    (chartParameter_one a k P y)
+
+/-- The second tip uses the unchanged chart-then-cylinder half split. -/
+def secondTrack := (secondChartHomotopy a k P G eps).trans (cylinderHomotopy a k P true)
+
+/-- Descent across both original pushouts transports every point, preserving the two tips. -/
+def transport : C(sourceCarrier k P G eps, T) :=
+  DoubleCylinder.homotopyDesc
+    (SSet.toTop.map (CutOpenCarrier.secondAttaching P JY G eps eps))
+    (SSet.toTop.map (CutOpenCarrier.erase P)) (CutOpenCarrier.second_isPushout P JY G eps eps)
+    (firstTransport a k P G eps) (tipMap a k P true) (secondTrack a k P G eps)
+
+theorem transport_cylinderPlus (y : |CutOpenCarrier.parameterSSet P|) (s : I) :
+    transport a k P G eps (CutOpenCarrier.cylinderPlus P JY G eps eps (y, s)) =
+      secondTrack a k P G eps (s, y) :=
+  DoubleCylinder.homotopyDesc_apply_cylinder _ _ _ _ _ _ s y
+
+theorem transport_first (y : firstSheet k P G eps) :
+    transport a k P G eps (SSet.toTop.map (CutOpenCarrier.left₁ P JY G eps eps) y) =
+      firstTransport a k P G eps y := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.second_isPushout P JY G eps eps).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (secondTrack a k P G eps))
+      (DoubleCylinder.homotopyEndMap (firstTransport a k P G eps) (tipMap a k P true))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (secondTrack a k P G eps))) (Sum.inl y)
+  exact (congrArg (transport a k P G eps)
+    (FourEdgeTree.SetDescent.eval_realized_left _ _ y)).trans h
+
+theorem transport_laurent (y : |CutOpenCarrier.parameterSSet G|) :
+    transport a k P G eps (CutOpenCarrier.laurentInclusion P JY G eps eps y) =
+      laurentMap a k P G eps y := by
+  change transport a k P G eps (SSet.toTop.map (CutOpenCarrier.left₁ P JY G eps eps)
+    (SSet.toTop.map (CutOpenCarrier.left₀ P JY G eps) y)) = _
+  rw [transport_first, firstTransport_laurent]
+
+theorem transport_cylinderMinus (y : |CutOpenCarrier.parameterSSet P|) (s : I) :
+    transport a k P G eps (CutOpenCarrier.cylinderMinus P JY G eps eps (y, s)) =
+      cylinderTrack a k P G eps false (s, y) := by
+  change transport a k P G eps (SSet.toTop.map (CutOpenCarrier.left₁ P JY G eps eps)
+    (DoubleCylinder.realizedCylinder (CutOpenCarrier.attaching P JY G eps)
+      (CutOpenCarrier.erase P) (y, ULift.up s))) = _
+  rw [transport_first]
+  exact DoubleCylinder.homotopyDesc_apply_cylinder _ _ _ _ _ _ s y
+
+theorem transport_tipMinus : transport a k P G eps (CutOpenCarrier.tipMinus P JY G eps eps) =
+    CutOpenCarrier.tipMinus F' JX G' η η := by
+  change transport a k P G eps (SSet.toTop.map (CutOpenCarrier.left₁ P JY G eps eps)
+    (SSet.toTop.map (CutOpenCarrier.right₀ P JY G eps)
+      (default : |CutOpenCarrier.tipSSet.{u + 1}|))) = _
+  rw [transport_first]
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.first_isPushout P JY G eps).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack a k P G eps false))
+      (DoubleCylinder.homotopyEndMap (laurentMap a k P G eps) (tipMap a k P false))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack a k P G eps false)))
+        (Sum.inr (default : |CutOpenCarrier.tipSSet.{u + 1}|))
+  exact (congrArg (firstTransport a k P G eps)
+    (FourEdgeTree.SetDescent.eval_realized_right _ _ _)).trans h
+
+theorem transport_tipPlus : transport a k P G eps (CutOpenCarrier.tipPlus P JY G eps eps) =
+    CutOpenCarrier.tipPlus F' JX G' η η := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.second_isPushout P JY G eps eps).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (secondTrack a k P G eps))
+      (DoubleCylinder.homotopyEndMap (firstTransport a k P G eps) (tipMap a k P true))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (secondTrack a k P G eps)))
+        (Sum.inr (default : |CutOpenCarrier.tipSSet.{u + 1}|))
+  exact (congrArg (transport a k P G eps)
+    (FourEdgeTree.SetDescent.eval_realized_right _ _ _)).trans h
+
+end Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport

@@ -1,0 +1,51 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCompositeCarrier
+/-!
+# The original complete Laurent-square boundary
+
+The final two Laurent paths retain their exact original concatenation and endpoint casts.
+The entire old-left and new-left paths are recovered in the original global cone.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+theorem face_one (s : unitInterval) :
+    face f g (1, s) =
+      ((InputNullCompositionCompositeCarrier.firstPath f g).trans
+        (InputNullCompositionCompositeCarrier.secondPath f g)) s := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [face_one_lower, path_lower]
+    rfl
+  · rw [face_one_upper, path_upper]
+    rfl
+
+/-- The original old-left path is recovered at every composition clock. -/
+theorem face_left_native (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    InputNullCompositionCompositeCarrier.evaluate f g n x (face f g (r, 0)) =
+      (InputCompositionNull.oldLeft f g).level n (r, x) := by
+  rw [InputNullCompositionCompositeCarrier.evaluate, face_native]
+  exact (InputCompositionNull.laurentSquare f g).left n r x
+
+/-- The original new-left path is recovered at every composition clock. -/
+theorem face_right_native (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    InputNullCompositionCompositeCarrier.evaluate f g n x (face f g (r, 1)) =
+      (InputCompositionNull.newLeft f g).level n (r, x) := by
+  rw [InputNullCompositionCompositeCarrier.evaluate, face_native]
+  exact (InputCompositionNull.laurentSquare f g).right n r x
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier

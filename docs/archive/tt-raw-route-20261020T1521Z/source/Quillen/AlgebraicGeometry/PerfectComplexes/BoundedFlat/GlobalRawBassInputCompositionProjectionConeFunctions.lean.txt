@@ -1,0 +1,56 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionProjectionChartAttachment
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenFold
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapMoving
+/-! Continuous Laurent and cylinder maps into the overlap scalar cone. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionProjectionAttachment
+open CommonReferenceNerve CutOpenCarrier
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+  (k : laurent ⟶ polynomial)
+  (hk : ∀ W, k.app W ≫ projection.app W = laurentProjection.app W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "J" => ProjectionReference.projectionMap X
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "L" => ProjectionReference.reference X E
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "β" => ProjectionReference.FourEdge.beta X E
+
+/-- Laurent Map for the exact original reference and parameter data. -/
+def laurentMap : C(|parameterSSet G|, ProjectionReference.FourEdge.scalarCone X E) :=
+  (FourEdgeTree.laurentInclusion E J L β).comp (mapParameter (laurentNode f g k hk))
+
+variable (v : parameterSSet
+    (InputCompositionTopPieces.baseSource f g ≫ ProjectionReference.projectionMap X) ⟶
+      FourEdgeTree.simplicial (InputCompositionTopPieces.baseSource f g)
+        (ProjectionReference.projectionMap X))
+  (hv : v ≫ ProjectionReference.FourEdge.beta X (InputCompositionTopPieces.baseSource f g) =
+    ProjectionReference.FourEdge.chartMap X (InputCompositionTopPieces.baseSource f g) k hk)
+/-- Cylinder Map for the exact original reference and parameter data. -/
+def cylinderMap :
+    C(|parameterSSet P| × unitInterval, ProjectionReference.FourEdge.scalarCone X E) :=
+  ⟨fun z ↦ FourEdgeTree.cylinder E J L β
+    (SSet.toTop.map v (mapParameter (polynomialNode f g) z.1) , z.2),
+    (FourEdgeTree.cylinder E J L β).continuous.comp
+      (((SSet.toTop.map v).hom.continuous.comp
+        ((mapParameter (polynomialNode f g)).continuous.comp continuous_fst)).prodMk
+          continuous_snd)⟩
+
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionProjectionAttachment

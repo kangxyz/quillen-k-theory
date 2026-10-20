@@ -1,0 +1,128 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullRails
+
+/-!
+# The prescribed composite source-null comparison boundary
+
+Both original arrowwise null comparisons are pasted with their actual pre- and postmaps.
+The original Laurent projection square and the whole source and target null rails then form
+a specified alternate relative comparison. Equality or higher homotopy with the original
+direct null comparison is not asserted: the two actual surfaces are retained as distinct data.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionNull
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The actual intermediate null is the original first-arrow null under base precomposition. -/
+def middleNull : Homotopy
+    ((boundedFlatPerfectPrespectrumMap g ≫
+      boundedFlatPerfectPrespectrumMap (laurentProjection.app Y)) ≫
+        (boundedFlatPerfectPrespectrumMap (laurent.map f) ≫
+          mappingConeInclusion (comparison X))) (Quillen.LoopPrespectrum.zeroHom _ _) :=
+  (Homotopy.precomp (boundedFlatPerfectPrespectrumMap g)
+    (InputNull.originalOldNull f)).cast (by
+      apply Hom.ext
+      funext n
+      ext x
+      rfl) rfl
+
+/-- The first Laurent route retains the original square followed by the actual cone map. -/
+def firstLaurent : Homotopy
+    ((boundedFlatPerfectPrespectrumMap (laurentProjection.app Z) ≫
+      (boundedFlatPerfectPrespectrumMap (laurent.map g) ≫
+        boundedFlatPerfectPrespectrumMap (laurent.map f))) ≫
+          mappingConeInclusion (comparison X))
+    ((boundedFlatPerfectPrespectrumMap g ≫
+      boundedFlatPerfectPrespectrumMap (laurentProjection.app Y)) ≫
+        (boundedFlatPerfectPrespectrumMap (laurent.map f) ≫
+          mappingConeInclusion (comparison X))) :=
+  ((InputNull.laurentMovement g).postcomp (coneMap f)).cast
+    (by apply Hom.ext; funext n; ext x; rfl)
+    (by apply Hom.ext; funext n; ext x; rfl)
+
+/-- The second Laurent route keeps the actual original base premap and target associations. -/
+def secondLaurent : Homotopy
+    ((boundedFlatPerfectPrespectrumMap g ≫
+      boundedFlatPerfectPrespectrumMap (laurentProjection.app Y)) ≫
+        (boundedFlatPerfectPrespectrumMap (laurent.map f) ≫
+          mappingConeInclusion (comparison X)))
+    (((boundedFlatPerfectPrespectrumMap g ≫ boundedFlatPerfectPrespectrumMap f) ≫
+      boundedFlatPerfectPrespectrumMap (laurentProjection.app X)) ≫
+        mappingConeInclusion (comparison X)) :=
+  (Homotopy.precomp (boundedFlatPerfectPrespectrumMap g)
+    (InputNull.laurentMovement f)).cast
+      (by apply Hom.ext; funext n; ext x; rfl)
+      (by apply Hom.ext; funext n; ext x; rfl)
+
+/-- The original second-arrow comparison retains every value after the actual first cone map. -/
+def firstComparison : (oldComposite f g).RelHomotopy
+    ((firstLaurent f g).trans (middleNull f g)) := by
+  refine ((InputNull.originalNullComparison g).postcomp (coneMap f)).ofLevels _ _
+    (fun _ ↦ rfl) ?_
+  intro n
+  rw [Homotopy.postcomp_trans]
+  apply Homotopy.trans_level_congr <;> rfl
+
+/-- The original first-arrow comparison keeps its entire base-precomposed surface. -/
+def secondComparison : (middleNull f g).RelHomotopy
+    ((secondLaurent f g).trans (newComposite f g)) := by
+  refine (Homotopy.RelHomotopy.precomp (boundedFlatPerfectPrespectrumMap g)
+    (InputNull.originalNullComparison f)).ofLevels _ _ (fun _ ↦ rfl) ?_
+  intro n
+  rw [Homotopy.precomp_trans]
+  apply Homotopy.trans_level_congr <;> rfl
+
+/-- The two actual comparisons retain the final inverse associator to the selected upper word. -/
+def compositeComparison : (oldComposite f g).RelHomotopy
+    (((firstLaurent f g).trans (secondLaurent f g)).trans (newComposite f g)) :=
+  (firstComparison f g).trans
+    (((Homotopy.RelHomotopy.refl (firstLaurent f g)).hcomp (secondComparison f g)).trans
+      (Homotopy.RelHomotopy.transAssoc (firstLaurent f g) (secondLaurent f g)
+        (newComposite f g)).symm)
+
+/-- The original Laurent projection rectangle moves between the exact two Laurent words. -/
+def laurentSquare : (InputNull.laurentMovement (f ≫ g)).Square
+    ((firstLaurent f g).trans (secondLaurent f g)) (oldLeft f g) (newLeft f g) := by
+  refine ((InputCompositionTransformations.movingSquare laurentProjection f g).postcompose
+    (mappingConeInclusion (comparison X))).ofBoundaryLevels _ _ _ _
+      (fun _ ↦ rfl) ?_ (fun _ ↦ rfl) (fun _ ↦ rfl)
+  intro n
+  unfold InputCompositionTransformations.compositeSquare
+  rw [Homotopy.postcomp_trans]
+  apply Homotopy.trans_level_congr <;> rfl
+
+/-- The entire Laurent and target-null faces paste in the original path coordinate. -/
+def targetWordSquare :
+    ((InputNull.laurentMovement (f ≫ g)).trans
+      (InputNull.originalNewNull (f ≫ g))).Square
+    (((firstLaurent f g).trans (secondLaurent f g)).trans (newComposite f g))
+    (oldLeft f g) (Quillen.LoopPrespectrum.Homotopy.refl (Quillen.LoopPrespectrum.zeroHom _ _)) :=
+  (laurentSquare f g).pastePaths (targetSquare f g)
+
+/-- The specified composite route has exactly the original direct comparison's two endpoints. -/
+def alternateComparison : (InputNull.originalOldNull (f ≫ g)).RelHomotopy
+    ((InputNull.laurentMovement (f ≫ g)).trans (InputNull.originalNewNull (f ≫ g))) :=
+  (sourceSquare f g).toBoundary.trans
+    ((((Homotopy.RelHomotopy.refl (oldLeft f g)).hcomp (compositeComparison f g)).hcomp
+      (Homotopy.RelHomotopy.refl
+        (Quillen.LoopPrespectrum.Homotopy.refl (zeroHom
+          (originalPrespectrum (boundedFlatPerfectWaldhausen Z))
+          (mappingCone (comparison X)))).symm)).trans
+      (targetWordSquare f g).toBoundary.symm)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionNull

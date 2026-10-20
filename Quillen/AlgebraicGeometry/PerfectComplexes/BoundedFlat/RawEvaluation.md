@@ -6,8 +6,12 @@ retains the chosen zeros, geometric composition tracks, source nulls and
 forward Laurent units. This guide distinguishes the coefficient construction
 over `Spec R` from the integer-base construction on arbitrary schemes. The
 [section-completion guide](BassComparison.md) owns the strict towers and their
-stable localization; [classical comparison boundaries](../Development.md)
-owns the remaining correspondence with the specified classical theory.
+stable localization; the [TT localization and comparison guide](../Development.md)
+owns the additional comparison with the prescribed raw point-set
+implementation. The [tensor-generated realization](TensorBassConstruction.md)
+already proves original TT 7.4 by direct recognition of the §§6.3–6.4 recipe,
+with its actual support maps and whole acyclicity null. The raw coherence
+obligations below concern that separate implementation comparison.
 
 ## Coefficient one-step evaluation
 
@@ -400,10 +404,10 @@ above are constructed. Higher coherence of the separately chosen
 `InputNull.originalNullComparison`, the complete cone/step composition cube,
 a same-convention raw second stage and a coherent arbitrary-stage producer
 still require their specified data. Comparison with the coefficient raw
-stage and the classical forward-transition and whole-null diagrams remains
-separate. Neither an arrowwise homotopy nor an objectwise stable equivalence
-permits `strictDiagramIterate` to be applied to a raw assignment lacking
-literal functor and transformation laws.
+stage and the prescribed raw forward-transition and whole-null diagrams
+remains separate. Neither an arrowwise homotopy nor an objectwise stable
+equivalence permits `strictDiagramIterate` to be applied to a raw assignment
+lacking literal functor and transformation laws.
 
 Source and validation identities are recorded in the
 [evidence registry](../../../../docs/evidence/README.md#tt-source-and-validation-records).

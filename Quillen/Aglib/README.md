@@ -6,6 +6,12 @@ objects, hypotheses and chosen comparison maps are preserved. The prefix records
 local ownership and does not assert upstream admission. Q/K/G/S, Waldhausen,
 spectra and specialized projective-line constructions retain their application owners.
 
+Native imports use the mathematical Aglib revision
+`52e09db47998f139064acf48a2d3a64494d0dd9a` pinned in
+[`lake-manifest.json`](../../lake-manifest.json). Focused `Aglib.*` imports own
+interfaces already supplied there; local `Quillen.Aglib.*` leaves retain the
+additional candidates described below.
+
 Candidate authoring follows the
 [development policy](../../docs/DEVELOPMENT.md#aglib-candidates).
 

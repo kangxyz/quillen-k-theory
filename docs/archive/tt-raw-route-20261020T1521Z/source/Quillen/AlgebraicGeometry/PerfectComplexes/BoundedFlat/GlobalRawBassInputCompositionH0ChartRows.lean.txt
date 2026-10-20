@@ -1,0 +1,112 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalRows
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientMovingSquareReferenceRows
+
+/-!
+# Original direct input/chart composition boundary nodes
+
+The actual chart row of the direct input surface and the actual outer row of its composition
+rectangle retain all five complete reference nodes. The original functor map-composition
+transports are kept inside the normalized geometric anchor; no coefficient model is substituted.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0ChartRows
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- The original direct chart square, including its actual composite-arrow naturality cast. -/
+abbrev squareNodes := NativeSquareFiveSimplex.nodes (laurent.map (f ≫ g)) (k.app Z)
+  (k.app X) (polynomial.map (f ≫ g)) (k.naturality (f ≫ g))
+
+/-- Original naturality and the polynomial map-composition equality identify the outer total. -/
+theorem outer_geom : k.app X ≫ polynomial.map f ≫ polynomial.map g =
+    laurent.map (f ≫ g) ≫ k.app Z :=
+  ((k.naturality (f ≫ g)).trans
+    (congrArg (fun h ↦ k.app X ≫ h) (polynomial.map_comp f g))).symm
+
+/-- The complete source transport from the unchanged chart rectangle to the direct square. -/
+def outerIso : (InputCompositionCarrierCharts.chartReference f g k).functor ≅
+    (NativeSquareFiveSimplex.source (laurent.map (f ≫ g)) (k.app Z)).functor :=
+  eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+    (congrArg boundedFlatNormalizedPullback (outer_geom f g k)))
+
+/-- Polynomial precomposition keeps both original outer source isomorphisms. -/
+def outerAnchor := InputCompositionCarrierCharts.chartReferenceIso f g k hk ≪≫
+  isoWhiskerLeft (InputCompositionCarrierCharts.projectionMap (Z := Z)).functor
+    (outerIso f g k)
+
+/-- The whole outer reference is exactly the original direct-input chart-row anchor. -/
+theorem anchor_eq : outerAnchor f g k hk =
+    InputCompositionTerminalRows.chartAnchor (f ≫ g) k hk := by
+  rw [InputCompositionTerminalRows.chart_anchor_normal]
+  change smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
+      (InputCompositionCarrierCharts.chart_total f g k hk).symm) ≪≫
+      boundedFlatNormalizedPullbackCompIso
+        (k.app X ≫ polynomial.map f ≫ polynomial.map g) (projection.app Z)) ≪≫
+    isoWhiskerLeft (AsSmall.down ⋙ boundedFlatNormalizedPullback (projection.app Z) ⋙ AsSmall.up)
+      (eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+        (congrArg boundedFlatNormalizedPullback (outer_geom f g k)))) = _
+  rw [← smallIso_eqToIso (congrArg boundedFlatNormalizedPullback (outer_geom f g k)),
+    smallIso_precomp, ← smallIso_trans]
+  apply congrArg smallIso
+  rw [Iso.trans_assoc, ← comp_change_source (outer_geom f g k) (projection.app Z),
+    ← Iso.trans_assoc, eqToIso_trans]
+
+/-- The five direct-input nodes retain their actual polynomial projection anchor. -/
+theorem input_row (i : Fin 5) :
+    InputDescSimplex.chartNodes (f ≫ g) k hk (ProjectionRectangleSquareRows.chartRow i) =
+      preReferenceNode (InputCompositionCarrierCharts.source f g)
+        (InputCompositionCarrierCharts.projectionMap (Z := Z))
+        (InputCompositionTerminalRows.chartAnchor (f ≫ g) k hk) (squareNodes f g k i) :=
+  ProjectionRectangleSquareRows.chart_row_nodes
+    (projection.app Z) (k.app Z) (projection.app X) (k.app X)
+    (f ≫ g) (polynomial.map (f ≫ g)) (laurent.map (f ≫ g))
+    (projection.naturality (f ≫ g)) (k.naturality (f ≫ g))
+    (laurentProjection.app Z) (hk Z) i
+
+/-- The outer rectangle row keeps the exact Laurent and polynomial map-composition transports. -/
+theorem chart_row (i : Fin 5) :
+    InputCompositionCarrierCharts.chartNodes f g k hk (CoefficientMovingSquareRows.outerRow i) =
+      preReferenceNode (InputCompositionCarrierCharts.source f g)
+        (InputCompositionCarrierCharts.projectionMap (Z := Z))
+        (outerAnchor f g k hk) (squareNodes f g k i) := by
+  have h := CoefficientMovingSquareRows.outer_row_nodes_cast
+    (polynomial.map g) (polynomial.map f) (laurent.map g) (laurent.map f)
+    (k.app Z) (k.app Y) (k.app X) (k.naturality g).symm (k.naturality f).symm
+    (polynomial.map (f ≫ g)) (laurent.map (f ≫ g))
+    (polynomial.map_comp f g) (laurent.map_comp f g) (k.naturality (f ≫ g)) i
+  have h' := congrArg (preReferenceNode (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierCharts.projectionMap (Z := Z))
+    (InputCompositionCarrierCharts.chartReferenceIso f g k hk)) h
+  exact h'.trans (pre_anchor_node (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierCharts.projectionMap (Z := Z))
+    (InputCompositionCarrierCharts.chartReferenceIso f g k hk) (outerIso f g k)
+    (squareNodes f g k i))
+
+/-- Every direct input/chart seam node agrees as a full dependent reference node. -/
+theorem row_nodes (i : Fin 5) :
+    InputDescSimplex.chartNodes (f ≫ g) k hk (ProjectionRectangleSquareRows.chartRow i) =
+      InputCompositionCarrierCharts.chartNodes f g k hk
+        (CoefficientMovingSquareRows.outerRow i) := by
+  rw [input_row, chart_row, anchor_eq]
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0ChartRows

@@ -1,0 +1,89 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSpanDescent
+/-!
+The six complete restrictions of the global target-span scalar map. Both polynomial-reference
+  summands and all four oriented cylinders retain their original values and clocks.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetSpan
+open CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier FourEdgeTree
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "Ja" => InputCompositionTerminalAttach.arrow (projection.app Y)
+
+/-- The whole target-span map restricts to the complete second branch. -/
+theorem treeMap_second (y : |FourEdgeTree.second E Ja|) :
+    treeMap f E (SSet.toTop.map (secondInTree E Ja) y) = secondValue f E y := by
+  rw [secondInTree, realized_comp, treeMap_third, thirdValue_second]
+
+/-- The whole target-span map restricts to the complete first branch. -/
+theorem treeMap_first (y : |FourEdgeTree.first E Ja|) :
+    treeMap f E (SSet.toTop.map (firstInTree E Ja) y) = firstValue f E y := by
+  rw [firstInTree, realized_comp, treeMap_second, secondValue_first]
+
+/-- The entire genuine positive polynomial input is sent by the original coefficient map. -/
+theorem treeMap_plus (y : |parameterSSet (E ≫ Ja)|) :
+    treeMap f E (SSet.toTop.map (plusVertex E Ja) y) = plusMap f E y := by
+  rw [plusVertex, realized_comp, treeMap_first, firstValue_plus]
+
+/-- The first quarter is the first reversed half of the polynomial square. -/
+theorem treeMap_edge12 (y : |parameterSSet E|) (t : I) :
+    treeMap f E (realizedEdge (edge12 E Ja) (y, t)) =
+      plusSquare f E (y, lower (unitInterval.symm t)) := by
+  rw [edge12, realizedEdge_comp]
+  change treeMap f E (SSet.toTop.map (firstInTree E Ja)
+    (DoubleCylinder.realizedCylinder (𝟙 _) (attachment E Ja) (y, ULift.up t))) = _
+  rw [treeMap_first]
+  exact DoubleCylinder.homotopyDesc_apply_cylinder _ _
+    (DoubleCylinder.realized_isPushout (𝟙 _) (attachment E Ja))
+    (oneValue f E) (plusMap f E) (firstHomotopy f E) t y
+
+/-- The second quarter finishes the reversed positive polynomial square. -/
+theorem treeMap_edge01 (y : |parameterSSet E|) (t : I) :
+    treeMap f E (realizedEdge (edge01 E Ja) (y, t)) =
+      plusSquare f E (y, unitInterval.symm (lower t)) := by
+  rw [edge01, realizedEdge_comp]
+  change treeMap f E (SSet.toTop.map (secondInTree E Ja)
+    (DoubleCylinder.realizedCylinder (𝟙 _) (firstOne E Ja) (y, ULift.up t))) = _
+  rw [treeMap_second]
+  exact DoubleCylinder.homotopyDesc_apply_cylinder _ _
+    (DoubleCylinder.realized_isPushout (𝟙 _) (firstOne E Ja))
+    (zeroValue f E) (firstValue f E) (secondHomotopy f E) t y
+
+/-- The third quarter traverses the whole target overlap, without an added pause. -/
+theorem treeMap_edge03 (y : |parameterSSet E|) (t : I) :
+    treeMap f E (realizedEdge (edge03 E Ja) (y, t)) = central f E (y, t) := by
+  rw [edge03, realizedEdge_comp]
+  change treeMap f E (SSet.toTop.map (thirdInTree E Ja)
+    (DoubleCylinder.realizedCylinder (secondZero E Ja) (𝟙 _) (y, ULift.up t))) = _
+  rw [treeMap_third]
+  exact DoubleCylinder.homotopyDesc_apply_cylinder _ _
+    (DoubleCylinder.realized_isPushout (secondZero E Ja) (𝟙 _))
+    (secondValue f E) (threeValue f E) (thirdHomotopy f E) t y
+
+/-- The final quarter is the entire negative polynomial square in reverse. -/
+theorem treeMap_edge34 (y : |parameterSSet E|) (t : I) :
+    treeMap f E (realizedEdge (edge34 E Ja) (y, t)) =
+      minusSquare f E (y, unitInterval.symm t) := by
+  change treeMap f E
+    (DoubleCylinder.realizedCylinder (thirdThree E Ja) (attachment E Ja) (y, ULift.up t)) = _
+  exact DoubleCylinder.homotopyDesc_apply_cylinder _ _
+    (DoubleCylinder.realized_isPushout (thirdThree E Ja) (attachment E Ja))
+    (thirdValue f E) (minusMap f E) (fourthHomotopy f E) t y
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetSpan

@@ -1,0 +1,56 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenPrecompAttachments
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameter
+/-! Finite source families act on full reference nodes and both original attachments. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor Convexity
+open scoped Simplicial Topology
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp
+open CutOpenCarrier
+variable {U V W T : Model.{u}} (A : U ⟶ V)
+
+/-- Compose a varying source node with a complete output-reference node. -/
+def node (H : V ⟶ W) (M : Node A) (N : Node H) : Node (A ≫ H) :=
+  CommonReferenceProduct.node (A ≫ H) A H (Iso.refl _) M N
+
+/-- The two actual attachment anchors retain their full dependent references. -/
+theorem attachment_node (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
+    (ε : G.functor ≅ (F ≫ J).functor) (M : Node A) (N : Node F) :
+    node A G M (attachPostcompNode F J G ε N) =
+      attachPostcompNode (A ≫ F) J (A ≫ G) (CutOpenPrecomp.anchor A F J G ε)
+        (node A F M N) := by
+  have h : attachPostcompNode F J G ε N =
+      CommonReferenceProduct.reanchor ε
+        (CommonReferenceProduct.postNode (F ≫ J) J (Iso.refl _) N) := by
+    simp [attachPostcompNode, CommonReferenceProduct.reanchor,
+      CommonReferenceProduct.postNode, postcompNode]
+  unfold node
+  rw [h]
+  rw [CommonReferenceProduct.node_second_reanchor, CommonReferenceProduct.node_postcomp]
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext X
+  simp only [CommonReferenceProduct.postNode, postcompNode, CommonReferenceProduct.reanchor,
+    Iso.refl_trans, Iso.trans_hom, isoWhiskerLeft_hom, isoWhiskerRight_hom, NatTrans.comp_app,
+    whiskerLeft_app, whiskerRight_app, CutOpenPrecomp.anchor, attachPostcompNode,
+    Iso.trans_assoc, Iso.symm_hom, comp_obj, associator_inv_app, NatIso.cancel_natIso_hom_left]
+  exact (Category.id_comp _).symm
+
+/-- The finite source family is the second parameter of the whole reference-nerve action. -/
+def parameter {q : ℕ} (M : Fin (q + 1) → Node A) (H : V ⟶ W) :
+    C(|parameterSSet H| × StdSimplex ℝ (Fin (q + 1)), |parameterSSet (A ≫ H)|) :=
+  FiniteParameter.parameter H (A ≫ H) (fun N i ↦ node A H (M i) N)
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp

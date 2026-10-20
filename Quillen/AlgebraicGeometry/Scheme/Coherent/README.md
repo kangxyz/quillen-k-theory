@@ -15,7 +15,6 @@ localization for every Noetherian ring and element, including G1 to G0.
 [`Dedekind.PrincipalDvrBoundaryComparison`](../../../GTheory/Dedekind/PrincipalDvrBoundaryComparison.lean)
 identifies this boundary with the original native local-DVR boundary, retaining
 any specified fraction field and the actual generic/closed pullbacks.
-The separate R5 transport uses the actual stalk, residue, and generic isomorphisms; its finite residue-G1 family lift retains original generic-G1 injectivity as an explicit premise.
 
 [`FinitePointAssembly`](ClosedImmersion/FinitePointAssembly.lean)
 then supplies `fieldAssemblyKEquiv` in every positive degree, including K1
@@ -54,7 +53,7 @@ finite-module applications underlying these geometric sequences.
 ## Finite direct image
 
 For an actual finite map `f : Z ⟶ X`, Aglib's
-[finite-type quasicoherent pushforward](https://github.com/kangxyz/aglib/blob/main/Aglib/AlgebraicGeometry/Modules/QuasiCoherent/FiniteType/Pushforward.lean)
+[finite-type quasicoherent pushforward](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Modules/QuasiCoherent/FiniteType/Pushforward.lean)
 preserves affine-local finite-type quasicoherent sheaves without noetherian
 assumptions. On locally noetherian source and target, the
 [Quillen G-map construction](Finite/GeneralPushforward.lean)

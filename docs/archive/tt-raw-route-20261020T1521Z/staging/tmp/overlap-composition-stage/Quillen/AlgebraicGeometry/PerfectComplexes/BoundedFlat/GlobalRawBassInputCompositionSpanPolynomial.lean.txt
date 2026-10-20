@@ -1,0 +1,76 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpanScalarNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopVertex
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeMovingSquare
+/-! The actual polynomial square and full base attachment in the projection-reference tree. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "E" => baseSource f g
+local notation "J" => ProjectionReference.projectionMap X
+
+/-- The full original binary base-composition path in its actual reference nerve. -/
+def basePath : C(unitInterval, |nerve (Codiscrete (Node E))|) :=
+  (parameter E (binaryNodes f g)).comp (binaryPath (k := 2) 0 1 2)
+
+/-- The complete original eighteen-node polynomial square in the projection reference. -/
+def polynomialSquare : C(unitInterval × unitInterval,
+    |nerve (Codiscrete (Node (E ≫ J)))|) :=
+  (parameter (E ≫ J) (fun i ↦ polynomialNode f g (polynomialNodes f g i))).comp
+    DoubleSquareScalarPaths.coefficientMovingSquareParameter
+
+/-- All three base-edge nodes attach before any native evaluation. -/
+theorem polynomial_base_nodes (i : Fin 3) :
+    polynomialNode f g (polynomialNodes f g
+      (InputCompositionTopVertex.movingEdge.toOrderHom i)) =
+    postcompNode J (binaryNodes f g i) := by
+  have he : InputCompositionTopVertex.movingEdge.toOrderHom i =
+      DoubleSquareMergedSimplex.firstFace.toOrderHom (leftIndex i) := by
+    fin_cases i <;> rfl
+  rw [he, InputCompositionTopInternalNodes.polynomial_base_column]
+  apply Sigma.ext
+  · exact Model.Hom.ext rfl
+  apply heq_of_eq
+  change (polynomialAnchor f g).symm ≪≫
+    ((polynomialAnchor f g) ≪≫ isoWhiskerRight (binaryNodes f g i).2 (J).functor) = _
+  simp only [← Iso.trans_assoc, Iso.symm_self_id, Iso.refl_trans]
+  rfl
+
+/-- The whole base edge has its original binary clock and full scalar attachment. -/
+theorem polynomialSquare_attachment (r : unitInterval) :
+    polynomialSquare f g (r, 1) =
+      SSet.toTop.map (FourEdgeTree.attachment E J) (basePath f g r) := by
+  change parameter (E ≫ J) _
+    (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 1)) =
+    mapParameter (postcompNode J) (parameter E _ (binaryPath (k := 2) 0 1 2 r))
+  rw [← InputCompositionTopVertex.moving_parameter, parameter_face]
+  exact (congrArg (fun N ↦ parameter (E ≫ J) N (binaryPath (k := 2) 0 1 2 r))
+    (funext (polynomial_base_nodes f g))).trans
+      (mapParameter_parameter (postcompNode J) (binaryNodes f g)
+        (binaryPath (k := 2) 0 1 2 r)).symm
+
+/-- Either chart attachment recovers the complete original moving square. -/
+theorem polynomialSquare_chart (k : laurent ⟶ polynomial)
+    (hk : ∀ W, k.app W ≫ projection.app W = laurentProjection.app W)
+    (r s : unitInterval) :
+    mapParameter (reanchor (middleAnchor f g))
+      (SSet.toTop.map (ProjectionReference.FourEdge.chartMap X E k hk)
+        (polynomialSquare f g (r, s))) = movingFace f g k hk (r, s) :=
+  moving_parameter f g k hk _
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionSpanScalar

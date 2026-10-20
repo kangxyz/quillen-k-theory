@@ -1,0 +1,40 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionRailEndpoints
+
+/-! The four whole scalar null rail endpoints retain their prescribed paths and clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry
+open Quillen.PerfectComplexes.GlobalRawBass
+open scoped unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputNullCompositionRailEndpoints
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+example (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.sourceRail f g (0,s) =
+      InputIdentitySeedNull.oldNull (f ≫ g) false s :=
+  InputNullCompositionRailEndpoints.sourceRail_zero f g s
+
+example (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.sourceRail f g (1,s) =
+      SeedSurfaceTransport.oldNull f g s :=
+  InputNullCompositionRailEndpoints.sourceRail_one f g s
+
+example (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.targetRail f g (0,s) =
+      InputIdentitySeedNull.newNull (f ≫ g) false s :=
+  InputNullCompositionRailEndpoints.targetRail_zero f g s
+
+example (s : unitInterval) :
+    InputNullCompositionPolynomialCarrier.targetRail f g (1,s) =
+      InputNullCompositionPrecomp.newNull f g s :=
+  InputNullCompositionRailEndpoints.targetRail_one f g s
+
+end QuillenTest.GlobalRawBassInputNullCompositionRailEndpoints

@@ -1,0 +1,109 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz, OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawUnitCoherence
+public import Quillen.Waldhausen.SConstruction.Iterated.NormalizationTrackPasting
+public import Quillen.Topology.Prespectrum.RelativeHomotopyHorizontal
+public import Quillen.Topology.Prespectrum.RelativeHomotopyReparam
+
+/-!
+# Supported scalar naturality along the original split composition tracks
+
+The proved supported scalar equations realize to whole geometric pastings. The existing
+binary-normalization pastings then retain the exact original geometric-plus-normalization
+clock, yielding pre- and postwhiskering comparisons for the supported unit tracks.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+
+/-- Postwhiskering an actual unit commutes relatively with the original composition track. -/
+def unitTrackPostcomp {X Y Z : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (r : (Γ(Y.obj.right, ⊤))ˣ) :
+    ((compositionHomotopy f g).trans
+      ((pullbackUnitHomotopy g r).postcomp
+        (rawMap f))).RelHomotopy
+    ((pullbackUnitHomotopy (f ≫ g) (Units.map f.hom.right.appTop.hom.toMonoidHom r)).trans
+      (compositionHomotopy f g)) := by
+  let W := boundedFlatPerfectSupportedWaldhausen Z.obj.hom
+  let U := boundedFlatPerfectSupportedWaldhausen X.obj.hom
+  let hA := boundedFlatPerfectSupportedPullback_exact (f ≫ g)
+  let hB := (boundedFlatPerfectSupportedPullback_exact g).comp
+    (boundedFlatPerfectSupportedPullback_exact f)
+  let e := boundedFlatPerfectSupportedPullbackCompIso f g
+  let a := pullbackUnitIso (f ≫ g) (Units.map f.hom.right.appTop.hom.toMonoidHom r)
+  let b := Functor.isoWhiskerRight (pullbackUnitIso g r)
+    (boundedFlatPerfectSupportedPullback f)
+  let G := exactOriginalPrespectrumIsoHomotopy W U hA hB e
+  let B := exactOriginalPrespectrumIsoHomotopy W U hB hB b
+  let A := pullbackUnitHomotopy (f ≫ g) (Units.map f.hom.right.appTop.hom.toMonoidHom r)
+  let N := exactOriginalPrespectrumMapCompHomotopy W
+    (boundedFlatPerfectSupportedWaldhausen Y.obj.hom) U
+    (boundedFlatPerfectSupportedPullback_exact g) (boundedFlatPerfectSupportedPullback_exact f)
+  let D := (pullbackUnitHomotopy g r).postcomp (rawMap f)
+  have JG : (G.trans B).RelHomotopy (A.trans G) :=
+    exactOriginalPrespectrumPastingHomotopy W U hA hB hA hB
+      e.hom b.hom a.hom e.hom (fun _ ↦ U.weq_iso _ inferInstance)
+      (fun _ ↦ U.weq_iso _ inferInstance) (fun _ ↦ U.weq_iso _ inferInstance)
+      (fun _ ↦ U.weq_iso _ inferInstance) (pullbackUnitIso_comp f g r)
+  have JN : (B.trans N).RelHomotopy (N.trans D) :=
+    exactNormalizationLeftTrackPasting (boundedFlatPerfectSupportedPullback_exact g)
+      (boundedFlatPerfectSupportedPullback_exact g) (boundedFlatPerfectSupportedPullback_exact f)
+      (pullbackUnitIso g r).hom
+      (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen Y.obj.hom).weq_iso _ inferInstance)
+  exact (Homotopy.RelHomotopy.transAssoc G N D).trans
+    (((Homotopy.RelHomotopy.refl G).hcomp JN.symm).trans
+      ((Homotopy.RelHomotopy.transAssoc G B N).symm.trans
+        ((JG.hcomp (Homotopy.RelHomotopy.refl N)).trans
+          (Homotopy.RelHomotopy.transAssoc A G N))))
+
+/-- Prewhiskering an actual unit commutes relatively with the original composition track. -/
+def unitTrackPrecomp {X Y Z : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (r : (Γ(X.obj.right, ⊤))ˣ) :
+    ((compositionHomotopy f g).trans
+      (Homotopy.precomp (rawMap g)
+        (pullbackUnitHomotopy f r))).RelHomotopy
+    ((pullbackUnitHomotopy (f ≫ g) r).trans
+      (compositionHomotopy f g)) := by
+  let W := boundedFlatPerfectSupportedWaldhausen Z.obj.hom
+  let U := boundedFlatPerfectSupportedWaldhausen X.obj.hom
+  let hA := boundedFlatPerfectSupportedPullback_exact (f ≫ g)
+  let hB := (boundedFlatPerfectSupportedPullback_exact g).comp
+    (boundedFlatPerfectSupportedPullback_exact f)
+  let e := boundedFlatPerfectSupportedPullbackCompIso f g
+  let a := pullbackUnitIso (f ≫ g) r
+  let b := Functor.isoWhiskerLeft (boundedFlatPerfectSupportedPullback g)
+    (pullbackUnitIso f r)
+  let G := exactOriginalPrespectrumIsoHomotopy W U hA hB e
+  let B := exactOriginalPrespectrumIsoHomotopy W U hB hB b
+  let A := pullbackUnitHomotopy (f ≫ g) r
+  let N := exactOriginalPrespectrumMapCompHomotopy W
+    (boundedFlatPerfectSupportedWaldhausen Y.obj.hom) U
+    (boundedFlatPerfectSupportedPullback_exact g) (boundedFlatPerfectSupportedPullback_exact f)
+  let D := Homotopy.precomp (rawMap g)
+    (pullbackUnitHomotopy f r)
+  have JG : (G.trans B).RelHomotopy (A.trans G) :=
+    exactOriginalPrespectrumPastingHomotopy W U hA hB hA hB
+      e.hom b.hom a.hom e.hom (fun _ ↦ U.weq_iso _ inferInstance)
+      (fun _ ↦ U.weq_iso _ inferInstance) (fun _ ↦ U.weq_iso _ inferInstance)
+      (fun _ ↦ U.weq_iso _ inferInstance) (pullbackUnitIso_comp_target f g r)
+  have JN : (B.trans N).RelHomotopy (N.trans D) :=
+    exactNormalizationRightTrackPasting (boundedFlatPerfectSupportedPullback_exact g)
+      (boundedFlatPerfectSupportedPullback_exact f) (boundedFlatPerfectSupportedPullback_exact f)
+      (pullbackUnitIso f r).hom
+      (fun _ ↦ U.weq_iso _ inferInstance)
+  exact (Homotopy.RelHomotopy.transAssoc G N D).trans
+    (((Homotopy.RelHomotopy.refl G).hcomp JN.symm).trans
+      ((Homotopy.RelHomotopy.transAssoc G B N).symm.trans
+        ((JG.hcomp (Homotopy.RelHomotopy.refl N)).trans
+          (Homotopy.RelHomotopy.transAssoc A G N))))
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

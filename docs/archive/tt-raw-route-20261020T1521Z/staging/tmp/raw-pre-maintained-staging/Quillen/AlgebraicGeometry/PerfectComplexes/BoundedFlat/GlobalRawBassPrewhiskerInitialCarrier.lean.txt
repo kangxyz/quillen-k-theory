@@ -1,0 +1,109 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerOuterCone
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerInitialParameter
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenPrecompMap
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenFoldWholeCells
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSelectedRecovery
+/-!
+Every original positive carrier point retains the genuine outer source projection at node two.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct CutOpenCarrier
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial) (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "M" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+local notation "D" => BassH0Merge.normalizedMap (projection.app W)
+local notation "C" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "J" => ProjectionReference.projectionMap X
+local notation "L'" => ProjectionReference.reference X (A ≫ E)
+local notation "β'" => ProjectionReference.FourEdge.beta X (A ≫ E)
+
+
+private theorem initial_carrier
+    (v : parameterSSet ((A ≫ E) ≫ J) ⟶ FourEdgeTree.simplicial (A ≫ E) J)
+    (hv : v ≫ β' = ProjectionReference.FourEdge.chartMap X (A ≫ E) k hk)
+    (y : InputCompositionPolynomialScalar.Carrier f g k) :
+    preConeMap f g c k hk v hv
+      (FinitePrecomp.precompFinite S M P K G ε ε (y, Convexity.StdSimplex.single 2)) =
+    outerConeMap f g c k hk v hv (CutOpenPrecomp.map C P K G ε ε y) := by
+  rcases exists_native_cell P K G ε ε y with
+    ⟨z, rfl⟩ | ⟨z, t, rfl⟩ | ⟨z, t, rfl⟩ | rfl | rfl
+  · simp only [FinitePrecomp.precompFinite_laurent, preConeMap,
+      CutOpenPrecomp.map_laurent, outerConeMap, CutOpenFold.map_laurent]
+    change FourEdgeTree.laurentInclusion (A ≫ E) J L' β'
+      (mapParameter (reanchor (projectionLaurentSeamAnchor f g c k hk))
+        (FinitePrecomp.parameter S M G (z, Convexity.StdSimplex.single 2))) =
+      FourEdgeTree.laurentInclusion (A ≫ E) J L' β'
+        (mapParameter (fun N ↦ reanchor (initialLaurentProjectionAnchor f g c k hk)
+          (precompNode D N)) (mapParameter (precompNode C) z))
+    exact congrArg (FourEdgeTree.laurentInclusion (A ≫ E) J L' β')
+      (initial_reference_parameter c G L' (projectionLaurentSeamAnchor f g c k hk) z)
+  · simp only [FinitePrecomp.precompFinite_cylinderMinus, preConeMap,
+      CutOpenPrecomp.map_cylinderMinus, outerConeMap, CutOpenFold.map_cylinder]
+    exact congrArg (fun a ↦ FourEdgeTree.cylinder (A ≫ E) J L' β'
+      (SSet.toTop.map v a, t))
+      (initial_reference_parameter c P ((A ≫ E) ≫ J) (projectionSeamAnchor f g c) z)
+  · simp only [FinitePrecomp.precompFinite_cylinderPlus, preConeMap,
+      CutOpenPrecomp.map_cylinderPlus, outerConeMap, CutOpenFold.map_cylinderPlus]
+    exact congrArg (fun a ↦ FourEdgeTree.cylinder (A ≫ E) J L' β'
+      (SSet.toTop.map v a, t))
+      (initial_reference_parameter c P ((A ≫ E) ≫ J) (projectionSeamAnchor f g c) z)
+  · simp only [FinitePrecomp.precompFinite_tipMinus, preConeMap,
+      CutOpenPrecomp.map_tipMinus, outerConeMap, CutOpenFold.map_tipMinus]
+  · simp only [FinitePrecomp.precompFinite_tipPlus, preConeMap,
+      CutOpenPrecomp.map_tipPlus, outerConeMap, CutOpenFold.map_tipPlus]
+
+/-- Every original positive carrier point retains the genuine outer source projection at node two.
+-/
+theorem initial_plus_carrier (y : InputCompositionPolynomialScalar.Carrier f g plus) :
+    prePlusConeMap f g c
+      (FinitePrecomp.precompFinite S M P (InputCompositionPolynomialScalar.chart (X := X) plus)
+        (InputCompositionPolynomialScalar.laurentReference f g plus)
+        (InputCompositionPolynomialScalar.anchor f g plus)
+        (InputCompositionPolynomialScalar.anchor f g plus) (y, Convexity.StdSimplex.single 2)) =
+    outerPlusConeMap f g c
+      (CutOpenPrecomp.map C P (InputCompositionPolynomialScalar.chart (X := X) plus)
+        (InputCompositionPolynomialScalar.laurentReference f g plus)
+        (InputCompositionPolynomialScalar.anchor f g plus)
+        (InputCompositionPolynomialScalar.anchor f g plus) y) :=
+  initial_carrier f g c plus plus_projection _
+    (ProjectionReference.FourEdge.beta_plus X (A ≫ E)) y
+
+/-- Every original negative carrier point retains its distinct outer source projection. -/
+theorem initial_minus_carrier (y : InputCompositionPolynomialScalar.Carrier f g minus) :
+    preMinusConeMap f g c
+      (FinitePrecomp.precompFinite S M P (InputCompositionPolynomialScalar.chart (X := X) minus)
+        (InputCompositionPolynomialScalar.laurentReference f g minus)
+        (InputCompositionPolynomialScalar.anchor f g minus)
+        (InputCompositionPolynomialScalar.anchor f g minus) (y, Convexity.StdSimplex.single 2)) =
+    outerMinusConeMap f g c
+      (CutOpenPrecomp.map C P (InputCompositionPolynomialScalar.chart (X := X) minus)
+        (InputCompositionPolynomialScalar.laurentReference f g minus)
+        (InputCompositionPolynomialScalar.anchor f g minus)
+        (InputCompositionPolynomialScalar.anchor f g minus) y) :=
+  initial_carrier f g c minus minus_projection _
+    (ProjectionReference.FourEdge.beta_minus X (A ≫ E)) y
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

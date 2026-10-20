@@ -1,0 +1,226 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialScalarCarrier
+public import Quillen.Topology.Prespectrum.CarrierSquareDescentEvaluation
+public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
+/-! Exact original scalar correction on arbitrary polynomial inputs, for either chart. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar
+open CommonReferenceNerve
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (k : laurent ⟶ polynomial)
+local notation "F" => polynomialReference f g
+local notation "G" => laurentReference f g k
+local notation "J" => chart (X := X) k
+local notation "ε" => anchor f g k
+open Quillen.SimplexParameters Quillen.ScalarRectangle Quillen.NativePathCells
+/-- The actual uncorrected moving-null row, with the ordinary tip fixed. -/
+def movingNullPath (r : unitInterval) :
+    Path (nullMovingFirst f g k (r, 0)) (tip f g k) where
+  toFun s := nullMoving f g k (r, s)
+  continuous_toFun := by fun_prop
+  source' := concatSecond_zero _ _ _ r
+  target' := nullMoving_tip f g k r
+
+/-- The entire bottom edge is retained as a path, not replaced by endpoint data. -/
+def nullBottom : Path (nullMovingFirst f g k (0, 0)) (nullMovingFirst f g k (1, 0)) where
+  toFun r := nullMovingFirst f g k (r, 0)
+  continuous_toFun := by fun_prop
+  source' := rfl
+  target' := rfl
+
+/-- The scalar square comes from the explicit Laurent/cylinder construction above. -/
+def movingSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g k 0)
+    (movingNullPath f g k 1) (nullBottom f g k)
+    (Path.refl (tip f g k)) where
+  parameter := nullMoving f g k
+  at_zero _ := rfl
+  at_one _ := rfl
+  left r := concatSecond_zero _ _ _ r
+  right r := nullMoving_tip f g k r
+
+/-- The first original half of the last chart row. -/
+def finalChartFirst : Path (nullMovingFirst f g k (1, 0))
+    (nullMovingFirst f g k (1, lower 1)) where
+  toFun s := nullMovingFirst f g k (1, lower s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g k (1, t))
+    (Subtype.ext (by norm_num [lower]))
+  target' := rfl
+
+/-- The second original half of the last chart row; its middle endpoint is exact. -/
+def finalChartSecond : Path (nullMovingFirst f g k (1, lower 1))
+    (nullMovingFirst f g k (1, 1)) where
+  toFun s := nullMovingFirst f g k (1, upper s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g k (1, t))
+    (Subtype.ext (by norm_num [lower, upper]))
+  target' := congrArg (fun t ↦ nullMovingFirst f g k (1, t))
+    (Subtype.ext (by norm_num [upper]))
+
+/-- The last cylinder row, attached at its original scalar seam. -/
+def finalCylinder : Path (nullMovingFirst f g k (1, 1))
+    (tip f g k) where
+  toFun s := nullMovingSecond f g k (1, s)
+  continuous_toFun := by fun_prop
+  source' := (nullMoving_seam f g k 1).symm
+  target' := CutOpenCarrier.cylinderMinus_one F J G ε ε (pausedPolynomial f g 1)
+
+/-- Splitting the chart at its original half height recovers the entire original row. -/
+theorem finalChart_halves (s : unitInterval) :
+    ((finalChartFirst f g k).trans (finalChartSecond f g k)) s =
+      nullMovingFirst f g k (1, s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower]
+    rfl
+  · rw [path_upper]
+    rfl
+
+/-- The uncorrected final row has precisely the left-associated three-piece word. -/
+theorem movingNullPath_one :
+    ((finalChartFirst f g k).trans (finalChartSecond f g k)).trans (finalCylinder f g k) =
+      movingNullPath f g k 1 := by
+  apply Path.ext
+  funext s
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower, finalChart_halves]
+    exact (nullMoving_lower f g k 1 t).symm
+  · rw [path_upper]
+    exact (nullMoving_upper f g k 1 t).symm
+
+/-- The prescribed correction is the literal path associator of the three original pieces. -/
+def finalCorrection : (movingNullPath f g k 1).Homotopy
+    ((finalChartFirst f g k).trans ((finalChartSecond f g k).trans (finalCylinder f g k))) :=
+  (Path.Homotopy.transAssoc (finalChartFirst f g k) (finalChartSecond f g k)
+    (finalCylinder f g k)).cast (movingNullPath_one f g k) rfl
+
+/-- The full chosen boundary recipe retains both horizontal compositions and the terminal pause. -/
+def correctedBoundary : (movingNullPath f g k 0).Homotopy
+    (((nullBottom f g k).trans
+      ((finalChartFirst f g k).trans ((finalChartSecond f g k).trans (finalCylinder f g k)))).trans
+        (Path.refl (tip f g k)).symm) :=
+  (movingSquare f g k).toBoundary.trans
+    (((Path.Homotopy.refl (nullBottom f g k)).hcomp (finalCorrection f g k)).hcomp
+      (Path.Homotopy.refl (Path.refl (tip f g k)).symm))
+
+/-- The actual corrected scalar square descends the literal boundary recipe. -/
+def correctedSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g k 0)
+    ((finalChartFirst f g k).trans ((finalChartSecond f g k).trans (finalCylinder f g k)))
+    (nullBottom f g k) (Path.refl (tip f g k)) :=
+  Quillen.CarrierPathSquare.boundarySquare (correctedBoundary f g k)
+
+/-- Every collapsed parameter is recovered exactly, preserving the complete correction interior. -/
+theorem correctedSquare_collapse (z : unitInterval × unitInterval) :
+    (correctedSquare f g k).parameter (Quillen.ThreeSideSquare.collapse z) =
+      correctedBoundary f g k z :=
+  Quillen.CarrierPathSquare.boundaryParameter_collapse (correctedBoundary f g k) z
+
+
+/-- The first scalar half recovers the complete original native chart square. -/
+theorem nullMovingFirst_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (nullMovingFirst f g k (r, s)) x =
+      (mappingConeInclusion (chartP k X)).map n
+        ((comparisonSquare f g k).level n (r, (s, x))) := by
+  change CutOpenCarrier.nativeEval F J G ε ε n
+    (CutOpenCarrier.laurentInclusion F J G ε ε (chartSurface f g k (r, s))) x = _
+  rw [CutOpenCarrier.nativeEval_laurentInclusion, chartSurface_native]
+  rfl
+
+/-- The scalar binary path recovers the original polynomial composition at every input. -/
+theorem polynomialPath_native (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    pointwisePrespectrumFamily F n (polynomialPath f g r) x =
+      (InputCompositionPolynomial.polynomialComposition f g).level n (r, x) := by
+  change pointwisePrespectrumFamily F n (parameter F (polynomialNodes f g) _) x = _
+  rw [pointwisePrespectrumFamily_parameter, prespectrumFamily_eq]
+  let M : Fin 3 → Node F := fun i ↦
+    ⟨![BinaryNormalizationSimplex.sourceMap (polynomial.map f) (polynomial.map g),
+      BinaryNormalizationSimplex.intermediateMap (polynomial.map f) (polynomial.map g),
+      BinaryNormalizationSimplex.targetMap (polynomial.map f) (polynomial.map g)] i,
+      Fin.cases (Iso.refl _) (Fin.cases
+        (BinaryNormalizationSimplex.first (polynomial.map f) (polynomial.map g))
+        (Fin.cases (BinaryNormalizationSimplex.total (polynomial.map f) (polynomial.map g))
+          (fun j ↦ Fin.elim0 j))) i⟩
+  have hs : ModelSimplex.ofIsos F (fun i ↦ (polynomialNodes f g i).1)
+      (fun i ↦ (polynomialNodes f g i).2) =
+      BinaryNormalizationSimplex.simplex (polynomial.map f) (polynomial.map g) :=
+    ModelSimplex.ofIsos_nodes_congr (polynomialNodes f g) M (by
+      intro i
+      fin_cases i <;> rfl)
+  rw [hs]
+  exact BinaryNormalizationSimplex.native_path (polynomial.map f) (polynomial.map g) n r x
+
+/-- The paused polynomial path recovers the original clock without source projection. -/
+theorem pausedPolynomial_native (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    pointwisePrespectrumFamily F n (pausedPolynomial f g r) x =
+      (polynomialTrack f g).level n (r, x) := by
+  rcases cover r with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [pausedPolynomial, path_lower, polynomialPath_native]
+    exact (Homotopy.trans_lower_cell
+      (InputCompositionPolynomial.polynomialComposition f g)
+      (Quillen.LoopPrespectrum.Homotopy.refl _) n t x).symm
+  · rw [pausedPolynomial, path_upper]
+    have h := polynomialPath_native f g n 1 x
+    rw [Path.target, Homotopy.at_one] at h
+    change pointwisePrespectrumFamily F n
+      (parameter F (polynomialNodes f g) (Convexity.StdSimplex.single 2)) x = _
+    rw [h]
+    exact (Homotopy.trans_upper_cell
+      (InputCompositionPolynomial.polynomialComposition f g)
+      (Quillen.LoopPrespectrum.Homotopy.refl _) n t x).symm
+
+/-- The second scalar half retains the original height and moving polynomial input. -/
+theorem nullMovingSecond_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (nullMovingSecond f g k (r, s)) x =
+      (mappingConeHomotopy (chartP k X)).level n
+        (s, (polynomialTrack f g).level n (r, x)) := by
+  change CutOpenCarrier.nativeEval F J G ε ε n
+    (CutOpenCarrier.cylinderMinus F J G ε ε (pausedPolynomial f g r, s)) x = _
+  rw [CutOpenCarrier.nativeEval_cylinderMinus, pausedPolynomial_native]
+  rfl
+
+/-- The unchanged native moving-null construction for the selected chart. -/
+def nativeMovingSquare := coneSquareNullMovingSquare (chartP k Z) (chartP k X)
+  (InputCompositionTransformations.square k (f ≫ g)) (compositeComparison f g k)
+  (polynomialTrack f g) (InputCompositionCharts.laurentComposition f g)
+  (comparisonSquare f g k)
+
+/-- Both scalar halves recover the complete native moving-null square on arbitrary input. -/
+theorem nullMoving_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n (nullMoving f g k (r, s)) x =
+      (nativeMovingSquare f g k).level n (r, (s, x)) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [nullMoving_lower, nullMovingFirst_native]
+    unfold nativeMovingSquare coneSquareNullMovingSquare
+    rw [Homotopy.Square.nativePastePaths_lower]
+    rfl
+  · rw [nullMoving_upper, nullMovingSecond_native]
+    unfold nativeMovingSquare coneSquareNullMovingSquare
+    rw [Homotopy.Square.nativePastePaths_upper]
+    rfl
+
+/-- The original boundary collapse is retained at every pair of clocks. -/
+theorem movingBoundary_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε n ((movingSquare f g k).toBoundary (r, s)) x =
+      (nativeMovingSquare f g k).toBoundary.level n (r, (s, x)) :=
+  nullMoving_native f g k n (Quillen.ThreeSideSquare.collapse (r, s)).1
+    (Quillen.ThreeSideSquare.collapse (r, s)).2 x
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar

@@ -1,0 +1,60 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerPolynomialHalf
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSelectedSeams
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenFoldWholeCells
+public import Quillen.Topology.Path.ScalarRectangleConcatenation
+/-!
+The genuine polynomial sector reaches its original negative tip for every composition time.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+variable (k : laurent ⟶ polynomial)
+open CommonReferenceNerve CutOpenCarrier
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "ε'" => CutOpenPrecomp.anchor MC P K G ε
+local notation "Q" => outerPolynomialCarrier f g c k
+
+/-- The genuine polynomial sector reaches its original negative tip for every composition time. -/
+theorem polynomialPrewhisker_tip (r : I) :
+    polynomialPrewhisker f g c k (r, 1) = tipMinus (MC ≫ P) K (MC ≫ G) ε' ε' := by
+  have h := ((polynomialLowerTrack f g c k).trans
+    (polynomialUpperTrack f g c k)).map_one_left r
+  change polynomialPrewhisker f g c k (r, 1) = polynomialUpper f g c k (r, 1) at h
+  rw [h]
+  change CutOpenPrecomp.map MC P K G ε ε
+    ((InputCompositionPolynomialScalar.correctedSquare f g k).parameter (r, 1)) = _
+  rw [(InputCompositionPolynomialScalar.correctedSquare f g k).right]
+  exact CutOpenPrecomp.map_tipMinus MC P K G ε ε
+
+/-- Finite source-square precomposition keeps the chosen polynomial tip at every source time. -/
+theorem selectedPolynomial_tip (r t : I) :
+    selectedPolynomial f g c k ((r, 1), t) =
+      tipMinus
+        (NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W) ≫ P)
+        K (NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W) ≫ G)
+        (CutOpenPrecomp.anchor _ P K G ε) (CutOpenPrecomp.anchor _ P K G ε) := by
+  unfold selectedPolynomial
+  simp only [ContinuousMap.comp_apply, ContinuousMap.coe_mk]
+  rw [(InputCompositionPolynomialScalar.correctedSquare f g k).right]
+  exact FinitePrecomp.precompFinite_tipMinus _ _ P K G ε ε _
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

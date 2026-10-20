@@ -1,0 +1,33 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetConeNative
+/-! Exact whole-reference cone action and independent original clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Consumer.GlobalRawBassProjectionTargetCone
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}} (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+open Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference
+local notation "E'" => E ≫ InputCompositionTerminalAttach.arrow f
+
+/-- Structure time is independent of every scalar-cone parameter. -/
+theorem independent_structure (n : ℕ) (z : FourEdge.scalarCone Y E)
+    (x : (prespectrum V).space n) (s : I) :
+    FourEdge.coneEval X E' (n+1) (TargetCone.coneMap f E z)
+      ((prespectrum V).structureMap n x s) =
+    (mappingCone (GlobalRawBass.comparison X)).structureMap n
+      ((GlobalRawBass.coneMap f).map n (FourEdge.coneEval Y E n z x)) s := by
+  exact (FourEdge.coneEval_structure X E' n (TargetCone.coneMap f E z) x s).trans
+    (congrArg (fun y ↦ (mappingCone (GlobalRawBass.comparison X)).structureMap n y s)
+      (TargetCone.coneMap_native f E n z x))
+end Consumer.GlobalRawBassProjectionTargetCone

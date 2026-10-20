@@ -1,0 +1,74 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalPolynomialRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetCharts
+/-!
+The original global moving chart and target-oriented polynomial square agree at their complete
+  common node. Positive and inverse charts retain separate full normalization anchors.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target.TerminalChartJoin
+open BassH0Merge BassH1Join CommonReferenceNerve
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+
+private theorem chart_row (α : laurent ⟶ polynomial)
+    (ha : ∀ Z, α.app Z ≫ projection.app Z = laurentProjection.app Z) (i : Fin 5) :
+    InputDescSimplex.chartNodes f α ha (BassH0ChartBoundaryRows.rowFace.toOrderHom i) =
+      preNode f α ha (squareNodes f α i) :=
+  ProjectionRectangleSquareRows.chart_row_nodes
+    (projection.app Y) (α.app Y) (projection.app X) (α.app X)
+    f (polynomial.map f) (laurent.map f) (projection.naturality f) (α.naturality f)
+    (laurentProjection.app Y) (ha Y) i
+
+/-- The final positive chart node is the original first polynomial-square endpoint. -/
+theorem positive_node :
+    preNode f plus plus_projection (squareNodes f plus 4) =
+      postReferenceNode (InputDescSimplex.reference f)
+        (InputCompositionTerminalAttach.arrow (plus.app X))
+        (terminalPolynomialAnchor f plus plus_projection)
+        (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y)
+          (projection.app X) f (projection.naturality f) 2) :=
+  (chart_row f plus plus_projection 4).symm.trans (terminal_polynomial_plus_nodes f 2)
+
+/-- The separate inverse chart keeps its full reference at the same original endpoint. -/
+theorem negative_node :
+    preNode f minus minus_projection (squareNodes f minus 4) =
+      postReferenceNode (InputDescSimplex.reference f)
+        (InputCompositionTerminalAttach.arrow (minus.app X))
+        (terminalPolynomialAnchor f minus minus_projection)
+        (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y)
+          (projection.app X) f (projection.naturality f) 2) :=
+  (chart_row f minus minus_projection 4).symm.trans (terminal_polynomial_minus_nodes f 2)
+
+/-- The full positive chart and polynomial normalization anchors agree. -/
+theorem positive_anchor :
+    canonicalAnchor f plus plus_projection ≪≫
+      isoWhiskerLeft (projectionMap Y).functor (squareNodes f plus 4).2 =
+    terminalPolynomialAnchor f plus plus_projection ≪≫
+      isoWhiskerRight (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y)
+        (projection.app X) f (projection.naturality f) 2).2
+        (InputCompositionTerminalAttach.arrow (plus.app X)).functor := by
+  exact eq_of_heq (Sigma.mk.inj (positive_node f)).2
+
+/-- The inverse chart preserves its distinct full normalization equality. -/
+theorem negative_anchor :
+    canonicalAnchor f minus minus_projection ≪≫
+      isoWhiskerLeft (projectionMap Y).functor (squareNodes f minus 4).2 =
+    terminalPolynomialAnchor f minus minus_projection ≪≫
+      isoWhiskerRight (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y)
+        (projection.app X) f (projection.naturality f) 2).2
+        (InputCompositionTerminalAttach.arrow (minus.app X)).functor := by
+  exact eq_of_heq (Sigma.mk.inj (negative_node f)).2
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target.TerminalChartJoin

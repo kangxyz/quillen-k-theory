@@ -141,7 +141,7 @@ two totalizations of an actual four-dimensional strict arrow diagram `E`. Their
 target is `totalFunctor.obj (coneSquare (comparisonMap E))`, and all sixteen cells exchange
 whole parameter blocks, retaining four independent times in the deepest cell.
 The geometric target transports and point-set involution are described in
-the [perfect-complex guide](README.md#geometric-double-cone-permutation).
+the [geometric double-cone section](#geometric-double-cone-permutation).
 
 [DoubleLaurentInclusion](DoubleLaurentInclusion.lean)
 compares the geometric and cone-loop constructions after the displayed
@@ -241,6 +241,15 @@ slice of a supplied equivariant whole null. The
 [perfect-complex application](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md#native-current-stage-full-open-localization)
 constructs these equivariance equations for the original supported/full-open
 null and proves the integer-base current-stage fiber lift stable under its
-open-immersion, compactness and quasi-separatedness hypotheses. That result remains separate from classical TT identification and the older
-raw O-cell route. [Recorded evidence](../../../docs/evidence/README.md#tt-source-and-validation-records)
+open-immersion, compactness and quasi-separatedness hypotheses. Together with
+the actual perfect K-model, inherited forward left-[T] tensor action, all-stage
+recursion and specified stable roof, these basic and auxiliary canonical-null
+fiber comparisons prove original TT Theorem 7.4 in every integer degree:
+`X` is qcqs, `U` is quasi-compact, and the auxiliary closed support has
+quasi-compact complement. See the
+[tensor Bass construction](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md)
+and [fine Bass K-model](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/FineBassK.md).
+A full multiplicative API and comparison with another prescribed raw point-set
+implementation remain separate tasks; neither is an additional premise of
+this localization theorem. [Recorded evidence](../../../docs/evidence/README.md#tt-source-and-validation-records)
 is maintained with the global documentation.

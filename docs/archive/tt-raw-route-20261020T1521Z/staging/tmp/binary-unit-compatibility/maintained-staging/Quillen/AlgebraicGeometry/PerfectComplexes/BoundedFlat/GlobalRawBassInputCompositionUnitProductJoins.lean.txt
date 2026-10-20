@@ -1,0 +1,114 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitProductEnds
+/-! Full endpoint references of the two original unit product rails. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open CommonReferenceNerve Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductJoins
+open InputCompositionUnitProductEnds InputCompositionUnitProducts InputCompositionUnitProductRows
+  InputCompositionUnitMiddleRows
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+private def oldEdge : ⦋1⦌ ⟶ ⦋9⦌ := SimplexCategory.Hom.mk ⟨![2, 7], by decide⟩
+private def newEdge : ⦋1⦌ ⟶ ⦋9⦌ := SimplexCategory.Hom.mk ⟨![4, 9], by decide⟩
+
+/-- Entire original unit path at composition time 0, before native evaluation. -/
+theorem source_zero_path (s : unitInterval) :
+    sourceSurface f g (0, s) = parameter (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+      (InputIdentitySeedUnitNodes.nodes (f ≫ g)) (InputIdentitySeedUnitNodes.V s) := by
+  change parameter _ (sourceNodes f g) (Quillen.SimplexGrid.parameter 1 2 (edge (k := 1) 0 1 s,
+    binaryPath (k := 2) 0 1 2 0)) = _
+  rw [Path.source, Quillen.SimplexGrid.parameter_column]
+  have hv : InputIdentitySeedUnitNodes.V s = embed oldEdge (edge (k := 1) 0 1 s) :=
+    (map_edge oldEdge 0 1 s).symm
+  rw [hv]
+  change parameter _ _ (Convexity.StdSimplex.map _ _) =
+    parameter _ _ (Convexity.StdSimplex.map oldEdge.toOrderHom _)
+  exact parameter_eq_of_face_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (InputIdentitySeedUnitNodes.nodes (f ≫ g)) (sourceNodes f g) oldEdge
+      (Quillen.SimplexGrid.columnFace 1 2 0)
+    (by
+      intro i
+      fin_cases i
+      · exact source_zero_lower f g
+      · exact source_zero_upper f g) (edge (k := 1) 0 1 s)
+
+/-- Entire original unit path at composition time 1, before native evaluation. -/
+theorem source_one_path (s : unitInterval) :
+    sourceSurface f g (1, s) = mapParameter (InputCompositionTerminalAttach.postNode f g)
+      (parameter (InputIdentitySeedCarrier.laurentRef g) (InputIdentitySeedUnitNodes.nodes g)
+        (InputIdentitySeedUnitNodes.V s)) := by
+  change parameter _ (sourceNodes f g) (Quillen.SimplexGrid.parameter 1 2 (edge (k := 1) 0 1 s,
+    binaryPath (k := 2) 0 1 2 1)) = _
+  rw [Path.target, Quillen.SimplexGrid.parameter_column]
+  rw [mapParameter_parameter]
+  have hv : InputIdentitySeedUnitNodes.V s = embed oldEdge (edge (k := 1) 0 1 s) :=
+    (map_edge oldEdge 0 1 s).symm
+  rw [hv]
+  change parameter _ _ (Convexity.StdSimplex.map _ _) =
+    parameter _ _ (Convexity.StdSimplex.map oldEdge.toOrderHom _)
+  exact parameter_eq_of_face_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (fun i ↦ InputCompositionTerminalAttach.postNode f g (InputIdentitySeedUnitNodes.nodes g i))
+      (sourceNodes f g) oldEdge (Quillen.SimplexGrid.columnFace 1 2 2)
+    (by
+      intro i
+      fin_cases i
+      · exact source_one_lower f g
+      · exact source_one_upper f g) (edge (k := 1) 0 1 s)
+
+/-- Entire original unit path at composition time 0, before native evaluation. -/
+theorem target_zero_path (s : unitInterval) :
+    targetSurface f g (0, s) = parameter (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+      (InputIdentitySeedUnitNodes.nodes (f ≫ g)) (InputIdentitySeedUnitNodes.W s) := by
+  change parameter _ (targetNodes f g) (Quillen.SimplexGrid.parameter 2 1 (binaryPath (k := 2) 0 1 2
+    0, edge (k := 1) 0 1 s)) = _
+  rw [Path.source, Quillen.SimplexGrid.parameter_row]
+  have hv : InputIdentitySeedUnitNodes.W s = embed newEdge (edge (k := 1) 0 1 s) :=
+    (map_edge newEdge 0 1 s).symm
+  rw [hv]
+  change parameter _ _ (Convexity.StdSimplex.map _ _) =
+    parameter _ _ (Convexity.StdSimplex.map newEdge.toOrderHom _)
+  exact parameter_eq_of_face_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (InputIdentitySeedUnitNodes.nodes (f ≫ g)) (targetNodes f g) newEdge
+      (Quillen.SimplexGrid.rowFace 2 1 0)
+    (by
+      intro i
+      fin_cases i
+      · exact target_zero_lower f g
+      · exact target_zero_upper f g) (edge (k := 1) 0 1 s)
+
+/-- Entire original unit path at composition time 1, before native evaluation. -/
+theorem target_one_path (s : unitInterval) :
+    targetSurface f g (1, s) = mapParameter (InputCompositionTerminalAttach.preNode f g)
+      (parameter (InputIdentitySeedCarrier.laurentRef f) (InputIdentitySeedUnitNodes.nodes f)
+        (InputIdentitySeedUnitNodes.W s)) := by
+  change parameter _ (targetNodes f g) (Quillen.SimplexGrid.parameter 2 1 (binaryPath (k := 2) 0 1 2
+    1, edge (k := 1) 0 1 s)) = _
+  rw [Path.target, Quillen.SimplexGrid.parameter_row]
+  rw [mapParameter_parameter]
+  have hv : InputIdentitySeedUnitNodes.W s = embed newEdge (edge (k := 1) 0 1 s) :=
+    (map_edge newEdge 0 1 s).symm
+  rw [hv]
+  change parameter _ _ (Convexity.StdSimplex.map _ _) =
+    parameter _ _ (Convexity.StdSimplex.map newEdge.toOrderHom _)
+  exact parameter_eq_of_face_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (fun i ↦ InputCompositionTerminalAttach.preNode f g (InputIdentitySeedUnitNodes.nodes f i))
+      (targetNodes f g) newEdge (Quillen.SimplexGrid.rowFace 2 1 2)
+    (by
+      intro i
+      fin_cases i
+      · exact target_one_lower f g
+      · exact target_one_upper f g) (edge (k := 1) 0 1 s)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductJoins

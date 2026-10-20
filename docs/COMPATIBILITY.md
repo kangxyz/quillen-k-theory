@@ -1,5 +1,19 @@
 # Compatibility and integration history
 
+## Tensor construction checkpoint and terminal-chart aliases
+
+The 2026-10-21 integration adds the tensor-generated construction, generic
+weak-zero/grid interfaces and their tests. The incoming recovery package is
+labelled 0.10.0; its archived raw-route modules were never enrolled in the
+accepted `25387c65` library. The [archive guide](RESEARCH_ARCHIVE.md) records
+that source boundary and the recovery layout.
+
+`MWholeNerveTerminalChartComparisonClients` keeps its public import path and
+all ten `client_terminal_chart_comparison_*` names as deprecated aliases.
+New clients use `Quillen.PerfectComplexes.BassMWholeNerve.terminal_chart_comparison_*`
+from `MWholeNerveTerminalChartComparison` directly. The original wrapper body
+is preserved as a compatibility snapshot, with the same hypotheses and coordinates.
+
 Historical imports and integration records live here; current mathematical
 statements, hypotheses and interfaces remain at the linked source owners.
 These notes introduce no new API break or release tag.

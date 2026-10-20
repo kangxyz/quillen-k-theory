@@ -1,0 +1,162 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierBottom
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentityBoundaryNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeProjectionBinaryRows
+
+/-!
+# Full original direct-input and Laurent-bottom source rows
+
+The two actual source projection rows are compared with the unchanged first product column.
+The Laurent functor map-composition equality transports the full postmap and its reference;
+one actual shared source node identifies the distinct inverse projection anchor.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0BottomRows
+
+private theorem postmap_transport {V W T : Model.{u}}
+    (F : V ⟶ T) (H : V ⟶ W) {J K : W ⟶ T} (h : J.functor = K.functor)
+    (ρ : F.functor ≅ (H ≫ J).functor) (N : CommonReferenceNerve.Node H) :
+    postReferenceNode F J ρ N =
+      postReferenceNode F K (ρ ≪≫ isoWhiskerLeft H.functor (eqToIso h)) N := by
+  have hJ : J = K := Model.Hom.ext h
+  subst K
+  simp only [eqToIso_refl, isoWhiskerLeft_refl]
+  exact congrArg (fun σ ↦ postReferenceNode F J σ N) (Iso.trans_refl ρ).symm
+
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The original Laurent triangle source is the actual composite-arrow normalized pullback. -/
+theorem laurent_functor_eq : (InputCompositionCarrierBottom.laurentSource f g).functor =
+    (normalizedMap (laurent.map (f ≫ g))).functor :=
+  congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+    (congrArg boundedFlatNormalizedPullback (laurent.map_comp f g).symm)
+
+/-- The original product anchor transported along the literal Laurent map-composition equality. -/
+def bottomAnchor := InputCompositionCarrierBottom.sourceIso f g ≪≫
+  isoWhiskerLeft (InputIdentityProjection.source Z).functor (eqToIso (laurent_functor_eq f g))
+
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- The actual source-column anchor of the direct input rectangle for either original chart. -/
+def inputAnchor :=
+  eqToIso (ProjectionReference.anchor (projection.app Z) (k.app Z) (laurent.map (f ≫ g))
+    (laurentProjection.app Z) (hk Z)) ≪≫
+      BinaryNormalizationSimplex.total (laurent.map (f ≫ g)) (k.app Z ≫ projection.app Z)
+
+/-- The full original source-column anchor has its unchanged normalized two-factor form. -/
+theorem input_anchor_normal : inputAnchor f g k hk =
+    smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
+      (congrArg (fun h ↦ laurent.map (f ≫ g) ≫ h) (hk Z).symm)) ≪≫
+      boundedFlatNormalizedPullbackCompIso (laurent.map (f ≫ g))
+        (k.app Z ≫ projection.app Z)) := by
+  rw [smallIso_trans, smallIso_eqToIso]
+  rfl
+
+/-- All three direct source-column nodes retain the actual composite Laurent postmap. -/
+theorem input_row (i : Fin 3) :
+    InputDescSimplex.chartNodes (f ≫ g) k hk (rectangleLeftIndex i) =
+      postReferenceNode (InputCompositionCarrierCharts.source f g)
+        (normalizedMap (laurent.map (f ≫ g)))
+        (inputAnchor f g k hk) (binaryNodes (k.app Z) (projection.app Z) i) :=
+  native_source_column (projection.app Z) (k.app Z) (projection.app X) (k.app X)
+    (f ≫ g) (polynomial.map (f ≫ g)) (laurent.map (f ≫ g))
+    (projection.naturality (f ≫ g)) (k.naturality (f ≫ g))
+    (laurentProjection.app Z) (hk Z) i
+
+/-- Whole binary transport identifies the positive product and direct source-column anchors. -/
+theorem plus_reference : bottomAnchor f g = inputAnchor f g plus plus_projection := by
+  rw [input_anchor_normal]
+  change smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
+      (InputCompositionCarrierBottom.total f g).symm) ≪≫
+      boundedFlatNormalizedPullbackCompIso (laurent.map f ≫ laurent.map g)
+        (plus.app Z ≫ projection.app Z)) ≪≫
+    isoWhiskerLeft
+      (AsSmall.down ⋙ boundedFlatNormalizedPullback (plus.app Z ≫ projection.app Z) ⋙ AsSmall.up)
+      (eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+        (congrArg boundedFlatNormalizedPullback (laurent.map_comp f g).symm))) = _
+  rw [← smallIso_eqToIso
+    (congrArg boundedFlatNormalizedPullback (laurent.map_comp f g).symm),
+    smallIso_precomp, ← smallIso_trans]
+  apply congrArg smallIso
+  rw [Iso.trans_assoc, ← comp_change_source (laurent.map_comp f g).symm
+    (plus.app Z ≫ projection.app Z), ← Iso.trans_assoc, eqToIso_trans]
+
+/-- Every original bottom-column node retains the transported composite Laurent postmap. -/
+theorem bottom_column (j : Fin 5) :
+    InputCompositionCarrierBottom.nodes f g (Quillen.SimplexGrid.index 4 2 (j, 0)) =
+      postReferenceNode (InputCompositionCarrierCharts.source f g)
+        (normalizedMap (laurent.map (f ≫ g)))
+        (bottomAnchor f g) (InputIdentityProjection.nodes Z j) := by
+  have h := product_column_nodes (InputCompositionCarrierCharts.source f g)
+    (InputIdentityProjection.source Z) (fun i ↦ (InputIdentityProjection.nodes Z i).1)
+    (fun i ↦ (InputIdentityProjection.nodes Z i).2)
+    (InputCompositionCarrierBottom.laurentSource f g)
+    (InputCompositionCarrierBottom.laurentVertices f g)
+    (InputCompositionCarrierBottom.laurentReferences f g)
+    (InputCompositionCarrierBottom.sourceIso f g) j 0
+  change InputCompositionCarrierBottom.nodes f g (Quillen.SimplexGrid.index 4 2 (j, 0)) =
+    postReferenceNode (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierBottom.laurentSource f g)
+      (InputCompositionCarrierBottom.sourceIso f g ≪≫
+        isoWhiskerLeft (InputIdentityProjection.source Z).functor (Iso.refl _))
+      (InputIdentityProjection.nodes Z j) at h
+  rw [isoWhiskerLeft_refl] at h
+  have hρ := congrArg (fun ρ ↦ postReferenceNode (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierBottom.laurentSource f g) ρ (InputIdentityProjection.nodes Z j))
+    (Iso.trans_refl (InputCompositionCarrierBottom.sourceIso f g))
+  exact h.trans (hρ.trans (postmap_transport (InputCompositionCarrierCharts.source f g)
+    (InputIdentityProjection.source Z) (laurent_functor_eq f g)
+    (InputCompositionCarrierBottom.sourceIso f g) (InputIdentityProjection.nodes Z j)))
+
+/-- All positive source-path nodes agree in the whole original reference carrier. -/
+theorem plus_nodes (i : Fin 3) :
+    InputDescSimplex.chartNodes (f ≫ g) plus plus_projection (rectangleLeftIndex i) =
+      InputCompositionCarrierBottom.nodes f g
+        (Quillen.SimplexGrid.index 4 2 (![0, 1, 2] i, 0)) := by
+  rw [bottom_column, InputIdentityBoundaryNodes.projection_plus_row, plus_reference]
+  exact input_row f g plus plus_projection i
+
+/-- The inverse bottom row retains its own complete original projection-source transport. -/
+theorem bottom_minus_row (i : Fin 3) :
+    InputCompositionCarrierBottom.nodes f g
+      (Quillen.SimplexGrid.index 4 2 (![0, 3, 4] i, 0)) =
+    postReferenceNode (InputCompositionCarrierCharts.source f g)
+      (normalizedMap (laurent.map (f ≫ g)))
+      (bottomAnchor f g ≪≫ isoWhiskerRight (InputIdentityProjection.sourceIso Z)
+        (normalizedMap (laurent.map (f ≫ g))).functor)
+      (binaryNodes (minus.app Z) (projection.app Z) i) := by
+  rw [bottom_column, InputIdentityBoundaryNodes.projection_minus_row]
+  exact post_anchor_node _ _ _ _ _
+
+/-- The actual shared source identifies the entire inverse binary row, including its anchor. -/
+theorem minus_nodes (i : Fin 3) :
+    InputDescSimplex.chartNodes (f ≫ g) minus minus_projection (rectangleLeftIndex i) =
+      InputCompositionCarrierBottom.nodes f g
+        (Quillen.SimplexGrid.index 4 2 (![0, 3, 4] i, 0)) := by
+  apply post_families_match (InputCompositionCarrierCharts.source f g)
+    (normalizedMap (laurent.map (f ≫ g)))
+    (BinaryNormalizationSimplex.sourceMap (minus.app Z) (projection.app Z))
+    (binaryNodes (minus.app Z) (projection.app Z))
+    (input_row f g minus minus_projection) (bottom_minus_row f g) 0 ?_ i
+  exact (InputDescSimplex.shared_nodes (f ≫ g) 2).symm.trans (plus_nodes f g 0)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH0BottomRows

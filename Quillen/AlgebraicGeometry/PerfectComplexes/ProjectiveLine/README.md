@@ -50,7 +50,7 @@ categories supply homological comparisons; the K-theory endpoints are the
 actual Waldhausen models. A derived-category equivalence of the two-summand
 functor is neither assumed nor generally true.
 The local implementation uses direct arbitrary-ring diagonal generation;
-the [projective-line route](README.md)
+the [proof-model discussion](#proof-model-and-geometric-limitations)
 records its relation to TT's noetherian-reduction proof.
 
 | Construction | Result | Source owner |
@@ -129,7 +129,8 @@ quasi-isomorphism verifications are accepted without noetherian assumptions.
 It uses bounded affine counits, their original derived-unit maps, the literal
 lifted signed two-chart Čech arrow and its rotated triangle to construct a
 bounded termwise-QC model of the original input. The intrinsic consumer obtains
-its actual global strict model and perfect Rp image.  These objectwise derived isomorphisms do not supply P4's
+its actual global strict model and perfect Rp image. These objectwise derived
+isomorphisms do not supply P4's
 exact/natural roof model.
 
 Relevant source
@@ -140,38 +141,39 @@ quasicoherence rather than coherence over a possibly noncoherent R.
 
 ## Flasque K-model and geometric inverse
 
-The accepted `Scheme/Sheaf/GodementFirst` constructs the actual first Godement
+The native [first Godement functor](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/First.lean) constructs the actual first Godement
 functor on all scheme module sheaves: the product of stalk skyscrapers, with
 its natural monic germ unit, flasque values and exactness. Its explicit sections
 are pointwise stalk products, and their exactness is proved directly rather
-than inferred from arbitrary sheaf products. `GodementResolution` now constructs
+than inferred from arbitrary sheaf products. The native [resolution](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/Resolution.lean) constructs
 the exact natural cokernel functor, its iterates, the augmented flasque sheaf
 resolution and the original germ augmentation quasi-isomorphism. The resolution
-functor preserves short exact sequences. The accepted ten-source total family
-now supplies the actual natural totalization on all lower-bounded complexes
-of arbitrary module sheaves on every scheme. `GodementComplex` retains the
-same lower bound and has flasque terms; `GodementTotalExact` preserves
+functor preserves short exact sequences. The totalization sources supply
+the actual natural totalization on all lower-bounded complexes
+of arbitrary module sheaves on every scheme. The native [total complex](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Basic.lean) retains the
+same lower bound and has flasque terms; its [exactness theorem](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Exactness.lean) preserves
 short exact sequences and degreewise monomorphisms. The original signed
 stalk contraction and joint homology reflection prove the actual total
-augmentation quasi-isomorphism in `GodementTotalQuasiIso`, whose naturality
+augmentation [quasi-isomorphism](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/QuasiIso.lean), whose naturality
 also proves preservation of genuine weak arrows.
-`GodementTotalDerivedComparison` constructs the natural installed-unit
+The same native total-complex owner constructs the natural installed-unit
 comparison Q(f_*T(K))≅Rf_*(Q(K)) for every scheme map and every Plus input.
 
-`FlasqueBoundedBelow` now constructs the actual full Waldhausen model of
+`FlasqueBoundedBelow` constructs the actual full Waldhausen model of
 lower-bounded locally perfect complexes with flasque terms, its literal
 inclusion and exact Godement total functor, and both forward natural weak
 units. `FlasqueBoundedBelowComparison` proves the two original K-map inverse
 laws in every nonnegative degree, including zero, on every scheme; its literal
 comparison to all perfect complexes requires quasi-compactness.
-`FlasquePushforwardExact` proves actual sheaf and complex short-exact
-preservation with flasque first terms, without bounds. These source results supply the exact model and a pushforward foundation;
+Native [flasque pushforward exactness](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Flasque/PushforwardExactness.lean) proves actual sheaf and complex short-exact
+preservation with flasque first terms, without bounds. These source results
+supply the exact model and a pushforward foundation;
 `FlasqueCoefficientZero`, `FlasqueCoefficientOperations` and
-`FlasqueCoefficientOne` now supply the actual exact G₀=p_* and
+`FlasqueCoefficientOne` supply the actual exact G₀=p_* and
 G₁=p_*T(−⊗L)[1], with flasque-perfect values, original maps, lower bounds and
 native shift signs. Their product is exact, and their natural comparisons
 retain the installed derived units, actual augmentation and inclusion-shift
-equations.  `FlasqueTwoSummands` and `FlasqueTwoSummandComparison` now supply
+equations. `FlasqueTwoSummands` and `FlasqueTwoSummandComparison` supply
 actual exact Phi=T_P(p*A coproduct (L tensor p*B)) and its original forward
 weak unit/categorical coproduct comparison. `TautologicalCoefficientPullback`
 preserves the original line inclusion and both chart trivializations under
@@ -184,7 +186,7 @@ inclusion and actual inverse affine pullback, with unchanged Product.KEquiv
 and chosen-zero rebasing, for every R and every natural degree including zero.
 Naturality is in coefficient-complex maps at each fixed R.
 [`StrictPositiveRetraction`](StrictPositiveRetraction.lean)
-now proves the canonical geometric unit followed by pushed actual total
+proves the canonical geometric unit followed by pushed actual total
 augmentation is a genuine quasi-isomorphism on the original strict affine
 coefficients. Its actual forward weak span proves the original positive
 K-map equality. `StrictPositiveSourceComparison` proves the literal strictTotal
@@ -192,7 +194,7 @@ source K-map bijective in every natural degree, including zero, using the
 original affine strict inclusion and proved lower-bounded/flasque comparisons.
 There is no natural strictification premise.
 [`FlasqueShift`](../FlasqueShift.lean)
-now proves inversion for the actual signed model shift K-map on every scheme
+proves inversion for the actual signed model shift K-map on every scheme
 and in every natural degree, including zero, through the original identity
 cone, genuine cofibration/cofiber structure and weak-zero natural map.
 `EulerSequence`, `EulerFunctors`, `EulerNegative`, `EulerAdditivity` and
@@ -206,23 +208,23 @@ then proves K(E2[1])=K(E0) on every original strict affine source;
 and native shift sign. Outputs remain locally perfect/flasque, rather than
 termwise strict.
 [`FlasqueGPhiMatrix`](FlasqueGPhiMatrix.lean)
-now proves both the actual original product-category K(G)∘K(Phi)=id and
+proves both the actual original product-category K(G)∘K(Phi)=id and
 the literal composite KMap(Phi⋙G)=id. Its four entries retain the actual
 positive units, negative vanishing, Euler comparison and signed shift; proved
 strictTotal K-map surjectivity and the unchanged Product.KEquiv extend them
-to every flasque coefficient input.
-over every R, including the zero ring, and every natural degree, including
-zero. The opposite PhiG identity and its actual natural endpoint weak-span
-comparisons are now supplied below. The native qcqs/support extension is supplied below.
+to every flasque coefficient input over every R, including the zero ring,
+and every natural degree, including zero. The opposite PhiG identity and
+its actual natural endpoint weak-span comparisons are supplied below,
+followed by the native qcqs and supported extensions.
 [`FlasqueTensorDiagonalAdditivity`](FlasqueTensorDiagonalAdditivity.lean)
-now gives K(Gamma E2)=K(Gamma E1)*K(Gamma E3) from the literal original
+gives K(Gamma E2)=K(Gamma E1)*K(Gamma E3) from the literal original
 diagonal conflation after exact LEFT-L tensor and totalization.
 [`FlasquePhiColumns`](FlasquePhiColumns.lean)
 expresses actual K(Phi)(K(G)(x)) as the positive composite times the inverse
 unshifted negative composite, using the original sum functor, product
 coordinates and actual base shift.
 [`FlasquePhiInverse`](FlasquePhiInverse.lean)
-now combines the actual first negative-column, second positive-column and
+combines the actual first negative-column, second positive-column and
 third identity K-map comparisons with that original additivity and native
 K-group commutativity. It proves K(Phi)∘K(G)=id and literal KMap(G⋙Phi)=id
 in every natural degree, including zero. Together with GPhi it makes the
@@ -231,11 +233,12 @@ SAME original Phi K-map bijective.
 retains the original compact-model inclusions, unchanged product
 K-equivalence and actual affine inverse pullback to prove bijectivity of
 the EXISTING nativeTwoSummandKMap. The packaged nativeAffineTwoSummandKEquiv
-has that literal forward map.  for the final ten-source family; All rings include zero and all natural degrees
-include zero. This closes affine P4. The separate specialized P3
+has that literal forward map. All commutative rings, including the zero ring,
+and all natural degrees, including zero, are covered. This closes affine P4.
+The separate specialized P3
 endpoint-unit/connecting comparisons, Proj/twisting-sheaf
-identification, Bass cube and final TT identification are not conclusions
-of this argument. No unbounded Godement augmentation is asserted.
+identification, and prescribed raw Bass coherence/comparison are not conclusions
+of this affine argument. No unbounded Godement augmentation is asserted.
 
 `NativeOpenNaturality` proves
 the original native two-summand K-map square for actual base open immersions
@@ -250,7 +253,7 @@ proves both coefficients preserve acyclicity on the literal inverse image
 of every base open, without quasi-separatedness or compactness of that open.
 The original derived unit, total augmentation, shift comparisons and their
 naturality are retained. `P5NativePhi`, `P5NativePhiObjects`, `P5NativePhiComparison` and
-`P5NativePhiSupport` now construct the actual native Phi model with the
+`P5NativePhiSupport` construct the actual native Phi model with the
 original LEFT line tensor, chosen coproduct and total augmentation. Its
 K-map after model inclusion is the EXISTING nativeTwoSummandKMap, with the
 unchanged Product.KEquiv. Model support and the original unbounded-perfect
@@ -259,7 +262,7 @@ open Z. `NativeBoundaryNaturality` and `NativeInverseImageBoundary` give
 the actual supported functor, original forget-support square and original
 localization-boundary naturality for qcqs bases and compact opens, including
 K1(open) to supported K0. No caller-supplied open isomorphism is needed.
-`NativeGlobalBundle` now proves bijectivity of the original native map for
+`NativeGlobalBundle` proves bijectivity of the original native map for
 every qcqs base and every natural degree, including zero. Its actual affine
 and scheme-isomorphism cases feed a proved compact binary-union step using
 the original T-first Mayer–Vietoris restriction, difference and connecting
@@ -273,7 +276,7 @@ Both packaged equivalences have the literal existing forward map and
 original product coordinates.
 These results close global and supported Phi bijectivity.
 
-The four `P5PositiveUnit` sources now prove that the actual canonical
+The four `P5PositiveUnit` sources prove that the actual canonical
 unit A→p_*T(p^*A) is a natural weak map on every quasi-compact native base,
 without a termwise-QC, QS or supplied projection-isomorphism premise.
 `P5NativeNegativeVanishing`, `P5NativeOffDiagonal` and the native Euler
@@ -291,11 +294,15 @@ then proves ΦG=id on qcqs bases and identifies the transported actual
 G0/G1 pair with the EXISTING nativeGlobalTwoSummandKEquiv.symm. No inverse
 is used to define geometric G. This closes P5 at the stated native qcqs
 and supported-Phi scope.
-Final TT identification remains open.
+The [tensor-generated Bass construction](../BoundedFlat/TensorBassConstruction.md)
+uses these geometric inputs in a direct realization of TT §§6.3–6.4 and
+proves original TT 7.4. The additional comparison with the
+[prescribed raw implementation](../Development.md#comparison-with-the-prescribed-raw-point-set-implementation)
+retains its own coherence and class/boundary obligations.
 
 ## Positive Bass row and remaining Laurent boundary
 
-The original positive exact row is now proved for
+The original positive exact row is proved for
 `K_m(S) := PerfectK(Spec S, m)`, every commutative R including zero, and
 every n ≥ 0:
 
@@ -310,10 +317,10 @@ and [`BassPositiveFundamental`](BassPositiveFundamental.lean)
 retain the actual polynomial evaluation retraction, positive restriction
 times inverse negative restriction, and first O-coordinate of the same
 native Phi inverse after the original T-first Mayer–Vietoris boundary.
-The connecting coefficient image is exactly `(a,a⁻¹)`. , including K1 to K0.
+The connecting coefficient image is exactly `(a,a⁻¹)`, including K₁ to K₀.
 
 [`ScalarForwardRelativeBoundary`](../ScalarForwardRelativeBoundary.lean)
-now computes the original coarse forward scalar K1 class under the actual
+computes the original coarse forward scalar K₁ class under the actual
 relative localization boundary as the actual acyclic cofiber K0 class.
 The original inverse-prefix normalization and double-loop transpose give
 two inversions, which cancel. The original fine Laurent [T] terminal boundary, its lower negative-chart

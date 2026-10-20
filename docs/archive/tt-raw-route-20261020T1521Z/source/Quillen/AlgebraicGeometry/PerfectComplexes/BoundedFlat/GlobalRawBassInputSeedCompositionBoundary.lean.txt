@@ -1,0 +1,80 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionMap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeed
+/-!
+The exact original binary seed-composition boundary, retaining the actual first/second
+seed homotopies and original map/base rails with all independent path clocks.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionBoundary
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The first original seed input homotopy is postcomposed with the actual next Bass map. -/
+def firstInput := (transitionInputHomotopy g).postcomp (map f)
+
+/-- The second original seed input homotopy retains its normalized original base premap. -/
+def secondInput := (Homotopy.precomp (boundedFlatPerfectPrespectrumMap g)
+  (transitionInputHomotopy f)).cast (Category.assoc _ _ _).symm (Category.assoc _ _ _).symm
+
+/-- The original two input homotopies, with only the required outer source association cast. -/
+def compositeInput : Homotopy (transition Z ≫ (map g ≫ map f))
+    ((boundedFlatPerfectPrespectrumMap g ≫ boundedFlatPerfectPrespectrumMap f) ≫ transition X) :=
+  ((firstInput f g).trans (secondInput f g)).cast (Category.assoc _ _ _) rfl
+
+/-- The whole original map-composition track acts on the original forward seed. -/
+def sourceRail := Homotopy.precomp (transition Z) (InputComposition.mapHomotopy f g)
+
+/-- The whole original base-composition track precedes the unchanged target transition. -/
+def targetRail := (boundedFlatPerfectPrespectrumCompHomotopy f g).postcomp (transition X)
+
+/-- The exact three-side boundary required by the original seed-composition square. -/
+def alternateInput : Homotopy (transition Z ≫ map (f ≫ g))
+    (boundedFlatPerfectPrespectrumMap (f ≫ g) ≫ transition X) :=
+  ((sourceRail f g).trans (compositeInput f g)).trans (targetRail f g).symm
+
+/-- The first half retains every original comparison and output-loop value. -/
+theorem composite_lower (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((compositeInput f g).level n
+      (Quillen.NativePathCells.lower r,x)) s =
+      (coneMap f).map n ((InputSeed.conjugateComparison g).level n (r,(s,x))) := by
+  change Path.toContinuousMap (((firstInput f g).trans (secondInput f g)).level n
+    (Quillen.NativePathCells.lower r,x)) s = _
+  rw [Homotopy.trans_lower_cell]
+  rfl
+
+/-- The second half retains the original precomposed input and all independent coordinates. -/
+theorem composite_upper (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((compositeInput f g).level n
+      (Quillen.NativePathCells.upper r,x)) s =
+      (InputSeed.conjugateComparison f).level n
+        (r,(s,(boundedFlatPerfectPrespectrumMap g).map n x)) := by
+  change Path.toContinuousMap (((firstInput f g).trans (secondInput f g)).level n
+    (Quillen.NativePathCells.upper r,x)) s = _
+  rw [Homotopy.trans_upper_cell]
+  rfl
+
+/-- The left seed rail is exactly the original cone-composition evaluation, not a replacement. -/
+theorem sourceRail_apply (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((sourceRail f g).level n (r,x)) s =
+      (InputComposition.coneHomotopy f g).level n
+        (r, (((unitHomotopy Z).postcomp (mappingConeInclusion (comparison Z))).conjugateToZero
+          (sourceNull Z)).level n (s,x)) :=
+  InputComposition.mapHomotopy_transition_apply f g n r s x
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionBoundary

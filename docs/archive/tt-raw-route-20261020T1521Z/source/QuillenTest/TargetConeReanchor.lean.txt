@@ -1,0 +1,70 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetConeReanchor
+
+/-! # The old Laurent baseline and both literal cone half clocks survive the whole square -/
+
+set_option warningAsError true
+set_option autoImplicit false
+set_option linter.mathlibStandardSet true
+
+@[expose] public noncomputable section
+
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge
+open scoped Simplicial Topology unitInterval
+
+universe u
+namespace QuillenTest.TargetConeReanchor
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct CutOpenCarrier FourEdgeTree
+open Quillen.NativePathCells
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+local notation "U" => normalizedMap (coefficientMap P f)
+local notation "Ja" => normalizedMap (polynomialProjection P a)
+local notation "Jb" => normalizedMap (polynomialProjection P b)
+local notation "Fa" => BassProjectionPath.WholeReference.reference P a E
+local notation "Fb'" => BassProjectionPath.WholeReference.reference P b (E' ≫ U)
+
+/-- The first half retains the entire old target surface at its unchanged rescaled time. -/
+theorem original_lower (z : FourEdgeTree.space E Ja) (s : I) :
+    Reanchor.cone P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)
+      (TargetCone.coneMap P f E
+        (cylinder E Ja Fa (beta P a E) (z, lower s))) =
+      laurentInclusion (E' ≫ U) Jb Fb' (beta P b (E' ≫ U))
+        (TargetCone.surface P f E' (Reanchor.tree P a E E' δ z, s)) := by
+  rw [TargetCone.coneMap_reanchor, Reanchor.cone_cylinder, TargetCone.coneMap_lower]
+
+/-- The second half uses the entire old target span with its literal independent height. -/
+theorem original_upper (z : FourEdgeTree.space E Ja) (s : I) :
+    Reanchor.cone P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)
+      (TargetCone.coneMap P f E
+        (cylinder E Ja Fa (beta P a E) (z, upper s))) =
+      cylinder (E' ≫ U) Jb Fb' (beta P b (E' ≫ U))
+        (TargetSpan.treeMap P f E' (Reanchor.tree P a E E' δ z), s) := by
+  rw [TargetCone.coneMap_reanchor, Reanchor.cone_cylinder, TargetCone.coneMap_upper]
+
+/-- Every original Laurent point is covered, without an assumption that it is in beta's image. -/
+theorem original_laurent (y : |parameterSSet Fa|) :
+    Reanchor.cone P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)
+      (TargetCone.coneMap P f E (laurentInclusion E Ja Fa (beta P a E) y)) =
+      laurentInclusion (E' ≫ U) Jb Fb' (beta P b (E' ≫ U))
+        (TargetCone.laurent P f E'
+          (mapParameter (reanchor (isoWhiskerRight δ (BassProjectionPath.source P a).functor))
+            y)) := by
+  rw [TargetCone.coneMap_reanchor, Reanchor.cone_laurent, TargetCone.coneMap_laurent]
+  rfl
+
+end QuillenTest.TargetConeReanchor

@@ -1,0 +1,94 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterSwap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedPairDiagram
+
+/-!
+# Whole selected-zero Model squares for the actual parameter-factor swap
+
+The actual right-factor pair Models and arrows are defined independently of the parameter-first
+identification. Contravariant pullback along the genuine two-factor pair isomorphism gives the
+strict Model squares, both for complete row arrows and for changes of parameter. In particular,
+these retain the original selected zeros before any raw geometric evaluation or realization.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+open Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.GlobalSectionChangeIndex.SupportedParameterSwap
+open ParameterAuxiliarySupport
+variable {S T : Scheme.{u}}
+
+/-- The independent section Model on the actual right-factor product pair. -/
+abbrev sectionModel (p : S ⟶ integerBase) [QuasiCompact p]
+    (A : Scheme.QuasiCompactOpenPairs.{u}) : Model.{u+1} :=
+  pairSupported.obj (op ((pairBaseProductFunctor p).obj A).obj)
+
+/-- The actual right-factor product row map in the strict original section diagram. -/
+def sectionMap (p : S ⟶ integerBase) [QuasiCompact p]
+    {A B : Scheme.QuasiCompactOpenPairs.{u}} (g : A ⟶ B) :
+    sectionModel p B ⟶ sectionModel p A :=
+  pairSupported.map ((pairBaseProductFunctor p).map g).hom.op
+
+/-- The genuine pair symmetry induces the original chosen-zero Model isomorphism. -/
+def sectionIso (p : S ⟶ integerBase) [QuasiCompact p]
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (ParameterModels.supported A.obj.obj.hom).obj (op S) ≅ sectionModel p A :=
+  pairSupported.mapIso (pairIso p A).op
+
+private theorem map_op_square {C D : Type*} [Category C] [Category D]
+    (F : Cᵒᵖ ⥤ D) {A B X Y : C} (f : A ⟶ B) (q : B ⟶ Y)
+    (p : A ⟶ X) (g : X ⟶ Y) (h : f ≫ q = p ≫ g) :
+    F.map q.op ≫ F.map f.op = F.map g.op ≫ F.map p.op := by
+  rw [← F.map_comp, ← F.map_comp]
+  exact congrArg (fun k ↦ F.map k.op) h
+
+/-- Both original row maps commute strictly with the whole swap-induced Model isomorphism. -/
+theorem sectionIso_naturality (p : S ⟶ integerBase) [QuasiCompact p]
+    {A B : Scheme.QuasiCompactOpenPairs.{u}} (g : A ⟶ B) :
+    (sectionIso p B).hom ≫ sectionMap p g =
+      (supportedMap g.hom).app (op S) ≫ (sectionIso p A).hom := by
+  change pairSupported.map (pairIso p B).hom.op ≫
+      pairSupported.map ((pairBaseProductFunctor p).map g).hom.op =
+    pairSupported.map ((pairTransformation g.hom).app S).op ≫
+      pairSupported.map (pairIso p A).hom.op
+  exact map_op_square pairSupported _ _ _ _ (pairIso_naturality p g)
+
+/-- Parameter change is the independently defined original right-factor product map. -/
+def sectionParameterMap (p : S ⟶ integerBase) (q : T ⟶ integerBase)
+    [QuasiCompact p] [QuasiCompact q] (h : S ⟶ T) (hh : h ≫ q = p)
+    (A : Scheme.QuasiCompactOpenPairs.{u}) : sectionModel q A ⟶ sectionModel p A :=
+  pairSupported.map ((pairBaseProductTransformation p q h hh).app A).hom.op
+
+/-- Right-factor parameter change commutes strictly with every original row map. -/
+theorem sectionMap_parameter (p : S ⟶ integerBase) (q : T ⟶ integerBase)
+    [QuasiCompact p] [QuasiCompact q] (h : S ⟶ T) (hh : h ≫ q = p)
+    {A B : Scheme.QuasiCompactOpenPairs.{u}} (g : A ⟶ B) :
+    sectionMap q g ≫ sectionParameterMap p q h hh A =
+      sectionParameterMap p q h hh B ≫ sectionMap p g := by
+  apply map_op_square pairSupported
+  exact congrArg (fun k ↦ k.hom) ((pairBaseProductTransformation p q h hh).naturality g).symm
+
+/-- The complete parameter naturality square retains its original coefficient-map direction. -/
+theorem sectionIso_parameter (p : S ⟶ integerBase) (q : T ⟶ integerBase)
+    [QuasiCompact p] [QuasiCompact q] (h : S ⟶ T) (hh : h ≫ q = p)
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionIso q A).hom ≫ sectionParameterMap p q h hh A =
+      (ParameterModels.supported A.obj.obj.hom).map h.op ≫ (sectionIso p A).hom := by
+  change pairSupported.map (pairIso q A).hom.op ≫
+      pairSupported.map ((pairBaseProductTransformation p q h hh).app A).hom.op =
+    pairSupported.map (GlobalSupportedParameter.pairMap A.obj.obj.hom h).op ≫
+      pairSupported.map (pairIso p A).hom.op
+  exact map_op_square pairSupported _ _ _ _ (pairIso_parameter p q h hh A)
+
+end Quillen.PerfectComplexes.GlobalSectionChangeIndex.SupportedParameterSwap

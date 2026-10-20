@@ -1,0 +1,146 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterModels
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliarySupportNull
+public import Quillen.Waldhausen.SConstruction.Iterated.ModelZeroNormalization
+
+/-!
+# The original localization zero-null on literal right-factor section rows
+
+The actual right-factor rows and their chosen-zero transformation are defined independently.
+The genuine factor-swap Model isomorphism proves weakness from the original parameter-first
+acyclicity. Strict Model naturality recovers the full old null at every time and also retains
+actual right-factor parameter changes, before any geometric pullback normalization.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization.Parameter
+open GlobalSectionChangeIndex GlobalSectionChangeIndex.ParameterAuxiliarySupport
+open GlobalSectionChangeIndex.SupportedParameterSwap
+variable {U X S : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+  (p : S ⟶ integerBase) [QuasiCompact p]
+
+/-- The independent literal right-factor section source. -/
+abbrev strictSource : Model.{u+1} := sectionModel p (Rows.source j T)
+
+/-- The independent literal right-factor section middle. -/
+abbrev strictMiddle : Model.{u+1} := sectionModel p (Rows.middle T)
+
+/-- The independent literal right-factor section target. -/
+abbrev strictTarget : Model.{u+1} := sectionModel p (Rows.target j T)
+
+/-- Actual right-factor support enlargement, without conjugating a parameter map. -/
+def strictEnlargement : strictSource j T p ⟶ strictMiddle T p :=
+  sectionMap p (Rows.enlargement j T)
+
+/-- Actual right-factor restriction, without conjugating a parameter map. -/
+def strictRestriction : strictMiddle T p ⟶ strictTarget j T p :=
+  sectionMap p (Rows.restriction j T)
+
+/-- The literal two-arrow section composite. -/
+def strictComposite : strictSource j T p ⟶ strictTarget j T p :=
+  strictEnlargement j T p ≫ strictRestriction j T p
+
+private theorem paste_squares {C : Type*} [Category C] {A B C₀ D E F : C}
+    (a : A ⟶ B) (b : B ⟶ C₀) (c : D ⟶ E) (d : E ⟶ F)
+    (e₀ : A ⟶ D) (e₁ : B ⟶ E) (e₂ : C₀ ⟶ F)
+    (h₀ : a ≫ e₁ = e₀ ≫ c) (h₁ : b ≫ e₂ = e₁ ≫ d) :
+    (a ≫ b) ≫ e₂ = e₀ ≫ (c ≫ d) := by
+  rw [Category.assoc, h₁, ← Category.assoc, h₀, Category.assoc]
+
+/-- Both original row maps commute with the same actual selected-zero factor swap. -/
+theorem composite_swap :
+    ((enlargement j T).app (op S) ≫ (restriction j T).app (op S)) ≫
+        (sectionIso p (Rows.target j T)).hom =
+      (sectionIso p (Rows.source j T)).hom ≫ strictComposite j T p :=
+  paste_squares ((enlargement j T).app (op S)) ((restriction j T).app (op S))
+    (strictEnlargement j T p) (strictRestriction j T p)
+    (sectionIso p (Rows.source j T)).hom (sectionIso p (Rows.middle T)).hom
+    (sectionIso p (Rows.target j T)).hom
+    (sectionIso_naturality p (Rows.enlargement j T)).symm
+    (sectionIso_naturality p (Rows.restriction j T)).symm
+
+/-- The actual zero-to-composite transformation is independent of its weakness proof. -/
+def zeroToStrictFull :
+    (zeroHom (strictSource j T p) (strictTarget j T p)).functor ⟶
+      (strictComposite j T p).functor :=
+  ModelZeroNormalization.zeroToMap (strictComposite j T p)
+
+/-- Original parameter-first support acyclicity proves the actual literal component weak. -/
+theorem zeroToStrictFull_weak (Y : strictSource j T p) :
+    (strictTarget j T p).waldhausen.weq ((zeroToStrictFull j T p).app Y) :=
+  ModelZeroNormalization.zeroToMap_weak_of_comparison
+    ((enlargement j T).app (op S) ≫ (restriction j T).app (op S))
+    (strictComposite j T p)
+    (sectionIso p (Rows.source j T)).hom (sectionIso p (Rows.target j T)).hom
+    (eqToIso (congrArg Model.Hom.functor (composite_swap j T p)))
+    (zeroToFull j T (op S)) (zeroToFull_weak j T (op S))
+    (sectionIso p (Rows.source j T)).inv.functor
+    (eqToIso (congrArg Model.Hom.functor (sectionIso p (Rows.source j T)).inv_hom_id)) Y
+
+/-- Reverse precisely the independent literal chosen-zero transformation. -/
+def strictNull :=
+  prespectrumCompositeZeroNullHomotopy (strictEnlargement j T p) (strictRestriction j T p)
+    (zeroToStrictFull j T p) (zeroToStrictFull_weak j T p)
+
+/-- The full old canonical null is recovered at every original parameter, level and time. -/
+theorem strictNull_recovery (n : ℕ) (s : I)
+    (x : (prespectrum ((fiber j T).obj (op S))).space n) :
+    (prespectrumMap (sectionIso p (Rows.target j T)).hom).map n
+        (((fullNull j T).homotopy (op S)).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionIso p (Rows.source j T)).hom).map n x) :=
+  prespectrumCompositeZeroNullHomotopy_naturality
+    ((enlargement j T).app (op S)) ((restriction j T).app (op S))
+    (strictEnlargement j T p) (strictRestriction j T p)
+    (sectionIso p (Rows.source j T)).hom (sectionIso p (Rows.target j T)).hom
+    (composite_swap j T p)
+    (zeroToFull j T (op S)) (zeroToStrictFull j T p)
+    (zeroToFull_weak j T (op S)) (zeroToStrictFull_weak j T p) n s x
+
+/-- The entire literal two-row composite commutes with an actual change of parameter. -/
+theorem composite_parameter {S' : Scheme.{u}} (q : S' ⟶ integerBase)
+    [QuasiCompact q] (h : S ⟶ S') (hh : h ≫ q = p) :
+    strictComposite j T q ≫ sectionParameterMap p q h hh (Rows.target j T) =
+      sectionParameterMap p q h hh (Rows.source j T) ≫ strictComposite j T p :=
+  paste_squares (strictEnlargement j T q) (strictRestriction j T q)
+    (strictEnlargement j T p) (strictRestriction j T p)
+    (sectionParameterMap p q h hh (Rows.source j T))
+    (sectionParameterMap p q h hh (Rows.middle T))
+    (sectionParameterMap p q h hh (Rows.target j T))
+    (sectionMap_parameter p q h hh (Rows.enlargement j T))
+    (sectionMap_parameter p q h hh (Rows.restriction j T))
+
+/-- Actual parameter changes preserve the entire independently chosen zero-null path. -/
+theorem strictNull_parameter {S' : Scheme.{u}} (q : S' ⟶ integerBase)
+    [QuasiCompact q] (h : S ⟶ S') (hh : h ≫ q = p) (n : ℕ) (s : I)
+    (x : (prespectrum (strictSource j T q)).space n) :
+    (prespectrumMap (sectionParameterMap p q h hh (Rows.target j T))).map n
+        ((strictNull j T q).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionParameterMap p q h hh (Rows.source j T))).map n x) :=
+  prespectrumCompositeZeroNullHomotopy_naturality
+    (strictEnlargement j T q) (strictRestriction j T q)
+    (strictEnlargement j T p) (strictRestriction j T p)
+    (sectionParameterMap p q h hh (Rows.source j T))
+    (sectionParameterMap p q h hh (Rows.target j T))
+    (composite_parameter j T p q h hh)
+    (zeroToStrictFull j T q) (zeroToStrictFull j T p)
+    (zeroToStrictFull_weak j T q) (zeroToStrictFull_weak j T p) n s x
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization.Parameter

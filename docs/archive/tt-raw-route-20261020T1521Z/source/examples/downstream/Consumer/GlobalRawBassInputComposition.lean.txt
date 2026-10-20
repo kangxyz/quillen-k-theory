@@ -1,0 +1,49 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionMap
+
+/-! Independent use of the actual raw step composition, Laurent track and original seed word. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalRawBassInputComposition
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- A downstream client receives an unconditional whole composition of the actual raw maps. -/
+theorem original_maps_homotopic : Nonempty (Homotopy (map (f ≫ g)) (map g ≫ map f)) :=
+  ⟨InputComposition.mapHomotopy f g⟩
+
+/-- The literal Laurent inclusion follows the actual composition track at every original time. -/
+theorem laurent_track (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).space n) :
+    (InputComposition.coneHomotopy f g).level n
+      (r, (mappingConeInclusion (comparison Z)).map n x) =
+      (mappingConeInclusion (comparison X)).map n
+        ((InputCompositionCharts.laurentComposition f g).level n (r, x)) :=
+  InputComposition.coneHomotopy_inclusion f g n r x
+
+/-- Independent native loop evaluation preserves the complete original cone null square. -/
+theorem looped_cone_cylinder (n : ℕ) (r s t : unitInterval)
+    (γ : (step Z).space n) (x : (span Z).space n)
+    (hγ : Path.toContinuousMap γ t =
+      Quillen.ReducedMappingCone.cylinder ((span Z).point n)
+        ((originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).point n)
+        ((comparison Z).map n) (s, x)) :
+    Path.toContinuousMap ((InputComposition.mapHomotopy f g).level n (r, γ)) t =
+      (InputComposition.comparisonConeNullSquare f g).level n (r, (s, x)) := by
+  rw [InputComposition.mapHomotopy_apply, hγ]
+  exact InputComposition.coneHomotopy_cylinder f g n r s x
+
+end Consumer.GlobalRawBassInputComposition

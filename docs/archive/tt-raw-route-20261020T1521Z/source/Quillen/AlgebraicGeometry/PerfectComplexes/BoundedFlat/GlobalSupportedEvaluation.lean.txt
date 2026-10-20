@@ -1,0 +1,74 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedEvaluationCharts
+public import Quillen.Topology.Prespectrum.StrictSquareSplitNull
+
+/-!
+# Actual supported section-to-raw first-stage evaluation
+
+The proved supported chart pastings map the original supported strict span, comparison cone
+and parameter-looped first stage to the actual raw stage. The original scheme-parameter source
+is recovered by the whole source-square isomorphism, rather than replaced by a new strict
+object. The complete original undelayed source-null comparison is also retained. Compatibility
+with the localization composite's weak-zero null is a separate obligation.
+-/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedEvaluation
+open GlobalSupportedRawBass
+variable (A : Scheme.QuasiCompactOpenPairs.{u})
+
+/-- Original supported evaluation maps the entire strict double cylinder. -/
+def spanEvaluation : StrictSquare.span (Source.sectionSquare A) ⟶ span A :=
+  (splitEvaluation A).spanMap
+
+/-- The whole original chart overlap descends to the actual supported comparison maps. -/
+def comparisonHomotopy :
+    Homotopy (StrictSquare.comparison (Source.sectionSquare A) ≫ evaluation (Geometry.laurent A))
+      (spanEvaluation A ≫ comparison A) :=
+  (splitEvaluation A).comparisonHomotopy
+
+/-- Original supported evaluation maps the actual strict comparison cone. -/
+def coneEvaluation : mappingCone (StrictSquare.comparison (Source.sectionSquare A)) ⟶
+    mappingCone (comparison A) :=
+  (splitEvaluation A).coneMap
+
+/-- The cone-inclusion square retains precisely the original supported Laurent evaluation. -/
+theorem coneEvaluation_inclusion :
+    mappingConeInclusion (StrictSquare.comparison (Source.sectionSquare A)) ≫ coneEvaluation A =
+      evaluation (Geometry.laurent A) ≫ mappingConeInclusion (comparison A) :=
+  (splitEvaluation A).coneMap_inclusion
+
+/-- Evaluation on the original strict geometric first stage. -/
+def sectionStepEvaluation :
+    strictSquareLoopedConeFunctor.obj (Source.sectionSquare A) ⟶ step A :=
+  (splitEvaluation A).map
+
+/-- The literal original supported scheme-parameter first stage evaluates into the raw stage. -/
+def stepEvaluation :
+    ((Quillen.KTheory.Bass.strictDiagramFunctor
+      AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex.squareFunctor).obj
+      (Source.parameterModels A ⋙ Quillen.Waldhausen.IteratedS.prespectrumFunctor)).obj
+        (Opposite.op AlgebraicGeometry.Scheme.Products.integerBase) ⟶ step A :=
+  (Source.sourceStepIso A).hom ≫ sectionStepEvaluation A
+
+/-- The original strict null, without an inserted pause, compares to the specified raw null. -/
+def sourceNullComparison :=
+  StrictSquare.SplitEvaluation.Null.originalNullComparison (splitEvaluation A)
+
+/-- Both moving-overlap coordinates remain independent in the actual comparison. -/
+theorem comparisonHomotopy_cylinder (n : ℕ) (r s : unitInterval)
+    (x : (Source.sectionSquare A).left.left.space n) :
+    (comparisonHomotopy A).level n
+      (r, HomotopyPushout.cylinder (Source.sectionSquare A).left.hom
+        (Source.sectionSquare A).hom.left n (s, x)) =
+      (splitEvaluation A).descPasting.toSquare.level n (r, (s, x)) := rfl
+
+end Quillen.PerfectComplexes.GlobalSupportedEvaluation

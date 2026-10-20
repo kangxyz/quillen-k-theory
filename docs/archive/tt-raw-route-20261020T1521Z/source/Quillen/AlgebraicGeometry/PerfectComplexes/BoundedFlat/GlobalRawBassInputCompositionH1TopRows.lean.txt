@@ -1,0 +1,188 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopChartRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1ChartRows
+
+/-!
+# Actual polynomial rows on the terminal/top boundary
+
+The first polynomial square retains its two fixed target maps; the second square retains
+its fixed base premap and chart postmap. Complete existing corner nodes identify the original
+reference routes for all five nodes of each row, without changing any original path word.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopRows
+open InputCompositionTopPieces InputCompositionTerminalAttach
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- The first polynomial row keeps the actual polynomial map followed by the target chart. -/
+abbrev firstPostmap := normalizedMap (polynomial.map f) ≫ chartMap (X := X) k
+
+/-- The original first polynomial rectangle row keeps its full last-triple reference. -/
+abbrev firstBaseAnchor := CoefficientMovingSquareRows.firstAnchor
+  g f (polynomial.map g) (polynomial.map f)
+  (projection.app Z) (projection.app Y) (projection.app X)
+  (projection.naturality g).symm (projection.naturality f).symm
+
+/-- Both actual postmaps and the moving reference remain in the first-row anchor. -/
+def movingFirstAnchor := movingAnchor f g k hk ≪≫
+  isoWhiskerRight (firstBaseAnchor f g) (chartMap (X := X) k).functor
+
+/-- The original chart-square endpoint anchors the first terminal product column. -/
+def productAnchor := InputCompositionTerminalProducts.sourceIso f g k hk ≪≫
+  isoWhiskerLeft (InputCompositionTerminalProducts.polynomialSource g).functor
+    (InputCompositionTerminalProducts.chartNodes f k 4).2
+
+/-- Every first moving polynomial node keeps both original fixed postmaps. -/
+theorem moving_first (i : Fin 5) :
+    movingNodes f g k hk (CoefficientMovingSquareRows.firstRow i) =
+      postReferenceNode (InputCompositionCarrierCharts.source f g) (firstPostmap f k)
+        (movingFirstAnchor f g k hk) (InputCompositionTerminalProducts.polynomialNodes g i) := by
+  have h := congrArg (postReferenceNode (InputCompositionCarrierCharts.source f g)
+    (chartMap (X := X) k) (movingAnchor f g k hk))
+    (CoefficientMovingSquareRows.first_row_nodes
+      g f (polynomial.map g) (polynomial.map f)
+      (projection.app Z) (projection.app Y) (projection.app X)
+      (projection.naturality g).symm (projection.naturality f).symm i)
+  exact h.trans (post_post_node (InputCompositionCarrierCharts.source f g)
+    (normalizedMap (polynomial.map f)) (chartMap (X := X) k)
+    (InputCompositionTerminalProducts.polynomialSource g) (firstBaseAnchor f g)
+    (movingAnchor f g k hk) (InputCompositionTerminalProducts.polynomialNodes g i))
+
+/-- All original terminal product nodes at the chart target retain the whole polynomial row. -/
+theorem product_column (i : Fin 5) :
+    InputCompositionTerminalProducts.nodes f g k hk (Quillen.SimplexGrid.index 4 4 (i, 4)) =
+      postReferenceNode (InputCompositionCarrierCharts.source f g) (firstPostmap f k)
+        (productAnchor f g k hk) (InputCompositionTerminalProducts.polynomialNodes g i) :=
+  product_column_nodes (InputCompositionCarrierCharts.source f g)
+    (InputCompositionTerminalProducts.polynomialSource g)
+    (fun j ↦ (InputCompositionTerminalProducts.polynomialNodes g j).1)
+    (fun j ↦ (InputCompositionTerminalProducts.polynomialNodes g j).2)
+    (InputCompositionTerminalProducts.chartSource f k)
+    (fun j ↦ (InputCompositionTerminalProducts.chartNodes f k j).1)
+    (fun j ↦ (InputCompositionTerminalProducts.chartNodes f k j).2)
+    (InputCompositionTerminalProducts.sourceIso f g k hk) i 4
+
+private theorem first_nodes (hcorner : InputCompositionTerminalProducts.nodes f g k hk
+    (Quillen.SimplexGrid.index 4 4 (2, 4)) =
+      InputCompositionCarrierCharts.chartNodes f g k hk 11) (i : Fin 5) :
+    movingNodes f g k hk (CoefficientMovingSquareRows.firstRow i) =
+      InputCompositionTerminalProducts.nodes f g k hk
+        (Quillen.SimplexGrid.index 4 4 (i, 4)) := by
+  apply post_families_match (InputCompositionCarrierCharts.source f g) (firstPostmap f k)
+    (InputCompositionTerminalProducts.polynomialSource g)
+    (InputCompositionTerminalProducts.polynomialNodes g)
+    (moving_first f g k hk) (product_column f g k hk) 2 ?_ i
+  exact (InputCompositionTopChartRows.row_nodes f g k hk 2).trans hcorner.symm
+
+/-- All five positive first-terminal polynomial nodes retain the actual product reference. -/
+theorem plus_first_nodes (i : Fin 5) :
+    movingNodes f g plus plus_projection (CoefficientMovingSquareRows.firstRow i) =
+      InputCompositionTerminalProducts.nodes f g plus plus_projection
+        (Quillen.SimplexGrid.index 4 4 (i, 4)) :=
+  first_nodes f g plus plus_projection (InputCompositionH1ChartRows.plus_second_nodes f g 4) i
+
+/-- The inverse first-terminal row retains its separate original chart endpoint reference. -/
+theorem minus_first_nodes (i : Fin 5) :
+    movingNodes f g minus minus_projection (CoefficientMovingSquareRows.firstRow i) =
+      InputCompositionTerminalProducts.nodes f g minus minus_projection
+        (Quillen.SimplexGrid.index 4 4 (i, 4)) :=
+  first_nodes f g minus minus_projection (InputCompositionH1ChartRows.minus_second_nodes f g 4) i
+
+/-- The original middle-triple polynomial reference anchors the second moving row. -/
+abbrev secondBaseAnchor := CoefficientMovingSquareRows.secondAnchor
+  g f (polynomial.map f) (projection.app Y) (projection.app X) (projection.naturality f).symm
+
+/-- The complete second moving anchor retains the actual chart postmap. -/
+def movingSecondAnchor := movingAnchor f g k hk ≪≫
+  isoWhiskerRight (secondBaseAnchor f g) (chartMap (X := X) k).functor
+
+/-- The original first-arrow input polynomial anchor retains its unchanged direct references. -/
+abbrev inputPolynomialAnchor := ProjectionRectangleSquareRows.polynomialAnchor
+  (projection.app Y) (k.app Y) (k.app X) (polynomial.map f) (laurent.map f)
+  (k.naturality f) (laurentProjection.app Y) (hk Y)
+
+/-- The whole original base premap remains in the second terminal row anchor. -/
+def inputSecondAnchor := preAnchor f g ≪≫
+  isoWhiskerLeft (arrow g).functor (inputPolynomialAnchor f k hk)
+
+/-- All second moving nodes retain the independent original base and chart fixed maps. -/
+theorem moving_second (i : Fin 5) :
+    movingNodes f g k hk (CoefficientMovingSquareRows.secondRow i) =
+      prePostNodes (InputCompositionCarrierCharts.source f g) (arrow g) (chartMap (X := X) k)
+        (InputCompositionTerminalProducts.polynomialSource f)
+        (InputCompositionTerminalProducts.polynomialNodes f) (movingSecondAnchor f g k hk) i := by
+  have h := congrArg (postReferenceNode (InputCompositionCarrierCharts.source f g)
+    (chartMap (X := X) k) (movingAnchor f g k hk))
+    (CoefficientMovingSquareRows.second_row_nodes
+      g f (polynomial.map g) (polynomial.map f)
+      (projection.app Z) (projection.app Y) (projection.app X)
+      (projection.naturality g).symm (projection.naturality f).symm i)
+  exact h.trans (post_pre_node (InputCompositionCarrierCharts.source f g)
+    (arrow g) (chartMap (X := X) k) (InputCompositionTerminalProducts.polynomialSource f)
+    (InputCompositionTerminalProducts.polynomialNodes f) (secondBaseAnchor f g)
+    (movingAnchor f g k hk) i)
+
+/-- Every original input polynomial node keeps its actual whole base precomposition. -/
+theorem input_second (i : Fin 5) :
+    preNode f g (InputDescSimplex.chartNodes f k hk
+      (ProjectionRectangleSquareRows.polynomialRow i)) =
+      prePostNodes (InputCompositionCarrierCharts.source f g) (arrow g) (chartMap (X := X) k)
+        (InputCompositionTerminalProducts.polynomialSource f)
+        (InputCompositionTerminalProducts.polynomialNodes f) (inputSecondAnchor f g k hk) i := by
+  have h := congrArg (preNode f g)
+    (ProjectionRectangleSquareRows.polynomial_row_nodes
+      (projection.app Y) (k.app Y) (projection.app X) (k.app X)
+      f (polynomial.map f) (laurent.map f) (projection.naturality f) (k.naturality f)
+      (laurentProjection.app Y) (hk Y) i)
+  exact h.trans (pre_post_node (InputCompositionCarrierCharts.source f g)
+    (arrow g) (chartMap (X := X) k) (InputCompositionTerminalProducts.polynomialSource f)
+    (InputCompositionTerminalProducts.polynomialNodes f)
+    (inputPolynomialAnchor f k hk) (preAnchor f g) i)
+
+private theorem second_nodes (hcorner : movingNodes f g k hk 13 =
+    InputCompositionTerminalProducts.nodes f g k hk (Quillen.SimplexGrid.index 4 4 (4, 4)))
+    (i : Fin 5) :
+    movingNodes f g k hk (CoefficientMovingSquareRows.secondRow i) =
+      preNode f g (InputDescSimplex.chartNodes f k hk
+        (ProjectionRectangleSquareRows.polynomialRow i)) := by
+  apply prePost_families_match (InputCompositionCarrierCharts.source f g)
+    (arrow g) (chartMap (X := X) k) (InputCompositionTerminalProducts.polynomialSource f)
+    (InputCompositionTerminalProducts.polynomialNodes f)
+    (moving_second f g k hk) (input_second f g k hk) 2 ?_ i
+  exact hcorner.trans (InputCompositionTerminalRows.row_nodes f g k hk 4).symm
+
+/-- Every positive second-terminal polynomial node agrees in the complete reference carrier. -/
+theorem plus_second_nodes (i : Fin 5) :
+    movingNodes f g plus plus_projection (CoefficientMovingSquareRows.secondRow i) =
+      preNode f g (InputDescSimplex.chartNodes f plus plus_projection
+        (ProjectionRectangleSquareRows.polynomialRow i)) :=
+  second_nodes f g plus plus_projection (plus_first_nodes f g 4) i
+
+/-- Every inverse second-terminal polynomial node retains its distinct original reference. -/
+theorem minus_second_nodes (i : Fin 5) :
+    movingNodes f g minus minus_projection (CoefficientMovingSquareRows.secondRow i) =
+      preNode f g (InputDescSimplex.chartNodes f minus minus_projection
+        (ProjectionRectangleSquareRows.polynomialRow i)) :=
+  second_nodes f g minus minus_projection (minus_first_nodes f g 4) i
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopRows

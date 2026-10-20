@@ -1,0 +1,63 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSelectedRecovery
+/-! The untouched left edge of each chosen corrected square is its actual Laurent inclusion. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "SN" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+
+/-- Every source-square time retains the original corrected-square bottom without new filling. -/
+theorem selectedPolynomial_bottom (k : laurent ⟶ polynomial) (r t : I) :
+    selectedPolynomial f g c k ((r, 0), t) =
+      CutOpenCarrier.laurentInclusion
+        (S ≫ InputCompositionPolynomialScalar.polynomialReference f g)
+        (InputCompositionPolynomialScalar.chart (X := X) k)
+        (S ≫ InputCompositionPolynomialScalar.laurentReference f g k)
+        (CutOpenPrecomp.anchor S _ _ _ (InputCompositionPolynomialScalar.anchor f g k))
+        (CutOpenPrecomp.anchor S _ _ _ (InputCompositionPolynomialScalar.anchor f g k))
+        (FinitePrecomp.parameter S SN (InputCompositionPolynomialScalar.laurentReference f g k)
+          (InputCompositionPolynomialScalar.chartSurface f g k (r, 0),
+            NativeSquareFiveSimplex.parameter t)) := by
+  change FinitePrecomp.precompFinite _ _ _ _ _ _ _
+    ((InputCompositionPolynomialScalar.correctedSquare f g k).parameter (r, 0), _) = _
+  rw [(InputCompositionPolynomialScalar.correctedSquare f g k).left]
+  change FinitePrecomp.precompFinite _ _ _ _ _ _ _
+    (CutOpenCarrier.laurentInclusion _ _ _ _ _
+      (InputCompositionPolynomialScalar.chartSurface f g k (r, 0)), _) = _
+  exact FinitePrecomp.precompFinite_laurent _ _ _ _ _ _ _ _ _
+
+/-- The positive branch bottom is the whole actual Laurent map into the shared scalar cone. -/
+theorem selectedPlus_bottom (r t : I) :
+    selectedPlus f g c ((r, 0), t) = preLaurentMap f g c plus plus_projection
+      (FinitePrecomp.parameter S SN (InputCompositionPolynomialScalar.laurentReference f g plus)
+        (InputCompositionPolynomialScalar.chartSurface f g plus (r, 0),
+          NativeSquareFiveSimplex.parameter t)) := by
+  change prePlusConeMap f g c (selectedPolynomial f g c plus ((r, 0), t)) = _
+  rw [selectedPolynomial_bottom, prePlusConeMap, preConeMap, CutOpenFold.map_laurent]
+
+/-- The negative branch keeps its own Laurent chart at the entire original bottom edge. -/
+theorem selectedMinus_bottom (r t : I) :
+    selectedMinus f g c ((r, 0), t) = preLaurentMap f g c minus minus_projection
+      (FinitePrecomp.parameter S SN (InputCompositionPolynomialScalar.laurentReference f g minus)
+        (InputCompositionPolynomialScalar.chartSurface f g minus (r, 0),
+          NativeSquareFiveSimplex.parameter t)) := by
+  change preMinusConeMap f g c (selectedPolynomial f g c minus ((r, 0), t)) = _
+  rw [selectedPolynomial_bottom, preMinusConeMap, preConeMap, CutOpenFold.map_laurent]
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

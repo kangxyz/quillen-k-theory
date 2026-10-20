@@ -1,0 +1,90 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerMiddleNodes
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveGridSwap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalBoundary
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteEdge
+public import Quillen.Topology.Path.ScalarPathCells
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopPieces
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionReference
+/-! Actual global projection naturality anchors the original lower-half Laurent family. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve BassH0Merge
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+open Convexity Quillen.SimplexParameters Quillen.NativePathCells
+
+/-- The original source-map terminal middle clock is exactly its original ordered five-node face. -/
+theorem middleInputParameter (t : I) :
+    BassH0Diagram.parameter (1, upper (lower t)) =
+      StdSimplex.map ProjectionReference.Target.terminalFace.toOrderHom
+        (InputIdentityProjection.parameter t) := by
+  rw [BassH0Diagram.parameter_one, path_upper, path_lower,
+    ProjectionReference.Target.terminal_parameter]
+
+/-- The lower Laurent family's terminal middle branch is the full fixed-source bottom grid. -/
+theorem middle_parameter (r t : I) :
+    anchoredLowerLaurent f g c ((r, 1), upper (lower t)) =
+      mapParameter (precompNode (BassH0Merge.normalizedMap c))
+        (mapParameter (CommonReferenceProduct.reanchor
+          (InputCompositionTopPieces.middleAnchor f g).symm)
+          (InputCompositionCarrierBottom.face f g (r, t))) := by
+  change mapParameter (CommonReferenceProduct.reanchor (lowerLaurentAnchor f g c))
+    (FiniteParameter.parameter (lowerLaurentBinary f g) (lowerLaurentReference f g c)
+      (fun N i ↦ FinitePrecomp.node (InputDescSimplex.reference c) (lowerLaurentBinary f g)
+        (InputDescSimplex.nodes c i) N)
+      (parameter (lowerLaurentBinary f g) (lowerLaurentNodes f g)
+        (binaryPath (k := 2) 0 1 2 r), BassH0Diagram.parameter (1, upper (lower t)))) = _
+  rw [middleInputParameter, ← FiniteParameter.parameter_restrict,
+    FiniteParameter.parameter_characteristic]
+  refine (mapParameter_parameter (CommonReferenceProduct.reanchor (lowerLaurentAnchor f g c))
+    _ _).trans ?_
+  change parameter _ (GridSwap.nodes _ (fun i j ↦
+    CommonReferenceProduct.reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node (InputDescSimplex.reference c) (lowerLaurentBinary f g)
+        (InputDescSimplex.nodes c (ProjectionReference.Target.terminalRow j))
+        (lowerLaurentNodes f g i))))
+      (Quillen.SimplexGrid.parameter 2 4
+        (binaryPath (k := 2) 0 1 2 r, InputIdentityProjection.parameter t)) = _
+  rw [GridSwap.parameter_swap]
+  have hr := (congrArg (mapParameter (precompNode (BassH0Merge.normalizedMap c)))
+    (mapParameter_parameter (CommonReferenceProduct.reanchor
+      (InputCompositionTopPieces.middleAnchor f g).symm)
+      (InputCompositionCarrierBottom.nodes f g)
+      (Quillen.SimplexGrid.parameter 4 2
+        (InputIdentityProjection.parameter t, binaryPath (k := 2) 0 1 2 r)))).trans
+    (mapParameter_parameter (precompNode (BassH0Merge.normalizedMap c))
+      (fun k ↦ CommonReferenceProduct.reanchor (InputCompositionTopPieces.middleAnchor f g).symm
+        (InputCompositionCarrierBottom.nodes f g k))
+      (Quillen.SimplexGrid.parameter 4 2
+        (InputIdentityProjection.parameter t, binaryPath (k := 2) 0 1 2 r)))
+  refine Eq.trans ?_ hr.symm
+  apply congrArg (fun ns ↦ parameter _ ns
+    (Quillen.SimplexGrid.parameter 4 2
+      (InputIdentityProjection.parameter t, binaryPath (k := 2) 0 1 2 r)))
+  funext k
+  let z := (Quillen.SimplexGrid.indexEquiv 4 2).symm k
+  have hk : Quillen.SimplexGrid.index 4 2 z = k :=
+    (Quillen.SimplexGrid.index_eq_equiv 4 2 z).trans
+      ((Quillen.SimplexGrid.indexEquiv 4 2).apply_symm_apply k)
+  exact (middle_grid_node f g c z.2 z.1).trans
+    (congrArg (fun l ↦ precompNode (BassH0Merge.normalizedMap c)
+      (CommonReferenceProduct.reanchor (InputCompositionTopPieces.middleAnchor f g).symm
+        (InputCompositionCarrierBottom.nodes f g l))) hk)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

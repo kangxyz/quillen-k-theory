@@ -1,0 +1,74 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerPolynomialTips
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerOverlapHalf
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerUpperSpan
+/-!
+The positive selected sector reaches the common tip at every independent source-square time.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "J" => ProjectionReference.projectionMap X
+local notation "L" => ProjectionReference.reference X (A ≫ E)
+local notation "β" => ProjectionReference.FourEdge.beta X (A ≫ E)
+local notation "Q" => ProjectionReference.FourEdge.scalarCone X (A ≫ E)
+
+/-- The positive selected sector reaches the common tip at every independent source-square time. -/
+theorem selectedPlus_tip (r t : I) :
+    selectedPlus f g c ((r, 1), t) = FourEdgeTree.tip (A ≫ E) J L β := by
+  change prePlusConeMap f g c (selectedPolynomial f g c plus ((r, 1), t)) = _
+  rw [selectedPolynomial_tip]
+  unfold prePlusConeMap preConeMap
+  exact CutOpenFold.map_tipMinus _ _ _ _ _ _ _ _ _ _
+
+/-- The negative selected sector reaches the same actual tip, without reversing its source clock. -/
+theorem selectedMinus_tip (r t : I) :
+    selectedMinus f g c ((r, 1), t) = FourEdgeTree.tip (A ≫ E) J L β := by
+  change preMinusConeMap f g c (selectedPolynomial f g c minus ((r, 1), t)) = _
+  rw [selectedPolynomial_tip]
+  unfold preMinusConeMap preConeMap
+  exact CutOpenFold.map_tipMinus _ _ _ _ _ _ _ _ _ _
+
+/-- The original corrected overlap has its whole terminal edge at the common tip. -/
+theorem selectedOverlap_tip (r t : I) :
+    selectedOverlap f g c ((r, 1), t) = FourEdgeTree.tip (A ≫ E) J L β := by
+  change ProjectionReference.FourEdge.Precomp.cone X A E
+    (((InputCompositionOverlapScalar.correctedSquare f g).parameter (r, 1)) t) = _
+  rw [(InputCompositionOverlapScalar.correctedSquare f g).right]
+  exact ProjectionReference.FourEdge.Precomp.cone_tip X A E
+
+/-- All three original span pieces have one terminal tip, with their original half and quarter
+clocks. -/
+theorem upperSpan_tip (r t : I) :
+    upperSpan f g c ((r, 1), t) = FourEdgeTree.tip (A ≫ E) J L β := by
+  rcases cover t with ⟨v, rfl⟩ | ⟨v, rfl⟩
+  · rw [upperSpan_lower, selectedPlus_tip]
+  · rcases cover v with ⟨w, rfl⟩ | ⟨w, rfl⟩
+    · rw [upperSpan_middle, selectedOverlap_tip]
+    · rw [upperSpan_upper, selectedMinus_tip]
+
+/-- The complete two-half overlap sector reaches the common tip for every composition and overlap
+time. -/
+theorem overlapPrewhisker_tip (r t : I) :
+    overlapPrewhisker f g c ((r, 1), t) = FourEdgeTree.tip (A ≫ E) J L β := by
+  have h := ((overlapLowerTrack f g c).trans (overlapUpperTrack f g c)).map_one_left (r, t)
+  change overlapPrewhisker f g c ((r, 1), t) = upperSpan f g c ((r, 1), t) at h
+  exact h.trans (upperSpan_tip f g c r t)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

@@ -1,0 +1,238 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionChartNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalAttach
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenCompactFamily
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopChartSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPositiveFactor
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveReanchorFamily
+
+/-! Genuine polynomial-input chart carriers, with no projection of the source input. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar
+open CommonReferenceNerve InputCompositionTerminalAttach
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+  (k : laurent ⟶ polynomial)
+
+/-- The actual binary polynomial reference, with the original polynomial scheme as source. -/
+abbrev polynomialReference := BinaryNormalizationSimplex.sourceMap
+  (polynomial.map f) (polynomial.map g)
+/-- The normalized model map of the selected positive or inverse chart. -/
+abbrev chart := arrow (k.app X)
+/-- The original geometric triple reference on arbitrary polynomial input. -/
+abbrev laurentReference := NormalizedTripleSimplex.sourceMap
+  (k.app X) (polynomial.map f) (polynomial.map g)
+
+/-- The actual triple composition isomorphism attaches the polynomial reference to the chart. -/
+def anchor : (laurentReference f g k).functor ≅
+    (polynomialReference f g ≫ chart (X := X) k).functor :=
+  NormalizedTripleSimplex.leftFirst (k.app X) (polynomial.map f) (polynomial.map g)
+
+/-- The existing two-tip scalar carrier retains the entire polynomial and Laurent references. -/
+abbrev Carrier := CutOpenCarrier.space (polynomialReference f g) (chart (X := X) k)
+  (laurentReference f g k) (anchor f g k) (anchor f g k)
+
+/-- The eighteen original geometric chart nodes and their complete reference isomorphisms. -/
+abbrev chartNodes := DoubleSquareMergedSimplex.nodes
+  (polynomial.map g) (polynomial.map f) (laurent.map g) (laurent.map f)
+  (k.app Z) (k.app Y) (k.app X) (k.naturality g).symm (k.naturality f).symm
+
+/-- The complete chosen chart surface retains its original terminal pause. -/
+def chartSurface : C(unitInterval × unitInterval,
+    |nerve (Codiscrete (Node (laurentReference f g k)))|) :=
+  (parameter (laurentReference f g k) (chartNodes f g k)).comp
+    DoubleSquareScalarPaths.coefficientPausedSquareParameter
+
+/-- Every scalar chart value recovers the original paused moving square on arbitrary input. -/
+theorem chartSurface_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    pointwisePrespectrumFamily (laurentReference f g k) n (chartSurface f g k (r, s)) x =
+      ((InputCompositionTransformations.movingSquare k f g).pauseRight).level n
+        (r, (s, x)) := by
+  change pointwisePrespectrumFamily _ n (parameter _ _ _) x = _
+  rw [pointwisePrespectrumFamily_parameter, prespectrumFamily_eq]
+  exact InputCompositionChartNative.pausedSquare_native k f g n r s x
+
+/-- The three original polynomial composition nodes include both normalization stages. -/
+def polynomialNodes : Fin 3 → Node (polynomialReference f g) :=
+  ![⟨polynomialReference f g, Iso.refl _⟩,
+    ⟨BinaryNormalizationSimplex.intermediateMap (polynomial.map f) (polynomial.map g),
+      BinaryNormalizationSimplex.first (polynomial.map f) (polynomial.map g)⟩,
+    ⟨BinaryNormalizationSimplex.targetMap (polynomial.map f) (polynomial.map g),
+      BinaryNormalizationSimplex.total (polynomial.map f) (polynomial.map g)⟩]
+
+/-- The top-row attachment is equality of full dependent reference nodes. -/
+theorem polynomial_node_attachment (i : Fin 3) :
+    attachPostcompNode (polynomialReference f g) (chart (X := X) k)
+      (laurentReference f g k) (anchor f g k) (polynomialNodes f g i) =
+        chartNodes f g k (![2, 3, 11] i) := by
+  fin_cases i
+  · refine Sigma.ext ?_ ?_
+    · exact Model.Hom.ext rfl
+    · apply heq_of_eq
+      change (anchor f g k ≪≫ isoWhiskerRight (Iso.refl _)
+        (chart (X := X) k).functor) = anchor f g k
+      rw [isoWhiskerRight_refl]
+      apply Iso.ext
+      ext A
+      exact Category.comp_id _
+  · refine Sigma.ext ?_ ?_
+    · exact Model.Hom.ext rfl
+    · apply heq_of_eq
+      change (anchor f g k ≪≫ isoWhiskerRight
+        (BinaryNormalizationSimplex.first (polynomial.map f) (polynomial.map g))
+        (chart (X := X) k).functor) = anchor f g k ≪≫
+          SplitTripleSimplex.leftSecondGeometric (k.app X) (polynomial.map f) (polynomial.map g)
+      apply congrArg (fun e ↦ anchor f g k ≪≫ e)
+      apply Iso.ext
+      ext A
+      rfl
+  · refine Sigma.ext ?_ ?_
+    · exact Model.Hom.ext rfl
+    · apply heq_of_eq
+      change (anchor f g k ≪≫ isoWhiskerRight
+        (BinaryNormalizationSimplex.total (polynomial.map f) (polynomial.map g))
+        (chart (X := X) k).functor) = anchor f g k ≪≫
+          NormalizedTripleSimplex.leftSecond (k.app X) (polynomial.map f) (polynomial.map g)
+      apply congrArg (fun e ↦ anchor f g k ≪≫ e)
+      apply Iso.ext
+      ext A
+      simp only [BinaryNormalizationSimplex.total, NormalizedTripleSimplex.leftSecond,
+        isoWhiskerLeft_hom, isoWhiskerRight_hom, Iso.trans_hom, NatTrans.comp_app,
+        whiskerLeft_app, whiskerRight_app, Functor.associator_hom_app, Category.comp_id]
+      rfl
+
+open Quillen.SimplexParameters Quillen.ScalarRectangle Quillen.NativePathCells
+
+/-- The original two-piece polynomial composition path in its full reference nerve. -/
+def polynomialPath := (binaryPath (k := 2) 0 1 2).map
+  (parameter (polynomialReference f g) (polynomialNodes f g)).continuous
+
+/-- The original terminal constant half is retained literally. -/
+def pausedPolynomial := (polynomialPath f g).trans (Path.refl _)
+
+/-- All binary path points attach to the original three-node chart row. -/
+theorem polynomialPath_attachment (r : unitInterval) :
+    mapParameter (attachPostcompNode (polynomialReference f g) (chart (X := X) k)
+      (laurentReference f g k) (anchor f g k)) (polynomialPath f g r) =
+      parameter (laurentReference f g k) (chartNodes f g k)
+        (DoubleSquareScalarPaths.sourceChart r) := by
+  change mapParameter _ (parameter _ _ _) = _
+  rw [mapParameter_parameter]
+  have hn : (fun i ↦ attachPostcompNode (polynomialReference f g) (chart (X := X) k)
+      (laurentReference f g k) (anchor f g k) (polynomialNodes f g i)) =
+      (fun i ↦ chartNodes f g k (InputCompositionTopChartSeams.chartEdge.toOrderHom i)) :=
+    funext (polynomial_node_attachment f g k)
+  rw [hn, ← parameter_face]
+  exact congrArg (parameter (laurentReference f g k) (chartNodes f g k))
+    (map_binaryPath InputCompositionTopChartSeams.chartEdge 0 1 2 r)
+
+/-- The whole paused path attaches to the unchanged chart surface before evaluation. -/
+theorem pausedPolynomial_attachment (r : unitInterval) :
+    mapParameter (attachPostcompNode (polynomialReference f g) (chart (X := X) k)
+      (laurentReference f g k) (anchor f g k)) (pausedPolynomial f g r) =
+      chartSurface f g k (r, 1) := by
+  rcases cover r with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [pausedPolynomial, path_lower, polynomialPath_attachment]
+    change _ = parameter _ _ (DoubleSquareScalarPaths.coefficientPausedSquareParameter (_, _))
+    rw [InputCompositionTopChartSeams.paused_lower]
+  · rw [pausedPolynomial, path_upper]
+    have h := polynomialPath_attachment f g k 1
+    rw [Path.target, Path.target] at h
+    change _ = parameter _ _ (DoubleSquareScalarPaths.coefficientPausedSquareParameter (_, _))
+    rw [InputCompositionTopChartSeams.paused_upper]
+    exact h
+
+/-- The native prespectrum map of the selected actual chart. -/
+abbrev chartP (W : Scheme.{u}) := boundedFlatPerfectPrespectrumMap (k.app W)
+/-- The already chosen polynomial composition track, including its terminal pause. -/
+abbrev polynomialTrack := InputCompositionPositive.polynomialTrack f g
+
+/-- The two original chart squares with the prescribed cone-composition association. -/
+def compositeComparison := coneSquarePastedHomotopy (chartP k Z) (chartP k Y) (chartP k X)
+  (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+  (boundedFlatPerfectPrespectrumMap (laurent.map g))
+  (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+  (boundedFlatPerfectPrespectrumMap (laurent.map f))
+  (InputCompositionTransformations.square k g) (InputCompositionTransformations.square k f)
+
+/-- The full original paused chart comparison with its exact four native boundaries. -/
+def comparisonSquare :
+    (InputCompositionTransformations.square k (f ≫ g)).Square (compositeComparison f g k)
+      (Homotopy.precomp (chartP k Z) (InputCompositionCharts.laurentComposition f g))
+      ((polynomialTrack f g).postcomp (chartP k X)) := by
+  refine ((InputCompositionTransformations.movingSquare k f g).pauseRight).ofBoundaryLevels
+    _ _ _ _ (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl) ?_
+  intro n
+  rw [polynomialTrack, InputCompositionPositive.polynomialTrack, Homotopy.postcomp_trans]
+  apply Homotopy.trans_level_congr <;> rfl
+
+/-- The prescribed corrected chart null square, with no new interior choice. -/
+def nullSquare := coneSquareCompositionMovingNullSquare (chartP k Z) (chartP k Y) (chartP k X)
+  (boundedFlatPerfectPrespectrumMap (polynomial.map g))
+  (boundedFlatPerfectPrespectrumMap (laurent.map g))
+  (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+  (boundedFlatPerfectPrespectrumMap (laurent.map f))
+  (InputCompositionTransformations.square k g) (InputCompositionTransformations.square k f)
+  (InputCompositionTransformations.square k (f ≫ g))
+  (polynomialTrack f g) (InputCompositionCharts.laurentComposition f g) (comparisonSquare f g k)
+
+local notation "F" => polynomialReference f g
+local notation "G" => laurentReference f g k
+local notation "J" => chart (X := X) k
+local notation "ε" => anchor f g k
+
+/-- The ordinary scalar tip; the unused second tip is not identified with it. -/
+abbrev tip := CutOpenCarrier.tipMinus F J G ε ε
+
+/-- The original chart square enters the scalar Laurent summand at unchanged clocks. -/
+def nullMovingFirst : C(unitInterval × unitInterval, Carrier f g k) :=
+  (CutOpenCarrier.laurentInclusion F J G ε ε).comp (chartSurface f g k)
+
+/-- The independent cone height runs over the actual paused polynomial path. -/
+def nullMovingSecond : C(unitInterval × unitInterval, Carrier f g k) :=
+  ⟨fun z ↦ CutOpenCarrier.cylinderMinus F J G ε ε (pausedPolynomial f g z.1, z.2),
+    by fun_prop⟩
+
+/-- The complete intermediate height seam is proved inside the scalar carrier. -/
+theorem nullMoving_seam (r : unitInterval) :
+    nullMovingFirst f g k (r, 1) = nullMovingSecond f g k (r, 0) := by
+  change CutOpenCarrier.laurentInclusion F J G ε ε (chartSurface f g k (r, 1)) =
+    CutOpenCarrier.cylinderMinus F J G ε ε (pausedPolynomial f g r, 0)
+  rw [CutOpenCarrier.cylinderMinus_zero, pausedPolynomial_attachment]
+
+/-- The exact moving-null concatenation of the chart surface and polynomial cylinder. -/
+def nullMoving : C(unitInterval × unitInterval, Carrier f g k) :=
+  concatSecond (nullMovingFirst f g k) (nullMovingSecond f g k) (nullMoving_seam f g k)
+
+/-- The first literal half retains the original chart surface. -/
+theorem nullMoving_lower (r s : unitInterval) :
+    nullMoving f g k (r, lower s) = nullMovingFirst f g k (r, s) :=
+  concatSecond_lower _ _ _ r s
+
+/-- The second literal half retains the original polynomial cylinder. -/
+theorem nullMoving_upper (r s : unitInterval) :
+    nullMoving f g k (r, upper s) = nullMovingSecond f g k (r, s) :=
+  concatSecond_upper _ _ _ r s
+
+/-- The terminal face is the ordinary scalar tip for every composition time. -/
+theorem nullMoving_tip (r : unitInterval) :
+    nullMoving f g k (r, 1) = tip f g k := by
+  rw [nullMoving, concatSecond_one]
+  exact CutOpenCarrier.cylinderMinus_one F J G ε ε (pausedPolynomial f g r)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPolynomialScalar

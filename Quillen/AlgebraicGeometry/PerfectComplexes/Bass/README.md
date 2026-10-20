@@ -54,7 +54,14 @@ The degree-zero restriction is the original `perfectKRestrict`.
 `qcqsPerfectConnectingHom` from K₁(U) to supported K₀ by exactness at the
 literal K₀ groups. It does not identify that geometric connecting map with
 the fine connecting map. Arbitrary-pair pullback naturality of the transported
-boundary and identification with the classical raw boundary remain open.
+boundary and identification with the separately prescribed raw boundary
+remain open. These are additional comparison targets: the
+[tensor-generated realization](../BoundedFlat/TensorBassConstruction.md)
+directly realizes TT §§6.3–6.4 and proves original TT 7.4 under the qcqs and
+quasi-compact-open hypotheses above, including the auxiliary closed support
+with quasi-compact complement. Its canonical-null lifts are stable in every
+integer degree; the fixed original class maps retain their
+[signed geometric boundary formulas](../BoundedFlat/GeometricBoundary.md).
 The coefficient-level owners are `CoefficientFullOpenBassRestriction`,
 `CoefficientNegativeLocalizationExactness` and
 `CoefficientNegativeLocalizationBoundary`. The full-open fine row, action,

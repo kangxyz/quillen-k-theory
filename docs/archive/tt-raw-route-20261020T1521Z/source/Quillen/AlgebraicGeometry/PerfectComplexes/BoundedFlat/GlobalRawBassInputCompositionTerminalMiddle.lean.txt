@@ -1,0 +1,152 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalCenter
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1MiddleJoinFace
+
+/-!
+# All original middle-path reference nodes of terminal composition
+
+The two binary rows carry the actual positive and inverse projection paths, with both fixed
+premap and postmap retained. Their original common central node determines all references,
+and hence the entire original five-node middle seam before evaluation.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes.BassH0Merge Quillen.PerfectComplexes.BassH1Join
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTerminalMiddle
+open InputCompositionTerminalAttach
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- The actual last-row reference from the original second-arrow input rectangle. -/
+abbrev targetReference := rightRowReference (InputDescSimplex.reference g)
+  (k.app Y) (projection.app Y) g
+    (nativeLastReference (projection.app Z) (k.app Z) (projection.app Y) (k.app Y)
+      g (polynomial.map g) (laurent.map g) (projection.naturality g) (k.naturality g)
+      (laurentProjection.app Z) (hk Z))
+
+/-- The complete first-row reference after actual Laurent postcomposition. -/
+def firstReference := postAnchor f g ≪≫
+  isoWhiskerRight (targetReference g k hk) (arrow (laurent.map f)).functor
+
+/-- The complete middle-row reference after actual base precomposition. -/
+def middleReference := preAnchor f g ≪≫ isoWhiskerLeft (arrow g).functor
+  (eqToIso (ProjectionReference.anchor (projection.app Y) (k.app Y) (laurent.map f)
+    (laurentProjection.app Y) (hk Y)) ≪≫
+      BinaryNormalizationSimplex.total (laurent.map f) (k.app Y ≫ projection.app Y))
+
+/-- The entire original target row retains both original fixed maps and its full reference. -/
+theorem first_row (i : Fin 3) :
+    postNode f g (InputDescSimplex.chartNodes g k hk
+      (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i))) =
+    prePostNodes (InputCompositionCarrierCharts.source f g) (arrow g) (arrow (laurent.map f))
+      (BinaryNormalizationSimplex.sourceMap (k.app Y) (projection.app Y))
+      (binaryNodes (k.app Y) (projection.app Y)) (firstReference f g k hk) i := by
+  have h := congrArg (postNode f g)
+    (native_target_row (projection.app Z) (k.app Z) (projection.app Y) (k.app Y)
+      g (polynomial.map g) (laurent.map g) (projection.naturality g) (k.naturality g)
+      (laurentProjection.app Z) (hk Z) i)
+  exact h.trans (post_pre_node (InputCompositionCarrierCharts.source f g)
+    (arrow g) (arrow (laurent.map f))
+    (BinaryNormalizationSimplex.sourceMap (k.app Y) (projection.app Y))
+    (binaryNodes (k.app Y) (projection.app Y)) (targetReference g k hk) (postAnchor f g) i)
+
+/-- The original source column retains the identical actual premap and postmap. -/
+theorem middle_row (i : Fin 3) :
+    preNode f g (InputDescSimplex.chartNodes f k hk (rectangleLeftIndex i)) =
+    prePostNodes (InputCompositionCarrierCharts.source f g) (arrow g) (arrow (laurent.map f))
+      (BinaryNormalizationSimplex.sourceMap (k.app Y) (projection.app Y))
+      (binaryNodes (k.app Y) (projection.app Y)) (middleReference f g k hk) i := by
+  have h := congrArg (preNode f g)
+    (native_source_column (projection.app Y) (k.app Y) (projection.app X) (k.app X)
+      f (polynomial.map f) (laurent.map f) (projection.naturality f) (k.naturality f)
+      (laurentProjection.app Y) (hk Y) i)
+  exact h.trans (pre_post_node (InputCompositionCarrierCharts.source f g)
+    (arrow g) (arrow (laurent.map f))
+    (BinaryNormalizationSimplex.sourceMap (k.app Y) (projection.app Y))
+    (binaryNodes (k.app Y) (projection.app Y))
+    (eqToIso (ProjectionReference.anchor (projection.app Y) (k.app Y) (laurent.map f)
+      (laurentProjection.app Y) (hk Y)) ≪≫
+        BinaryNormalizationSimplex.total (laurent.map f) (k.app Y ≫ projection.app Y))
+    (preAnchor f g) i)
+
+/-- A proved full central node identifies all original binary-row nodes, for either chart. -/
+theorem middle_nodes (i : Fin 3) :
+    postNode f g (InputDescSimplex.chartNodes g k hk
+      (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i))) =
+      preNode f g (InputDescSimplex.chartNodes f k hk (rectangleLeftIndex i)) :=
+  prePost_families_match (InputCompositionCarrierCharts.source f g)
+    (arrow g) (arrow (laurent.map f))
+    (BinaryNormalizationSimplex.sourceMap (k.app Y) (projection.app Y))
+    (binaryNodes (k.app Y) (projection.app Y))
+    (first_row f g k hk) (middle_row f g k hk) 0
+    (InputCompositionTerminalCenter.center_node (f := f) (g := g) (k := k) (hk := hk)) i
+
+/-- Every positive middle-seam node is one of the unchanged original thirty-one input nodes. -/
+theorem plus_nodes (i : Fin 3) :
+    postNode f g (InputDescSimplex.nodes g (BassH0Diagram.plusFace.toOrderHom
+      (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i)))) =
+      preNode f g (InputDescSimplex.nodes f
+        (BassH0Diagram.plusFace.toOrderHom (rectangleLeftIndex i))) :=
+  (congrArg (postNode f g) (InputDescSimplex.plus_nodes g _)).trans
+    ((middle_nodes f g plus plus_projection i).trans
+      (congrArg (preNode f g) (InputDescSimplex.plus_nodes f _)).symm)
+
+/-- The separate inverse middle-seam nodes retain their original shared-source transport. -/
+theorem minus_nodes (i : Fin 3) :
+    postNode f g (InputDescSimplex.nodes g (BassH0Diagram.minusFace.toOrderHom
+      (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i)))) =
+      preNode f g (InputDescSimplex.nodes f
+        (BassH0Diagram.minusFace.toOrderHom (rectangleLeftIndex i))) :=
+  (congrArg (postNode f g) (InputDescSimplex.minus_nodes g _)).trans
+    ((middle_nodes f g minus minus_projection i).trans
+      (congrArg (preNode f g) (InputDescSimplex.minus_nodes f _)).symm)
+
+/-- All five complete actual middle-path nodes agree before any native evaluation. -/
+theorem whole_nodes (i : Fin 5) :
+    postNode f g (InputDescSimplex.nodes g (firstMiddleFace.toOrderHom i)) =
+      preNode f g (InputDescSimplex.nodes f (middleSourceFace.toOrderHom i)) := by
+  fin_cases i
+  · exact plus_nodes f g 0
+  · exact plus_nodes f g 1
+  · exact plus_nodes f g 2
+  · exact minus_nodes f g 1
+  · exact minus_nodes f g 2
+
+/-- The whole actual middle seam retains its original second-quarter and source clocks. -/
+theorem seam (t : unitInterval) :
+    postFace f g (1, Quillen.NativePathCells.upper (Quillen.NativePathCells.lower t)) =
+      preFace f g (0, t) := by
+  change CommonReferenceNerve.mapParameter (postNode f g)
+      (CommonReferenceNerve.parameter (InputDescSimplex.reference g) (InputDescSimplex.nodes g)
+        (BassH0Diagram.parameter (1, _))) =
+    CommonReferenceNerve.mapParameter (preNode f g)
+      (CommonReferenceNerve.parameter (InputDescSimplex.reference f) (InputDescSimplex.nodes f)
+        (BassH0Diagram.parameter (0, t)))
+  rw [CommonReferenceNerve.mapParameter_parameter, CommonReferenceNerve.mapParameter_parameter]
+  have h := CommonReferenceNerve.parameter_eq_of_face_nodes
+    (InputCompositionCarrierCharts.source f g)
+    (fun i ↦ preNode f g (InputDescSimplex.nodes f i))
+    (fun i ↦ postNode f g (InputDescSimplex.nodes g i))
+    middleSourceFace firstMiddleFace (whole_nodes f g) (NativeSquareFiveSimplex.parameter t)
+  exact (congrArg (CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (fun i ↦ postNode f g (InputDescSimplex.nodes g i))) (first_middle_parameter t)).symm.trans
+    (h.trans (congrArg (CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (fun i ↦ preNode f g (InputDescSimplex.nodes f i))) (middle_source_parameter t)))
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTerminalMiddle

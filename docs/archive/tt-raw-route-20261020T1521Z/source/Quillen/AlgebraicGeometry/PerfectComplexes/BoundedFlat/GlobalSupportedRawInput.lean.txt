@@ -1,0 +1,78 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputCharts
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawRows
+
+/-!
+# Actual supported raw first-stage input maps
+
+The original supported chart squares induce actual maps of spans, comparison cones and
+parameter-looped first stages. The whole prescribed Bass source-null comparison is inherited
+from the proved chart pastings. In particular the two localization row arrows act on these
+actual first stages; their composite localization null requires its separate weak-zero square.
+-/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+variable {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+
+/-- The actual polynomial span map formed from the original supported projection square. -/
+def spanMap : span B ⟶ span A := (splitInput f).spanMap
+
+/-- The two distinct original chart squares descend to the actual comparison homotopy. -/
+def inputComparisonHomotopy :
+    Homotopy (comparison B ≫ rawMap (InputGeometry.laurentMap f))
+      (spanMap f ≫ comparison A) :=
+  (splitInput f).inputComparisonHomotopy
+
+/-- The entire input cone map retains the original supported charts and moving overlap. -/
+def coneMap : mappingCone (comparison B) ⟶ mappingCone (comparison A) :=
+  (splitInput f).coneMap
+
+/-- Actual pair input change acts on the parameter-looped supported first stage. -/
+def map : step B ⟶ step A := (splitInput f).map
+
+/-- The cone inclusion square is the genuine Laurent pair pullback. -/
+theorem coneMap_inclusion :
+    mappingConeInclusion (comparison B) ≫ coneMap f =
+      rawMap (InputGeometry.laurentMap f) ≫ mappingConeInclusion (comparison A) :=
+  (splitInput f).coneMap_inclusion
+
+/-- Every overlap point retains both independent moving-square coordinates. -/
+theorem inputComparisonHomotopy_cylinder (n : ℕ) (r s : unitInterval)
+    (x : (rawSpectrum B.obj).space n) :
+    (inputComparisonHomotopy f).level n
+      (r, HomotopyPushout.cylinder (rawMap (Geometry.projection B))
+        (rawMap (Geometry.projection B)) n (s, x)) =
+      (splitInput f).inputDescPasting.toSquare.level n (r, (s, x)) := rfl
+
+/-- The original positive source-null compares along the actual Laurent input square. -/
+def sourceNullComparison :=
+  SplitSquare.Input.InputNull.originalNullComparison (splitInput f)
+
+/-- Every first-stage loop coordinate retains the same actual input cone map. -/
+theorem map_apply (n : ℕ) (s : unitInterval) (x : (step B).space n) :
+    Path.toContinuousMap ((map f).map n x) s =
+      (coneMap f).map n (Path.toContinuousMap x s) := rfl
+
+namespace Rows
+variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+
+/-- The actual first raw stage of support enlargement. -/
+def enlargementMap : step (source j T) ⟶ step (middle T) :=
+  GlobalSupportedRawBass.map (enlargement j T)
+
+/-- The actual first raw stage of restriction to the localization open. -/
+def restrictionMap : step (middle T) ⟶ step (target j T) :=
+  GlobalSupportedRawBass.map (restriction j T)
+
+end Rows
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

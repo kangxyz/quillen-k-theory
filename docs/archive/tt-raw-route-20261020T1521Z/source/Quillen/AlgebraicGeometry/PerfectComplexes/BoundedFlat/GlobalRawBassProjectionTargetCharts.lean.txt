@@ -1,0 +1,259 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0ChartBoundaryRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetOverlap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionFourEdgeNative
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteEdge
+
+/-!
+# Genuine polynomial-source target charts and the two outer overlap seams
+
+Each chart is the original five-node square family on the entire polynomial reference nerve.
+The prescribed H0 reference is reached through the full projection anchor. Product association
+identifies both outer seams on complete dependent nodes before realization. The comparison
+time and both distinct chart equality transports remain unchanged.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge CommonReferenceNerve
+
+private theorem parameter_source_map {V W W' T : Model.{u}}
+    (E : V ⟶ W) (D : V ⟶ W') (F : V ⟶ T) {q : ℕ}
+    (h : CommonReferenceNerve.Node E → CommonReferenceNerve.Node D)
+    (g : CommonReferenceNerve.Node D → Fin (q + 1) → CommonReferenceNerve.Node F)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|)
+    (z : StdSimplex ℝ (Fin (q + 1))) :
+    FiniteParameter.parameter D F g (mapParameter h y, z) =
+      FiniteParameter.parameter E F (fun e i ↦ g (h e) i) (y, z) := by
+  obtain ⟨k, N, w, rfl⟩ := exists_parameter E y
+  rw [mapParameter_parameter, FiniteParameter.parameter_characteristic,
+    FiniteParameter.parameter_characteristic]
+  rfl
+
+private theorem product_projection {V W W' T : Model.{u}}
+    (E : V ⟶ W) (K : W ⟶ T) (J : W ⟶ W') (H : W' ⟶ T)
+    (θ : K.functor ≅ (J ≫ H).functor)
+    (N : CommonReferenceNerve.Node E) (M : CommonReferenceNerve.Node H) :
+    CommonReferenceProduct.node (E ≫ K) (E ≫ J) H (isoWhiskerLeft E.functor θ)
+      (postcompNode J N) M =
+    CommonReferenceProduct.node (E ≫ K) E K (Iso.refl _) N
+      (preReferenceNode K J θ M) := by
+  have h₁ := CommonReferenceProduct.node_associativity (E ≫ K) E J H
+    (isoWhiskerLeft E.functor θ) N M
+  have h₂ := CommonReferenceProduct.node_second_reanchor (E ≫ K) E K (J ≫ H)
+    θ (Iso.refl _) N (precompNode J M)
+  simp only [CommonReferenceProduct.postNode, CommonReferenceProduct.preNode,
+    CommonReferenceProduct.reanchor, Iso.refl_trans] at h₁ h₂
+  exact h₁.trans h₂.symm
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}} (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+variable (α : laurent ⟶ polynomial)
+  (ha : ∀ Z, α.app Z ≫ projection.app Z = laurentProjection.app Z)
+
+/-- The original global chart-square source model. -/
+abbrev squareSource := NativeSquareFiveSimplex.source (laurent.map f) (α.app Y)
+/-- The five full nodes of the original global chart square. -/
+abbrev squareNodes := NativeSquareFiveSimplex.nodes (laurent.map f) (α.app Y)
+  (α.app X) (polynomial.map f) (α.naturality f)
+/-- The actual projection-normalization anchor of the original chart. -/
+abbrev canonicalAnchor := InputCompositionTerminalRows.chartAnchor f α ha
+/-- Precompose the complete chart node by the actual source projection. -/
+abbrev preNode := preReferenceNode (InputDescSimplex.reference f) (projectionMap Y)
+  (canonicalAnchor f α ha)
+
+private theorem chart_row (i : Fin 5) :
+    InputDescSimplex.chartNodes f α ha (BassH0ChartBoundaryRows.rowFace.toOrderHom i) =
+      preNode f α ha (squareNodes f α i) :=
+  ProjectionRectangleSquareRows.chart_row_nodes
+    (projection.app Y) (α.app Y) (projection.app X) (α.app X)
+    f (polynomial.map f) (laurent.map f) (projection.naturality f) (α.naturality f)
+    (laurentProjection.app Y) (ha Y) i
+
+private theorem plus_row (i : Fin 5) :
+    InputDescSimplex.nodes f ((BassH0ChartBoundaryRows.rowFace ≫ BassH0Diagram.plusFace).toOrderHom
+      i) =
+      preNode f plus plus_projection (squareNodes f plus i) :=
+  (InputDescSimplex.plus_nodes f _).trans (chart_row f plus plus_projection i)
+
+private theorem minus_row (i : Fin 5) :
+    InputDescSimplex.nodes f ((BassH0ChartBoundaryRows.rowFace ≫ BassH0Diagram.minusFace).toOrderHom
+      i) =
+      preNode f minus minus_projection (squareNodes f minus i) :=
+  (InputDescSimplex.minus_nodes f _).trans (chart_row f minus minus_projection i)
+
+/-- The target chart uses the original H0 projection anchor with its complete left whiskering. -/
+def chartAnchor : (reference f E).functor ≅
+    (polynomialReference Y E ≫ squareSource f α).functor :=
+  isoWhiskerLeft E.functor (canonicalAnchor f α ha)
+
+/-- Every polynomial node is composed with each original full chart-square node. -/
+def chartNodes (M : CommonReferenceNerve.Node (polynomialReference Y E)) (i : Fin 5) :
+    CommonReferenceNerve.Node (reference f E) :=
+  CommonReferenceProduct.node (reference f E) (polynomialReference Y E)
+    (squareSource f α) (chartAnchor f E α ha) M
+    (squareNodes f α i)
+
+/-- The genuine whole polynomial-source chart retains the original reversed-binary square time. -/
+def chart : C(|nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference Y E)))| × I,
+    |nerve (Codiscrete (CommonReferenceNerve.Node (reference f E)))|) :=
+  (FiniteParameter.parameter (polynomialReference Y E) (reference f E)
+    (chartNodes f E α ha)).comp
+      ⟨fun z ↦ (z.1, NativeSquareFiveSimplex.parameter z.2), by fun_prop⟩
+
+/-- Every full polynomial-source chain retains its exact product-simplex parameter. -/
+theorem chart_characteristic {k : ℕ}
+    (M : Fin (k + 1) → CommonReferenceNerve.Node (polynomialReference Y E))
+    (z : StdSimplex ℝ (Fin (k + 1))) (s : I) :
+    chart f E α ha (CommonReferenceNerve.parameter (polynomialReference Y E) M z, s) =
+    CommonReferenceNerve.parameter (reference f E)
+      (FiniteParameter.gridNodes (polynomialReference Y E) (reference f E)
+        (chartNodes f E α ha) M)
+      (SimplexGrid.parameter.{u + 1} k 4 (z, NativeSquareFiveSimplex.parameter s)) :=
+  FiniteParameter.parameter_characteristic (polynomialReference Y E) (reference f E)
+    (chartNodes f E α ha) M z (NativeSquareFiveSimplex.parameter s)
+
+/-- Product association retains the entire projection anchor and both complete input nodes. -/
+theorem chart_polynomial_node (N : CommonReferenceNerve.Node E) (i : Fin 5) :
+    chartNodes f E α ha (postcompNode (projectionMap Y) N) i =
+    CommonReferenceProduct.node (reference f E) E (InputDescSimplex.reference f)
+      (Iso.refl _) N
+      (preNode f α ha (squareNodes f α i)) :=
+  product_projection E (InputDescSimplex.reference f)
+    (projectionMap Y) (squareSource f α)
+    (canonicalAnchor f α ha) N _
+
+/-- Every full positive product row agrees with the original left H0 row. -/
+theorem chart_plus_nodes (N : CommonReferenceNerve.Node E) (i : Fin 5) :
+    chartNodes f E (plus) (plus_projection)
+      (postcompNode (projectionMap Y) N) i =
+    nodes f E N ((BassH0ChartBoundaryRows.rowFace ≫ BassH0Diagram.plusFace).toOrderHom i) := by
+  rw [chart_polynomial_node, ← plus_row]
+  simp only [nodes, CommonReferenceProduct.node, Iso.refl_trans]
+
+/-- Every full inverse product row retains its separate right H0 row and casts. -/
+theorem chart_minus_nodes (N : CommonReferenceNerve.Node E) (i : Fin 5) :
+    chartNodes f E (minus) (minus_projection)
+      (postcompNode (projectionMap Y) N) i =
+    nodes f E N ((BassH0ChartBoundaryRows.rowFace ≫ BassH0Diagram.minusFace).toOrderHom i) := by
+  rw [chart_polynomial_node, ← minus_row]
+  simp only [nodes, CommonReferenceProduct.node, Iso.refl_trans]
+
+/-- The complete positive chart attachment is the original whole left overlap seam. -/
+theorem chart_plus_polynomial (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (s : I) :
+    chart f E (plus) (plus_projection)
+      (mapParameter (postcompNode (projectionMap Y)) y, s) =
+    overlap f E (y, (s, 0)) := by
+  change FiniteParameter.parameter (polynomialReference Y E) (reference f E)
+    (chartNodes f E (plus) (plus_projection))
+    (mapParameter (postcompNode (projectionMap Y)) y,
+      NativeSquareFiveSimplex.parameter s) = _
+  rw [parameter_source_map, overlap_left]
+  have hn := funext (fun N ↦ funext (chart_plus_nodes f E N))
+  refine (congrArg (fun ns ↦ FiniteParameter.parameter E (reference f E) ns
+    (y, NativeSquareFiveSimplex.parameter s)) hn).trans ?_
+  rw [FiniteParameter.parameter_restrict]
+  have hs := ProjectionRectangleSquareRows.chart_parameter BassH0Diagram.plusFace s
+  change StdSimplex.map (BassH0ChartBoundaryRows.rowFace ≫ BassH0Diagram.plusFace).toOrderHom
+    (NativeSquareFiveSimplex.parameter s) = _ at hs
+  rw [hs]
+
+/-- The complete inverse chart attachment is the original whole right overlap seam. -/
+theorem chart_minus_polynomial (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (s : I) :
+    chart f E (minus) (minus_projection)
+      (mapParameter (postcompNode (projectionMap Y)) y, s) =
+    overlap f E (y, (s, 1)) := by
+  change FiniteParameter.parameter (polynomialReference Y E) (reference f E)
+    (chartNodes f E (minus) (minus_projection))
+    (mapParameter (postcompNode (projectionMap Y)) y,
+      NativeSquareFiveSimplex.parameter s) = _
+  rw [parameter_source_map, overlap_right]
+  have hn := funext (fun N ↦ funext (chart_minus_nodes f E N))
+  refine (congrArg (fun ns ↦ FiniteParameter.parameter E (reference f E) ns
+    (y, NativeSquareFiveSimplex.parameter s)) hn).trans ?_
+  rw [FiniteParameter.parameter_restrict]
+  have hs := ProjectionRectangleSquareRows.chart_parameter BassH0Diagram.minusFace s
+  change StdSimplex.map (BassH0ChartBoundaryRows.rowFace ≫ BassH0Diagram.minusFace).toOrderHom
+    (NativeSquareFiveSimplex.parameter s) = _ at hs
+  rw [hs]
+
+/-- Every finite polynomial source family evaluates as the actual chart square. -/
+theorem chart_finite_native {k : ℕ}
+    (M : Fin (k + 1) → CommonReferenceNerve.Node (polynomialReference Y E))
+    (n : ℕ) (z : StdSimplex ℝ (Fin (k + 1))) (s : I) (x : (prespectrum V).space n) :
+    prespectrumFamily (reference f E)
+      (FiniteParameter.gridNodes (polynomialReference Y E) (reference f E)
+        (chartNodes f E α ha) M) n
+      (SimplexGrid.parameter.{u + 1} k 4 (z, NativeSquareFiveSimplex.parameter s), x) =
+    (boundedFlatPerfectPrespectrumSquareHomotopy
+      (laurent.map f) (α.app Y)
+      (α.app X) (polynomial.map f)
+      (α.naturality f)).level n
+      (s, prespectrumFamily (polynomialReference Y E) M n (z, x)) := by
+  rw [prespectrumFamily_eq, prespectrumFamily_eq]
+  have hs : ModelSimplex.ofIsos (reference f E)
+      (fun i ↦ (FiniteParameter.gridNodes (polynomialReference Y E) (reference f E)
+        (chartNodes f E α ha) M i).1)
+      (fun i ↦ (FiniteParameter.gridNodes (polynomialReference Y E) (reference f E)
+        (chartNodes f E α ha) M i).2) =
+      CommonReferenceProduct.simplex (polynomialReference Y E)
+        (fun i ↦ (M i).1) (fun i ↦ (M i).2)
+        (squareSource f α)
+        (fun i ↦ (squareNodes f α i).1)
+        (fun i ↦ (squareNodes f α i).2) :=
+    ModelSimplex.ofIsos_change_reference (chartAnchor f E α ha) _ _
+  rw [hs, CommonReferenceProduct.prespectrum_comp]
+  exact NativeSquareFiveSimplex.native _ _ _ _ _ n s _
+
+/-- Whole polynomial inputs recover the actual chart square in every native degree. -/
+theorem chart_native (n : ℕ)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference Y E)))|)
+    (s : I) (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (reference f E) n (chart f E α ha (y, s)) x =
+    (boundedFlatPerfectPrespectrumSquareHomotopy
+      (laurent.map f) (α.app Y)
+      (α.app X) (polynomial.map f)
+      (α.naturality f)).level n
+      (s, pointwisePrespectrumFamily (polynomialReference Y E) n y x) := by
+  obtain ⟨k, M, z, hz⟩ := exists_parameter (polynomialReference Y E) y
+  rw [← hz, chart_characteristic, pointwisePrespectrumFamily_parameter,
+    pointwisePrespectrumFamily_parameter]
+  exact chart_finite_native f E α ha M n z s x
+
+
+/-- The original plus chart is retained on every polynomial-reference point. -/
+theorem chart_plus_native (n : ℕ)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference Y E)))|)
+    (s : I) (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (reference f E) n
+      (chart f E plus plus_projection (y, s)) x =
+    (plusSquareHomotopy f).level n
+      (s, pointwisePrespectrumFamily (polynomialReference Y E) n y x) :=
+  chart_native f E plus plus_projection n y s x
+
+/-- The original minus chart is retained on every polynomial-reference point. -/
+theorem chart_minus_native (n : ℕ)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference Y E)))|)
+    (s : I) (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (reference f E) n
+      (chart f E minus minus_projection (y, s)) x =
+    (minusSquareHomotopy f).level n
+      (s, pointwisePrespectrumFamily (polynomialReference Y E) n y x) :=
+  chart_native f E minus minus_projection n y s x
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

@@ -1,0 +1,10 @@
+{
+  "restore_check": "passed",
+  "restored_sources": 322,
+  "source_checksums_verified": true,
+  "archived_links_resolve": 54,
+  "original_manifest_sha256": "f9320b39ab821894de5298002fe934602ed4487251543ebeb574c82c7189124f",
+  "live_removed_sources_absent": true,
+  "archive_sources_verified": true,
+  "compiled_artifacts_in_archive": 0
+}

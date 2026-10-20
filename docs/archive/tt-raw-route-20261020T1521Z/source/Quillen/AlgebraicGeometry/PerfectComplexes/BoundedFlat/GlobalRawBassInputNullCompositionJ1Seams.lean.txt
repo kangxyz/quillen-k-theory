@@ -1,0 +1,125 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPrecompSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedSurfaceTransport
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPolynomialCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullPasting
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedNull
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0TopRows
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCompactPrecompAttachment
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenMap
+
+/-! Literal middle seams for the two chosen null comparison surfaces. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor AlgebraicGeometry
+open Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionJ1Seams
+open CommonReferenceNerve InputIdentitySeedCarrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- The entire first final chart half is the original second positive movement. -/
+theorem chart_middle (s : I) :
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (SeedSurfaceTransport.chartParameter f g (s, movement g 1)) =
+      InputNullCompositionPrecomp.positiveMovement f g s := by
+  rw [SeedSurfaceTransport.chartParameter_movement,
+    InputCompositionTerminalSeams.plus_middle]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (InputCompositionTerminalAttach.preFace f g (s, 0)) =
+    InputNullCompositionPrecomp.transport f g
+      (SeedOrdinarySheet.laurent f
+        (parameter (laurentRef f) (InputDescSimplex.nodes f)
+          (ProjectionRectangleParameters.L BassH0Diagram.plusFace s)))
+  rw [InputNullCompositionPrecomp.transport_laurent]
+  have hn : InputNullCompositionPrecomp.laurentNode f g =
+      InputCompositionTerminalAttach.preNode f g :=
+    funext (InputNullCompositionPrecomp.laurent_node f g)
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (mapParameter (InputCompositionTerminalAttach.preNode f g)
+      (parameter (laurentRef f) (InputDescSimplex.nodes f) (BassH0Diagram.parameter (s, 0)))) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (InputNullCompositionPrecomp.laurentNode f g)
+        (parameter (laurentRef f) (InputDescSimplex.nodes f)
+          (ProjectionRectangleParameters.L BassH0Diagram.plusFace s)))
+  rw [hn, BassH0Diagram.parameter_left]
+  rfl
+
+/-- The first polynomial row retains the complete actual postcomposed nodes. -/
+theorem polynomial_first_nodes (i : Fin 5) :
+    InputNullCompositionPolynomialCarrier.polynomialNode f g
+      (InputCompositionTopPieces.polynomialNodes f g (CoefficientMovingSquareRows.firstRow i)) =
+      SeedSurfaceTransport.polynomialNode f g (InputIdentitySeedCarrier.polynomialNodes g i) := by
+  have h := congrArg (BassH0Merge.anchorNode (InputCompositionH0TopRows.outerIso f g).symm)
+    (CoefficientMovingSquareRows.first_row_nodes g f (polynomial.map g) (polynomial.map f)
+      (projection.app Z) (projection.app Y) (projection.app X)
+      (projection.naturality g).symm (projection.naturality f).symm i)
+  exact h.trans (BassH1Join.anchor_post_node (BassH0Merge.normalizedMap (polynomial.map f))
+    (InputCompositionH0TopRows.outerIso f g).symm
+    (InputCompositionH1TopRows.firstBaseAnchor f g)
+    (InputIdentitySeedCarrier.polynomialNodes g i))
+
+/-- The complete shared polynomial corner is literal equality, not native injectivity. -/
+theorem polynomial_corner :
+    SeedSurfaceTransport.polynomialNode f g (InputIdentitySeedCarrier.polynomialNodes g 4) =
+      InputNullCompositionPrecomp.polynomialNode f g
+        (InputIdentitySeedCarrier.polynomialNodes f 2) :=
+  (polynomial_first_nodes f g 4).symm.trans
+    (InputNullCompositionPrecomp.polynomial_second_nodes f g 2)
+
+/-- The actual final first cylinder and initial second cylinder have the same polynomial point. -/
+theorem polynomial_middle :
+    SeedSurfaceTransport.polynomialParameter f g (movement g 1) =
+      InputNullCompositionPrecomp.polynomial f g (movement f 0) := by
+  change mapParameter _ (parameter _ _ (NativeSquareFiveSimplex.parameter 1)) =
+    mapParameter _ (parameter _ _ (NativeSquareFiveSimplex.parameter 0))
+  rw [mapParameter_parameter, mapParameter_parameter, Path.target, Path.source]
+  have h := parameter_eq_of_face_nodes F
+    (fun i ↦ InputNullCompositionPrecomp.polynomialNode f g (polynomialNodes f i))
+    (fun i ↦ SeedSurfaceTransport.polynomialNode f g (polynomialNodes g i))
+    (Quillen.SimplexGrid.constantFace (q := 0) 2)
+    (Quillen.SimplexGrid.constantFace (q := 0) 4)
+    (fun _ ↦ polynomial_corner f g) (Convexity.StdSimplex.single (0 : Fin 1))
+  simpa only [Convexity.StdSimplex.map_single, Quillen.SimplexGrid.constantFace,
+    SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk] using h
+
+/-- The first target cone is exactly the second source's chart-then-cylinder word. -/
+theorem cone_middle (s : I) : SeedSurfaceTransport.newCone f g s =
+    ((InputNullCompositionPrecomp.positiveMovement f g).trans
+      (InputNullCompositionPrecomp.oldCone f g)) s := by
+  rcases Quillen.NativePathCells.cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [SeedSurfaceTransport.newCone_apply, Quillen.NativePathCells.path_lower]
+    change ((SeedSurfaceTransport.chartHomotopy f g).trans
+      (SeedSurfaceTransport.cylinderHomotopy f g))
+      (Quillen.NativePathCells.lower t, movement g 1) = _
+    rw [Quillen.ScalarRectangle.homotopy_lower]
+    exact chart_middle f g t
+  · rw [SeedSurfaceTransport.newCone_apply, Quillen.NativePathCells.path_upper,
+      InputNullCompositionPrecomp.oldCone_apply]
+    change ((SeedSurfaceTransport.chartHomotopy f g).trans
+      (SeedSurfaceTransport.cylinderHomotopy f g))
+      (Quillen.NativePathCells.upper t, movement g 1) = _
+    rw [Quillen.ScalarRectangle.homotopy_upper]
+    change CutOpenCarrier.cylinderMinus F J G ε ε'
+      (SeedSurfaceTransport.polynomialParameter f g (movement g 1), t) = _
+    rw [polynomial_middle]
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionJ1Seams

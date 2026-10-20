@@ -1,0 +1,42 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullPasting
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPositiveFactor
+
+/-! Client use of the unchanged original null-composition rail through positive-cone support. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalRawBassInputNullComposition
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- One positive-cone family simultaneously realizes both original composite-null endpoints. -/
+theorem supported_null_endpoints (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (InputCompositionPositive.sourceRail f g n (0, (s, x))) =
+        (InputNull.originalOldNull (f ≫ g)).level n (s, x) ∧
+      (InputIdentityPositive.inclusion X).map n
+        (InputCompositionPositive.sourceRail f g n (1, (s, x))) =
+          (InputCompositionNull.oldComposite f g).level n (s, x) := by
+  constructor
+  · exact (InputCompositionPositive.sourceRail_factor f g n 0 s x).trans
+      ((InputCompositionNull.sourceSquare_apply f g n 0 s x).symm.trans
+        ((InputCompositionNull.sourceSquare f g).at_zero n s x))
+  · exact (InputCompositionPositive.sourceRail_factor f g n 1 s x).trans
+      ((InputCompositionNull.sourceSquare_apply f g n 1 s x).symm.trans
+        ((InputCompositionNull.sourceSquare f g).at_one n s x))
+
+end Consumer.GlobalRawBassInputNullComposition

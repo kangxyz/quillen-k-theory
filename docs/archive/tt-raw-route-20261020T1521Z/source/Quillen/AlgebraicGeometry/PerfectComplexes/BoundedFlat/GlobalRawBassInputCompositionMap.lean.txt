@@ -1,0 +1,85 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionComparison
+public import Quillen.Topology.Prespectrum.ConeSquareMapMovingCoherence
+public import Quillen.Topology.Prespectrum.ParameterLoopingHomotopy
+
+/-!
+# Whole composition of the original global raw cone and Bass step maps
+
+The produced actual comparison square gives composition of the original square-cone maps.
+The Laurent track and complete cone null square are retained, and parameter looping keeps
+homotopy time independent from loop time. Compatibility with the separately chosen input
+source-null and seed naturality homotopies is not asserted here.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputComposition
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The produced whole comparison square gives the actual direct-to-composite cone null square. -/
+def comparisonConeNullSquare := coneSquareCompositionMovingNullSquare
+  (comparison Z) (comparison Y) (comparison X)
+  (spanMap g) (boundedFlatPerfectPrespectrumMap (laurent.map g))
+  (spanMap f) (boundedFlatPerfectPrespectrumMap (laurent.map f))
+  (inputComparisonHomotopy g) (inputComparisonHomotopy f) (inputComparisonHomotopy (f ≫ g))
+  (InputCompositionSpan.homotopy f g) (InputCompositionCharts.laurentComposition f g)
+  (comparisonSquare f g)
+
+/-- The actual original input cone maps compose through the constructed original square. -/
+def coneHomotopy : Homotopy (coneMap (f ≫ g)) (coneMap g ≫ coneMap f) :=
+  coneSquareCompositionHomotopyOfSquare (comparison Z) (comparison Y) (comparison X)
+    (spanMap g) (boundedFlatPerfectPrespectrumMap (laurent.map g))
+    (spanMap f) (boundedFlatPerfectPrespectrumMap (laurent.map f))
+    (inputComparisonHomotopy g) (inputComparisonHomotopy f) (inputComparisonHomotopy (f ≫ g))
+    (InputCompositionSpan.homotopy f g) (InputCompositionCharts.laurentComposition f g)
+    (comparisonSquare f g)
+
+/-- Every original Laurent inclusion point follows exactly the prescribed composition track. -/
+theorem coneHomotopy_inclusion (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).space n) :
+    (coneHomotopy f g).level n (r, (mappingConeInclusion (comparison Z)).map n x) =
+      (mappingConeInclusion (comparison X)).map n
+        ((InputCompositionCharts.laurentComposition f g).level n (r, x)) := rfl
+
+/-- The whole original cone cylinder retains its actual constructed two-parameter null square. -/
+theorem coneHomotopy_cylinder (n : ℕ) (r s : unitInterval) (x : (span Z).space n) :
+    (coneHomotopy f g).level n
+      (r, ReducedMappingCone.cylinder ((span Z).point n)
+        ((originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).point n)
+        ((comparison Z).map n) (s, x)) =
+      (comparisonConeNullSquare f g).level n (r, (s, x)) := rfl
+
+/-- Parameter-correct looping gives the whole composition law for the unchanged raw Bass map. -/
+def mapHomotopy : Homotopy (map (f ≫ g)) (map g ≫ map f) :=
+  (coneHomotopy f g).parameterLooping.cast rfl
+    (parameterLoopingFunctor.map_comp (coneMap g) (coneMap f))
+
+/-- Homotopy time and the original loop coordinate remain independent at every native level. -/
+theorem mapHomotopy_apply (n : ℕ) (r s : unitInterval) (γ : (step Z).space n) :
+    Path.toContinuousMap ((mapHomotopy f g).level n (r, γ)) s =
+      (coneHomotopy f g).level n (r, Path.toContinuousMap γ s) := rfl
+
+/-- The original seed input retains its unit loop and both unchanged source-null legs. -/
+theorem mapHomotopy_transition_apply (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap ((mapHomotopy f g).level n (r, (transition Z).map n x)) s =
+      (coneHomotopy f g).level n
+        (r, (((unitHomotopy Z).postcomp (mappingConeInclusion (comparison Z))).conjugateToZero
+          (sourceNull Z)).level n (s, x)) := rfl
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputComposition

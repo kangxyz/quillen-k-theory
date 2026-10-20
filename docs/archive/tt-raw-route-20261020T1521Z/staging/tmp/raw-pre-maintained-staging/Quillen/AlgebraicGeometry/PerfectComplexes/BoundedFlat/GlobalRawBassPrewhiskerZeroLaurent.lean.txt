@@ -1,0 +1,40 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerLaurentNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenPrecompNative
+/-! All-point recovery of the original source-map first half with all three clocks retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+/-- The actual Laurent source model is precomposed by the original Laurent map of c. -/
+abbrev zeroLaurentReference := BassH0Merge.normalizedMap (laurent.map c) ≫ lowerLaurentBinary f g
+
+/-- The original Laurent composition clock on arbitrary Laurent source inputs. -/
+def zeroLaurent : C(I, |CutOpenCarrier.parameterSSet (zeroLaurentReference f g c)|) :=
+  (mapParameter (precompNode (BassH0Merge.normalizedMap (laurent.map c)))).comp
+    (lowerLaurentPath f g)
+
+/-- Every original Laurent input has the literal prewhiskered Laurent composition value. -/
+theorem zeroLaurent_native (n : ℕ) (r : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj W))).space n) :
+    pointwisePrespectrumFamily (zeroLaurentReference f g c) n (zeroLaurent f g c r) x =
+      (InputCompositionCharts.laurentComposition f g).level n
+        (r, (boundedFlatPerfectPrespectrumMap (laurent.map c)).map n x) := by
+  exact (CutOpenPrecomp.pointwise_precomp (BassH0Merge.normalizedMap (laurent.map c))
+    (lowerLaurentBinary f g) n (lowerLaurentPath f g r) x).trans
+      (lowerLaurentPath_native f g n r _)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

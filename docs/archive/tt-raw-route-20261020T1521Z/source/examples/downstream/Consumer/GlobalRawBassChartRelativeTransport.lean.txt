@@ -1,0 +1,74 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportPolynomialRecovery
+
+/-!
+Continuous genuine polynomial inputs retain independently varying correction clocks after
+postmap.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u v
+namespace Consumer.GlobalRawBassChartRelativeTransport
+open CommonReferenceNerve ChartRelativeTransport
+variable {W X Y Z : Scheme.{u}} (a : W ⟶ X) (f : X ⟶ Y) (g : Y ⟶ Z)
+  {T : Type v} [TopologicalSpace T]
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+
+/--
+An independently varying plus polynomial input reconstructs continuously after the raw postmap.
+-/
+def reconstructPositive (n : ℕ) (r s : C(T, unitInterval))
+    (x : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n)) :
+    C(T, (mappingCone (comparison W)).space n) :=
+  ((InputIdentityPositive.inclusion W).map n).comp
+    ((CutOpenCarrier.compactNativeFamily (targetPolynomial a P)
+      (InputCompositionTerminalAttach.arrow (plus.app W)) (targetLaurent a plus P)
+      (targetAnchor a plus P) (targetAnchor a plus P) (postCorrectedSquare a f g plus) n).comp
+        ⟨fun z ↦ ((r z, s z), x z), by fun_prop⟩)
+
+/-- Both external clocks and every input remain in the selected original plus interior. -/
+theorem reconstructPositive_original (n : ℕ) (r s : C(T, unitInterval))
+    (x : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n))
+    (z : T) :
+    reconstructPositive a f g n r s x z =
+      (coneMap a).map n ((InputComposition.coneHomotopy f g).level n
+        (r z, Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s z, (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n (x z)))) :=
+  plus_postCorrectedSquare_native a f g n (r z) (s z) (x z)
+
+/--
+An independently varying minus polynomial input reconstructs continuously after the raw
+postmap.
+-/
+def reconstructInverse (n : ℕ) (r s : C(T, unitInterval))
+    (x : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n)) :
+    C(T, (mappingCone (comparison W)).space n) :=
+  ((InputIdentityNegative.inclusion W).map n).comp
+    ((CutOpenCarrier.compactNativeFamily (targetPolynomial a P)
+      (InputCompositionTerminalAttach.arrow (minus.app W)) (targetLaurent a minus P)
+      (targetAnchor a minus P) (targetAnchor a minus P) (postCorrectedSquare a f g minus) n).comp
+        ⟨fun z ↦ ((r z, s z), x z), by fun_prop⟩)
+
+/-- Both external clocks and every input remain in the selected original minus interior. -/
+theorem reconstructInverse_original (n : ℕ) (r s : C(T, unitInterval))
+    (x : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n))
+    (z : T) :
+    reconstructInverse a f g n r s x z =
+      (coneMap a).map n ((InputComposition.coneHomotopy f g).level n
+        (r z, Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s z, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n (x z)))) :=
+  minus_postCorrectedSquare_native a f g n (r z) (s z) (x z)
+end Consumer.GlobalRawBassChartRelativeTransport

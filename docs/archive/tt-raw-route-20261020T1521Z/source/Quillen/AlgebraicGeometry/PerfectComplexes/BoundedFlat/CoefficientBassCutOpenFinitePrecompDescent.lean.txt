@@ -1,0 +1,89 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompParameters
+public import Quillen.Topology.DoubleMappingCylinder.HomotopyDescent
+/-! Two genuine pushout descents with a finite source simplex left independent. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Convexity
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp
+open CutOpenCarrier
+variable {U V W T : Model.{u}} (A : U ⟶ V)
+variable {q : ℕ} (M : Fin (q + 1) → Node A)
+variable (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
+variable (ε₀ ε₁ : G.functor ≅ (F ≫ J).functor)
+
+/-- The target retains both separately transported original anchors. -/
+abbrev target := space (A ≫ F) J (A ≫ G)
+  (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁)
+
+/-- The Laurent sector is the exact finite-family action, curried only for descent. -/
+def laurent : C(|parameterSSet G|, C(StdSimplex ℝ (Fin (q + 1)),
+    target A F J G ε₀ ε₁)) :=
+  ((laurentInclusion (A ≫ F) J (A ≫ G)
+    (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁)).comp
+    (parameter A M G)).curry
+
+/-- The negative cylinder has its original height, independent of the finite parameter. -/
+def minus : C(|parameterSSet F| × TopCat.I.{u},
+    C(StdSimplex ℝ (Fin (q + 1)), target A F J G ε₀ ε₁)) :=
+  (show C((|parameterSSet F| × TopCat.I.{u}) × StdSimplex ℝ (Fin (q + 1)),
+    target A F J G ε₀ ε₁) from
+    (cylinderMinus (A ≫ F) J (A ≫ G)
+      (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁)).comp
+      ⟨fun z ↦ (parameter A M F (z.1.1, z.2), z.1.2.down), by fun_prop⟩).curry
+
+/-- The first endpoint pair keeps the original Laurent sector and negative tip. -/
+def firstEnds : C(|parameterSSet G| ⊕ |tipSSet.{u}|,
+    C(StdSimplex ℝ (Fin (q + 1)), target A F J G ε₀ ε₁)) :=
+  ⟨Sum.elim (laurent A M F J G ε₀ ε₁)
+      (fun _ ↦ ContinuousMap.const _ (tipMinus (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε₀) (CutOpenPrecomp.anchor A F J G ε₁))),
+    continuous_sum_dom.mpr ⟨(laurent A M F J G ε₀ ε₁).continuous, continuous_const⟩⟩
+
+/-- The entire first attaching square, not merely its vertices, commutes. -/
+theorem first_square :
+    Quillen.intervalEndpoints |parameterSSet F| ≫ TopCat.ofHom (minus A M F J G ε₀ ε₁) =
+      DoubleCylinder.endMap (SSet.toTop.map (attaching F J G ε₀))
+        (SSet.toTop.map (erase F)) ≫ TopCat.ofHom (firstEnds A M F J G ε₀ ε₁) := by
+  ext z w
+  rcases z with z | z
+  · change cylinderMinus _ _ _ _ _ (parameter A M F (z, w), 0) =
+      laurentInclusion _ _ _ _ _
+        (parameter A M G (mapParameter (attachPostcompNode F J G ε₀) z, w))
+    rw [cylinderMinus_zero, attachment_parameter]
+  · exact cylinderMinus_one _ _ _ _ _ (parameter A M F (z, w))
+
+/-- The first actual displayed pushout descends into continuous finite-parameter maps. -/
+def first : C(|firstSimplicial F J G ε₀|,
+    C(StdSimplex ℝ (Fin (q + 1)), target A F J G ε₀ ε₁)) :=
+  ((first_isPushout F J G ε₀).desc (TopCat.ofHom (minus A M F J G ε₀ ε₁))
+    (TopCat.ofHom (firstEnds A M F J G ε₀ ε₁))
+    (first_square A M F J G ε₀ ε₁)).hom
+
+/-- The first descended map recovers every original endpoint-pair value. -/
+theorem first_ends (z : |parameterSSet G| ⊕ |tipSSet.{u}|) :
+    first A M F J G ε₀ ε₁ (DoubleCylinder.realizedEnds
+      (attaching F J G ε₀) (erase F) z) = firstEnds A M F J G ε₀ ε₁ z :=
+  ConcreteCategory.congr_hom ((first_isPushout F J G ε₀).inr_desc
+    (TopCat.ofHom (minus A M F J G ε₀ ε₁))
+    (TopCat.ofHom (firstEnds A M F J G ε₀ ε₁))
+    (first_square A M F J G ε₀ ε₁)) z
+
+/-- The first descended map retains the entire negative cylinder. -/
+theorem first_cylinder (z : |parameterSSet F| × TopCat.I.{u}) :
+    first A M F J G ε₀ ε₁ (DoubleCylinder.realizedCylinder
+      (attaching F J G ε₀) (erase F) z) = minus A M F J G ε₀ ε₁ z :=
+  ConcreteCategory.congr_hom ((first_isPushout F J G ε₀).inl_desc
+    (TopCat.ofHom (minus A M F J G ε₀ ε₁))
+    (TopCat.ofHom (firstEnds A M F J G ε₀ ε₁))
+    (first_square A M F J G ε₀ ε₁)) z
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp

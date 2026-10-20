@@ -128,11 +128,22 @@ rectangle for every parameter arrow from the original product-pair square.
 These source locators distinguish the actual evaluated tensor square from
 ordinary naturality of a chosen strict Model map.
 
-The remaining classical application must identify its precise forward legs
-and functorial homotopies with the specified Laurent-unit cup action followed
-by cone boundary, through all required stages and rows. A whole finite
-comparison, or sequentialization for supplied strict inputs, does not by
-itself establish correspondence with the original raw geometric tower.
+The concrete application supplies this action through all finite stages.
+[ReturnedTensorGenerators](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorGenerators.lean)
+characterizes the actual inherited cone action on its four quotient generators.
+`ReturnedTensorConeRecognition.tensorStageBoundaryCurrentHomotopy` in the
+[module](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorRecursiveRecognition.lean)
+retains the whole tensor-action/boundary comparison at every stage.
+[ReturnedTensorGeneratedTrace](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/ReturnedTensorGeneratedTrace.lean)
+instantiates the uniform generated recursion with the actual tensor family;
+its declaration namespace is `Quillen.PerfectComplexes.ReturnedTensorConeRecognition`.
+These data, the specified stable roof, and the support maps and whole
+acyclicity null directly realize TT §§6.3–6.4 and prove original Theorem 7.4
+for qcqs `X`, quasi-compact `U`, and auxiliary support with quasi-compact
+complement, in every integer degree. The
+[tensor Bass guide](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md)
+records that realization. A full multiplicative API and comparison with
+another prescribed raw point-set tower remain separate targets.
 
 ## Ambient, supported and auxiliary presentations
 

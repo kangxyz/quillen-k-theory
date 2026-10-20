@@ -1,0 +1,162 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitShift
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedSurfaceTransport
+/-! Whole first seed transport, retaining both distinct tips and the actual chart/cylinder clocks.
+  -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.SeedFullPostTransport
+open CommonReferenceNerve InputIdentitySeedCarrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+local notation "Fg" => polyRef g
+local notation "Gg" => laurentRef g
+local notation "Jg" => chart (X := Y)
+local notation "εg" => ordinary g
+local notation "εg'" => shifted g
+
+/-- Full arbitrary-node attachment compatibility on the shifted sheet. -/
+theorem shifted_attachment (N : Node Fg) :
+    BassH0Merge.anchorNode (commonUnit (f ≫ g))
+      (SeedSurfaceTransport.chartNode f g N 2) =
+    InputCompositionTerminalAttach.postNode f g (attachPostcompNode Fg Jg Gg εg' N) := by
+  rw [SeedSurfaceTransport.chartNode_zero, InputCompositionUnitShift.post_shift,
+    InputIdentitySeedCarrier.shifted_node]
+
+/-- Shift the entire chart track, not just its endpoints. -/
+def shiftedChartParameter : C(I × |CutOpenCarrier.parameterSSet Fg|,
+    |CutOpenCarrier.parameterSSet G|) :=
+  (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))).comp
+    (SeedSurfaceTransport.chartParameter f g)
+
+/-- The entire shifted chart starts at the actual postcomposed shifted attachment. -/
+theorem shiftedChartParameter_zero (y : |CutOpenCarrier.parameterSSet Fg|) :
+    shiftedChartParameter f g (0, y) =
+      mapParameter (InputCompositionTerminalAttach.postNode f g)
+        (mapParameter (attachPostcompNode Fg Jg Gg εg') y) := by
+  change mapParameter _ (SeedSurfaceTransport.chartParameter f g (0, y)) = _
+  rw [SeedSurfaceTransport.chartParameter_zero]
+  obtain ⟨m, N, z, rfl⟩ := exists_parameter Fg y
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter,
+    mapParameter_parameter, mapParameter_parameter]
+  apply congrArg (fun ns ↦ parameter G ns z)
+  funext i
+  rw [InputCompositionUnitShift.post_shift, InputIdentitySeedCarrier.shifted_node]
+
+/-- The entire shifted chart ends at the shifted target polynomial attachment. -/
+theorem shiftedChartParameter_one (y : |CutOpenCarrier.parameterSSet Fg|) :
+    shiftedChartParameter f g (1, y) =
+      mapParameter (attachPostcompNode F J G ε')
+        (SeedSurfaceTransport.polynomialParameter f g y) := by
+  change mapParameter _ (SeedSurfaceTransport.chartParameter f g (1, y)) = _
+  rw [SeedSurfaceTransport.chartParameter_one]
+  obtain ⟨m, N, z, hz⟩ := exists_parameter F (SeedSurfaceTransport.polynomialParameter f g y)
+  rw [← hz, mapParameter_parameter, mapParameter_parameter, mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter G ns z)
+    (funext fun i ↦ InputIdentitySeedCarrier.shifted_node (f ≫ g) (N i))
+
+/-- Laurent-side starting map for the second attachment. -/
+def start : C(|CutOpenCarrier.parameterSSet Fg|, Carrier (f ≫ g)) :=
+  (SeedSurfaceTransport.transport f g).comp
+    (SSet.toTop.map (CutOpenCarrier.secondAttaching Fg Jg Gg εg εg')).hom
+
+/-- Shifted chart endpoint, attached to the distinct positive tip. -/
+def middle : C(|CutOpenCarrier.parameterSSet Fg|, Carrier (f ≫ g)) :=
+  (CutOpenCarrier.laurentInclusion F J G ε ε').comp
+    ((mapParameter (attachPostcompNode F J G ε')).comp
+      (SeedSurfaceTransport.polynomialParameter f g))
+
+/-- The second source tip maps to the separate second tip of the target carrier. -/
+def tipMap : C(|CutOpenCarrier.tipSSet.{u + 1}|, Carrier (f ≫ g)) :=
+  ContinuousMap.const _ (CutOpenCarrier.tipPlus F J G ε ε')
+
+/-- The actual chart half of the shifted cone map. -/
+def chartHomotopy : (start f g).Homotopy (middle f g) where
+  toContinuousMap := (CutOpenCarrier.laurentInclusion F J G ε ε').comp
+    (shiftedChartParameter f g)
+  map_zero_left y := by
+    change CutOpenCarrier.laurentInclusion F J G ε ε'
+      (shiftedChartParameter f g (0, y)) = SeedSurfaceTransport.transport f g
+        (SSet.toTop.map (CutOpenCarrier.secondAttaching Fg Jg Gg εg εg') y)
+    rw [CutOpenCarrier.secondAttaching, Functor.map_comp]
+    change CutOpenCarrier.laurentInclusion F J G ε ε'
+      (shiftedChartParameter f g (0, y)) =
+      SeedSurfaceTransport.transport f g
+        (SeedOrdinarySheet.laurent g (mapParameter (attachPostcompNode Fg Jg Gg εg') y))
+    rw [shiftedChartParameter_zero, SeedSurfaceTransport.transport_laurent]
+    rfl
+  map_one_left y := congrArg (CutOpenCarrier.laurentInclusion F J G ε ε')
+    (shiftedChartParameter_one f g y)
+
+/-- The final half is the original full-height positive cylinder. -/
+def cylinderHomotopy : (middle f g).Homotopy
+    ((tipMap f g).comp (SSet.toTop.map (CutOpenCarrier.erase Fg)).hom) where
+  toContinuousMap := ⟨fun z ↦ CutOpenCarrier.cylinderPlus F J G ε ε'
+    (SeedSurfaceTransport.polynomialParameter f g z.2, z.1), by fun_prop⟩
+  map_zero_left y := CutOpenCarrier.cylinderPlus_zero F J G ε ε' _
+  map_one_left y := CutOpenCarrier.cylinderPlus_one F J G ε ε' _
+
+/-- No reparametrization: the same chart-then-cylinder half split as the original cone map. -/
+def cylinderTrack := (chartHomotopy f g).trans (cylinderHomotopy f g)
+
+/-- Descent through the second pushout retains the entire already transported first sheet. -/
+def transport : C(Carrier g, Carrier (f ≫ g)) :=
+  DoubleCylinder.homotopyDesc
+    (SSet.toTop.map (CutOpenCarrier.secondAttaching Fg Jg Gg εg εg'))
+    (SSet.toTop.map (CutOpenCarrier.erase Fg))
+    (CutOpenCarrier.second_isPushout Fg Jg Gg εg εg')
+    (SeedSurfaceTransport.transport f g) (tipMap f g) (cylinderTrack f g)
+
+/-- The whole shifted cylinder retains the original chart-then-cylinder track. -/
+theorem transport_cylinderPlus (y : |CutOpenCarrier.parameterSSet Fg|) (s : I) :
+    transport f g (CutOpenCarrier.cylinderPlus Fg Jg Gg εg εg' (y, s)) =
+      cylinderTrack f g (s, y) :=
+  DoubleCylinder.homotopyDesc_apply_cylinder _ _ _ _ _ _ s y
+
+/-- The complete ordinary first sheet retains its previously constructed transport. -/
+theorem transport_first (y : SeedOrdinarySheet.Sheet g) :
+    transport f g (SeedOrdinarySheet.inclusion g y) = SeedSurfaceTransport.transport f g y := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.second_isPushout Fg Jg Gg εg εg').inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack f g))
+      (DoubleCylinder.homotopyEndMap (SeedSurfaceTransport.transport f g) (tipMap f g))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack f g))) (Sum.inl y)
+  exact (congrArg (transport f g)
+    (FourEdgeTree.SetDescent.eval_realized_left _ _ y)).trans h
+
+/-- The whole Laurent summand follows the actual original postcomposition node. -/
+theorem transport_laurent (y : |CutOpenCarrier.parameterSSet Gg|) :
+    transport f g (CutOpenCarrier.laurentInclusion Fg Jg Gg εg εg' y) =
+      SeedSurfaceTransport.laurentMap f g y := by
+  change transport f g (SeedOrdinarySheet.inclusion g (SeedOrdinarySheet.laurent g y)) = _
+  rw [transport_first, SeedSurfaceTransport.transport_laurent]
+
+/-- The second tip stays separate and maps to the actual second target tip. -/
+theorem transport_tipPlus : transport f g (CutOpenCarrier.tipPlus Fg Jg Gg εg εg') =
+    CutOpenCarrier.tipPlus F J G ε ε' := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.second_isPushout Fg Jg Gg εg εg').inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack f g))
+      (DoubleCylinder.homotopyEndMap (SeedSurfaceTransport.transport f g) (tipMap f g))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack f g)))
+        (Sum.inr (default : |CutOpenCarrier.tipSSet.{u + 1}|))
+  exact (congrArg (transport f g)
+    (FourEdgeTree.SetDescent.eval_realized_right _ _ _)).trans h
+
+end Quillen.PerfectComplexes.GlobalRawBass.SeedFullPostTransport

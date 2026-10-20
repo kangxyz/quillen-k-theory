@@ -1,0 +1,106 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOuterGridPropagation
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOuterSharedCells
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartBottom
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalPolynomialRows
+/-! Both original outer grids agree at every full dependent node. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "SN" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+local notation "B" => lowerLaurentBinary f g
+local notation "Q" => InputDescSimplex.reference c
+local notation "F" => ProjectionReference.reference X
+  (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g)
+
+private theorem outer_grid_rows (k : laurent ⟶ polynomial)
+    (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+    (hr : ∀ j, InputDescSimplex.chartNodes c k hk
+      (ProjectionRectangleSquareRows.polynomialRow j) =
+      BassH1Join.postReferenceNode Q (BassH0Merge.normalizedMap (k.app Z))
+        (ProjectionReference.Target.terminalPolynomialAnchor c k hk) (SN j))
+    (hs : reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B (InputDescSimplex.chartNodes c k hk 17) (lowerLaurentNodes f g 0)) =
+      reanchor (projectionLaurentSeamAnchor f g c k hk)
+        (FinitePrecomp.node S (InputCompositionPolynomialScalar.laurentReference f g k)
+          (SN 4) (InputCompositionPolynomialScalar.chartNodes f g k 15)))
+    (i : Fin 3) (j : Fin 5) :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B
+        (InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.polynomialRow j))
+        (lowerLaurentNodes f g i)) =
+      reanchor (projectionLaurentSeamAnchor f g c k hk)
+        (FinitePrecomp.node S (InputCompositionPolynomialScalar.laurentReference f g k)
+          (SN j) (InputCompositionPolynomialScalar.chartNodes f g k
+            (CoefficientMovingSquareRows.targetSide i))) := by
+  have hseed := hs
+  change reanchor _ (FinitePrecomp.node Q B
+    (InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.polynomialRow 4)) _) =
+      reanchor _ (FinitePrecomp.node S _ _
+        (InputCompositionPolynomialScalar.chartNodes f g k
+          (CoefficientMovingSquareRows.targetSide 0))) at hseed
+  rw [hr, chartSurface_bottom_preNode] at hseed ⊢
+  have hnorm : node F Q B (lowerLaurentAnchor f g c)
+      (postNode Q (BassH0Merge.normalizedMap (k.app Z))
+        (ProjectionReference.Target.terminalPolynomialAnchor c k hk) (SN 4))
+      (lowerLaurentNodes f g 0) =
+    node F S (InputCompositionPolynomialScalar.laurentReference f g k)
+      (projectionLaurentSeamAnchor f g c k hk) (SN 4)
+      (preNode (InputCompositionPolynomialScalar.laurentReference f g k)
+        (BassH0Merge.normalizedMap (k.app Z)) (lowerChartBottomAnchor f g k)
+        (lowerLaurentNodes f g 0)) := by
+    simpa only [Functor.id_obj, FinitePrecomp.node, reanchor, node, Iso.refl_trans,
+      BassH1Join.postReferenceNode, postNode, postcompNode, Iso.trans_assoc] using hseed
+  have hh := outer_grid_of_one F S (BassH0Merge.normalizedMap (k.app Z)) B Q
+    (InputCompositionPolynomialScalar.laurentReference f g k)
+    (ProjectionReference.Target.terminalPolynomialAnchor c k hk) (lowerChartBottomAnchor f g k)
+    (lowerLaurentAnchor f g c) (projectionLaurentSeamAnchor f g c k hk)
+    (SN 4) (SN j) (lowerLaurentNodes f g 0) (lowerLaurentNodes f g i) hnorm
+  simpa only [Functor.id_obj, FinitePrecomp.node, reanchor, node, Iso.refl_trans,
+    BassH1Join.postReferenceNode, postNode, postcompNode, Iso.trans_assoc] using hh
+
+/-- All fifteen positive outer nodes preserve the exact original references. -/
+theorem outer_plus_grid_nodes (i : Fin 3) (j : Fin 5) :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B
+        (InputDescSimplex.chartNodes c plus plus_projection
+          (ProjectionRectangleSquareRows.polynomialRow j)) (lowerLaurentNodes f g i)) =
+    reanchor (projectionLaurentSeamAnchor f g c plus plus_projection)
+      (FinitePrecomp.node S (InputCompositionPolynomialScalar.laurentReference f g plus)
+        (SN j) (InputCompositionPolynomialScalar.chartNodes f g plus
+          (CoefficientMovingSquareRows.targetSide i))) :=
+  outer_grid_rows f g c plus plus_projection
+    (ProjectionReference.Target.terminal_polynomial_plus_nodes c)
+    (outer_plus_shared_cell f g c) i j
+
+/-- All fifteen negative outer nodes preserve their separately chosen references. -/
+theorem outer_minus_grid_nodes (i : Fin 3) (j : Fin 5) :
+    reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node Q B
+        (InputDescSimplex.chartNodes c minus minus_projection
+          (ProjectionRectangleSquareRows.polynomialRow j)) (lowerLaurentNodes f g i)) =
+    reanchor (projectionLaurentSeamAnchor f g c minus minus_projection)
+      (FinitePrecomp.node S (InputCompositionPolynomialScalar.laurentReference f g minus)
+        (SN j) (InputCompositionPolynomialScalar.chartNodes f g minus
+          (CoefficientMovingSquareRows.targetSide i))) :=
+  outer_grid_rows f g c minus minus_projection
+    (ProjectionReference.Target.terminal_polynomial_minus_nodes c)
+    (outer_minus_shared_cell f g c) i j
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

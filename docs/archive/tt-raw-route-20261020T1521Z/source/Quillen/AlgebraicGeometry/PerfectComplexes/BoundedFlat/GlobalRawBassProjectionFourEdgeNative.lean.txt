@@ -1,0 +1,165 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionFourEdgeMap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionFamily
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteEdge
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeEvaluationCells
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeExt
+
+/-!
+# Exact global Laurent attachment on every original four-edge source point
+
+The global Laurent map retains the complete five-node path at all four original quarter
+clocks, as an equality before evaluation. Both genuine polynomial summands and the whole
+tree then recover the original global Bass comparison at every native level.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor MonoidalCategory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.NativePathCells
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge
+open CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier
+
+private theorem parameter12 (t : I) :
+    InputIdentityProjection.parameter (lower (unitInterval.symm (upper t))) =
+      edge (k := 4) 1 2 t := by
+  rw [InputIdentityProjection.parameter, path_lower]
+  change binaryPath (k := 4) 0 1 2 (unitInterval.symm (unitInterval.symm (upper t))) = _
+  rw [unitInterval.symm_symm]
+  exact path_upper _ _ t
+
+private theorem parameter01 (t : I) :
+    InputIdentityProjection.parameter (lower (unitInterval.symm (lower t))) =
+      edge (k := 4) 0 1 t := by
+  rw [InputIdentityProjection.parameter, path_lower]
+  change binaryPath (k := 4) 0 1 2 (unitInterval.symm (unitInterval.symm (lower t))) = _
+  rw [unitInterval.symm_symm]
+  exact path_lower _ _ t
+
+private theorem parameter03 (t : I) :
+    InputIdentityProjection.parameter (upper (lower t)) = edge (k := 4) 0 3 t := by
+  rw [InputIdentityProjection.parameter, path_upper]
+  exact path_lower _ _ t
+
+private theorem parameter34 (t : I) :
+    InputIdentityProjection.parameter (upper (upper t)) = edge (k := 4) 3 4 t := by
+  rw [InputIdentityProjection.parameter, path_upper]
+  exact path_upper _ _ t
+
+variable (X : Scheme.{u}) {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen X))
+local notation "J" => projectionMap X
+local notation "F" => reference X E
+
+/-- Every realized edge is the whole finite family at its unchanged affine edge coordinate. -/
+theorem edgeMap_realization (i j : Fin 5) (hij : i ≤ j)
+    (y : |parameterSSet E|) (t : I) :
+    FourEdgeTree.realizedEdge (edgeMap X E i j) (y, t) =
+      FiniteParameter.parameter E F (ProjectionReference.nodes X E) (y, edge i j t) := by
+  let α : ⦋1⦌ ⟶ ⦋4⦌ := SimplexCategory.Hom.mk ⟨![i, j], by
+    intro k l h
+    fin_cases k <;> fin_cases l <;> simp_all⟩
+  exact FiniteParameter.simplicial_edge E F (ProjectionReference.nodes X E) α y t
+
+/-- The full original overlap is preserved in the actual Laurent nerve before evaluation. -/
+theorem beta_overlap (y : |parameterSSet E|) (s : I) :
+    SSet.toTop.map (beta X E) (FourEdgeTree.overlap E J (y, s)) = family X E (y, s) := by
+  rcases cover s with ⟨u, rfl⟩ | ⟨u, rfl⟩
+  · rcases cover (unitInterval.symm u) with ⟨t, ht⟩ | ⟨t, ht⟩
+    · have hu : u = unitInterval.symm (lower t) := by rw [ht, unitInterval.symm_symm]
+      rw [hu, FourEdgeTree.overlap_quarter01, ← FourEdgeTree.realizedEdge_comp, beta_edge01]
+      change _ = FiniteParameter.parameter E F (ProjectionReference.nodes X E)
+        (y, InputIdentityProjection.parameter (lower (unitInterval.symm (lower t))))
+      rw [parameter01]
+      exact edgeMap_realization X E 0 1 (by decide) y t
+    · have hu : u = unitInterval.symm (upper t) := by rw [ht, unitInterval.symm_symm]
+      rw [hu, FourEdgeTree.overlap_quarter12, ← FourEdgeTree.realizedEdge_comp, beta_edge12]
+      change _ = FiniteParameter.parameter E F (ProjectionReference.nodes X E)
+        (y, InputIdentityProjection.parameter (lower (unitInterval.symm (upper t))))
+      rw [parameter12]
+      exact edgeMap_realization X E 1 2 (by decide) y t
+  · rcases cover u with ⟨t, rfl⟩ | ⟨t, rfl⟩
+    · rw [FourEdgeTree.overlap_quarter03, ← FourEdgeTree.realizedEdge_comp, beta_edge03]
+      change _ = FiniteParameter.parameter E F (ProjectionReference.nodes X E)
+        (y, InputIdentityProjection.parameter (upper (lower t)))
+      rw [parameter03]
+      exact edgeMap_realization X E 0 3 (by decide) y t
+    · rw [FourEdgeTree.overlap_quarter34, ← FourEdgeTree.realizedEdge_comp, beta_edge34]
+      change _ = FiniteParameter.parameter E F (ProjectionReference.nodes X E)
+        (y, InputIdentityProjection.parameter (upper (upper t)))
+      rw [parameter34]
+      exact edgeMap_realization X E 3 4 (by decide) y t
+
+/-- Each whole polynomial-reference nerve retains its original global chart pullback value. -/
+theorem chartMap_native (k : laurent ⟶ polynomial)
+    (hk : ∀ Y, k.app Y ≫ projection.app Y = laurentProjection.app Y)
+    (n : ℕ) (y : |parameterSSet (polynomialReference X E)|) (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n (SSet.toTop.map (chartMap X E k hk) y) x =
+      (boundedFlatPerfectPrespectrumMap (k.app X)).map n
+        (pointwisePrespectrumFamily (polynomialReference X E) n y x) :=
+  pointwisePrespectrumFamily_attachPostcomp (polynomialReference X E)
+    (InputCompositionTerminalAttach.arrow (k.app X)) F (chartAnchor X k hk E) n y x
+
+/-- The entire positive polynomial summand has its original global comparison value. -/
+theorem beta_native_plus (n : ℕ) (y : |parameterSSet (E ≫ J)|)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+        (SSet.toTop.map (beta X E) (SSet.toTop.map (FourEdgeTree.plusVertex E J) y)) x =
+      (comparison X).map n
+        (FourEdgeTree.nativeEval E J n (SSet.toTop.map (FourEdgeTree.plusVertex E J) y) x) := by
+  rw [← FourEdgeTree.realized_comp, beta_plus, FourEdgeTree.nativeEval_plus]
+  exact chartMap_native X E plus plus_projection n y x
+
+/-- The distinct inverse polynomial summand keeps its own original global chart value. -/
+theorem beta_native_minus (n : ℕ) (y : |parameterSSet (E ≫ J)|)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+        (SSet.toTop.map (beta X E) (SSet.toTop.map (FourEdgeTree.minusVertex E J) y)) x =
+      (comparison X).map n
+        (FourEdgeTree.nativeEval E J n (SSet.toTop.map (FourEdgeTree.minusVertex E J) y) x) := by
+  rw [← FourEdgeTree.realized_comp, beta_minus, FourEdgeTree.nativeEval_minus]
+  exact chartMap_native X E minus minus_projection n y x
+
+/-- The whole overlap value uses the unchanged original global Bass time. -/
+theorem beta_native_overlap (n : ℕ) (y : |parameterSSet E|) (t : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n
+        (SSet.toTop.map (beta X E) (FourEdgeTree.overlap E J (y, t))) x =
+      (comparison X).map n (FourEdgeTree.nativeEval E J n (FourEdgeTree.overlap E J (y, t)) x) := by
+  rw [beta_overlap, pointwise_native, FourEdgeTree.nativeEval_overlap]
+  rfl
+
+/-- Every whole-tree point has the actual global comparison value, at all native levels. -/
+theorem beta_native (n : ℕ) (z : FourEdgeTree.space E J) (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily F n (SSet.toTop.map (beta X E) z) x =
+      (comparison X).map n (FourEdgeTree.nativeEval E J n z x) := by
+  refine congrFun (FourEdgeTree.funext_cells E J
+    (fun y ↦ pointwisePrespectrumFamily F n (SSet.toTop.map (beta X E) y) x)
+    (fun y ↦ (comparison X).map n (FourEdgeTree.nativeEval E J n y x))
+    (fun y ↦ beta_native_plus X E n y x) (fun y ↦ beta_native_minus X E n y x)
+    ?_ ?_ ?_ ?_) z
+  · intro y t
+    rw [← FourEdgeTree.overlap_quarter12]
+    exact beta_native_overlap X E n y _ x
+  · intro y t
+    rw [← FourEdgeTree.overlap_quarter01]
+    exact beta_native_overlap X E n y _ x
+  · intro y t
+    rw [← FourEdgeTree.overlap_quarter03]
+    exact beta_native_overlap X E n y _ x
+  · intro y t
+    rw [← FourEdgeTree.overlap_quarter34]
+    exact beta_native_overlap X E n y _ x
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge

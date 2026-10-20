@@ -1,0 +1,79 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSpanPolynomial
+/-!
+All-level recovery of the actual global polynomial map and square on their complete reference
+  nerves. The independent input-simplex and original square parameters remain unchanged.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite Convexity
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetSpan
+open CommonReferenceNerve
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+
+/-- Every genuine polynomial input evaluates by the original polynomial coefficient map. -/
+theorem polynomialMap_native (n : ℕ)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node
+      (ProjectionReference.polynomialReference Y E)))|)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (polynomialReference f E) n (polynomialMap f E y) x =
+      (boundedFlatPerfectPrespectrumMap
+        (polynomial.map f)).map n
+          (pointwisePrespectrumFamily (ProjectionReference.polynomialReference Y E) n y x) :=
+  pointwisePrespectrumFamily_attachPostcomp (ProjectionReference.polynomialReference Y E)
+    (polynomialPost f) (polynomialReference f E) (polynomialMapAnchor f E) n y x
+
+/-- The finite product square keeps the independent original coefficient and square parameters. -/
+theorem polynomialSquare_finite_native {k : ℕ} (N : Fin (k + 1) → CommonReferenceNerve.Node E)
+    (n : ℕ) (z : StdSimplex ℝ (Fin (k + 1))) (s : I) (x : (prespectrum V).space n) :
+    prespectrumFamily (polynomialReference f E)
+      (FiniteParameter.gridNodes E (polynomialReference f E)
+        (polynomialSquareNodes f E) N) n
+      (SimplexGrid.parameter.{u + 1} k 4 (z, NativeSquareFiveSimplex.parameter s), x) =
+    (polynomialSquareHomotopy f).level n
+      (s, prespectrumFamily E N n (z, x)) := by
+  rw [prespectrumFamily_eq, prespectrumFamily_eq]
+  have hs : ModelSimplex.ofIsos (polynomialReference f E)
+      (fun i ↦ (FiniteParameter.gridNodes E (polynomialReference f E)
+        (polynomialSquareNodes f E) N i).1)
+      (fun i ↦ (FiniteParameter.gridNodes E (polynomialReference f E)
+        (polynomialSquareNodes f E) N i).2) =
+      CommonReferenceProduct.simplex E (fun i ↦ (N i).1) (fun i ↦ (N i).2)
+        (NativeSquareFiveSimplex.source (polynomial.map f) (projection.app Y))
+        (fun i ↦ (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y)
+          (projection.app X) f (projection.naturality f) i).1)
+        (fun i ↦ (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y)
+          (projection.app X) f (projection.naturality f) i).2) :=
+    ModelSimplex.ofIsos_change_reference (polynomialSquareAnchor f E) _ _
+  rw [hs, CommonReferenceProduct.prespectrum_comp]
+  exact NativeSquareFiveSimplex.native (polynomial.map f) (projection.app Y) (projection.app X) f
+    (projection.naturality f) n s _
+
+/-- All native levels, including actual degree-zero loops, retain the unchanged square clock. -/
+theorem polynomialSquare_native (n : ℕ)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) (s : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (polynomialReference f E) n
+      (polynomialSquare f E (y, s)) x =
+    (polynomialSquareHomotopy f).level n
+      (s, pointwisePrespectrumFamily E n y x) := by
+  obtain ⟨k, N, z, hz⟩ := exists_parameter E y
+  rw [← hz, polynomialSquare_characteristic, pointwisePrespectrumFamily_parameter,
+    pointwisePrespectrumFamily_parameter]
+  exact polynomialSquare_finite_native f E N n z s x
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetSpan

@@ -1,0 +1,100 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedUnitSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostUnit
+/-!
+# Complete binary Laurent anchors preserve the actual unit shift
+
+The existing raw scalar identity and Laurent scalar preservation identify the chosen
+common units. Naturality along the genuine post/pre anchors then preserves every
+full reference node. No higher filler or native injectivity is used.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS Quillen.FunctorIdentityAutomorphism
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitShift
+open CommonReferenceNerve InputIdentitySeedCarrier GlobalSectionChangeIndex
+
+/-- The originally chosen common unit is the existing target scalar action. -/
+theorem commonUnit_eq_target {X Y : Scheme.{u}} (g : X ⟶ Y) :
+    commonUnit g = onFunctor (laurentRef g).functor
+      (evaluationSmallUnit (op (laurent.obj X)) (GlobalSchemeLaurentTrack.laurentScalar (op X))) :=
+        by
+  apply Iso.ext
+  change evaluationRawUnit (laurent.map g ≫ laurentProjection.app Y)
+    (Units.map (laurent.map g).appTop.hom.toMonoidHom
+      (GlobalSchemeLaurentTrack.laurentScalar (op Y))) = _
+  rw [laurentUnit_map]
+  exact evaluationRawUnit_eq _ _
+
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The actual Laurent postcomposition anchor intertwines the two exact common units. -/
+theorem post_unit :
+    commonUnit (f ≫ g) ≪≫ InputCompositionTerminalAttach.postAnchor f g =
+      InputCompositionTerminalAttach.postAnchor f g ≪≫
+        isoWhiskerRight (commonUnit g)
+          (InputCompositionTerminalAttach.arrow (laurent.map f)).functor := by
+  rw [commonUnit_eq_target, commonUnit_eq_target]
+  apply Iso.ext
+  exact onFunctor_intertwine (laurentRef (f ≫ g)).functor (laurentRef g).functor
+    (InputCompositionTerminalAttach.arrow (laurent.map f)).functor
+    (InputCompositionTerminalAttach.postAnchor f g).hom
+    (evaluationSmallUnit (op (laurent.obj Y)) (GlobalSchemeLaurentTrack.laurentScalar (op Y)))
+    (evaluationSmallUnit (op (laurent.obj X)) (GlobalSchemeLaurentTrack.laurentScalar (op X)))
+    (GlobalBassEvaluation.InputSeedPostUnit.laurent_preserves f)
+
+/-- The actual base precomposition anchor intertwines the same target scalar on both sides. -/
+theorem pre_unit :
+    commonUnit (f ≫ g) ≪≫ InputCompositionTerminalAttach.preAnchor f g =
+      InputCompositionTerminalAttach.preAnchor f g ≪≫
+        isoWhiskerLeft (InputCompositionTerminalAttach.arrow g).functor (commonUnit f) := by
+  rw [commonUnit_eq_target, commonUnit_eq_target]
+  apply Iso.ext
+  apply NatTrans.ext
+  funext K
+  simp only [Iso.trans_hom, NatTrans.comp_app, isoWhiskerLeft_hom, whiskerLeft_app,
+    onFunctor_hom_app]
+  exact ((evaluationSmallUnit (op (laurent.obj X))
+    (GlobalSchemeLaurentTrack.laurentScalar (op X))).hom.naturality
+      ((InputCompositionTerminalAttach.preAnchor f g).hom.app K)).symm
+
+/-- Every complete Laurent node preserves its actual unit shift through the postmap. -/
+theorem post_shift (N : Node (laurentRef g)) :
+    BassH0Merge.anchorNode (commonUnit (f ≫ g)) (InputCompositionTerminalAttach.postNode f g N) =
+      InputCompositionTerminalAttach.postNode f g (BassH0Merge.anchorNode (commonUnit g) N) := by
+  apply congrArg (fun a ↦ (⟨N.1 ≫ InputCompositionTerminalAttach.arrow (laurent.map f), a⟩ :
+    Node (laurentRef (f ≫ g))))
+  change commonUnit (f ≫ g) ≪≫
+    (InputCompositionTerminalAttach.postAnchor f g ≪≫
+      isoWhiskerRight N.2 (InputCompositionTerminalAttach.arrow (laurent.map f)).functor) =
+    InputCompositionTerminalAttach.postAnchor f g ≪≫
+      isoWhiskerRight (commonUnit g ≪≫ N.2)
+        (InputCompositionTerminalAttach.arrow (laurent.map f)).functor
+  rw [isoWhiskerRight_trans, ← Iso.trans_assoc, ← Iso.trans_assoc, post_unit]
+
+/-- Every complete Laurent node preserves its actual unit shift through the premap. -/
+theorem pre_shift (N : Node (laurentRef f)) :
+    BassH0Merge.anchorNode (commonUnit (f ≫ g)) (InputCompositionTerminalAttach.preNode f g N) =
+      InputCompositionTerminalAttach.preNode f g (BassH0Merge.anchorNode (commonUnit f) N) := by
+  apply congrArg (fun a ↦ (⟨InputCompositionTerminalAttach.arrow g ≫ N.1, a⟩ :
+    Node (laurentRef (f ≫ g))))
+  change commonUnit (f ≫ g) ≪≫
+    (InputCompositionTerminalAttach.preAnchor f g ≪≫
+      isoWhiskerLeft (InputCompositionTerminalAttach.arrow g).functor N.2) =
+    InputCompositionTerminalAttach.preAnchor f g ≪≫
+      isoWhiskerLeft (InputCompositionTerminalAttach.arrow g).functor (commonUnit f ≪≫ N.2)
+  rw [isoWhiskerLeft_trans, ← Iso.trans_assoc, ← Iso.trans_assoc, pre_unit]
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitShift

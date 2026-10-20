@@ -1,0 +1,194 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedNull
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeEvaluation
+public import Quillen.Topology.DoubleMappingCylinder.HomotopyDescent
+public import Quillen.Topology.Path.NullWordEvaluation
+
+/-! The entire original ordinary seed surface in its actual first sheet.
+This is a recipe-level factorization, not an inverse to a native evaluator. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.SeedOrdinarySheet
+open CommonReferenceNerve InputIdentitySeedCarrier
+variable {X Y : Scheme.{u}} (g : X ⟶ Y)
+local notation "F" => polyRef g
+local notation "J" => chart (X := X)
+local notation "G" => laurentRef g
+local notation "ε" => ordinary g
+local notation "ε'" => shifted g
+
+/-- The ordinary one-tip sheet of the cut-open carrier. -/
+abbrev Sheet := |CutOpenCarrier.firstSimplicial F J G ε|
+
+/-- The canonical inclusion of the ordinary sheet into the two-tip carrier. -/
+def inclusion : C(Sheet g, Carrier g) :=
+  (SSet.toTop.map (CutOpenCarrier.left₁ F J G ε ε')).hom
+
+/-- The Laurent nerve inclusion into the ordinary sheet. -/
+def laurent : C(|CutOpenCarrier.parameterSSet G|, Sheet g) :=
+  (SSet.toTop.map (CutOpenCarrier.left₀ F J G ε)).hom
+
+/-- The ordinary cone cylinder with its original height coordinate. -/
+def cylinder : C(|CutOpenCarrier.parameterSSet F| × I, Sheet g) :=
+  ⟨fun z ↦ DoubleCylinder.realizedCylinder (CutOpenCarrier.attaching F J G ε)
+    (CutOpenCarrier.erase F) (z.1, ULift.up z.2), by fun_prop⟩
+
+/-- The ordinary cone tip. -/
+def tip : Sheet g := SSet.toTop.map (CutOpenCarrier.right₀ F J G ε)
+  (default : |CutOpenCarrier.tipSSet.{u + 1}|)
+
+theorem cylinder_zero (y : |CutOpenCarrier.parameterSSet F|) :
+    cylinder g (y, 0) = laurent g
+      (mapParameter (attachPostcompNode F J G ε) y) := by
+  have h := ConcreteCategory.congr_hom (CutOpenCarrier.first_isPushout F J G ε).w
+    (Sum.inl y)
+  exact h.trans (FourEdgeTree.SetDescent.eval_realized_left _ _ _).symm
+
+theorem cylinder_one (y : |CutOpenCarrier.parameterSSet F|) :
+    cylinder g (y, 1) = tip g := by
+  have h := ConcreteCategory.congr_hom (CutOpenCarrier.first_isPushout F J G ε).w
+    (Sum.inr y)
+  exact h.trans ((FourEdgeTree.SetDescent.eval_realized_right _ _ _).symm.trans
+    (congrArg (SSet.toTop.map (CutOpenCarrier.right₀ F J G ε)) (Subsingleton.elim _ _)))
+
+theorem inclusion_laurent (y : |CutOpenCarrier.parameterSSet G|) :
+    inclusion g (laurent g y) = CutOpenCarrier.laurentInclusion F J G ε ε' y := rfl
+
+theorem inclusion_cylinder (y : |CutOpenCarrier.parameterSSet F|) (s : I) :
+    inclusion g (cylinder g (y, s)) = CutOpenCarrier.cylinderMinus F J G ε ε' (y, s) := rfl
+
+theorem inclusion_tip : inclusion g (tip g) = CutOpenCarrier.tipMinus F J G ε ε' := rfl
+
+/-- The full Laurent seed simplex in the ordinary sheet. -/
+def sheetMap : C(Convexity.StdSimplex ℝ (Fin 31), Sheet g) :=
+  (laurent g).comp (parameter G (InputDescSimplex.nodes g))
+
+theorem inclusion_sheetMap (z : Convexity.StdSimplex ℝ (Fin 31)) :
+    inclusion g (sheetMap g z) = InputIdentitySeedRectangle.sheetMap g false z := rfl
+
+/-- The original D boundary path in the ordinary sheet. -/
+abbrev oldPositive := (ProjectionRectangleParameters.D BassH0Diagram.plusFace).map
+  (sheetMap g).continuous
+/-- The original L movement path in the ordinary sheet. -/
+abbrev positiveMovement := (ProjectionRectangleParameters.L BassH0Diagram.plusFace).map
+  (sheetMap g).continuous
+/-- The original polynomial boundary path in the ordinary sheet. -/
+abbrev polynomialMovement := (ProjectionRectangleParameters.Ppath BassH0Diagram.plusFace).map
+  (sheetMap g).continuous
+/-- The original Laurent movement path in the ordinary sheet. -/
+abbrev laurentMovement := (ProjectionRectangleParameters.T BassH0Diagram.plusFace).map
+  (sheetMap g).continuous
+/-- The original K boundary path in the ordinary sheet. -/
+abbrev newPositive := (ProjectionRectangleParameters.K BassH0Diagram.plusFace).map
+  (sheetMap g).continuous
+
+/-- The original five-path rectangle lifted to the ordinary sheet. -/
+def rectangle : ((positiveMovement g).trans (polynomialMovement g)).Homotopy
+    ((oldPositive g).symm.trans ((laurentMovement g).trans (newPositive g))) :=
+  Path.Homotopy.mapProjectionRectangle (sheetMap g)
+    (ProjectionRectangleParameters.D BassH0Diagram.plusFace)
+    (ProjectionRectangleParameters.L BassH0Diagram.plusFace)
+    (ProjectionRectangleParameters.Ppath BassH0Diagram.plusFace)
+    (ProjectionRectangleParameters.T BassH0Diagram.plusFace)
+    (ProjectionRectangleParameters.K BassH0Diagram.plusFace)
+    (ProjectionRectangleParameters.rectangle BassH0Diagram.plusFace)
+
+/-- The cone path at a fixed polynomial movement parameter. -/
+def conePath (r : I) : Path (cylinder g (movement g r, 0)) (tip g) where
+  toFun s := cylinder g (movement g r, s)
+  continuous_toFun := by fun_prop
+  source' := rfl
+  target' := cylinder_one g _
+
+/-- The polynomial movement along the bottom of the cone cylinder. -/
+def movementEdge : Path (cylinder g (movement g 0, 0)) (cylinder g (movement g 1, 0)) where
+  toFun r := cylinder g (movement g r, 0)
+  continuous_toFun := by fun_prop
+  source' := rfl
+  target' := rfl
+
+/-- The whole polynomial movement cylinder with its four boundary paths. -/
+def square : CarrierPathSquare.Square (conePath g 0) (conePath g 1)
+    (movementEdge g) (Path.refl (tip g)) where
+  parameter := ⟨fun z ↦ cylinder g (movement g z.1, z.2), by fun_prop⟩
+  at_zero _ := rfl
+  at_one _ := rfl
+  left _ := rfl
+  right r := cylinder_one g _
+
+theorem polynomial_seam (s : I) :
+    polynomialMovement g s = (square g).parameter (s, 0) := by
+  change laurent g (parameter G (InputDescSimplex.nodes g)
+    (ProjectionRectangleParameters.Ppath BassH0Diagram.plusFace s)) =
+      cylinder g (movement g s, 0)
+  rw [cylinder_zero, movement_attach]
+
+/-- The old cone path rebased along the polynomial seam. -/
+abbrev oldCone := (square g).rebaseOld (polynomialMovement g) (polynomial_seam g)
+/-- The new cone path rebased along the polynomial seam. -/
+abbrev newCone := (square g).rebaseNew (polynomialMovement g) (polynomial_seam g)
+
+/-- The cone-boundary comparison with the original movement clock. -/
+def coneComparison : (oldCone g).Homotopy ((polynomialMovement g).trans (newCone g)) :=
+  ((square g).rebaseMovement (polynomialMovement g) (polynomial_seam g)).coneBoundary
+
+/-- The complete original pasted null homotopy in the ordinary sheet. -/
+def pastedNull : ((oldPositive g).trans ((positiveMovement g).trans (oldCone g))).Homotopy
+    ((laurentMovement g).trans ((newPositive g).trans (newCone g))) :=
+  Path.Homotopy.pastedPositiveNullWord (oldPositive g) (positiveMovement g)
+    (polynomialMovement g) (laurentMovement g) (newPositive g)
+    (oldCone g) (newCone g) (rectangle g) (coneComparison g)
+
+theorem inclusion_coneComparison (r s : I) :
+    inclusion g (coneComparison g (r, s)) =
+      InputIdentitySeedRectangle.coneComparison g false (r, s) := by
+  unfold coneComparison InputIdentitySeedRectangle.coneComparison
+  exact ((square g).rebaseMovement (polynomialMovement g) (polynomial_seam g)).coneBoundary_natural
+    ((InputIdentitySeedCone.square g false).rebaseMovement
+      (InputIdentitySeedRectangle.polynomialMovement g false)
+      (InputIdentitySeedRectangle.polynomial_seam g false))
+    (inclusion g) (fun _ _ ↦ rfl) r s
+
+/-- The whole original comparison, including all five stages and both clocks, factors. -/
+theorem inclusion_pastedNull (r s : I) :
+    inclusion g (pastedNull g (r, s)) = InputIdentitySeedNull.pastedNull g false (r, s) := by
+  unfold pastedNull InputIdentitySeedNull.pastedNull
+  exact Path.Evaluation.pastedPositiveNullWord (inclusion g)
+    (oldPositive g) (positiveMovement g) (polynomialMovement g)
+    (laurentMovement g) (newPositive g) (oldCone g) (newCone g)
+    (InputIdentitySeedRectangle.oldPositive g false)
+    (InputIdentitySeedRectangle.positiveMovement g false)
+    (InputIdentitySeedRectangle.polynomialMovement g false)
+    (InputIdentitySeedRectangle.laurentMovement g false)
+    (InputIdentitySeedRectangle.newPositive g false)
+    (InputIdentitySeedRectangle.oldCone g false)
+    (InputIdentitySeedRectangle.newCone g false)
+    (rectangle g) (InputIdentitySeedRectangle.rectangle g false)
+    (coneComparison g) (InputIdentitySeedRectangle.coneComparison g false)
+    (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl)
+    (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ _ ↦ rfl)
+    (inclusion_coneComparison g) r s
+
+/-- The factorization recovers the selected original native surface, not a new comparison. -/
+theorem pastedNull_whole (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Y)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval F J G ε ε' n (inclusion g (pastedNull g (r, s))) x) =
+      (InputNull.originalNullComparison g).level n (r, (s, x)) := by
+  rw [inclusion_pastedNull]
+  exact InputIdentitySeedNull.originalNull_whole g false n r s x
+
+end Quillen.PerfectComplexes.GlobalRawBass.SeedOrdinarySheet

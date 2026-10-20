@@ -1,0 +1,127 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOverlapProjectionSeam
+/-! The genuine terminal Laurent seam, retaining full references before native evaluation. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+private theorem reanchor_pre {U V W : Model.{u}} (A : U ⟶ V)
+    {F F' : U ⟶ W} {H : V ⟶ W} (ρ : F.functor ≅ F'.functor)
+    (η : F'.functor ≅ (A ≫ H).functor) (N : Node H) :
+    reanchor ρ (preNode F' A η N) = preNode F A (ρ ≪≫ η) N := by
+  simp only [reanchor, preNode, Iso.trans_assoc]
+
+private theorem pre_reanchor {U V W : Model.{u}} (A : U ⟶ V)
+    {F : U ⟶ W} {B H : V ⟶ W} (ρ : F.functor ≅ (A ≫ B).functor)
+    (η : B.functor ≅ H.functor) (N : Node H) :
+    reanchor ρ (precompNode A (reanchor η N)) =
+      preNode F A (ρ ≪≫ isoWhiskerLeft A.functor η) N := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  simp only [reanchor, preNode, precompNode, isoWhiskerLeft_trans, Iso.trans_assoc]
+
+private theorem composite_pre_node {U V W T : Model.{u}}
+    (S : U ⟶ W) (A : U ⟶ V) (D : V ⟶ W) (P : W ⟶ T)
+    (θ : S.functor ≅ (A ≫ D).functor) (N : Node P) :
+    node (S ≫ P) S P (Iso.refl _) ⟨A ≫ D, θ⟩ N =
+      preNode (S ≫ P) A (H := D ≫ P)
+        (isoWhiskerRight θ P.functor ≪≫
+          Functor.associator A.functor D.functor P.functor) (precompNode D N) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext x
+  simp only [node, Iso.refl_trans, mapIso_hom, Iso.prod_hom, uncurry_obj_map,
+    whiskeringLeft_obj_obj, whiskeringLeft_obj_map, NatTrans.comp_app, comp_obj,
+    whiskeringLeft_map_app_app, whiskerLeft_app, NatTrans.naturality, precompNode, preNode,
+    reanchor, isoWhiskerLeft_twice, Iso.trans_assoc, Iso.self_symm_id_assoc, Iso.trans_hom,
+    isoWhiskerRight_hom, isoWhiskerLeft_hom, whiskerRight_app, associator_hom_app,
+    Category.comp_id]
+  exact (N.2.hom.naturality (θ.hom.app x)).symm
+
+private theorem remove_associator {U V W T : Model.{u}} (A : U ⟶ V)
+    (E : V ⟶ W) (R : W ⟶ T) (N : Node (E ≫ R)) :
+    reanchor (Functor.associator A.functor E.functor R.functor) (precompNode A N) =
+      precompNode A N := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext x
+  simp only [precompNode, reanchor, Iso.trans_hom, isoWhiskerLeft_hom, NatTrans.comp_app,
+    associator_hom_app, comp_obj, whiskerLeft_app]
+  exact Category.id_comp (N.2.hom.app (A.functor.obj x))
+
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "P" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "J" => ProjectionReference.source X
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "D" => InputCompositionCarrierCharts.projectionMap (Z := Z)
+local notation "θ" => NativeSquareModelNormalization.rightIso
+  (polynomial.map c) (projection.app W) (projection.app Z) c (projection.naturality c)
+
+private theorem terminal_laurent_node (N : Node P) :
+    node (S ≫ P) S P (Iso.refl _)
+      (NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+        (projection.app Z) c (projection.naturality c) 4) N =
+    preNode (S ≫ P) A (H := D ≫ P)
+      (isoWhiskerRight θ (P).functor ≪≫
+        Functor.associator (A).functor (D).functor (P).functor) (precompNode D N) := by
+  rw [NativeSquareModelNormalization.nodes_four]
+  exact composite_pre_node S A D P θ N
+
+/-- The actual terminal Laurent output retains the full original overlap anchor. -/
+theorem terminal_laurent_reanchored_node (N : Node P) :
+    reanchor (projectionLaurentSeamAnchor f g c k hk)
+      (node (S ≫ P) S P (Iso.refl _)
+        (NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+          (projection.app Z) c (projection.naturality c) 4) N) =
+    reanchor (Functor.associator (A).functor (E).functor (J).functor)
+      (precompNode A (reanchor (overlapLaurentAnchor f g k hk) (precompNode D N))) := by
+  have ha : projectionLaurentSeamAnchor f g c k hk ≪≫
+      (isoWhiskerRight θ (P).functor ≪≫
+        Functor.associator (A).functor (D).functor (P).functor) =
+      Functor.associator (A).functor (E).functor (J).functor ≪≫
+        isoWhiskerLeft (A).functor (overlapLaurentAnchor f g k hk) := by
+    simp only [projectionLaurentSeamAnchor, sourceSquareAnchor, ← isoWhiskerRight_symm,
+      Iso.trans_assoc,
+      Iso.symm_self_id_assoc, Iso.symm_self_id, Iso.trans_refl]
+  exact (congrArg (reanchor (projectionLaurentSeamAnchor f g c k hk))
+    (terminal_laurent_node f g c k N)).trans
+      ((reanchor_pre A _ _ (precompNode D N)).trans
+        ((congrArg (fun η ↦ preNode (((A ≫ E) ≫ J)) A (H := D ≫ P) η (precompNode D N)) ha).trans
+          (pre_reanchor A (F := (A ≫ E) ≫ J) (B := E ≫ J) (H := D ≫ P)
+            (Functor.associator (A).functor (E).functor (J).functor)
+            (overlapLaurentAnchor f g k hk)
+            (precompNode D N)).symm))
+
+/-- Removing only the identity associator yields the literal fixed-source Laurent node. -/
+theorem terminal_laurent_fixed_node (N : Node P) :
+    reanchor (projectionLaurentSeamAnchor f g c k hk)
+      (node (S ≫ P) S P (Iso.refl _)
+        (NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+          (projection.app Z) c (projection.naturality c) 4) N) =
+      precompNode A (reanchor (overlapLaurentAnchor f g k hk) (precompNode D N)) :=
+  (terminal_laurent_reanchored_node f g c k hk N).trans
+    (remove_associator A E J (reanchor (overlapLaurentAnchor f g k hk) (precompNode D N)))
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

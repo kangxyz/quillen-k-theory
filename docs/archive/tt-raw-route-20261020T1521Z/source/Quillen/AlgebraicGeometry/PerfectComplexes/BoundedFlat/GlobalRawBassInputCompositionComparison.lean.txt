@@ -1,0 +1,117 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierCube
+public import Quillen.Topology.Prespectrum.PushoutSquareFilling
+
+/-!
+# The whole original global input-comparison composition square
+
+The actual six-face carrier cube is evaluated at every original native level. Its point and
+independent structure-time laws produce the overlap cylinder, which descends together with
+both prescribed whole chart squares. No comparison square or cylinder filler is assumed.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputComposition
+open InputCompositionCharts
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The actual overlap cylinder retains all six original faces and independent structure time. -/
+def comparisonCylinder : HomotopyPushout.SquareCylinder
+    (boundedFlatPerfectPrespectrumMap (projection.app Z))
+    (boundedFlatPerfectPrespectrumMap (projection.app Z))
+    (inputComparisonHomotopy (f ≫ g)) (compositeComparison f g)
+    (laurentTrack f g) (spanTrack f g) (plusChart f g) (minusChart f g) where
+  level n := (CommonReferenceNerve.compactPrespectrumFamily
+    (InputCompositionCarrierCharts.source f g) (InputCompositionCarrierCube.carrierCube f g) n).comp
+      ⟨fun z ↦ (![z.1, z.2.1, z.2.2.1], z.2.2.2), by fun_prop⟩
+  at_zero n s t x :=
+    (CommonReferenceNerve.compactFamily_of_point_eq (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g) (InputCompositionCarrierCharts.inputFace f g)
+      ![0, s, t] (s, t) (InputCompositionCarrierCube.cube_zero f g s t) n x).trans
+        (InputCompositionCarrierCharts.inputFace_native f g n s t x)
+  at_one n s t x :=
+    (CommonReferenceNerve.compactFamily_of_point_eq (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g) (InputCompositionCarrierTerminal.face f g)
+      ![1, s, t] (s, t) (InputCompositionCarrierCube.cube_one f g s t) n x).trans
+        (InputCompositionCarrierTerminal.face_native f g n s t x)
+  bottom n r t x :=
+    (CommonReferenceNerve.compactFamily_of_point_eq (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g) (InputCompositionCarrierBottom.face f g)
+      ![r, 0, t] (r, t) (InputCompositionCarrierCube.cube_bottom f g r t) n x).trans
+        (InputCompositionCarrierBottom.face_native f g n r t x)
+  top n r t x :=
+    (CommonReferenceNerve.compactFamily_of_point_eq (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g) (InputCompositionCarrierTop.face f g)
+      ![r, 1, t] (r, t) (InputCompositionCarrierCube.cube_top f g r t) n x).trans
+        (InputCompositionCarrierTop.face_native f g n r t x)
+  left n r s x :=
+    (CommonReferenceNerve.compactFamily_of_point_eq (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g)
+      (InputCompositionCarrierCharts.chartFace f g plus plus_projection)
+      ![r, s, 0] (r, s) (InputCompositionCarrierCube.cube_left f g r s) n x).trans
+        (InputCompositionCarrierCharts.plusFace_native f g n r s x)
+  right n r s x :=
+    (CommonReferenceNerve.compactFamily_of_point_eq (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g)
+      (InputCompositionCarrierCharts.chartFace f g minus minus_projection)
+      ![r, s, 1] (r, s) (InputCompositionCarrierCube.cube_right f g r s) n x).trans
+        (InputCompositionCarrierCharts.minusFace_native f g n r s x)
+  at_point n r s t :=
+    CommonReferenceNerve.compactPrespectrumFamily_point (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g) n ![r, s, t]
+  comm n r s t x z :=
+    CommonReferenceNerve.compactPrespectrumFamily_structure
+      (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCube.carrierCube f g) n ![r, s, t] x z
+
+/-- The original direct comparison is compared with the whole actual pasted input comparison. -/
+def comparisonSquare :
+    (inputComparisonHomotopy (f ≫ g)).Square (compositeComparison f g)
+      (laurentTrack f g) (spanTrack f g) :=
+  HomotopyPushout.squareOfCylinder
+    (boundedFlatPerfectPrespectrumMap (projection.app Z))
+    (boundedFlatPerfectPrespectrumMap (projection.app Z))
+    (inputComparisonHomotopy (f ≫ g)) (compositeComparison f g)
+    (laurentTrack f g) (spanTrack f g) (plusChart f g) (minusChart f g) (comparisonCylinder f g)
+
+/-- Every positive chart value retains the whole original paused moving chart square. -/
+theorem comparisonSquare_inl (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (comparisonSquare f g).level n (r, (s,
+      (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+        (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) =
+      (plusChart f g).level n (r, (s, x)) := rfl
+
+/-- Every inverse chart value retains its distinct whole original chart square. -/
+theorem comparisonSquare_inr (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (comparisonSquare f g).level n (r, (s,
+      (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+        (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) =
+      (minusChart f g).level n (r, (s, x)) := rfl
+
+/-- Every original overlap point descends from the actual cube at its unchanged three clocks. -/
+theorem comparisonSquare_cylinder (n : ℕ) (r s t : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (comparisonSquare f g).level n (r, (s,
+      HomotopyPushout.cylinder (boundedFlatPerfectPrespectrumMap (projection.app Z))
+        (boundedFlatPerfectPrespectrumMap (projection.app Z)) n (t, x))) =
+      CommonReferenceNerve.compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+        (InputCompositionCarrierCube.carrierCube f g) n (![r, s, t], x) := rfl
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputComposition

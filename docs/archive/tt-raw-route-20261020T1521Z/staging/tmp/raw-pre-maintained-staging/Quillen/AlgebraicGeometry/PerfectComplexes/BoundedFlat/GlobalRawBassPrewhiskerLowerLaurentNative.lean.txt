@@ -1,0 +1,49 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerLaurent
+/-! All-point recovery of the original source-map first half with all three clocks retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+/-- Every Laurent native input follows the complete original normalization binary path. -/
+theorem lowerLaurentPath_native (n : ℕ) (r : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj Z))).space n) :
+    pointwisePrespectrumFamily (lowerLaurentBinary f g) n (lowerLaurentPath f g r) x =
+      (InputCompositionCharts.laurentComposition f g).level n (r, x) := by
+  change pointwisePrespectrumFamily _ n (parameter _ (lowerLaurentNodes f g) _) x = _
+  rw [pointwisePrespectrumFamily_parameter, prespectrumFamily_eq]
+  exact BinaryNormalizationSimplex.native_path (laurent.map f) (laurent.map g) n r x
+
+/-- The original thirty-one-node input comparison is retained before Laurent composition. -/
+theorem lowerLaurent_native (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    pointwisePrespectrumFamily (lowerLaurentReference f g c) n
+      (lowerLaurent f g c ((r, s), t)) x =
+      (InputCompositionCharts.laurentComposition f g).level n
+        (r, (inputComparisonHomotopy c).level n
+          (s, Quillen.LoopPrespectrum.HomotopyPushout.cylinder
+            (boundedFlatPerfectPrespectrumMap (projection.app W))
+            (boundedFlatPerfectPrespectrumMap (projection.app W)) n (t, x))) := by
+  change pointwisePrespectrumFamily _ n
+    (FinitePrecomp.parameter (InputDescSimplex.reference c) (InputDescSimplex.nodes c)
+      (lowerLaurentBinary f g)
+      (lowerLaurentPath f g r, BassH0Diagram.parameter (s, t))) x = _
+  rw [FinitePrecomp.parameter_native, lowerLaurentPath_native, prespectrumFamily_eq]
+  exact congrArg (fun y ↦ (InputCompositionCharts.laurentComposition f g).level n (r, y))
+    (InputDescSimplex.cylinder_native c n s t x)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

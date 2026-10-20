@@ -1,0 +1,169 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1ChartRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTerminal
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0ScalarEdges
+public import Quillen.Topology.Realization.SimplexGridBoundary
+
+/-!
+# Both whole original terminal/chart carrier edges
+
+The full five-node first and second rows retain their actual ordered primitive supports.
+Both original comparison half-clocks glue to the terminal edge of the unchanged paused
+chart surface. The inverse overlap reversal is evaluated only at its prescribed endpoint.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1ChartSeams
+open InputCompositionTerminalAttach InputCompositionTerminalProducts
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The original terminal pause leaves the whole composite-square edge unchanged. -/
+theorem paused_one (s : unitInterval) :
+    DoubleSquareScalarPaths.coefficientPausedSquareParameter (1, s) =
+      DoubleSquareScalarPaths.coefficientMovingSquareParameter (1, s) :=
+  (collapsed_top_path _ s).trans (CoefficientMovingSquareRows.moving_one s).symm
+
+private theorem first_path (k : laurent ⟶ polynomial)
+    (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+    (α : ⦋17⦌ ⟶ ⦋30⦌)
+    (hα : ∀ i, InputDescSimplex.nodes g (α.toOrderHom i) = InputDescSimplex.chartNodes g k hk i)
+    (hrow : ∀ i, postNode f g (InputDescSimplex.chartNodes g k hk
+      (ProjectionRectangleSquareRows.chartRow i)) =
+      InputCompositionCarrierCharts.chartNodes f g k hk (CoefficientMovingSquareRows.firstRow i))
+    (s : unitInterval) :
+    CommonReferenceNerve.mapParameter (postNode f g)
+      (CommonReferenceNerve.parameter (InputDescSimplex.reference g) (InputDescSimplex.nodes g)
+        (ProjectionRectangleParameters.L α s)) =
+      InputCompositionCarrierCharts.chartFace f g k hk (1, lower s) := by
+  change _ = CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (InputCompositionCarrierCharts.chartNodes f g k hk)
+    (DoubleSquareScalarPaths.coefficientPausedSquareParameter (1, lower s))
+  rw [CommonReferenceNerve.mapParameter_parameter, paused_one,
+    CoefficientMovingSquareRows.moving_one_lower_row,
+    ← ProjectionRectangleSquareRows.chart_parameter α s]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  let N := fun j ↦ postNode f g (InputDescSimplex.chartNodes g k hk
+    (ProjectionRectangleSquareRows.chartRow j))
+  exact (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+    N (fun j ↦ postNode f g (InputDescSimplex.nodes g j))
+    (α.toOrderHom ∘ ProjectionRectangleSquareRows.chartRow)
+    (fun j ↦ congrArg (postNode f g) (hα _)) (BassH1Support.edgeFace i)
+    (α.toOrderHom.monotone.comp (ProjectionRectangleSquareRows.primitive_rows_monotone 0 i))
+    z).trans
+    (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+      N (InputCompositionCarrierCharts.chartNodes f g k hk) CoefficientMovingSquareRows.firstRow
+      (fun j ↦ (hrow j).symm) (BassH1Support.edgeFace i)
+      (CoefficientMovingSquareRows.primitive_rows_monotone 1 i) z).symm
+
+private theorem second_path (k : laurent ⟶ polynomial)
+    (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+    (hrow : ∀ i, nodes f g k hk (Quillen.SimplexGrid.index 4 4 (2, i)) =
+      InputCompositionCarrierCharts.chartNodes f g k hk (CoefficientMovingSquareRows.secondRow i))
+    (s : unitInterval) :
+    face f g k hk (s, 0) =
+      InputCompositionCarrierCharts.chartFace f g k hk (1, upper s) := by
+  change CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+    (nodes f g k hk) (parameter.{u} (s, 0)) =
+    CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCharts.chartNodes f g k hk)
+      (DoubleSquareScalarPaths.coefficientPausedSquareParameter (1, upper s))
+  have hp : parameter.{u} (s, 0) =
+      StdSimplex.map (Quillen.SimplexGrid.rowFace 4 4 2).toOrderHom
+        (NativeSquareFiveSimplex.parameter s) := by
+    change Quillen.SimplexGrid.parameter.{u + 1} 4 4
+      (NativeSquareFiveSimplex.parameter 0, NativeSquareFiveSimplex.parameter s) = _
+    rw [Path.source]
+    exact Quillen.SimplexGrid.parameter_row 4 4 2 _
+  refine (congrArg (CommonReferenceNerve.parameter
+    (InputCompositionCarrierCharts.source f g) (nodes f g k hk)) hp).trans ?_
+  refine (CommonReferenceNerve.parameter_face (InputCompositionCarrierCharts.source f g)
+    (nodes f g k hk) (Quillen.SimplexGrid.rowFace 4 4 2)
+    (NativeSquareFiveSimplex.parameter s)).trans ?_
+  rw [paused_one, CoefficientMovingSquareRows.moving_one_upper_row]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in s
+  rw [← hz]
+  exact (CommonReferenceNerve.parameter_supported (InputCompositionCarrierCharts.source f g)
+    (fun j ↦ nodes f g k hk ((Quillen.SimplexGrid.rowFace 4 4 2).toOrderHom j))
+    (InputCompositionCarrierCharts.chartNodes f g k hk) CoefficientMovingSquareRows.secondRow
+    (fun j ↦ (hrow j).symm) (BassH1Support.edgeFace i)
+    (CoefficientMovingSquareRows.primitive_rows_monotone 2 i) z).symm
+
+/-- Every original first-half positive point equals the exact chart terminal point. -/
+theorem first_plus (s : unitInterval) :
+    postFace f g (s, 0) =
+      InputCompositionCarrierCharts.chartFace f g plus plus_projection (1, lower s) := by
+  change CommonReferenceNerve.mapParameter (postNode f g)
+    (CommonReferenceNerve.parameter (InputDescSimplex.reference g) (InputDescSimplex.nodes g)
+      (BassH0Diagram.parameter (s, 0))) = _
+  rw [BassH0Diagram.parameter_left]
+  exact first_path f g plus plus_projection BassH0Diagram.plusFace
+    (InputDescSimplex.plus_nodes g) (InputCompositionH1ChartRows.plus_first_nodes f g) s
+
+/-- Every original first-half inverse point retains its separate original chart reference. -/
+theorem first_minus (s : unitInterval) :
+    postFace f g (s, 1) =
+      InputCompositionCarrierCharts.chartFace f g minus minus_projection (1, lower s) := by
+  change CommonReferenceNerve.mapParameter (postNode f g)
+    (CommonReferenceNerve.parameter (InputDescSimplex.reference g) (InputDescSimplex.nodes g)
+      (BassH0Diagram.parameter (s, 1))) = _
+  rw [BassH0Diagram.parameter_right]
+  exact first_path f g minus minus_projection BassH0Diagram.minusFace
+    (InputDescSimplex.minus_nodes g) (InputCompositionH1ChartRows.minus_first_nodes f g) s
+
+/-- The complete second-half positive edge uses the actual product at its source endpoint. -/
+theorem second_plus (s : unitInterval) :
+    InputCompositionTerminalSecond.face f g (s, 0) =
+      InputCompositionCarrierCharts.chartFace f g plus plus_projection (1, upper s) := by
+  rw [InputCompositionTerminalSecond.face, concatSecond_zero]
+  exact second_path f g plus plus_projection (InputCompositionH1ChartRows.plus_second_nodes f g) s
+
+/-- The inverse second-half edge keeps its original prescribed overlap reversal at the endpoint. -/
+theorem second_minus (s : unitInterval) :
+    InputCompositionTerminalSecond.face f g (s, 1) =
+      InputCompositionCarrierCharts.chartFace f g minus minus_projection (1, upper s) := by
+  rw [InputCompositionTerminalSecond.face, concatSecond_one,
+    InputCompositionTerminalSecond.tailFace, concatSecond_one]
+  change face f g minus minus_projection (s, unitInterval.symm 1) = _
+  rw [unitInterval.symm_one]
+  exact second_path f g minus minus_projection
+    (InputCompositionH1ChartRows.minus_second_nodes f g) s
+
+/-- The whole positive terminal/chart seam agrees before native evaluation at every clock. -/
+theorem terminal_plus (s : unitInterval) :
+    InputCompositionCarrierTerminal.face f g (s, 0) =
+      InputCompositionCarrierCharts.chartFace f g plus plus_projection (1, s) := by
+  rcases cover s with ⟨r, rfl⟩ | ⟨r, rfl⟩
+  · rw [InputCompositionCarrierTerminal.face_lower]
+    exact first_plus f g r
+  · rw [InputCompositionCarrierTerminal.face_upper]
+    exact second_plus f g r
+
+/-- The complete inverse terminal/chart seam retains all original reference data. -/
+theorem terminal_minus (s : unitInterval) :
+    InputCompositionCarrierTerminal.face f g (s, 1) =
+      InputCompositionCarrierCharts.chartFace f g minus minus_projection (1, s) := by
+  rcases cover s with ⟨r, rfl⟩ | ⟨r, rfl⟩
+  · rw [InputCompositionCarrierTerminal.face_lower]
+    exact first_minus f g r
+  · rw [InputCompositionCarrierTerminal.face_upper]
+    exact second_minus f g r
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1ChartSeams

@@ -1,0 +1,115 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportMap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportParameterNative
+/-! Whole chart-relative transport recovers the original chart cone map at every point. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport
+open CommonReferenceNerve
+variable {X Y : Scheme.{u}} (a : X ⟶ Y) (k : laurent ⟶ polynomial)
+  {V : Model.{u + 1}} (P : V ⟶ modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Y)))
+  (G : V ⟶ modelOf (boundedFlatPerfectWaldhausen (laurent.obj Y)))
+local notation "JY" => InputCompositionTerminalAttach.arrow (k.app Y)
+local notation "JX" => InputCompositionTerminalAttach.arrow (k.app X)
+variable (eps : G.functor ≅
+  (P ≫ InputCompositionTerminalAttach.arrow (k.app Y)).functor)
+local notation "F'" => targetPolynomial a P
+local notation "G'" => targetLaurent a k P
+local notation "η" => targetAnchor a k P
+
+/-- The actual chosen geometric chart square, not an endpoint-only replacement. -/
+abbrev chartSquare := boundedFlatPerfectPrespectrumSquareHomotopy (laurent.map a)
+  (k.app Y) (k.app X) (polynomial.map a) (k.naturality a)
+
+/-- The native chart-cone map induced by the original selected geometric chart square. -/
+abbrev chartConeMap := mappingConeSquareMap
+  (boundedFlatPerfectPrespectrumMap (k.app Y)) (boundedFlatPerfectPrespectrumMap (k.app X))
+  (boundedFlatPerfectPrespectrumMap (polynomial.map a))
+  (boundedFlatPerfectPrespectrumMap (laurent.map a)) (chartSquare a k)
+
+/-- The minus sheet retains exactly the original comparison/cylinder half-time test. -/
+theorem minusTrack_native (n : ℕ) (s : I)
+    (y : |CutOpenCarrier.parameterSSet P|) (x : (prespectrum V).space n) :
+    CutOpenCarrier.nativeEval F' JX G' η η n (cylinderTrack a k P G eps false (s, y)) x =
+      (chartConeMap a k).map n
+        (ReducedMappingCone.cylinder _ _ ((prespectrumMap JY).map n)
+          (s, pointwisePrespectrumFamily P n y x)) := by
+  change CutOpenCarrier.nativeEval F' JX G' η η n
+    (((chartHomotopy a k P G eps).trans
+      (cylinderHomotopy a k P false)) (s, y)) x =
+      ((((chartSquare a k).postcomp
+        (mappingConeInclusion (prespectrumMap JX))).levelHomotopy n).trans
+        ((Homotopy.precomp (boundedFlatPerfectPrespectrumMap (polynomial.map a))
+          (mappingConeHomotopy (prespectrumMap JX))).levelHomotopy n))
+          (s, pointwisePrespectrumFamily P n y x)
+  rw [ContinuousMap.Homotopy.trans_apply, ContinuousMap.HomotopyRel.trans_apply]
+  split_ifs
+  · change CutOpenCarrier.nativeEval F' JX G' η η n
+      (CutOpenCarrier.laurentInclusion F' JX G' η η (chartParameter a k P (_, y))) x = _
+    rw [CutOpenCarrier.nativeEval_laurentInclusion, chartParameter_native]
+    rfl
+  · change CutOpenCarrier.nativeEval F' JX G' η η n
+      (CutOpenCarrier.cylinderMinus F' JX G' η η (polynomialParameter a P y,_)) x = _
+    rw [CutOpenCarrier.nativeEval_cylinderMinus, polynomialParameter_native]
+    rfl
+
+/-- The plus sheet retains exactly the original comparison/cylinder half-time test. -/
+theorem plusTrack_native (n : ℕ) (s : I)
+    (y : |CutOpenCarrier.parameterSSet P|) (x : (prespectrum V).space n) :
+    CutOpenCarrier.nativeEval F' JX G' η η n (secondTrack a k P G eps (s, y)) x =
+      (chartConeMap a k).map n
+        (ReducedMappingCone.cylinder _ _ ((prespectrumMap JY).map n)
+          (s, pointwisePrespectrumFamily P n y x)) := by
+  change CutOpenCarrier.nativeEval F' JX G' η η n
+    (((secondChartHomotopy a k P G eps).trans
+      (cylinderHomotopy a k P true)) (s, y)) x =
+      ((((chartSquare a k).postcomp
+        (mappingConeInclusion (prespectrumMap JX))).levelHomotopy n).trans
+        ((Homotopy.precomp (boundedFlatPerfectPrespectrumMap (polynomial.map a))
+          (mappingConeHomotopy (prespectrumMap JX))).levelHomotopy n))
+          (s, pointwisePrespectrumFamily P n y x)
+  rw [ContinuousMap.Homotopy.trans_apply, ContinuousMap.HomotopyRel.trans_apply]
+  split_ifs
+  · change CutOpenCarrier.nativeEval F' JX G' η η n
+      (CutOpenCarrier.laurentInclusion F' JX G' η η (chartParameter a k P (_, y))) x = _
+    rw [CutOpenCarrier.nativeEval_laurentInclusion, chartParameter_native]
+    rfl
+  · change CutOpenCarrier.nativeEval F' JX G' η η n
+      (CutOpenCarrier.cylinderPlus F' JX G' η η (polynomialParameter a P y,_)) x = _
+    rw [CutOpenCarrier.nativeEval_cylinderPlus, polynomialParameter_native]
+    rfl
+
+/-- Every scalar point and every genuine source input has the exact original native image. -/
+theorem transport_native (n : ℕ) (z : sourceCarrier k P G eps)
+    (x : (prespectrum V).space n) :
+    CutOpenCarrier.nativeEval F' JX G' η η n (transport a k P G eps z) x =
+      (chartConeMap a k).map n (CutOpenCarrier.nativeEval P JY G eps eps n z x) := by
+  rcases CutOpenCarrier.exists_native_cell P JY G eps eps z with
+    ⟨y, rfl⟩ | ⟨y, s, rfl⟩ | ⟨y, s, rfl⟩ | rfl | rfl
+  · rw [transport_laurent, CutOpenCarrier.nativeEval_laurentInclusion]
+    change CutOpenCarrier.nativeEval F' JX G' η η n
+      (CutOpenCarrier.laurentInclusion F' JX G' η η (laurentParameter a k P G eps y)) x = _
+    rw [CutOpenCarrier.nativeEval_laurentInclusion, laurentParameter_native]
+    rfl
+  · rw [transport_cylinderMinus, CutOpenCarrier.nativeEval_cylinderMinus]
+    exact minusTrack_native a k P G eps n s y x
+  · rw [transport_cylinderPlus, CutOpenCarrier.nativeEval_cylinderPlus]
+    exact plusTrack_native a k P G eps n s y x
+  · rw [transport_tipMinus, CutOpenCarrier.nativeEval_tipMinus, CutOpenCarrier.nativeEval_tipMinus]
+    exact ((chartConeMap a k).map_point n).symm
+  · rw [transport_tipPlus, CutOpenCarrier.nativeEval_tipPlus, CutOpenCarrier.nativeEval_tipPlus]
+    exact ((chartConeMap a k).map_point n).symm
+end Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport

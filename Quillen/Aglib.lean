@@ -948,6 +948,7 @@ public import Quillen.Aglib.RingTheory.RegularLocalRing.LowDimension
 public import Quillen.Aglib.RingTheory.RegularLocalRing.PrincipalDomain
 public import Quillen.Aglib.RingTheory.RegularLocalRing.ProjectiveDimension
 public import Quillen.Aglib.RingTheory.RegularLocalRing.QuotientLifting
+public import Quillen.Aglib.Topology.Path.AssociatorEvaluationComparison
 public import Quillen.Aglib.Topology.Path.CarrierHalfPaths
 public import Quillen.Aglib.Topology.Path.EvaluationFactorExtraction
 public import Quillen.Aglib.Topology.Path.EvaluationOperations

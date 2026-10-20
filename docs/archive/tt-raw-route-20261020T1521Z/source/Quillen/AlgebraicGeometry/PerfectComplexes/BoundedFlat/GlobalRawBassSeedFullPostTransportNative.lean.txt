@@ -1,0 +1,140 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedFullPostTransport
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedConjugation
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedSurfaceTransport
+/-! Whole first seed transport, retaining both distinct tips and the actual chart/cylinder clocks.
+  -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.SeedFullPostTransportNative
+open CommonReferenceNerve InputIdentitySeedCarrier SeedFullPostTransport
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+local notation "Fg" => polyRef g
+local notation "Gg" => laurentRef g
+local notation "Jg" => chart (X := Y)
+local notation "εg" => ordinary g
+local notation "εg'" => shifted g
+
+/-- The whole shifted chart evaluates to the original positive chart homotopy. -/
+theorem shiftedChartParameter_native (n : ℕ) (s : I)
+    (y : |CutOpenCarrier.parameterSSet Fg|)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily G n (shiftedChartParameter f g (s, y)) x =
+      (plusSquareHomotopy f).level n (s, pointwisePrespectrumFamily Fg n y x) := by
+  change pointwisePrespectrumFamily G n
+    (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+      (SeedSurfaceTransport.chartParameter f g (s, y))) x = _
+  rw [InputIdentitySeedUnitSeams.shifted_native]
+  exact SeedSurfaceTransport.chartParameter_native f g n s y x
+
+/-- No cylinder clock is replaced: both sides have the same original half-time test. -/
+theorem cylinderTrack_native (n : ℕ) (s : I)
+    (y : |CutOpenCarrier.parameterSSet Fg|)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (cylinderTrack f g (s, y)) x =
+      (InputIdentityPositive.coneMap f).map n
+        (ReducedMappingCone.cylinder _ _ ((InputIdentityPositive.chart Y).map n)
+          (s, pointwisePrespectrumFamily Fg n y x)) := by
+  change CutOpenCarrier.nativeEval F J G ε ε' n
+    (((chartHomotopy f g).trans (cylinderHomotopy f g)) (s, y)) x =
+      ((((plusSquareHomotopy f).postcomp
+        (mappingConeInclusion (InputIdentityPositive.chart X))).levelHomotopy n).trans
+        ((Homotopy.precomp (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+          (mappingConeHomotopy (InputIdentityPositive.chart X))).levelHomotopy n))
+        (s, pointwisePrespectrumFamily Fg n y x)
+  rw [ContinuousMap.Homotopy.trans_apply, ContinuousMap.HomotopyRel.trans_apply]
+  split_ifs
+  · change CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.laurentInclusion F J G ε ε' (shiftedChartParameter f g (_, y))) x = _
+    rw [CutOpenCarrier.nativeEval_laurentInclusion, shiftedChartParameter_native]
+    rfl
+  · change CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.cylinderPlus F J G ε ε' (SeedSurfaceTransport.polynomialParameter f g y, _)) x
+        = _
+    rw [CutOpenCarrier.nativeEval_cylinderPlus, SeedSurfaceTransport.polynomial_native]
+    rfl
+
+
+/-- Exact native recovery on every point of both sheets, not only the seed vertices. -/
+theorem transport_native (n : ℕ) (z : Carrier g)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (transport f g z) x =
+      (InputIdentityPositive.coneMap f).map n
+        (CutOpenCarrier.nativeEval Fg Jg Gg εg εg' n z x) := by
+  rcases Types.eq_or_eq_of_isPushout
+    ((CutOpenCarrier.second_isPushout Fg Jg Gg εg εg').map (forget TopCat)) z with
+      ⟨⟨y, t⟩, hz⟩ | ⟨y | y, hz⟩
+  · change DoubleCylinder.realizedCylinder (CutOpenCarrier.secondAttaching Fg Jg Gg εg εg')
+      (CutOpenCarrier.erase Fg) (y, t) = z at hz
+    rw [← hz]
+    change CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (CutOpenCarrier.cylinderPlus Fg Jg Gg εg εg' (y, t.down))) x = _
+    rw [transport_cylinderPlus]
+    change CutOpenCarrier.nativeEval F J G ε ε' n (cylinderTrack f g (t.down, y)) x =
+      (InputIdentityPositive.coneMap f).map n
+        (CutOpenCarrier.nativeEval Fg Jg Gg εg εg' n
+          (CutOpenCarrier.cylinderPlus Fg Jg Gg εg εg' (y, t.down)) x)
+    rw [CutOpenCarrier.nativeEval_cylinderPlus]
+    exact cylinderTrack_native f g n t.down y x
+  · change DoubleCylinder.realizedEnds (CutOpenCarrier.secondAttaching Fg Jg Gg εg εg')
+      (CutOpenCarrier.erase Fg) (Sum.inl y) = z at hz
+    rw [← hz, ← FourEdgeTree.SetDescent.eval_realized_left]
+    change CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (SeedOrdinarySheet.inclusion g y)) x = _
+    rw [transport_first]
+    exact SeedSurfaceTransport.transport_native f g n y x
+  · change DoubleCylinder.realizedEnds (CutOpenCarrier.secondAttaching Fg Jg Gg εg εg')
+      (CutOpenCarrier.erase Fg) (Sum.inr y) = z at hz
+    rw [← hz, ← FourEdgeTree.SetDescent.eval_realized_right]
+    have hy : y = (default : |CutOpenCarrier.tipSSet.{u + 1}|) := Subsingleton.elim _ _
+    rw [hy]
+    change CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (CutOpenCarrier.tipPlus Fg Jg Gg εg εg')) x =
+      (InputIdentityPositive.coneMap f).map n
+        (CutOpenCarrier.nativeEval Fg Jg Gg εg εg' n
+          (CutOpenCarrier.tipPlus Fg Jg Gg εg εg') x)
+    rw [transport_tipPlus, CutOpenCarrier.nativeEval_tipPlus, CutOpenCarrier.nativeEval_tipPlus]
+    exact ((InputIdentityPositive.coneMap f).map_point n).symm
+
+/-- The complete actual first seed comparison, with both original independent clocks. -/
+def surface : C(I × I, Carrier (f ≫ g)) :=
+  (transport f g).comp (InputIdentitySeedConjugation.comparison g).toContinuousMap
+
+/-- Exact original frozen first seed under the original cone map. -/
+theorem surface_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval F J G ε ε' n (surface f g (r, s)) x) =
+      (GlobalRawBass.coneMap f).map n
+        (Path.toContinuousMap ((transitionInputHomotopy g).level n (r, x)) s) := by
+  change (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (InputIdentitySeedConjugation.comparison g (r, s))) x) = _
+  rw [transport_native]
+  have hf := congrArg (fun k ↦ k.map n
+    (CutOpenCarrier.nativeEval Fg Jg Gg εg εg' n
+      (InputIdentitySeedConjugation.comparison g (r, s)) x))
+    (InputIdentityPositive.coneMap_factor f)
+  change (GlobalRawBass.coneMap f).map n ((InputIdentityPositive.inclusion Y).map n _) =
+    (InputIdentityPositive.inclusion X).map n ((InputIdentityPositive.coneMap f).map n _) at hf
+  rw [← hf, InputIdentitySeedConjugation.comparison_transition]
+
+end Quillen.PerfectComplexes.GlobalRawBass.SeedFullPostTransportNative

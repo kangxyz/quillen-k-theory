@@ -1,0 +1,127 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetConeMap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSpanNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetNative
+
+/-! Every point of the original ordinary cone action recovers the fixed global Bass map. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u v
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetCone
+open BassH0Merge CommonReferenceNerve FourEdge CommonReferenceNerve.CutOpenCarrier FourEdgeTree
+open LoopPrespectrum
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "U" => InputCompositionTerminalAttach.arrow f
+local notation "Ja" => projectionMap Y
+local notation "Jb" => projectionMap X
+local notation "Eb" => E ≫ U
+local notation "Fb" => ProjectionReference.reference X Eb
+local notation "βb" => FourEdge.beta X Eb
+local notation "B" => GlobalRawBass.coneMap f
+
+/-- The exact Laurent source map recovers the original Laurent global map at all levels. -/
+theorem laurent_native (n : ℕ) (y : |parameterSSet (ProjectionReference.reference Y E)|)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily Fb n (laurent f E y) x =
+      (boundedFlatPerfectPrespectrumMap
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex.laurent.map f)).map n
+          (pointwisePrespectrumFamily (ProjectionReference.reference Y E) n y x) := by
+  have hm : laurent f E y = mapParameter (toTargetNode f E)
+      (mapParameter (Target.sourceBoundaryNode f E) y) := by
+    obtain ⟨k, N, z, rfl⟩ := exists_parameter (ProjectionReference.reference Y E) y
+    change mapParameter (fun N ↦ toTargetNode f E (Target.sourceBoundaryNode f E N))
+      (CommonReferenceNerve.parameter _ N z) = _
+    simp only [mapParameter_parameter]
+  rw [hm, toTarget_native]
+  exact pointwisePrespectrumFamily_attachPostcomp (ProjectionReference.reference Y E)
+    (Target.sourcePost f) (Target.reference f E) (Target.sourceBoundaryAnchor f E) n y x
+
+/-- The unchanged first-half surface has the original Bass comparison value. -/
+theorem surface_native (n : ℕ) (z : FourEdgeTree.space E Ja) (s : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily Fb n (surface f E (z, s)) x =
+      (inputComparisonHomotopy f).level n
+        (s, nativeEval E Ja n z x) :=
+  (toTarget_native f E n (Target.tree f E (z, s)) x).trans
+    (Target.tree_native f E n z s x)
+
+/-- The entire Laurent baseline recovers the literal global cone-map inclusion. -/
+theorem coneMap_native_laurent (n : ℕ)
+    (y : |parameterSSet (ProjectionReference.reference Y E)|) (x : (prespectrum V).space n) :
+    FourEdge.coneEval X Eb n (coneMap f E
+      (laurentInclusion E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) y)) x =
+      (B).map n (FourEdge.coneEval Y E n
+        (laurentInclusion E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) y) x) := by
+  rw [coneMap_laurent, coneEval_laurent]
+  change FourEdge.coneEval X Eb n (laurentInclusion Eb Jb Fb βb (laurent f E y)) x = _
+  rw [coneEval_laurent]
+  change (mappingConeInclusion (GlobalRawBass.comparison X)).map n
+    (pointwisePrespectrumFamily Fb n (laurent f E y) x) = _
+  rw [laurent_native]
+  exact (congrArg (fun k ↦ k.map n
+    (pointwisePrespectrumFamily (ProjectionReference.reference Y E) n y x))
+      (GlobalRawBass.coneMap_inclusion f)).symm
+
+/-- The same original tip is fixed by the actual pointed cone map. -/
+theorem coneMap_native_tip (n : ℕ) (x : (prespectrum V).space n) :
+    FourEdge.coneEval X Eb n (coneMap f E
+      (tip E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E))) x =
+      (B).map n (FourEdge.coneEval Y E n
+        (tip E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E)) x) := by
+  rw [coneMap_tip, coneEval_tip, coneEval_tip, (B).map_point]
+
+/-- Both original cone-height halves recover the exact original native cylinder formula. -/
+theorem coneMap_native_cylinder (n : ℕ) (z : FourEdgeTree.space E Ja) (t : I)
+    (x : (prespectrum V).space n) :
+    FourEdge.coneEval X Eb n (coneMap f E
+      (cylinder E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) (z, t))) x =
+      (B).map n (FourEdge.coneEval Y E n
+        (cylinder E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) (z, t)) x) := by
+  rcases cover t with ⟨s, rfl⟩ | ⟨s, rfl⟩
+  · rw [coneMap_lower, coneEval_laurent, coneEval_cylinder,
+      GlobalRawBass.coneMap_cylinder, Homotopy.trans_lower_cell]
+    change (mappingConeInclusion (GlobalRawBass.comparison X)).map n
+      (pointwisePrespectrumFamily Fb n (surface f E (z, s)) x) = _
+    rw [surface_native]; rfl
+  · rw [coneMap_upper, coneEval_cylinder, coneEval_cylinder,
+      GlobalRawBass.coneMap_cylinder, Homotopy.trans_upper_cell]
+    rw [TargetSpan.treeMap_native]
+    rfl
+
+/-- Every ordinary scalar-cone point has its actual original native global-map value. -/
+theorem coneMap_native (n : ℕ) (z : FourEdge.scalarCone Y E) (x : (prespectrum V).space n) :
+    FourEdge.coneEval X Eb n (coneMap f E z) x = (B).map n (FourEdge.coneEval Y E n z x) := by
+  have h := SetDescent.funext (FourEdge.beta Y E)
+    (SSet.stdSimplex.isTerminalObj₀.from (FourEdgeTree.simplicial E Ja))
+    (fun z ↦ FourEdge.coneEval X Eb n (coneMap f E z) x)
+    (fun z ↦ (B).map n (FourEdge.coneEval Y E n z x))
+    (fun z ↦ coneMap_native_cylinder f E n z.1 z.2.down x)
+    (fun y ↦ coneMap_native_laurent f E n y x)
+    (fun y ↦ by
+      have hy : y = (default : |tipSSet.{u + 1}|) := Subsingleton.elim _ _
+      subst y
+      exact coneMap_native_tip f E n x)
+  exact congrFun h z
+
+/-- Compact scalar families retain joint continuity in every genuine native input. -/
+theorem coneMap_compact_continuous {S : Type v} [TopologicalSpace S] [CompactSpace S]
+    (p : C(S, FourEdge.scalarCone Y E)) (n : ℕ) :
+    Continuous (fun z : S × (prespectrum V).space n ↦
+      FourEdge.coneEval X Eb n (coneMap f E (p z.1)) z.2) :=
+  FourEdge.coneEval_compact_continuous X Eb ((coneMap f E).comp p) n
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetCone

@@ -1,0 +1,74 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopPaths
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTerminal
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTop
+
+/-!
+# The whole original terminal/top carrier seam
+
+The five actual path leaves are assembled in the exact original terminal association. The
+reverse reassociation starts at the other association and ends at this original word, with
+all overlap clocks unchanged. This proves the last external carrier edge before evaluation.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopSeam
+open InputCompositionTopWord InputCompositionTerminalAttach
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The original preattached target path is exactly the middle three original top leaves. -/
+theorem middle_word (s : unitInterval) :
+    preFace f g (1, s) =
+      ((lastPlus f g).trans ((overlapTop f g).trans (lastMinus f g).symm)) s := by
+  rcases three_cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower]
+    exact InputCompositionH1TopPaths.second_plus f g t
+  · rw [path_upper, path_lower]
+    exact InputCompositionH1TopPaths.middle f g t
+  · rw [path_upper, path_upper]
+    exact InputCompositionH1TopPaths.second_minus f g t
+
+/-- Every point of the terminal three-piece target is the original five-leaf association. -/
+theorem terminal_word (t : unitInterval) :
+    InputCompositionTerminalSecond.face f g (1, t) = actualTop f g t := by
+  change _ = ((firstPlus f g).trans
+    (((lastPlus f g).trans ((overlapTop f g).trans (lastMinus f g).symm)).trans
+      (firstMinus f g).symm)) t
+  rcases three_cover t with ⟨s, rfl⟩ | ⟨s, rfl⟩ | ⟨s, rfl⟩
+  · rw [InputCompositionTerminalSecond.face_plus, path_lower]
+    exact InputCompositionH1TopPaths.first_plus f g s
+  · rw [InputCompositionTerminalSecond.face_middle, path_upper, path_lower]
+    exact middle_word f g s
+  · rw [InputCompositionTerminalSecond.face_minus, path_upper, path_upper]
+    exact InputCompositionH1TopPaths.first_minus f g (unitInterval.symm s)
+
+/-- The top's original final composition time is the unchanged actual five-leaf word. -/
+theorem top_one (t : unitInterval) :
+    InputCompositionCarrierTop.face f g (1, t) = actualTop f g t := by
+  rw [InputCompositionCarrierTop.face, concatFirst_one]
+  change reassociation f g (unitInterval.symm 1, t) = _
+  rw [unitInterval.symm_one, ContinuousMap.HomotopyWith.apply_zero]
+  rfl
+
+/-- The complete terminal/top carrier edge agrees at every unchanged original overlap height. -/
+theorem terminal_top (t : unitInterval) :
+    InputCompositionCarrierTerminal.face f g (1, t) =
+      InputCompositionCarrierTop.face f g (1, t) := by
+  rw [InputCompositionCarrierTerminal.face, concatFirst_one, top_one]
+  exact terminal_word f g t
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1TopSeam

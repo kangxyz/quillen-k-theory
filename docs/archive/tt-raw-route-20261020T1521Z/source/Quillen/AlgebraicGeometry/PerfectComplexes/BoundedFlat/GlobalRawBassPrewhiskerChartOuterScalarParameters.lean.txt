@@ -1,0 +1,109 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOuterGridNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOuterPolynomialParameter
+/-! The original outer polynomial words equal the selected paused-chart bottoms as whole scalars. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "SN" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+local notation "B" => lowerLaurentBinary f g
+local notation "Q" => InputDescSimplex.reference c
+local notation "F" => ProjectionReference.reference X
+  (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g)
+
+private theorem bottom_parameter (k : laurent ⟶ polynomial) (r : I) :
+    InputCompositionPolynomialScalar.chartSurface f g k (r, 0) =
+      parameter (InputCompositionPolynomialScalar.laurentReference f g k)
+        (fun i ↦ InputCompositionPolynomialScalar.chartNodes f g k
+          (CoefficientMovingSquareRows.targetSide i)) (binaryPath (k := 2) 0 1 2 r) := by
+  rw [chartSurface_bottom]
+  change mapParameter _ (parameter B (lowerLaurentNodes f g) _) = _
+  rw [mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter _ ns (binaryPath (k := 2) 0 1 2 r))
+    (funext fun i ↦ (chartSurface_bottom_node f g k i).symm)
+
+private theorem outer_scalar_rows (k : laurent ⟶ polynomial)
+    (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+    (α : ⦋17⦌ ⟶ ⦋30⦌)
+    (hn : ∀ j, InputDescSimplex.nodes c (α.toOrderHom j) = InputDescSimplex.chartNodes c k hk j)
+    (hg : ∀ i j,
+      reanchor (lowerLaurentAnchor f g c)
+        (FinitePrecomp.node Q B
+          (InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.polynomialRow j))
+          (lowerLaurentNodes f g i)) =
+        reanchor (projectionLaurentSeamAnchor f g c k hk)
+          (FinitePrecomp.node S (InputCompositionPolynomialScalar.laurentReference f g k)
+            (SN j) (InputCompositionPolynomialScalar.chartNodes f g k
+              (CoefficientMovingSquareRows.targetSide i)))) (r t : I) :
+    mapParameter (reanchor (lowerLaurentAnchor f g c))
+      (FinitePrecomp.parameter Q (InputDescSimplex.nodes c) B
+        (lowerLaurentPath f g r, ProjectionRectangleParameters.Ppath α t)) =
+    mapParameter (reanchor (projectionLaurentSeamAnchor f g c k hk))
+      (FinitePrecomp.parameter S SN (InputCompositionPolynomialScalar.laurentReference f g k)
+        (InputCompositionPolynomialScalar.chartSurface f g k (r, 0),
+          NativeSquareFiveSimplex.parameter t)) := by
+  change mapParameter _ (FiniteParameter.parameter B (Q ≫ B)
+    (fun N j ↦ FinitePrecomp.node Q B (InputDescSimplex.nodes c j) N)
+      (lowerLaurentPath f g r, ProjectionRectangleParameters.Ppath α t)) = _
+  rw [outer_polynomial_parameter_row]
+  simp only [hn]
+  change mapParameter _ (FinitePrecomp.parameter Q
+    (fun j ↦ InputDescSimplex.chartNodes c k hk (ProjectionRectangleSquareRows.polynomialRow j))
+    B (parameter B (lowerLaurentNodes f g) (binaryPath (k := 2) 0 1 2 r),
+      NativeSquareFiveSimplex.parameter t)) = _
+  rw [bottom_parameter, FinitePrecomp.parameter_characteristic,
+    FinitePrecomp.parameter_characteristic]
+  refine (mapParameter_parameter (reanchor (lowerLaurentAnchor f g c)) _ _).trans ?_
+  refine Eq.trans ?_
+    (mapParameter_parameter (reanchor (projectionLaurentSeamAnchor f g c k hk)) _ _).symm
+  apply congrArg (fun ns ↦ parameter F ns
+    (Quillen.SimplexGrid.parameter 2 4
+      (binaryPath (k := 2) 0 1 2 r, NativeSquareFiveSimplex.parameter t)))
+  funext i
+  exact hg ((Quillen.SimplexGrid.indexEquiv 2 4).symm i).1
+    ((Quillen.SimplexGrid.indexEquiv 2 4).symm i).2
+
+/-- Every point of the original positive polynomial word is the full selected chart-bottom scalar.
+-/
+theorem outer_plus_scalar_parameter (r t : I) :
+    mapParameter (reanchor (lowerLaurentAnchor f g c))
+      (FinitePrecomp.parameter Q (InputDescSimplex.nodes c) B
+        (lowerLaurentPath f g r, ProjectionRectangleParameters.Ppath BassH0Diagram.plusFace t)) =
+    mapParameter (reanchor (projectionLaurentSeamAnchor f g c plus plus_projection))
+      (FinitePrecomp.parameter S SN (InputCompositionPolynomialScalar.laurentReference f g plus)
+        (InputCompositionPolynomialScalar.chartSurface f g plus (r, 0),
+          NativeSquareFiveSimplex.parameter t)) :=
+  outer_scalar_rows f g c plus plus_projection BassH0Diagram.plusFace
+    (InputDescSimplex.plus_nodes c) (outer_plus_grid_nodes f g c) r t
+
+/-- Every point of the original negative polynomial word retains its distinct selected chart
+scalar. -/
+theorem outer_minus_scalar_parameter (r t : I) :
+    mapParameter (reanchor (lowerLaurentAnchor f g c))
+      (FinitePrecomp.parameter Q (InputDescSimplex.nodes c) B
+        (lowerLaurentPath f g r, ProjectionRectangleParameters.Ppath BassH0Diagram.minusFace t)) =
+    mapParameter (reanchor (projectionLaurentSeamAnchor f g c minus minus_projection))
+      (FinitePrecomp.parameter S SN (InputCompositionPolynomialScalar.laurentReference f g minus)
+        (InputCompositionPolynomialScalar.chartSurface f g minus (r, 0),
+          NativeSquareFiveSimplex.parameter t)) :=
+  outer_scalar_rows f g c minus minus_projection BassH0Diagram.minusFace
+    (InputDescSimplex.minus_nodes c) (outer_minus_grid_nodes f g c) r t
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

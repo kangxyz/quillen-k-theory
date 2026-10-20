@@ -1,0 +1,92 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionReference
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameter
+public import Quillen.Waldhausen.SConstruction.Iterated.RealizationSimplexComposition
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNervePointwiseFamily
+
+/-!
+# The whole original global Bass path over an arbitrary Model reference
+
+The original five-node `InputIdentityProjection` family acts on every point of a whole
+reference nerve. Its finite product, pointwise evaluation and compact evaluation retain
+the original Bass clock and independent input parameters at all native levels.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u v
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference
+open CommonReferenceNerve
+variable (X : Scheme.{u}) {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen X))
+
+/-- The whole input nerve acts on the five original nodes at the unchanged global Bass clock. -/
+def family : C(|nerve (Codiscrete (Node E))| × I,
+    |nerve (Codiscrete (Node (reference X E)))|) :=
+  (FiniteParameter.parameter E (reference X E) (nodes X E)).comp
+    ⟨fun z ↦ (z.1, InputIdentityProjection.parameter z.2), by fun_prop⟩
+
+/-- Every characteristic simplex has the actual original lexicographic product parameter. -/
+theorem family_characteristic {p : ℕ} (N : Fin (p + 1) → Node E)
+    (z : StdSimplex ℝ (Fin (p + 1))) (t : I) :
+    family X E (CommonReferenceNerve.parameter E N z, t) =
+      CommonReferenceNerve.parameter (reference X E)
+        (FiniteParameter.gridNodes E (reference X E) (nodes X E) N)
+        (Quillen.SimplexGrid.parameter.{u + 1} p 4 (z, InputIdentityProjection.parameter t)) :=
+  FiniteParameter.parameter_characteristic E (reference X E) (nodes X E)
+    N z (InputIdentityProjection.parameter t)
+
+/-- The product is the old global Bass path evaluated on the entire original input family. -/
+theorem finite_native {p : ℕ} (N : Fin (p + 1) → Node E) (n : ℕ)
+    (z : StdSimplex ℝ (Fin (p + 1))) (t : I) (x : (prespectrum V).space n) :
+    prespectrumFamily (reference X E)
+      (FiniteParameter.gridNodes E (reference X E) (nodes X E) N) n
+      (Quillen.SimplexGrid.parameter.{u + 1} p 4 (z, InputIdentityProjection.parameter t), x) =
+      (squareHomotopy X).level n (t, prespectrumFamily E N n (z, x)) := by
+  rw [prespectrumFamily_eq, prespectrumFamily_eq]
+  change prespectrumSimplexFamily
+    (CommonReferenceProduct.simplex E (fun i ↦ (N i).1) (fun i ↦ (N i).2)
+      (source X) (fun j ↦ (InputIdentityProjection.nodes X j).1)
+      (fun j ↦ (InputIdentityProjection.nodes X j).2)) n
+    (Quillen.SimplexGrid.parameter.{u + 1} p 4 (z, InputIdentityProjection.parameter t), x) = _
+  rw [CommonReferenceProduct.prespectrum_comp]
+  exact InputIdentityProjection.native X n t _
+
+/-- Every actual nerve point has the same original native overlap value. -/
+theorem pointwise_native (n : ℕ) (y : |nerve (Codiscrete (Node E))|) (t : I)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (reference X E) n (family X E (y, t)) x =
+      (squareHomotopy X).level n (t, pointwisePrespectrumFamily E n y x) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter E y
+  rw [family_characteristic, pointwisePrespectrumFamily_parameter,
+    pointwisePrespectrumFamily_parameter]
+  exact finite_native X E N n z t x
+
+variable {T : Type v} [TopologicalSpace T] [CompactSpace T]
+
+/-- A supplied compact input family keeps a new independent original overlap coordinate. -/
+def compactParameter (p : C(T, |nerve (Codiscrete (Node E))|)) :
+    C(T × I, |nerve (Codiscrete (Node (reference X E)))|) :=
+  (family X E).comp ⟨fun z ↦ (p z.1, z.2), by fun_prop⟩
+
+/-- Joint compact evaluation retains every input coordinate, without global evaluator continuity. -/
+theorem compact_native (p : C(T, |nerve (Codiscrete (Node E))|))
+    (n : ℕ) (s : T) (t : I) (x : (prespectrum V).space n) :
+    compactPrespectrumFamily (reference X E) (compactParameter X E p) n ((s, t), x) =
+      (squareHomotopy X).level n (t, compactPrespectrumFamily E p n (s, x)) := by
+  rw [← pointwisePrespectrumFamily_eq_compact, ← pointwisePrespectrumFamily_eq_compact]
+  exact pointwise_native X E n (p s) t x
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference

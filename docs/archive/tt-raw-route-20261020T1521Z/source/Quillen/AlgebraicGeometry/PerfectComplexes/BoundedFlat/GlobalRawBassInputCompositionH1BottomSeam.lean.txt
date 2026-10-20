@@ -1,0 +1,87 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1BottomRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTerminal
+public import Quillen.Topology.Realization.SimplexGridBoundary
+
+/-!
+# The whole original terminal-input and Laurent-bottom seam
+
+All five actual source Bass-path nodes are shared in their original order. Their entire
+four-segment path agrees with the actual last Laurent product column, with unchanged speed
+and the positive/inverse projection normalization references retained.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.ScalarRectangle
+open Quillen.PerfectComplexes.BassH0Merge Quillen.PerfectComplexes.BassH1Join
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1BottomSeam
+open InputCompositionTerminalAttach
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Every complete original source-path node is the identical last bottom-column node. -/
+theorem whole_nodes (i : Fin 5) :
+    postNode f g (InputDescSimplex.nodes g (middleSourceFace.toOrderHom i)) =
+      InputCompositionCarrierBottom.nodes f g
+        ((Quillen.SimplexGrid.columnFace 4 2 2).toOrderHom i) := by
+  have hp (j : Fin 3) :=
+    (congrArg (postNode f g) (InputDescSimplex.plus_nodes g (rectangleLeftIndex j))).trans
+      (InputCompositionH1BottomRows.plus_nodes f g j)
+  have hm (j : Fin 3) :=
+    (congrArg (postNode f g) (InputDescSimplex.minus_nodes g (rectangleLeftIndex j))).trans
+      (InputCompositionH1BottomRows.minus_nodes f g j)
+  fin_cases i
+  · exact hp 0
+  · exact hp 1
+  · exact hp 2
+  · exact hm 1
+  · exact hm 2
+
+/-- The original product source has precisely the old five-node Bass parameter and speed. -/
+theorem bottom_one_parameter (t : unitInterval) :
+    InputCompositionCarrierBottom.parameter.{u} (1, t) =
+      StdSimplex.map (Quillen.SimplexGrid.columnFace 4 2 2).toOrderHom
+        (NativeSquareFiveSimplex.parameter t) := by
+  change Quillen.SimplexGrid.parameter.{u + 1} 4 2
+    (InputIdentityProjection.parameter t, binaryPath (k := 2) 0 1 2 1) = _
+  rw [Path.target]
+  exact Quillen.SimplexGrid.parameter_column 4 2 2 _
+
+/-- The first terminal source edge agrees with the full original Laurent-composition target. -/
+theorem first_bottom (t : unitInterval) :
+    postFace f g (0, t) = InputCompositionCarrierBottom.face f g (1, t) := by
+  change CommonReferenceNerve.mapParameter (postNode f g)
+      (CommonReferenceNerve.parameter (InputDescSimplex.reference g) (InputDescSimplex.nodes g)
+        (BassH0Diagram.parameter (0, t))) =
+    CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierBottom.nodes f g)
+      (InputCompositionCarrierBottom.parameter.{u} (1, t))
+  rw [CommonReferenceNerve.mapParameter_parameter, ← middle_source_parameter,
+    bottom_one_parameter]
+  exact (CommonReferenceNerve.parameter_eq_of_face_nodes
+    (InputCompositionCarrierCharts.source f g)
+    (fun i ↦ postNode f g (InputDescSimplex.nodes g i))
+    (InputCompositionCarrierBottom.nodes f g) middleSourceFace
+    (Quillen.SimplexGrid.columnFace 4 2 2) (fun i ↦ (whole_nodes f g i).symm)
+    (NativeSquareFiveSimplex.parameter t)).symm
+
+/-- The whole terminal/bottom edge retains all original carrier points and clocks. -/
+theorem terminal_bottom (t : unitInterval) :
+    InputCompositionCarrierTerminal.face f g (0, t) =
+      InputCompositionCarrierBottom.face f g (1, t) := by
+  rw [InputCompositionCarrierTerminal.face, concatFirst_zero]
+  exact first_bottom f g t
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionH1BottomSeam

@@ -42,6 +42,22 @@ conditional theorem-family inputs must remain attached to their interfaces.
 
 ## TT comparison scope
 
+The [tensor-generated construction](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md)
+directly realizes the Bass recipe of TT §§6.3–6.4 through the actual perfect
+K-model, constant-overlap looped cone, inherited forward left-[T] tensor action,
+uniform finite recursion and specified stable roof. It proves original TT 7.4:
+the basic and auxiliary canonical-null homotopy-fiber lifts are stable
+equivalences in every integer degree, with the resulting long exact sequences.
+The hypotheses are a qcqs scheme X, a quasi-compact open U, and, for the auxiliary
+statement, a closed support Z with quasi-compact complement. The original support
+maps and whole acyclicity null are retained.
+
+The comparison with a separately prescribed raw point-set implementation,
+including its transitions, whole null and class conventions, and the full
+multiplicative module API remain additional goals. Neither is a missing premise
+of the TT 7.4 result. Exact statements and the reconciled review boundary are
+linked from the [tensor construction guide](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TensorBassConstruction.md#scope-of-the-tt-74-interpretation).
+
 The source guides distinguish the constructed strict/fine completion,
 native current-stage and normalized-row localization, one-step raw evaluation,
 and the specified classical target. Basic and auxiliary same-null lifts,

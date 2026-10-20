@@ -1,0 +1,67 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportRaw
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialRecovery
+/-! Transport of the original selected polynomial composition correction, including its interior. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport
+open CommonReferenceNerve
+variable {W X Y Z : Scheme.{u}} (a : W ⟶ X) (f : X ⟶ Y) (g : Y ⟶ Z)
+  (k : laurent ⟶ polynomial)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "eps" => InputCompositionPolynomialScalar.anchor f g k
+
+/-- The actual selected corrected scalar square is posttransported unchanged. -/
+def postCorrectedSquare : C(I × I, targetCarrier a k P) :=
+  (transport a k P G eps).comp (InputCompositionPolynomialScalar.correctedSquare f g k).parameter
+
+/-- The whole selected plus correction retains both clocks and every arbitrary polynomial input. -/
+theorem plus_postCorrectedSquare_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityPositive.inclusion W).map n
+      (CutOpenCarrier.nativeEval (targetPolynomial a P)
+        (InputCompositionTerminalAttach.arrow (plus.app W)) (targetLaurent a plus P)
+        (targetAnchor a plus P) (targetAnchor a plus P) n
+        (postCorrectedSquare a f g plus (r, s)) x) =
+      (GlobalRawBass.coneMap a).map n ((InputComposition.coneHomotopy f g).level n
+        (r, ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s, (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x))) := by
+  exact (plus_raw_native a P (InputCompositionPolynomialScalar.laurentReference f g plus)
+    (InputCompositionPolynomialScalar.anchor f g plus) n
+    ((InputCompositionPolynomialScalar.correctedSquare f g plus).parameter (r, s)) x).trans
+      (congrArg ((GlobalRawBass.coneMap a).map n)
+        (InputCompositionPolynomialScalar.plus_coneHomotopy f g n r s x))
+
+/-- The whole selected minus correction retains both clocks and every arbitrary polynomial input. -/
+theorem minus_postCorrectedSquare_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityNegative.inclusion W).map n
+      (CutOpenCarrier.nativeEval (targetPolynomial a P)
+        (InputCompositionTerminalAttach.arrow (minus.app W)) (targetLaurent a minus P)
+        (targetAnchor a minus P) (targetAnchor a minus P) n
+        (postCorrectedSquare a f g minus (r, s)) x) =
+      (GlobalRawBass.coneMap a).map n ((InputComposition.coneHomotopy f g).level n
+        (r, ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x))) := by
+  exact (minus_raw_native a P (InputCompositionPolynomialScalar.laurentReference f g minus)
+    (InputCompositionPolynomialScalar.anchor f g minus) n
+    ((InputCompositionPolynomialScalar.correctedSquare f g minus).parameter (r, s)) x).trans
+      (congrArg ((GlobalRawBass.coneMap a).map n)
+        (InputCompositionPolynomialScalar.minus_coneHomotopy f g n r s x))
+end Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport

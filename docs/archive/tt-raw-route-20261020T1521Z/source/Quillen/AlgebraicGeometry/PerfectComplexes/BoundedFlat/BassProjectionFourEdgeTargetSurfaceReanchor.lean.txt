@@ -1,0 +1,119 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetTreeReanchor
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetConeReference
+
+/-!
+# The original whole target surface commutes with reanchoring
+
+The terminal reference transport is natural on complete dependent nodes. Combined with the
+six-cell tree equality, this proves the literal scalar action/reanchoring square for the
+entire original target surface, including both polynomial sectors and all comparison times.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u v
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetCone
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct
+
+private theorem inverse_anchor_reanchor {A B C : Model.{u}} {E E' : A ⟶ B}
+    (δ : E'.functor ≅ E.functor) (J K : B ⟶ C) (θ : K.functor ≅ J.functor)
+    (N : CommonReferenceNerve.Node (E ≫ K)) :
+    reanchor (F₀ := E' ≫ J) (F₁ := E ≫ J) (isoWhiskerRight δ J.functor)
+        (reanchor (F₀ := E ≫ J) (F₁ := E ≫ K) (isoWhiskerLeft E.functor θ).symm N) =
+      reanchor (F₀ := E' ≫ J) (F₁ := E' ≫ K) (isoWhiskerLeft E'.functor θ).symm
+        (reanchor (F₀ := E' ≫ K) (F₁ := E ≫ K) (isoWhiskerRight δ K.functor) N) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext X
+  change J.functor.map (δ.hom.app X) ≫
+      (θ.inv.app (E.functor.obj X) ≫ N.2.hom.app X) =
+    θ.inv.app (E'.functor.obj X) ≫
+      (K.functor.map (δ.hom.app X) ≫ N.2.hom.app X)
+  simpa only [Category.assoc] using
+    congrArg (fun g ↦ g ≫ N.2.hom.app X) (θ.inv.naturality (δ.hom.app X))
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+local notation "U" => normalizedMap (coefficientMap P f)
+local notation "J" => normalizedMap (polynomialProjection P a)
+
+/-- The full terminal anchor commutes with reanchoring before any native evaluation. -/
+theorem toTargetNode_reanchor (N : CommonReferenceNerve.Node (Target.reference P f E)) :
+    reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor) (toTargetNode P f E N) =
+      toTargetNode P f E'
+        (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor) N) := by
+  have hE : Target.terminalBoundaryAnchor P f E =
+      isoWhiskerLeft E.functor (Target.terminalBaseAnchor P f) := by
+    change isoWhiskerLeft E.functor (Target.terminalBaseAnchor P f) ≪≫ Iso.refl _ = _
+    exact Iso.trans_refl _
+  have hE' : Target.terminalBoundaryAnchor P f E' =
+      isoWhiskerLeft E'.functor (Target.terminalBaseAnchor P f) := by
+    change isoWhiskerLeft E'.functor (Target.terminalBaseAnchor P f) ≪≫ Iso.refl _ = _
+    exact Iso.trans_refl _
+  change reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor)
+      (reanchor (Target.terminalBoundaryAnchor P f E).symm N) =
+    reanchor (Target.terminalBoundaryAnchor P f E').symm
+      (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor) N)
+  rw [hE, hE']
+  exact inverse_anchor_reanchor δ (U ≫ BassProjectionPath.source P b)
+    (BassH0Diagram.reference P f) (Target.terminalBaseAnchor P f) N
+
+/-- The entire terminal reference nerve square is strict, not just its evaluated image. -/
+theorem toTarget_reanchor
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (Target.reference P f E)))|) :
+    mapParameter (reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor)) (mapParameter (toTargetNode P f E) y) =
+      mapParameter (toTargetNode P f E')
+        (mapParameter (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor)) y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter (Target.reference P f E) y
+  simp only [mapParameter_parameter]
+  apply congrArg (fun ns ↦ CommonReferenceNerve.parameter
+    (WholeReference.reference P b (E' ≫ U)) ns z)
+  funext i
+  exact toTargetNode_reanchor P f E E' δ (N i)
+
+/-- The complete original target surface satisfies the scalar action/reanchoring square. -/
+theorem surface_reanchor (z : FourEdgeTree.space E J) (s : I) :
+    mapParameter (reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor)) (surface P f E (z, s)) =
+      surface P f E' (Reanchor.tree P a E E' δ z, s) := by
+  change mapParameter (reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor))
+      (mapParameter (toTargetNode P f E) (Target.tree P f E (z, s))) =
+    mapParameter (toTargetNode P f E')
+      (Target.tree P f E' (Reanchor.tree P a E E' δ z, s))
+  rw [toTarget_reanchor, Target.tree_reanchor]
+
+/-- Arbitrary external families retain the entire original surface and its separate time. -/
+theorem surface_reanchor_family {S : Type v} [TopologicalSpace S]
+    (p : C(S, FourEdgeTree.space E J)) :
+    (mapParameter (reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+      (BassProjectionPath.source P b).functor))).comp
+        ((surface P f E).comp (p.prodMap (ContinuousMap.id I))) =
+      (surface P f E').comp
+        (((Reanchor.tree P a E E' δ).comp p).prodMap (ContinuousMap.id I)) := by
+  ext ⟨z, s⟩
+  exact surface_reanchor P f E E' δ (p z) s
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetCone

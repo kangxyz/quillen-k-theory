@@ -1,0 +1,118 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopChartRows
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTop
+
+/-!
+# Both whole original top/chart carrier seams
+
+The original polynomial triangle gives the first half of each side. The prescribed five-leaf
+reassociation fixes both endpoints during the second half, exactly matching the original chart's
+terminal pause. No native evaluation or replacement of an original face is used.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTopChartSeams
+open InputCompositionTopPieces
+
+/-- The original polynomial target-composition row is an ordered three-node face. -/
+def movingEdge : ⦋2⦌ ⟶ ⦋17⦌ := SimplexCategory.Hom.mk
+  ⟨CoefficientMovingSquareRows.targetSide, CoefficientMovingSquareRows.side_rows_monotone 1⟩
+
+/-- The original chart source-composition row is its separate ordered three-node face. -/
+def chartEdge : ⦋2⦌ ⟶ ⦋17⦌ := SimplexCategory.Hom.mk
+  ⟨CoefficientMovingSquareRows.sourceSide, CoefficientMovingSquareRows.side_rows_monotone 0⟩
+
+/-- The exact prescribed chart side consists of the source-composition path and its final pause. -/
+theorem paused_side (r : unitInterval) :
+    DoubleSquareScalarPaths.coefficientPausedSquareParameter (r, 1) =
+      (DoubleSquareScalarPaths.sourceChart.trans (Path.refl (StdSimplex.single 11))) r :=
+  collapsed_right_path (pauseRightParameter DoubleSquareScalarPaths.coefficientBoundaryParameter) r
+
+/-- Every first-half chart-side point retains the original unpaused composition time. -/
+theorem paused_lower (r : unitInterval) :
+    DoubleSquareScalarPaths.coefficientPausedSquareParameter (lower r, 1) =
+      DoubleSquareScalarPaths.sourceChart r := by
+  rw [paused_side, path_lower]
+
+/-- Every second-half chart-side point is the originally prescribed fixed endpoint. -/
+theorem paused_upper (r : unitInterval) :
+    DoubleSquareScalarPaths.coefficientPausedSquareParameter (upper r, 1) =
+      StdSimplex.single 11 := by
+  rw [paused_side, path_upper]
+  rfl
+
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+
+/-- Every whole moving/chart first-half point agrees by its three complete reference nodes. -/
+theorem moving_chart_lower (r : unitInterval) :
+    movingFace f g k hk (r, 0) =
+      InputCompositionCarrierCharts.chartFace f g k hk (lower r, 1) := by
+  change CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (movingNodes f g k hk) (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 0)) =
+    CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCharts.chartNodes f g k hk)
+      (DoubleSquareScalarPaths.coefficientPausedSquareParameter (lower r, 1))
+  rw [CoefficientMovingSquareRows.moving_left_row, paused_lower]
+  have h := CommonReferenceNerve.parameter_eq_of_face_nodes
+    (InputCompositionCarrierCharts.source f g) (movingNodes f g k hk)
+    (InputCompositionCarrierCharts.chartNodes f g k hk) movingEdge chartEdge
+    (fun i ↦ (InputCompositionTopChartRows.row_nodes f g k hk i).symm)
+    (binaryPath (k := 2) 0 1 2 r)
+  exact h.symm.trans (congrArg
+    (CommonReferenceNerve.parameter (InputCompositionCarrierCharts.source f g)
+      (InputCompositionCarrierCharts.chartNodes f g k hk))
+    (map_binaryPath chartEdge 0 1 2 r))
+
+/-- The entire paused carrier edge is its exact first-half target with the full reference. -/
+theorem chart_upper (r : unitInterval) :
+    InputCompositionCarrierCharts.chartFace f g k hk (upper r, 1) =
+      InputCompositionCarrierCharts.chartFace f g k hk (lower 1, 1) := by
+  change CommonReferenceNerve.parameter _ _
+    (DoubleSquareScalarPaths.coefficientPausedSquareParameter (upper r, 1)) =
+      CommonReferenceNerve.parameter _ _
+        (DoubleSquareScalarPaths.coefficientPausedSquareParameter (lower 1, 1))
+  rw [paused_upper, paused_lower, Path.target]
+
+/-- The complete positive top/chart seam retains both original composition-time halves. -/
+theorem top_plus (r : unitInterval) :
+    InputCompositionCarrierTop.face f g (r, 0) =
+      InputCompositionCarrierCharts.chartFace f g plus plus_projection (r, 1) := by
+  rcases cover r with ⟨s, rfl⟩ | ⟨s, rfl⟩
+  · rw [InputCompositionCarrierTop.face_lower, InputCompositionTopVertex.face, concatSecond_zero]
+    exact moving_chart_lower f g plus plus_projection s
+  · rw [InputCompositionCarrierTop.face_upper, Path.Homotopy.source]
+    exact (moving_chart_lower f g plus plus_projection 1).trans
+      (chart_upper f g plus plus_projection s).symm
+
+/-- The inverse top/chart seam preserves the actual overlap reversal and its endpoint pause. -/
+theorem top_minus (r : unitInterval) :
+    InputCompositionCarrierTop.face f g (r, 1) =
+      InputCompositionCarrierCharts.chartFace f g minus minus_projection (r, 1) := by
+  rcases cover r with ⟨s, rfl⟩ | ⟨s, rfl⟩
+  · rw [InputCompositionCarrierTop.face_lower, InputCompositionTopVertex.face, concatSecond_one,
+      InputCompositionTopVertex.tailFace, concatSecond_one]
+    change movingFace f g minus minus_projection (s, unitInterval.symm 1) = _
+    rw [unitInterval.symm_one]
+    exact moving_chart_lower f g minus minus_projection s
+  · rw [InputCompositionCarrierTop.face_upper, Path.Homotopy.target]
+    exact (moving_chart_lower f g minus minus_projection 1).trans
+      (chart_upper f g minus minus_projection s).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionTopChartSeams

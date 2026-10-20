@@ -1,0 +1,46 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputUnit
+public import Quillen.Topology.Prespectrum.SplitSquareSeed
+
+/-!
+# The original supported raw forward seed under actual pair input change
+
+The entire supported forward-unit and specified Bass source-null comparisons yield a whole
+homotopy between the two literal first-stage seed composites. The actual pair pullbacks,
+comparison parameter, output-loop coordinate and structure coordinate are unchanged.
+This one-step law does not assert localization null compatibility or strict input composition.
+-/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+
+/-- The split-square seed is the literal original supported Laurent seed. -/
+theorem splitSquare_transition (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (splitSquare A).transition (unitHomotopy A) = transition A := rfl
+
+variable {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+
+/-- Actual supported pair change intertwines the two original first-stage transitions. -/
+def transitionInputHomotopy :
+    Homotopy (transition B ≫ map f) (rawMap f.hom ≫ transition A) :=
+  (splitInput f).transitionInputHomotopy (unitHomotopy B) (unitHomotopy A)
+    (laurentUnitPasting f)
+
+/-- Every comparison and loop coordinate is the original proved null/unit/null comparison. -/
+theorem transitionInputHomotopy_apply (n : ℕ) (r s : unitInterval)
+    (x : (rawSpectrum B.obj).space n) :
+    Path.toContinuousMap ((transitionInputHomotopy f).level n (r, x)) s =
+      (SplitSquare.Input.InputSeed.conjugateComparison (splitInput f)
+        (unitHomotopy B) (unitHomotopy A) (laurentUnitPasting f)).level n (r, (s, x)) :=
+  (splitInput f).transitionInputHomotopy_apply (unitHomotopy B) (unitHomotopy A)
+    (laurentUnitPasting f) n r s x
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

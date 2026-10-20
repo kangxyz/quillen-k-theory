@@ -1,0 +1,78 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportNodes
+/-! Exact native recovery of the unrestricted polynomial chart track and Laurent postmap. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport
+open CommonReferenceNerve
+variable {X Y : Scheme.{u}} (a : X ⟶ Y) (k : laurent ⟶ polynomial)
+  {V : Model.{u + 1}} (P : V ⟶ modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Y)))
+  (G : V ⟶ modelOf (boundedFlatPerfectWaldhausen (laurent.obj Y)))
+local notation "JY" => InputCompositionTerminalAttach.arrow (k.app Y)
+variable (eps : G.functor ≅
+  (P ≫ InputCompositionTerminalAttach.arrow (k.app Y)).functor)
+
+theorem chartParameter_native (n : ℕ) (s : I)
+    (y : |CutOpenCarrier.parameterSSet P|) (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (targetLaurent a k P) n (chartParameter a k P (s, y)) x =
+      (boundedFlatPerfectPrespectrumSquareHomotopy (laurent.map a) (k.app Y)
+        (k.app X) (polynomial.map a) (k.naturality a)).level n
+          (s, pointwisePrespectrumFamily P n y x) := by
+  obtain ⟨m, N, z, rfl⟩ := exists_parameter P y
+  change pointwisePrespectrumFamily (targetLaurent a k P) n
+    (FiniteParameter.parameter P _ (chartNode a k P)
+      (parameter P N z, NativeSquareFiveSimplex.parameter s)) x = _
+  rw [FiniteParameter.parameter_characteristic, pointwisePrespectrumFamily_parameter,
+    pointwisePrespectrumFamily_parameter]
+  let Q : Fin (Quillen.SimplexGrid.dimension m 4 + 1) →
+      Node (P ≫ InputCompositionTerminalProducts.chartSource a k) :=
+    fun i ↦ ⟨CommonReferenceProduct.vertices (fun j ↦ (N j).1)
+      (fun j ↦ (InputCompositionTerminalProducts.chartNodes a k j).1) i,
+      CommonReferenceProduct.references P (fun j ↦ (N j).1) (fun j ↦ (N j).2)
+        (InputCompositionTerminalProducts.chartSource a k)
+        (fun j ↦ (InputCompositionTerminalProducts.chartNodes a k j).1)
+        (fun j ↦ (InputCompositionTerminalProducts.chartNodes a k j).2) i⟩
+  change prespectrumFamily (targetLaurent a k P)
+    (ModelSimplex.reanchorNodes (Iso.refl _) Q) n _ = _
+  rw [prespectrumFamily_reanchor, prespectrumFamily_eq]
+  refine (CommonReferenceProduct.prespectrum_comp P
+    (fun j ↦ (N j).1) (fun j ↦ (N j).2)
+    (InputCompositionTerminalProducts.chartSource a k)
+    (fun j ↦ (InputCompositionTerminalProducts.chartNodes a k j).1)
+    (fun j ↦ (InputCompositionTerminalProducts.chartNodes a k j).2)
+    n x z (NativeSquareFiveSimplex.parameter s)).trans ?_
+  rw [prespectrumFamily_eq]
+  exact NativeSquareFiveSimplex.native (laurent.map a) (k.app Y)
+    (k.app X) (polynomial.map a) (k.naturality a) n s _
+
+theorem polynomialParameter_native (n : ℕ) (y : |CutOpenCarrier.parameterSSet P|)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (targetPolynomial a P) n (polynomialParameter a P y) x =
+      (boundedFlatPerfectPrespectrumMap (polynomial.map a)).map n
+        (pointwisePrespectrumFamily P n y x) :=
+  pointwisePrespectrumFamily_attachPostcomp P
+    (InputCompositionTerminalAttach.arrow (polynomial.map a)) (targetPolynomial a P)
+    (Iso.refl _) n y x
+
+theorem laurentParameter_native (n : ℕ) (y : |CutOpenCarrier.parameterSSet G|)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (targetLaurent a k P) n (laurentParameter a k P G eps y) x =
+      (boundedFlatPerfectPrespectrumMap (laurent.map a)).map n
+        (pointwisePrespectrumFamily G n y x) :=
+  pointwisePrespectrumFamily_attachPostcomp G
+    (InputCompositionTerminalAttach.arrow (laurent.map a)) (targetLaurent a k P)
+    (sourceAnchor a k P G eps) n y x
+end Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport

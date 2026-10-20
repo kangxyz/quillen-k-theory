@@ -1,0 +1,97 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitProductRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitMiddleRows
+/-! Full endpoint references of the two original unit product rails. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open CommonReferenceNerve
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductEnds
+open InputCompositionUnitProducts InputCompositionUnitProductRows InputCompositionUnitMiddleRows
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The lower source reference at composition time zero is the exact direct unit node. -/
+theorem source_zero_lower :
+    sourceNodes f g (Quillen.SimplexGrid.index 1 2 (0, 0)) = InputIdentitySeedUnitNodes.nodes (f ≫
+      g) 2 := by
+  rw [source_lower]
+  change InputNullCompositionLaurentCarrier.nodes f g
+    (CoefficientMovingSquareRows.outerRow 2) = _
+  rw [InputNullCompositionLaurentCarrier.outer_nodes]
+  exact lower_nodes (f ≫ g) 2
+
+/-- The lower source reference at composition time one is the exact transported unit node. -/
+theorem source_one_lower :
+    sourceNodes f g (Quillen.SimplexGrid.index 1 2 (0, 2)) = InputCompositionTerminalAttach.postNode
+      f g (InputIdentitySeedUnitNodes.nodes g 2) := by
+  rw [source_lower]
+  change InputNullCompositionLaurentCarrier.nodes f g
+    (CoefficientMovingSquareRows.firstRow 2) = _
+  rw [InputNullCompositionLaurentCarrier.first_nodes]
+  apply congrArg _
+  exact lower_nodes g 2
+
+/-- The lower target reference at composition time zero is the exact direct unit node. -/
+theorem target_zero_lower :
+    targetNodes f g (Quillen.SimplexGrid.index 2 1 (0, 0)) = InputIdentitySeedUnitNodes.nodes (f ≫
+      g) 4 := by
+  rw [target_lower]
+  change InputNullCompositionLaurentCarrier.nodes f g
+    (CoefficientMovingSquareRows.outerRow 4) = _
+  rw [InputNullCompositionLaurentCarrier.outer_nodes]
+  exact lower_nodes (f ≫ g) 4
+
+/-- The lower target reference at composition time one is the exact transported unit node. -/
+theorem target_one_lower :
+    targetNodes f g (Quillen.SimplexGrid.index 2 1 (2, 0)) = InputCompositionTerminalAttach.preNode
+      f g (InputIdentitySeedUnitNodes.nodes f 4) := by
+  rw [target_lower]
+  change InputNullCompositionLaurentCarrier.nodes f g
+    (CoefficientMovingSquareRows.secondRow 4) = _
+  rw [InputNullCompositionLaurentCarrier.second_nodes]
+  apply congrArg _
+  exact lower_nodes f 4
+
+/-- The upper source reference at composition time zero is the exact direct unit node. -/
+theorem source_zero_upper :
+    sourceNodes f g (Quillen.SimplexGrid.index 1 2 (1, 0)) = InputIdentitySeedUnitNodes.nodes (f ≫
+      g) 7 := by
+  rw [source_upper, ← source_lower f g 0, source_zero_lower]
+  exact InputIdentitySeedUnitSeams.five_shift (f ≫ g) 2
+
+/-- The upper source reference at composition time one is the exact transported unit node. -/
+theorem source_one_upper :
+    sourceNodes f g (Quillen.SimplexGrid.index 1 2 (1, 2)) = InputCompositionTerminalAttach.postNode
+      f g (InputIdentitySeedUnitNodes.nodes g 7) := by
+  rw [source_upper, ← source_lower f g 2, source_one_lower]
+  rw [InputCompositionUnitShift.post_shift]
+  apply congrArg _
+  exact InputIdentitySeedUnitSeams.five_shift g 2
+
+/-- The upper target reference at composition time zero is the exact direct unit node. -/
+theorem target_zero_upper :
+    targetNodes f g (Quillen.SimplexGrid.index 2 1 (0, 1)) = InputIdentitySeedUnitNodes.nodes (f ≫
+      g) 9 := by
+  rw [target_upper, ← target_lower f g 0, target_zero_lower]
+  exact InputIdentitySeedUnitSeams.five_shift (f ≫ g) 4
+
+/-- The upper target reference at composition time one is the exact transported unit node. -/
+theorem target_one_upper :
+    targetNodes f g (Quillen.SimplexGrid.index 2 1 (2, 1)) = InputCompositionTerminalAttach.preNode
+      f g (InputIdentitySeedUnitNodes.nodes f 9) := by
+  rw [target_upper, ← target_lower f g 2, target_one_lower]
+  rw [InputCompositionUnitShift.pre_shift]
+  apply congrArg _
+  exact InputIdentitySeedUnitSeams.five_shift f 4
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitProductEnds

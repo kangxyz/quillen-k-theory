@@ -1,0 +1,56 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceProductNodes
+/-! A full shared cell determines the original outer product grid, with all references retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceProduct
+open CommonReferenceNerve
+
+private theorem node_reference_eq {V W T : Model.{u}}
+    (F : V ⟶ T) (H : V ⟶ W) (G : W ⟶ T)
+    (η η' : F.functor ≅ (H ≫ G).functor) (N : Node H) (M : Node G)
+    (h : node F H G η N M = node F H G η' N M) : η = η' := by
+  have hs := eq_of_heq (Sigma.mk.inj h).2
+  change η ≪≫ _ = η' ≪≫ _ at hs
+  have hc := congrArg (fun e ↦ e ≪≫
+    ((Functor.uncurry.obj (whiskeringLeft V W T)).mapIso (N.2.prod M.2)).symm) hs
+  simpa only [Iso.trans_assoc, Iso.self_symm_id, Iso.trans_refl] using hc
+
+variable {V U W T : Model.{u}}
+    (F : V ⟶ T) (S : V ⟶ U) (K : U ⟶ W) (B : W ⟶ T)
+    (Q : V ⟶ W) (G : U ⟶ T)
+    (ρ : Q.functor ≅ (S ≫ K).functor) (σ : G.functor ≅ (K ≫ B).functor)
+    (α : F.functor ≅ (Q ≫ B).functor) (μ : F.functor ≅ (S ≫ G).functor)
+
+private theorem outer_normal (N : Node S) (M : Node B) :
+    node F Q B α (postNode Q K ρ N) M =
+      node F S (K ≫ B) (α ≪≫ isoWhiskerRight ρ B.functor) N
+        (preNode (K ≫ B) K (Iso.refl _) M) := by
+  rw [post_node_reanchor Q S K ρ N, node_first_reanchor]
+  exact node_associativity F S K B _ N M
+
+/-- One equal full scalar cell forces every cell of the same two original product families. -/
+theorem outer_grid_of_one (N₀ N : Node S) (M₀ M : Node B)
+    (h : node F Q B α (postNode Q K ρ N₀) M₀ =
+      node F S G μ N₀ (preNode G K σ M₀)) :
+    node F Q B α (postNode Q K ρ N) M =
+      node F S G μ N (preNode G K σ M) := by
+  rw [outer_normal F S K B Q ρ α] at h ⊢
+  rw [pre_node_reanchor G K B σ M₀, node_second_reanchor] at h
+  rw [pre_node_reanchor G K B σ M, node_second_reanchor]
+  have he := node_reference_eq F S (K ≫ B) _ _ N₀
+    (preNode (K ≫ B) K (Iso.refl _) M₀) h
+  exact congrArg (fun e ↦ node F S (K ≫ B) e N
+    (preNode (K ≫ B) K (Iso.refl _) M)) he
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceProduct

@@ -1,0 +1,91 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIdentityModels
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliarySupportMaps
+
+/-!
+# The actual integer-base projection on supported localization rows
+
+The original fixed-factor projection is natural on complete open-pair arrows. Its
+contravariant supported Model isomorphisms therefore give strict squares for the
+actual support-enlargement and restriction maps. These identify the original
+section Models; they do not identify normalized geometric pullback Models by
+reflexivity or construct a raw localization cone-null square.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products
+open Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.GlobalSectionChangeIndex.ParameterIdentity
+open ParameterAuxiliarySupport
+
+/-- The complete pair projection commutes with every original fixed-factor pair square. -/
+theorem pairProjection_naturality {A B : Scheme.OpenPairs.{u}} (g : A ⟶ B) :
+    (pairTransformation g).app integerBase ≫ (projectionPairIso B.obj.hom).hom =
+      (projectionPairIso A.obj.hom).hom ≫ g := by
+  apply ObjectProperty.hom_ext
+  apply Arrow.hom_ext
+  · change (productMap g.hom.left).app integerBase ≫ (projectionIso B.obj.left).hom =
+      (projectionIso A.obj.left).hom ≫ g.hom.left
+    rw [projectionIso_hom, projectionIso_hom]
+    dsimp only [productMap, baseProductTransformation]
+    exact pullback.lift_snd _ _ _
+  · change (productMap g.hom.right).app integerBase ≫ (projectionIso B.obj.right).hom =
+      (projectionIso A.obj.right).hom ≫ g.hom.right
+    rw [projectionIso_hom, projectionIso_hom]
+    dsimp only [productMap, baseProductTransformation]
+    exact pullback.lift_snd _ _ _
+
+private theorem map_op_square {C D : Type*} [Category C] [Category D]
+    (F : Cᵒᵖ ⥤ D) {A B X Y : C} (f : A ⟶ B) (q : B ⟶ Y)
+    (p : A ⟶ X) (g : X ⟶ Y) (h : f ≫ q = p ≫ g) :
+    F.map q.op ≫ F.map f.op = F.map g.op ≫ F.map p.op := by
+  rw [← F.map_comp, ← F.map_comp]
+  exact congrArg (fun k => F.map k.op) h
+
+/-- The original selected-zero Model projections form the whole strict row square. -/
+theorem supportedIso_naturality {A B : Scheme.OpenPairs.{u}} (g : A ⟶ B) :
+    (supportedIso B.obj.hom).hom ≫ (supportedMap g).app (op integerBase) =
+      pairSupported.map g.op ≫ (supportedIso A.obj.hom).hom := by
+  change pairSupported.map (projectionPairIso B.obj.hom).hom.op ≫
+      pairSupported.map ((pairTransformation g).app integerBase).op =
+    pairSupported.map g.op ≫ pairSupported.map (projectionPairIso A.obj.hom).hom.op
+  exact map_op_square pairSupported _ _ _ _ (pairProjection_naturality g)
+
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- Actual support enlargement commutes with the original projection, with no map replacement. -/
+theorem supportedIso_enlargement :
+    (supportedIso (unionOpen f T).ι).hom ≫ (enlargement f T).app (op integerBase) =
+      pairSupported.map (enlargementPair f T).op ≫ (supportedIso T.ι).hom :=
+  supportedIso_naturality (enlargementPair f T)
+
+omit [IsOpenImmersion f] in
+/-- Actual open restriction commutes with the same projection on the inverse-image support. -/
+theorem supportedIso_restriction :
+    (supportedIso T.ι).hom ≫ (restriction f T).app (op integerBase) =
+      pairSupported.map (supportRestrictionPair f T).op ≫
+        (supportedIso (inverseOpen f T).ι).hom :=
+  supportedIso_naturality (supportRestrictionPair f T)
+
+/-- The full two-arrow composite retains both original row squares and the actual projections. -/
+theorem supportedIso_localization_composite :
+    (pairSupported.map (enlargementPair f T).op ≫
+      pairSupported.map (supportRestrictionPair f T).op) ≫
+        (supportedIso (inverseOpen f T).ι).hom =
+    (supportedIso (unionOpen f T).ι).hom ≫
+      ((enlargement f T).app (op integerBase) ≫
+        (restriction f T).app (op integerBase)) := by
+  rw [Category.assoc, ← supportedIso_restriction, ← Category.assoc,
+    ← supportedIso_enlargement, Category.assoc]
+
+end Quillen.PerfectComplexes.GlobalSectionChangeIndex.ParameterIdentity

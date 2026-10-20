@@ -1,0 +1,101 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalFirst
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalMiddle
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalSecond
+
+/-!
+# The whole original terminal input-composition carrier face
+
+The actual first and second comparison halves agree along their complete carrier edge.
+Pasting them retains both original comparison half-clocks and the original overlap
+half/quarter/quarter allocation. Every native value is the prescribed composite comparison;
+the external cube edges and a whole cone-composition square remain separate obligations.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells Quillen.ScalarRectangle
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionCarrierTerminal
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The entire first/second edge agrees before evaluation, with all original overlap clocks. -/
+theorem seam (t : unitInterval) :
+    InputCompositionTerminalAttach.postFace f g (1, t) =
+      InputCompositionTerminalSecond.face f g (0, t) := by
+  rcases three_cover t with ⟨q, rfl⟩ | ⟨q, rfl⟩ | ⟨q, rfl⟩
+  · rw [InputCompositionTerminalSecond.face_plus]
+    exact InputCompositionTerminalFirst.plus_seam f g q
+  · rw [InputCompositionTerminalSecond.face_middle]
+    exact InputCompositionTerminalMiddle.seam f g q
+  · rw [InputCompositionTerminalSecond.face_minus]
+    exact InputCompositionTerminalFirst.minus_seam f g q
+
+/-- The complete original terminal surface keeps its unchanged first and second halves. -/
+def face : C(unitInterval × unitInterval, InputCompositionCarrierCharts.Carrier f g) :=
+  concatFirst (InputCompositionTerminalAttach.postFace f g)
+    (InputCompositionTerminalSecond.face f g) (seam f g)
+
+/-- The original first comparison half is the whole actual Laurent-postattached input face. -/
+theorem face_lower (s t : unitInterval) :
+    face f g (lower s, t) = InputCompositionTerminalAttach.postFace f g (s, t) :=
+  concatFirst_lower _ _ _ s t
+
+/-- The original second comparison half retains its entire three-piece overlap face. -/
+theorem face_upper (s t : unitInterval) :
+    face f g (upper s, t) = InputCompositionTerminalSecond.face f g (s, t) :=
+  concatFirst_upper _ _ _ s t
+
+/-- Every terminal carrier value is the original composite comparison at all native levels. -/
+theorem face_native (n : ℕ) (s t : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CommonReferenceNerve.compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+      (face f g) n ((s, t), x) =
+      (InputCompositionCharts.compositeComparison f g).level n
+        (s, HomotopyPushout.cylinder (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z)) n (t, x)) := by
+  refine (CommonReferenceNerve.pointwisePrespectrumFamily_eq_compact
+    (InputCompositionCarrierCharts.source f g) (face f g) n (s, t) x).symm.trans ?_
+  rcases cover s with ⟨r, rfl⟩ | ⟨r, rfl⟩
+  · rw [face_lower]
+    exact (CommonReferenceNerve.pointwisePrespectrumFamily_eq_compact
+      (InputCompositionCarrierCharts.source f g)
+      (InputCompositionTerminalAttach.postFace f g) n (r, t) x).trans
+        (InputCompositionTerminalAttach.post_cell f g n r t x)
+  · rw [face_upper]
+    exact (CommonReferenceNerve.pointwisePrespectrumFamily_eq_compact
+      (InputCompositionCarrierCharts.source f g)
+      (InputCompositionTerminalSecond.face f g) n (r, t) x).trans
+        (InputCompositionTerminalSecond.face_native f g n r t x)
+
+/-- Both terminal parameters retain the original based point. -/
+theorem face_point (n : ℕ) (s t : unitInterval) :
+    CommonReferenceNerve.compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+      (face f g) n ((s, t), (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).point n) =
+      (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj X))).point n :=
+  CommonReferenceNerve.compactPrespectrumFamily_point _ _ n (s, t)
+
+/-- The two terminal coordinates remain independent of the prespectrum structure time. -/
+theorem face_structure (n : ℕ) (s t z : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CommonReferenceNerve.compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+      (face f g) (n + 1)
+        ((s, t), (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).structureMap n x z) =
+      (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj X))).structureMap n
+        (CommonReferenceNerve.compactPrespectrumFamily (InputCompositionCarrierCharts.source f g)
+          (face f g) n ((s, t), x)) z :=
+  CommonReferenceNerve.compactPrespectrumFamily_structure _ _ n (s, t) x z
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionCarrierTerminal

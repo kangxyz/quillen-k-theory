@@ -1,0 +1,221 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputSquareNative
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveWhiskering
+
+/-!
+# Both original row-square paths in one finite reference family
+
+The first square is postcomposed with the second translated row. The second square is
+precomposed with the first original row. Their common vertex is the entire original Model
+composite, including its anchor. The literal two-square word keeps all eight normalization
+pieces and its original half clocks.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.InputRectangle
+open SupportedTensorEvaluation
+variable {A B C A' B' C' : Scheme.OpenPairs.{u}}
+  (f : B ⟶ A) (g : C ⟶ B) (f' : B' ⟶ A') (g' : C' ⟶ B')
+  (a : A' ⟶ A) (b : B' ⟶ B) (c : C' ⟶ C)
+  (hf : f' ≫ a = b ≫ f) (hg : g' ≫ b = c ≫ g)
+
+/-- The actual first endpoint, with its original chosen-zero Model composite. -/
+def source : rawModel A ⟶ rawModel C' :=
+  InputBinary.targetMap f' a ≫ evaluationRawMap g'
+
+/-- The actual binary target is precisely the composite of the two raw Model arrows. -/
+theorem binary_target {X Y Z : Scheme.OpenPairs.{u}} (p : X ⟶ Y) (q : Y ⟶ Z) :
+    InputBinary.targetMap p q = evaluationRawMap q ≫ evaluationRawMap p :=
+  modelMap_comp _ _ _ (boundedFlatPerfectSupportedPullback_exact q).rebase
+    (boundedFlatPerfectSupportedPullback_exact p).rebase
+    (Quillen.rebaseFunctor_obj_base _ _ _ _) (Quillen.rebaseFunctor_obj_base _ _ _ _)
+
+/-- The first full family is reanchored at its original initial vertex. -/
+def firstReference : (source f' g' a).functor ≅
+    (InputSquare.source f' a ≫ evaluationRawMap g').functor :=
+  (isoWhiskerRight (InputBinary.total f' a) (evaluationRawMap g').functor).symm
+
+/-- The shared middle Model maps agree, before any realization or path evaluation. -/
+theorem middle_eq :
+    InputBinary.targetMap b f ≫ evaluationRawMap g' =
+      evaluationRawMap f ≫ InputBinary.targetMap g' b := by
+  rw [binary_target, binary_target, Category.assoc]
+
+/-- The second reference uses the actual first terminal anchor and the shared middle map. -/
+def secondReference : (source f' g' a).functor ≅
+    (evaluationRawMap f ≫ InputSquare.source g' b).functor :=
+  firstReference f' g' a ≪≫
+    isoWhiskerRight (InputSquare.nodes f' a b f hf 4).2 (evaluationRawMap g').functor ≪≫
+    eqToIso (congrArg Model.Hom.functor (middle_eq f g' b)) ≪≫
+    (isoWhiskerLeft (evaluationRawMap f).functor (InputBinary.total g' b)).symm
+
+/-- The five first-square nodes retain the exact postcomposition and every original anchor. -/
+def firstNodes (i : Fin 5) : CommonReferenceNerve.Node (source f' g' a) :=
+  ⟨(InputSquare.nodes f' a b f hf i).1 ≫ evaluationRawMap g',
+    firstReference f' g' a ≪≫
+      isoWhiskerRight (InputSquare.nodes f' a b f hf i).2 (evaluationRawMap g').functor⟩
+
+/-- The five second-square nodes retain the exact precomposition and every original anchor. -/
+def secondNodes (i : Fin 5) : CommonReferenceNerve.Node (source f' g' a) :=
+  ⟨evaluationRawMap f ≫ (InputSquare.nodes g' b c g hg i).1,
+    secondReference f f' g' a b hf ≪≫
+      isoWhiskerLeft (evaluationRawMap f).functor (InputSquare.nodes g' b c g hg i).2⟩
+
+
+private theorem join_node {V W : Model.{u}} {F R K L M : V ⟶ W}
+    (ε : F.functor ≅ R.functor) (ρ : R.functor ≅ K.functor)
+    (h : K.functor = L.functor) (e : M.functor ≅ L.functor) :
+    (⟨K, ε ≪≫ ρ⟩ : CommonReferenceNerve.Node F) =
+      ⟨L, (ε ≪≫ ρ ≪≫ eqToIso h ≪≫ e.symm) ≪≫ e⟩ := by
+  apply ModelSimplex.reference_node_eq h
+  simp [Category.assoc]
+
+/-- Both references retain the complete shared middle node, rather than only its native map. -/
+theorem middle_node : firstNodes f f' g' a b hf 4 =
+    secondNodes f g f' g' a b c hf hg 2 := by
+  dsimp only [firstNodes, secondNodes, secondReference, InputSquare.nodes,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.head_cons]
+  exact @join_node _ _ (source f' g' a)
+    (InputSquare.source f' a ≫ evaluationRawMap g')
+    (InputBinary.targetMap b f ≫ evaluationRawMap g')
+    (evaluationRawMap f ≫ InputBinary.targetMap g' b)
+    (evaluationRawMap f ≫ InputSquare.source g' b)
+    (firstReference f' g' a)
+    (isoWhiskerRight (InputSquare.nodes f' a b f hf 4).2 (evaluationRawMap g').functor)
+    (congrArg Model.Hom.functor (middle_eq f g' b))
+    (isoWhiskerLeft (evaluationRawMap f).functor (InputBinary.total g' b))
+
+
+/-- The two original five-node chains share precisely their middle endpoint. -/
+def nodes : Fin 9 → CommonReferenceNerve.Node (source f' g' a) :=
+  ![firstNodes f f' g' a b hf 0, firstNodes f f' g' a b hf 1,
+    firstNodes f f' g' a b hf 2, firstNodes f f' g' a b hf 3,
+    secondNodes f g f' g' a b c hf hg 0, secondNodes f g f' g' a b c hf hg 1,
+    firstNodes f f' g' a b hf 4,
+    secondNodes f g f' g' a b c hf hg 3, secondNodes f g f' g' a b c hf hg 4]
+
+/-- Both original row squares are ordered faces of one finite Model diagram. -/
+def simplex : ModelSimplex (rawModel A) (rawModel C') 8 :=
+  ModelSimplex.ofIsos (source f' g' a) (fun i ↦ (nodes f g f' g' a b c hf hg i).1)
+    (fun i ↦ (nodes f g f' g' a b c hf hg i).2)
+
+/-- The entire postcomposed first square is the first five-node face. -/
+def firstFace : ⦋4⦌ ⟶ ⦋8⦌ := SimplexCategory.Hom.mk ⟨![0, 1, 2, 3, 6], by
+  intro i j hij; fin_cases i <;> fin_cases j <;> simp_all⟩
+
+/-- The entire precomposed second square is the second five-node face. -/
+def secondFace : ⦋4⦌ ⟶ ⦋8⦌ := SimplexCategory.Hom.mk ⟨![4, 5, 6, 7, 8], by
+  intro i j hij; fin_cases i <;> fin_cases j <;> simp_all⟩
+
+/-- Full diagrams, with their specified original transformations, identify the first face. -/
+theorem first_face : (simplex f g f' g' a b c hf hg).face firstFace =
+    (InputSquare.simplex f' a b f hf).postcomp (evaluationRawMap g') := by
+  unfold simplex
+  rw [ModelSimplex.ofIsos_face]
+  have hn : (fun i ↦ nodes f g f' g' a b c hf hg (firstFace.toOrderHom i)) =
+      firstNodes f f' g' a b hf := by
+    funext i
+    fin_cases i <;> rfl
+  refine (ModelSimplex.ofIsos_nodes_congr
+    (fun i ↦ nodes f g f' g' a b c hf hg (firstFace.toOrderHom i))
+    (firstNodes f f' g' a b hf) (congrFun hn)).trans ?_
+  unfold firstNodes
+  rw [ModelSimplex.ofIsos_change_reference]
+  exact (ModelSimplex.ofIsos_postcomp _ _ _ _).symm
+
+/-- Full diagrams, including the common middle anchor, identify the second face. -/
+theorem second_face : (simplex f g f' g' a b c hf hg).face secondFace =
+    (InputSquare.simplex g' b c g hg).precomp (evaluationRawMap f) := by
+  unfold simplex
+  rw [ModelSimplex.ofIsos_face]
+  have hn : (fun i ↦ nodes f g f' g' a b c hf hg (secondFace.toOrderHom i)) =
+      secondNodes f g f' g' a b c hf hg := by
+    funext i
+    fin_cases i
+    · rfl
+    · rfl
+    · exact middle_node f g f' g' a b c hf hg
+    · rfl
+    · rfl
+  refine (ModelSimplex.ofIsos_nodes_congr
+    (fun i ↦ nodes f g f' g' a b c hf hg (secondFace.toOrderHom i))
+    (secondNodes f g f' g' a b c hf hg) (congrFun hn)).trans ?_
+  unfold secondNodes
+  rw [ModelSimplex.ofIsos_change_reference]
+  exact (ModelSimplex.ofIsos_precomp _ _ _ _).symm
+
+
+/-- The original first square word keeps its four native normalization pieces. -/
+def firstPath : Path (StdSimplex.single 2 : StdSimplex ℝ (Fin 9)) (StdSimplex.single 6) :=
+  (binaryPath 0 1 2).symm.trans (binaryPath 0 3 6)
+
+/-- The original second square word keeps its four native normalization pieces. -/
+def secondPath : Path (StdSimplex.single 6 : StdSimplex ℝ (Fin 9)) (StdSimplex.single 8) :=
+  (binaryPath 4 5 6).symm.trans (binaryPath 4 7 8)
+
+/-- The complete row word, with the original outer half-clock and all eight inner pieces. -/
+def parameter : Path (StdSimplex.single 2 : StdSimplex ℝ (Fin 9)) (StdSimplex.single 8) :=
+  firstPath.trans secondPath
+
+/-- The whole first scalar word follows its ordered face without reparametrization. -/
+theorem first_parameter (t : unitInterval) :
+    embed firstFace (InputSquare.parameter t) = firstPath t :=
+  map_trans_values _ _ _ _ _
+    (fun s ↦ map_binaryPath firstFace 0 1 2 (unitInterval.symm s))
+    (map_binaryPath firstFace 0 3 4) t
+
+/-- The whole second scalar word follows its ordered face without reparametrization. -/
+theorem second_parameter (t : unitInterval) :
+    embed secondFace (InputSquare.parameter t) = secondPath t :=
+  map_trans_values _ _ _ _ _
+    (fun s ↦ map_binaryPath secondFace 0 1 2 (unitInterval.symm s))
+    (map_binaryPath secondFace 0 3 4) t
+
+/-- The complete first square remains the original postcomposed row track. -/
+theorem first_native : PathLift (simplex f g f' g' a b c hf hg) firstPath
+    ((compositionTracks.square f' a b f hf).postcomp (rawMap g')) := by
+  intro n t x
+  rw [← first_parameter]
+  change prespectrumSimplexFamily _ n
+    (StdSimplex.map firstFace.toOrderHom (InputSquare.parameter t), x) = _
+  rw [prespectrumSimplexFamily_face, first_face, prespectrumSimplexFamily_postcomp]
+  exact congrArg ((rawMap g').map n) (InputSquare.native f' a b f hf n t x)
+
+/-- The complete second square remains the original precomposed row track. -/
+theorem second_native : PathLift (simplex f g f' g' a b c hf hg) secondPath
+    (Quillen.LoopPrespectrum.Homotopy.precomp (rawMap f)
+      (compositionTracks.square g' b c g hg)) := by
+  intro n t x
+  rw [← second_parameter]
+  change prespectrumSimplexFamily _ n
+    (StdSimplex.map secondFace.toOrderHom (InputSquare.parameter t), x) = _
+  rw [prespectrumSimplexFamily_face, second_face, prespectrumSimplexFamily_precomp]
+  exact InputSquare.native g' b c g hg n t ((rawMap f).map n x)
+
+/-- The selected two-row track is defined from the two original square tracks. -/
+def word :=
+  (((compositionTracks.square f' a b f hf).postcomp (rawMap g')).cast rfl
+    (Category.assoc (rawMap f) (rawMap b) (rawMap g'))).trans
+      (Quillen.LoopPrespectrum.Homotopy.precomp (rawMap f)
+        (compositionTracks.square g' b c g hg))
+
+/-- Every point of the complete original two-row word has this finite native parameter. -/
+theorem native : PathLift (simplex f g f' g' a b c hf hg) parameter
+    (word f g f' g' a b c hf hg) :=
+  PathLift.trans _ (first_native f g f' g' a b c hf hg)
+    (second_native f g f' g' a b c hf hg)
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.InputRectangle

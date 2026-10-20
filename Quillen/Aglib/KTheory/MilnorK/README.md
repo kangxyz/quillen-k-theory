@@ -45,7 +45,7 @@ directly from Aglib. No old Quillen Milnor implementation is retained.
 ## Native Milnor symbols
 
 Milnor objects, symbols, field maps and residue maps are imported directly from
-Aglib `16aa08a9` through their precise native leaves. Its public group is
+Aglib `52e09db47998f139064acf48a2d3a64494d0dd9a` through their precise native leaves. Its public group is
 `MilnorK.K F 2`; `MilnorK.twoEquiv` is the canonical ordered-symbol and field-map
 comparison to the retained tensor quotient `MilnorK.K2.Group F`.
 The additional candidate

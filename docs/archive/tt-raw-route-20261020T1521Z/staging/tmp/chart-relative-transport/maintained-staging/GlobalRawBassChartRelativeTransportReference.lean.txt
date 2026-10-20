@@ -1,0 +1,66 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedSurfaceTransport
+/-! Actual chart-relative transport references for unrestricted polynomial source models. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport
+open CommonReferenceNerve BassH1Join
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y : Scheme.{u}} (a : X ⟶ Y) (k : laurent ⟶ polynomial)
+  {V : Model.{u + 1}} (P : V ⟶ modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Y)))
+  (G : V ⟶ modelOf (boundedFlatPerfectWaldhausen (laurent.obj Y)))
+local notation "JY" => InputCompositionTerminalAttach.arrow (k.app Y)
+local notation "JX" => InputCompositionTerminalAttach.arrow (k.app X)
+local notation "A" => InputCompositionTerminalAttach.arrow (polynomial.map a)
+local notation "L" => InputCompositionTerminalAttach.arrow (laurent.map a)
+variable (eps : G.functor ≅
+  (P ≫ InputCompositionTerminalAttach.arrow (k.app Y)).functor)
+
+/-- The source model is not projected to the base scheme. -/
+abbrev sourceCarrier (attachment : G.functor ≅ (P ≫ JY).functor) : TopCat.{u + 1} :=
+  CutOpenCarrier.space P JY G attachment attachment
+/-- Literal polynomial postcomposition of the genuine input reference. -/
+abbrev targetPolynomial := P ≫ A
+/-- The Laurent reference is the genuine input followed by the original chart-square source. -/
+abbrev targetLaurent := P ≫ InputCompositionTerminalProducts.chartSource a k
+/-- The final chart reference uses the actual original naturality isomorphism. -/
+def targetAnchor : (targetLaurent a k P).functor ≅
+    (targetPolynomial a P ≫ JX).functor :=
+  isoWhiskerLeft P.functor (InputCompositionTerminalProducts.chartNodes a k 4).2
+/-- The source attachment is transported through its actual isomorphism, not a projection. -/
+def sourceAnchor (attachment : G.functor ≅ (P ≫ JY).functor) :
+    (targetLaurent a k P).functor ≅ (G ≫ L).functor :=
+  isoWhiskerLeft P.functor (InputCompositionTerminalProducts.chartNodes a k 2).2 ≪≫
+    isoWhiskerRight attachment.symm (L).functor
+/-- Both target tips remain distinct. -/
+abbrev targetCarrier := CutOpenCarrier.space (targetPolynomial a P) JX
+  (targetLaurent a k P) (targetAnchor a k P) (targetAnchor a k P)
+
+/-- Postcompose an arbitrary full polynomial node with its literal target reference. -/
+def polynomialNode (N : Node P) : Node (targetPolynomial a P) :=
+  postReferenceNode (targetPolynomial a P) A (Iso.refl _) N
+
+/-- Postcompose an arbitrary full Laurent node using the actual source attachment anchor. -/
+def laurentNode (N : Node G) : Node (targetLaurent a k P) :=
+  postReferenceNode (targetLaurent a k P) L (sourceAnchor a k P G eps) N
+
+/-- All five original comparison nodes are whiskered by each genuine polynomial node. -/
+def chartNode (N : Node P) (i : Fin 5) : Node (targetLaurent a k P) :=
+  CommonReferenceProduct.node (targetLaurent a k P) P
+    (InputCompositionTerminalProducts.chartSource a k) (Iso.refl _) N
+    (InputCompositionTerminalProducts.chartNodes a k i)
+
+end Quillen.PerfectComplexes.GlobalRawBass.ChartRelativeTransport

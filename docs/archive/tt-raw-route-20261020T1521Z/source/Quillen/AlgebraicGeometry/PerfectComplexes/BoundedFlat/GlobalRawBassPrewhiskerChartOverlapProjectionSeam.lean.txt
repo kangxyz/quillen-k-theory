@@ -1,0 +1,68 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOverlapAssociatedNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionProjectionChartReference
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerProjectionReference
+/-!
+The original Laurent overlap anchor, before source-square transport.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u v
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionTopPieces.chartMap (X := X) k
+local notation "L" => ProjectionReference.reference X E
+local notation "J" => ProjectionReference.projectionMap X
+local notation "D" => InputCompositionCarrierCharts.projectionMap (Z := Z)
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "θ" => NativeSquareModelNormalization.rightIso
+  (polynomial.map c) (projection.app W) (projection.app Z) c (projection.naturality c)
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+
+/-- The original Laurent overlap anchor, before source-square transport. -/
+def overlapLaurentAnchor : (L).functor ≅ (D ≫ G).functor :=
+  (InputCompositionTopPieces.middleAnchor f g).symm ≪≫
+    InputCompositionCarrierCharts.chartReferenceIso f g k hk
+
+/-- The full genuine Laurent seam uses the actual normalized source-square isomorphism. -/
+def projectionLaurentSeamAnchor :
+    (ProjectionReference.reference X (A ≫ E)).functor ≅ (S ≫ G).functor :=
+  Functor.associator (A).functor (E).functor (ProjectionReference.source X).functor ≪≫
+    sourceSquareAnchor A D S θ L G (overlapLaurentAnchor f g k hk)
+
+/-- Both full attachment paths agree, including the original Laurent normalization anchor. -/
+theorem projectionSeam_attachment :
+    projectionLaurentSeamAnchor f g c k hk ≪≫ CutOpenPrecomp.anchor S P K G ε =
+      ProjectionReference.chartAnchor X k hk (A ≫ E) ≪≫
+        isoWhiskerRight (projectionSeamAnchor f g c) (K).functor := by
+  have hbase : overlapLaurentAnchor f g k hk ≪≫ isoWhiskerLeft (D).functor ε =
+      ProjectionReference.chartAnchor X k hk E ≪≫
+        isoWhiskerRight (InputCompositionProjectionAttachment.polynomialAnchor f g) (K).functor :=
+          by
+    have h := congrArg (fun e ↦ (InputCompositionTopPieces.middleAnchor f g).symm ≪≫ e)
+      (InputCompositionProjectionAttachment.attachment_anchor f g k hk)
+    simpa only [overlapLaurentAnchor, Iso.trans_assoc, Iso.symm_self_id_assoc] using h.symm
+  exact associatedSourceSquare_attachment A D S θ E J (ProjectionReference.source X) K
+    (ProjectionReference.chartEndpoint X k hk) P G
+    (InputCompositionProjectionAttachment.polynomialAnchor f g)
+    (overlapLaurentAnchor f g k hk) ε hbase
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

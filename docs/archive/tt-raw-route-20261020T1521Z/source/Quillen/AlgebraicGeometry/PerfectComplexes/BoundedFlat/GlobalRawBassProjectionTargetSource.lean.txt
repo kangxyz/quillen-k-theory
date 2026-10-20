@@ -1,0 +1,184 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSourceBeta
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassSeedTargetH0Chart
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeExt
+
+/-!
+# The full source value of the original target tree
+
+The original H0 chart-anchor identity identifies the initial chart node on every genuine
+polynomial-reference input. The whole chart-zero identities then combine with the four
+original overlap edges to identify the source of the complete target tree with the actual
+beta map followed by its full anchored Laurent coefficient node map.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge BassH1Join CommonReferenceNerve
+attribute [local irreducible] boundedFlatNormalizedPullback
+
+private theorem product_total_node {V W T : Model.{u}}
+    (F : V ⟶ T) (D : V ⟶ W) (H G : W ⟶ T)
+    (γ : F.functor ≅ (D ≫ H).functor) (δ : H.functor ≅ G.functor)
+    (N : CommonReferenceNerve.Node D) :
+    CommonReferenceProduct.node F D H γ N ⟨G, δ⟩ =
+      postReferenceNode F G (γ ≪≫ isoWhiskerLeft D.functor δ) N := by
+  have hp : (Functor.uncurry.obj (whiskeringLeft _ _ _)).mapIso (N.2.prod δ) =
+      isoWhiskerLeft D.functor δ ≪≫ isoWhiskerRight N.2 G.functor := by
+    apply Iso.ext
+    ext X
+    exact δ.hom.naturality (N.2.hom.app X)
+  change (⟨N.1 ≫ G, γ ≪≫ _⟩ : CommonReferenceNerve.Node F) =
+    ⟨N.1 ≫ G, (γ ≪≫ isoWhiskerLeft D.functor δ) ≪≫ isoWhiskerRight N.2 G.functor⟩
+  rw [hp, Iso.trans_assoc]
+
+private theorem product_chart_total {V A B C D : Model.{u}}
+    (E : V ⟶ A) (J : A ⟶ B) (K : B ⟶ C) (L : C ⟶ D)
+    (F : A ⟶ C) (Q : A ⟶ D) (H : B ⟶ D)
+    (e : F.functor ≅ (J ≫ K).functor) (h : Q.functor ≅ (F ≫ L).functor)
+    (δ : H.functor ≅ (K ≫ L).functor) (γ : Q.functor ≅ (J ≫ H).functor)
+    (hh : h ≪≫ isoWhiskerRight e L.functor = γ ≪≫ isoWhiskerLeft J.functor δ)
+    (N : CommonReferenceNerve.Node (E ≫ J)) :
+    CommonReferenceProduct.node (E ≫ Q) (E ≫ J) H (isoWhiskerLeft E.functor γ) N
+      ⟨K ≫ L, δ⟩ =
+    postReferenceNode (E ≫ Q) L
+      (isoWhiskerLeft E.functor h ≪≫ (Functor.associator E.functor F.functor L.functor).symm)
+      (postReferenceNode (E ≫ F) K (isoWhiskerLeft E.functor e) N) := by
+  have hη :
+      (isoWhiskerLeft E.functor h ≪≫
+          (Functor.associator E.functor F.functor L.functor).symm) ≪≫
+        isoWhiskerRight (isoWhiskerLeft E.functor e) L.functor =
+      isoWhiskerLeft E.functor γ ≪≫ isoWhiskerLeft (E ≫ J).functor δ := by
+    apply Iso.ext
+    ext X
+    have he := congrArg (fun i ↦ i.hom.app (E.functor.obj X)) hh
+    change h.hom.app (E.functor.obj X) ≫ L.functor.map (e.hom.app (E.functor.obj X)) =
+      γ.hom.app (E.functor.obj X) ≫ δ.hom.app (J.functor.obj (E.functor.obj X)) at he
+    change (h.hom.app (E.functor.obj X) ≫ 𝟙 _) ≫
+      L.functor.map (e.hom.app (E.functor.obj X)) =
+        γ.hom.app (E.functor.obj X) ≫ δ.hom.app (J.functor.obj (E.functor.obj X))
+    rw [Category.comp_id]
+    exact he
+  rw [product_total_node]
+  rw [post_post_node, hη]
+
+private theorem mapParameter_comp {V W V' W' V'' W'' : Model.{u}}
+    {F : V ⟶ W} {G : V' ⟶ W'} {H : V'' ⟶ W''}
+    (h : CommonReferenceNerve.Node F → CommonReferenceNerve.Node G)
+    (g : CommonReferenceNerve.Node G → CommonReferenceNerve.Node H)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node F))|) :
+    mapParameter (fun N ↦ g (h N)) y = mapParameter g (mapParameter h y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter F y
+  simp only [mapParameter_parameter]
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+variable (α : laurent ⟶ polynomial)
+  (ha : ∀ Z, α.app Z ≫ projection.app Z = laurentProjection.app Z)
+
+private theorem projection_endpoint_for :
+    projectionReferenceIso Y ≪≫ ProjectionReference.chartEndpoint Y α ha =
+      sourceChartIso α ha ≪≫ BinaryNormalizationSimplex.total (α.app Y) (projection.app Y) := by
+  dsimp only [projectionReferenceIso, sourceChartIso, ProjectionReference.chartEndpoint,
+    ProjectionReference.chartSourceIso]
+  rw [← Iso.trans_assoc]
+  congr 1
+  apply Iso.ext
+  simp only [Iso.trans_hom, eqToIso.hom, eqToHom_trans]
+
+private theorem h0_chart_total_for :
+    h0ProjectionIso f ≪≫
+      isoWhiskerRight (ProjectionReference.chartEndpoint Y α ha) (sourcePost f).functor =
+    canonicalAnchor f α ha ≪≫ isoWhiskerLeft (projectionMap Y).functor
+      (BinaryNormalizationSimplex.total (laurent.map f) (α.app Y)) := by
+  rw [h0ProjectionIso, sourceRowAnchor, Iso.trans_assoc, ← isoWhiskerRight_trans,
+    projection_endpoint_for]
+  exact (CoefficientBassSeedTargetH0Chart.chart_anchor_total (projection.app Y) (α.app Y)
+    (laurent.map f) (laurentProjection.app Y) (ha Y)).symm
+
+/-- Every genuine polynomial node retains the full source-boundary chart factorization. -/
+theorem chart_source_node (N : CommonReferenceNerve.Node (polynomialReference Y E)) :
+    chartNodes f E α ha N 2 =
+      sourceBoundaryNode f E (ProjectionReference.chartNode Y α ha E N) := by
+  have hs : squareNodes f α 2 =
+      (⟨InputCompositionTerminalAttach.arrow (α.app Y) ≫ sourcePost f,
+        BinaryNormalizationSimplex.total
+          (laurent.map f) (α.app Y)⟩ :
+        CommonReferenceNerve.Node (squareSource f α)) := by
+    apply Sigma.ext (Model.Hom.ext rfl)
+    apply heq_of_eq
+    rfl
+  change CommonReferenceProduct.node (E ≫ InputDescSimplex.reference f)
+    (E ≫ projectionMap Y) (squareSource f α)
+    (isoWhiskerLeft E.functor (canonicalAnchor f α ha)) N
+    (squareNodes f α 2) =
+      postReferenceNode (E ≫ InputDescSimplex.reference f) (sourcePost f)
+        (isoWhiskerLeft E.functor (h0ProjectionIso f) ≪≫
+          (Functor.associator E.functor (ProjectionReference.source Y).functor
+            (sourcePost f).functor).symm)
+        (postReferenceNode (E ≫ ProjectionReference.source Y)
+          (InputCompositionTerminalAttach.arrow (α.app Y))
+          (isoWhiskerLeft E.functor (ProjectionReference.chartEndpoint Y α ha)) N)
+  rw [hs]
+  exact product_chart_total E (projectionMap Y)
+    (InputCompositionTerminalAttach.arrow (α.app Y)) (sourcePost f)
+    (ProjectionReference.source Y) (InputDescSimplex.reference f)
+    (squareSource f α) (ProjectionReference.chartEndpoint Y α ha)
+    (h0ProjectionIso f)
+    (BinaryNormalizationSimplex.total
+      (laurent.map f) (α.app Y))
+    (canonicalAnchor f α ha)
+    (h0_chart_total_for f α ha) N
+
+/-- The initial entire polynomial chart is the actual chart map with its complete target anchor. -/
+theorem chart_zero
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference Y E)))|) :
+    chart f E α ha (y, 0) =
+      mapParameter (sourceBoundaryNode f E) (SSet.toTop.map (FourEdge.chartMap Y E α ha) y) := by
+  change FiniteParameter.parameter (polynomialReference Y E) (reference f E)
+    (chartNodes f E α ha) (y, NativeSquareFiveSimplex.parameter 0) = _
+  rw [Path.source, FiniteParameter.parameter_vertex]
+  have hn := funext (chart_source_node f E α ha)
+  rw [hn]
+  change mapParameter (fun N ↦ sourceBoundaryNode f E (ProjectionReference.chartNode Y α ha E N)) y
+    =
+    mapParameter (sourceBoundaryNode f E) (mapParameter (ProjectionReference.chartNode Y α ha E) y)
+  exact mapParameter_comp (ProjectionReference.chartNode Y α ha E) (sourceBoundaryNode f E) y
+
+/-- All six complete cells give the actual beta value at the original source of the target tree. -/
+theorem tree_source
+    (z : FourEdgeTree.space E (projectionMap Y)) :
+    tree f E (z, 0) =
+      mapParameter (sourceBoundaryNode f E) (SSet.toTop.map (FourEdge.beta Y E) z) := by
+  suffices h : (fun z ↦ tree f E (z, 0)) =
+      (fun z ↦ mapParameter (sourceBoundaryNode f E) (SSet.toTop.map (FourEdge.beta Y E) z)) from
+    congrFun h z
+  apply FourEdgeTree.funext_cells E (projectionMap Y)
+  · intro y
+    rw [tree_plus, ← FourEdgeTree.realized_comp, FourEdge.beta_plus]
+    exact chart_zero f E (plus) (plus_projection) y
+  · intro y
+    rw [tree_minus, ← FourEdgeTree.realized_comp, FourEdge.beta_minus]
+    exact chart_zero f E (minus) (minus_projection) y
+  · exact tree_source_edge12_beta f E
+  · exact tree_source_edge01_beta f E
+  · exact tree_source_edge03_beta f E
+  · exact tree_source_edge34_beta f E
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

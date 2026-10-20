@@ -1,0 +1,48 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationNull
+
+/-! Independent consumers of the original localization null and its base evaluation square. -/
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalSupportedRawLocalizationNull
+open GlobalSectionChangeIndex ParameterIdentity ParameterAuxiliarySupport
+open GlobalSupportedRawBass.Localization
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- The actual base square requires no supplied filler or replacement null. -/
+def actual_square :
+    (postSectionNull f T).Square (preRawNull f T) (evaluationTrack f T)
+      (Quillen.LoopPrespectrum.Homotopy.refl
+        (Quillen.LoopPrespectrum.zeroHom (prespectrum (sectionSource f T))
+          (prespectrum (targetModel f T)))) :=
+  evaluationSquare f T
+
+/-- The old fixed-factor canonical null is recovered at every original time and level. -/
+theorem original_null (n : ℕ) (s : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (prespectrumMap (supportedIso (inverseOpen f T).ι).hom).map n
+        ((sectionNull f T).level n (s, x)) =
+      ((fullNull f T).homotopy (op integerBase)).level n
+        (s, (prespectrumMap (supportedIso (unionOpen f T).ι).hom).map n x) :=
+  sectionNull_recovery f T n s x
+
+/-- The whole geometric family keeps both square times and an independent structure time. -/
+theorem structure_time (n : ℕ) (r s t : I)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (actual_square f T).level (n + 1)
+        (r, (s, (prespectrum (sectionSource f T)).structureMap n x t)) =
+      (prespectrum (targetModel f T)).structureMap n
+        ((actual_square f T).level n (r, (s, x))) t :=
+  (actual_square f T).comm n r s x t
+
+end Consumer.GlobalSupportedRawLocalizationNull

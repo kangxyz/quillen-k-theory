@@ -1,0 +1,296 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputRectangle
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroFaces
+public import Quillen.Waldhausen.SConstruction.Iterated.ZeroNormalizationSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterNull
+
+/-!
+# Original two-row weak-null squares
+
+The two weak-zero transformations are genuine original geometric input data. The actual
+normalization word is the eight-piece two-row rectangle, realized in the fixed finite family.
+A directed weak-zero cone retains both entire chosen nulls, the unchanged rectangle word, and
+the constant zero edge. There is no assumption supplying a spectral square filler.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.LoopPrespectrum
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.InputNullSquare
+open SupportedTensorEvaluation
+variable {A B C A' B' C' : Scheme.OpenPairs.{u}}
+  (f : B ⟶ A) (g : C ⟶ B) (f' : B' ⟶ A') (g' : C' ⟶ B')
+  (a : A' ⟶ A) (b : B' ⟶ B) (c : C' ⟶ C)
+  (hf : f' ≫ a = b ≫ f) (hg : g' ≫ b = c ≫ g)
+  (η : (Quillen.Waldhausen.IteratedS.zeroHom (rawModel A) (rawModel C)).functor ⟶
+    (evaluationRawMap f ≫ evaluationRawMap g).functor)
+  (θ : (Quillen.Waldhausen.IteratedS.zeroHom (rawModel A') (rawModel C')).functor ⟶
+    (evaluationRawMap f' ≫ evaluationRawMap g').functor)
+  (hη : ∀ X, (rawModel C).waldhausen.weq (η.app X))
+  (hθ : ∀ X, (rawModel C').waldhausen.weq (θ.app X))
+
+/-- The initial finite Model is the actual source pullback followed by both translated rows. -/
+theorem source_eq : InputRectangle.source f' g' a =
+    evaluationRawMap a ≫ (evaluationRawMap f' ≫ evaluationRawMap g') := by
+  unfold InputRectangle.source
+  rw [InputRectangle.binary_target, Category.assoc]
+
+/-- The final finite Model is the actual composite of both original rows and target pullback. -/
+theorem target_eq : (InputRectangle.nodes f g f' g' a b c hf hg 8).1 =
+    (evaluationRawMap f ≫ evaluationRawMap g) ≫ evaluationRawMap c := by
+  change evaluationRawMap f ≫ InputBinary.targetMap c g = _
+  rw [InputRectangle.binary_target, Category.assoc]
+
+/-- Precomposition of the original selected weak zero, with only the literal Model endpoint cast. -/
+def sourceZero : (Quillen.Waldhausen.IteratedS.zeroHom (rawModel A) (rawModel C')).functor ⟶
+    (InputRectangle.source f' g' a).functor :=
+  ModelZeroNormalization.preZero θ (evaluationRawMap a) ≫
+    eqToHom (congrArg Model.Hom.functor (source_eq f' g' a).symm)
+
+include hθ in
+/-- This original directed source arrow is weak, without introducing a weak inverse. -/
+theorem sourceZero_weak (X : rawModel A) :
+    (rawModel C').waldhausen.weq ((sourceZero f' g' a θ).app X) :=
+  (rawModel C').waldhausen.weq.comp_mem _ _
+    (ModelZeroNormalization.preZero_weak θ hθ (evaluationRawMap a) X)
+    ((rawModel C').waldhausen.weq_iso _ inferInstance)
+
+/-- Postcomposition of the original selected weak zero reaches the actual final finite vertex. -/
+def targetZero : (Quillen.Waldhausen.IteratedS.zeroHom (rawModel A) (rawModel C')).functor ⟶
+    (InputRectangle.nodes f g f' g' a b c hf hg 8).1.functor :=
+  ModelZeroNormalization.postZero η (evaluationRawMap c) ≫
+    eqToHom (congrArg Model.Hom.functor (target_eq f g f' g' a b c hf hg).symm)
+
+include hη in
+/-- The target arrow is the original postwhiskered weak zero with its exact endpoint transport. -/
+theorem targetZero_weak (X : rawModel A) :
+    (rawModel C').waldhausen.weq ((targetZero f g f' g' a b c hf hg η).app X) :=
+  (rawModel C').waldhausen.weq.comp_mem _ _
+    (ModelZeroNormalization.postZero_weak η hη (evaluationRawMap c) X)
+    ((rawModel C').waldhausen.weq_iso _ inferInstance)
+
+/-- The whole original translated null, precomposed at its unchanged null time. -/
+def sourceNull :=
+  (Homotopy.precomp (rawMap a)
+    (prespectrumCompositeZeroNullHomotopy (evaluationRawMap f') (evaluationRawMap g') θ hθ)).cast
+      (Category.assoc (rawMap a) (rawMap f') (rawMap g')).symm (comp_zeroHom _)
+
+/-- The whole original base null, postcomposed at its unchanged null time. -/
+def targetNull :=
+  ((prespectrumCompositeZeroNullHomotopy (evaluationRawMap f) (evaluationRawMap g) η hη).postcomp
+    (rawMap c)).cast (Category.assoc (rawMap f) (rawMap g) (rawMap c)) (zeroHom_comp _)
+
+/-- The complete old rectangle parameter is retained separately from the null-cone height. -/
+def family (n : ℕ) :
+    C(unitInterval × (unitInterval × (rawSpectrum A).space n), (rawSpectrum C').space n) :=
+  (CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+    (InputRectangle.nodes f g f' g' a b c hf hg)
+    (sourceZero f' g' a θ) (sourceZero_weak f' g' a θ hθ) n).comp
+      ⟨fun z ↦ ((z.2.1, StdSimplex.map Fin.succ (InputRectangle.parameter z.1)), z.2.2),
+        by fun_prop⟩
+
+
+/-- Every ordered normalization subface preserves the entire original weak-null height. -/
+theorem family_face {l : ℕ} (α : ⦋l⦌ ⟶ ⦋8⦌) (n : ℕ) (s : unitInterval)
+    (z : StdSimplex ℝ (Fin (l + 2))) (x : (rawSpectrum A).space n) :
+    CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+      (InputRectangle.nodes f g f' g' a b c hf hg)
+      (sourceZero f' g' a θ) (sourceZero_weak f' g' a θ hθ) n
+      ((s, StdSimplex.map (CommonReferenceWeakZero.keepInitial α).toOrderHom z), x) =
+      CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+        ((InputRectangle.nodes f g f' g' a b c hf hg) ∘ α.toOrderHom)
+        (sourceZero f' g' a θ) (sourceZero_weak f' g' a θ hθ) n ((s, z), x) :=
+  CommonReferenceWeakZero.coneFamily_face _ _ _ _ α n s z x
+
+/-- The source transport retains the full original prewhiskered transformation track. -/
+theorem sourceZero_level (n : ℕ) :
+    (prespectrumTransformationHomotopy (sourceZero f' g' a θ)
+      (sourceZero_weak f' g' a θ hθ)).level n =
+      (Homotopy.precomp (rawMap a) (prespectrumTransformationHomotopy θ hθ)).level n :=
+  (prespectrumTransformationHomotopy_target_transport_level (source_eq f' g' a).symm
+    (ModelZeroNormalization.preZero θ (evaluationRawMap a))
+    (ModelZeroNormalization.preZero_weak θ hθ (evaluationRawMap a))
+    (sourceZero_weak f' g' a θ hθ) n).trans
+      (ModelZeroNormalization.preZero_level θ hθ (evaluationRawMap a) n)
+
+/-- The target transport retains the full original postwhiskered transformation track. -/
+theorem targetZero_level (n : ℕ) :
+    (prespectrumTransformationHomotopy (targetZero f g f' g' a b c hf hg η)
+      (targetZero_weak f g f' g' a b c hf hg η hη)).level n =
+      ((prespectrumTransformationHomotopy η hη).postcomp (rawMap c)).level n :=
+  (prespectrumTransformationHomotopy_target_transport_level
+    (target_eq f g f' g' a b c hf hg).symm
+    (ModelZeroNormalization.postZero η (evaluationRawMap c))
+    (ModelZeroNormalization.postZero_weak η hη (evaluationRawMap c))
+    (targetZero_weak f g f' g' a b c hf hg η hη) n).trans
+      (ModelZeroNormalization.postZero_level η hη (evaluationRawMap c) n)
+
+/-- The original source null is exactly the reverse of its prewhiskered weak transformation. -/
+theorem sourceNull_value (n : ℕ) (s : unitInterval) (x : (rawSpectrum A).space n) :
+    (sourceNull f' g' a θ hθ).level n (s, x) =
+      (Homotopy.precomp (rawMap a) (prespectrumTransformationHomotopy θ hθ)).level n
+        (unitInterval.symm s, x) := rfl
+
+/-- The first complete null face is the unchanged translated-row null. -/
+theorem family_zero (n : ℕ) (s : unitInterval) (x : (rawSpectrum A).space n) :
+    family f g f' g' a b c hf hg θ hθ n (0, (s, x)) =
+      (sourceNull f' g' a θ hθ).level n (s, x) := by
+  change CommonReferenceWeakZero.coneFamily _ _ _ _ n
+    ((s, StdSimplex.map Fin.succ (InputRectangle.parameter 0)), x) = _
+  rw [Path.source, StdSimplex.map_single]
+  have hx := congrArg
+    (fun K : C(unitInterval × (prespectrum (rawModel A)).space n,
+      (prespectrum (rawModel C')).space n) ↦ K (unitInterval.symm s, x))
+    (sourceZero_level f' g' a θ hθ n)
+  have hs := sourceNull_value f' g' a θ hθ n s x
+  exact (CommonReferenceWeakZero.coneFamily_vertex
+    (InputRectangle.source f' g' a) (InputRectangle.nodes f g f' g' a b c hf hg)
+    (sourceZero f' g' a θ) (sourceZero_weak f' g' a θ hθ) 2
+    (sourceZero f' g' a θ) (sourceZero_weak f' g' a θ hθ) n s x).trans (hx.trans hs.symm)
+
+
+/-- The second complete null face is the unchanged postcomposed base-row null. -/
+theorem family_one (n : ℕ) (s : unitInterval) (x : (rawSpectrum A).space n) :
+    family f g f' g' a b c hf hg θ hθ n (1, (s, x)) =
+      (targetNull f g c η hη).level n (s, x) := by
+  change CommonReferenceWeakZero.coneFamily _ _ _ _ n
+    ((s, StdSimplex.map Fin.succ (InputRectangle.parameter 1)), x) = _
+  rw [Path.target, StdSimplex.map_single]
+  exact (CommonReferenceWeakZero.coneFamily_vertex _ _ _ _ 8
+    (targetZero f g f' g' a b c hf hg η)
+    (targetZero_weak f g f' g' a b c hf hg η hη) n s x).trans
+      (DFunLike.congr_fun (targetZero_level f g f' g' a b c hf hg η hη n)
+        (unitInterval.symm s, x))
+
+/-- The entire moving edge is the original eight-piece rectangle word. -/
+theorem family_left (n : ℕ) (r : unitInterval) (x : (rawSpectrum A).space n) :
+    family f g f' g' a b c hf hg θ hθ n (r, (0, x)) =
+      (InputRectangle.word f g f' g' a b c hf hg).level n (r, x) := by
+  change CommonReferenceWeakZero.coneFamily _ _ _ _ n
+    ((0, StdSimplex.map Fin.succ (InputRectangle.parameter r)), x) = _
+  rw [CommonReferenceWeakZero.coneFamily_zero]
+  change prespectrumSimplexFamily _ n
+    (StdSimplex.map ModelSimplex.tailFace.toOrderHom (InputRectangle.parameter r), x) = _
+  rw [prespectrumSimplexFamily_face, CommonReferenceWeakZero.normalization_face]
+  exact InputRectangle.native f g f' g' a b c hf hg n r x
+
+/-- The opposite edge is literally zero at every original normalization time. -/
+theorem family_right (n : ℕ) (r : unitInterval) (x : (rawSpectrum A).space n) :
+    family f g f' g' a b c hf hg θ hθ n (r, (1, x)) = (rawSpectrum C').point n :=
+  CommonReferenceWeakZero.coneFamily_one _ _ _ _ n _ x
+
+/-- A genuine square retains both original nulls and the complete original two-row path. -/
+def square :
+    (sourceNull f' g' a θ hθ).Square (targetNull f g c η hη)
+      (InputRectangle.word f g f' g' a b c hf hg)
+      (LoopPrespectrum.Homotopy.refl
+        (LoopPrespectrum.zeroHom (rawSpectrum A) (rawSpectrum C'))) where
+  level := family f g f' g' a b c hf hg θ hθ
+  at_zero := family_zero f g f' g' a b c hf hg θ hθ
+  at_one := family_one f g f' g' a b c hf hg η θ hη hθ
+  left := family_left f g f' g' a b c hf hg θ hθ
+  right := family_right f g f' g' a b c hf hg θ hθ
+  at_point n _r s := CommonReferenceWeakZero.coneFamily_point _ _ _ _ n s _
+  comm n _r s x t := CommonReferenceWeakZero.coneFamily_structure _ _ _ _ n s _ x t
+
+/-- The original null height, rectangle time, and level input remain independent. -/
+theorem square_apply (n : ℕ) (r s : unitInterval) (x : (rawSpectrum A).space n) :
+    (square f g f' g' a b c hf hg η θ hη hθ).level n (r, (s, x)) =
+      CommonReferenceWeakZero.coneFamily (InputRectangle.source f' g' a)
+        (InputRectangle.nodes f g f' g' a b c hf hg)
+        (sourceZero f' g' a θ) (sourceZero_weak f' g' a θ hθ) n
+        ((s, StdSimplex.map Fin.succ (InputRectangle.parameter r)), x) := rfl
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.InputNullSquare
+
+
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization.Parameter.Projection
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+variable {U X S : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+  (p : S ⟶ integerBase) [QuasiCompact p]
+
+/-- The literal source projection retains both entries of the original open pair. -/
+abbrev sourceMap : sourcePair j T p ⟶ (Rows.source j T).obj :=
+  ((pairBaseProductProjection p).app (Rows.source j T)).hom
+
+/-- The literal middle projection uses the actual auxiliary support row. -/
+abbrev middleMap : middlePair T p ⟶ (Rows.middle T).obj :=
+  ((pairBaseProductProjection p).app (Rows.middle T)).hom
+
+/-- The literal target projection uses the original inverse-image support row. -/
+abbrev targetMap : targetPair j T p ⟶ (Rows.target j T).obj :=
+  ((pairBaseProductProjection p).app (Rows.target j T)).hom
+
+private theorem projection_naturality {S : Scheme.{u}}
+    (p : S ⟶ integerBase) [QuasiCompact p]
+    {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B) :
+    ((pairBaseProductFunctor p).map f).hom ≫ ((pairBaseProductProjection p).app B).hom =
+      ((pairBaseProductProjection p).app A).hom ≫ f.hom :=
+  congrArg (fun k ↦ k.hom) ((pairBaseProductProjection p).naturality f)
+
+omit [CompactSpace U] in
+/-- Original enlargement and projection commute as complete open-pair arrows. -/
+theorem enlargement_square : enlargementPair j T p ≫ sourceMap j T p =
+    middleMap T p ≫ (Rows.enlargement j T).hom :=
+  projection_naturality p (Rows.enlargement j T)
+
+omit [IsOpenImmersion j] in
+/-- Original restriction and projection commute as complete open-pair arrows. -/
+theorem restriction_square : restrictionPair j T p ≫ middleMap T p =
+    targetMap j T p ≫ (Rows.restriction j T).hom :=
+  projection_naturality p (Rows.restriction j T)
+
+/-- Both actual original input squares, with the original eight-piece row word. -/
+def word :=
+  InputRectangle.word (Rows.enlargement j T).hom (Rows.restriction j T).hom
+    (enlargementPair j T p) (restrictionPair j T p)
+    (sourceMap j T p) (middleMap T p) (targetMap j T p)
+    (enlargement_square j T p) (restriction_square j T p)
+
+/-- The actual translated raw localization null after source projection. -/
+def preNull :=
+  (Homotopy.precomp (rawMap (sourceMap j T p)) (rawNull j T p)).cast
+    (Category.assoc (rawMap (sourceMap j T p)) (prespectrumMap (rawEnlargement j T p))
+      (prespectrumMap (rawRestriction j T p))).symm (comp_zeroHom _)
+
+/-- The actual original raw localization null before target projection. -/
+def postNull :=
+  ((Localization.rawNull j T).postcomp (rawMap (targetMap j T p))).cast
+    (Category.assoc (prespectrumMap (Localization.rawEnlargement j T))
+      (prespectrumMap (Localization.rawRestriction j T)) (rawMap (targetMap j T p)))
+    (zeroHom_comp _)
+
+/-- The literal two-row projection word and both independently selected raw nulls form a square. -/
+def square : (preNull j T p).Square (postNull j T p) (word j T p)
+    (LoopPrespectrum.Homotopy.refl (LoopPrespectrum.zeroHom
+      (prespectrum (Localization.sourceModel j T)) (prespectrum (targetModel j T p)))) :=
+  InputNullSquare.square (Rows.enlargement j T).hom (Rows.restriction j T).hom
+    (enlargementPair j T p) (restrictionPair j T p)
+    (sourceMap j T p) (middleMap T p) (targetMap j T p)
+    (enlargement_square j T p) (restriction_square j T p)
+    (Localization.zeroToRawFull j T) (zeroToRawFull j T p)
+    (Localization.zeroToRawFull_weak j T) (zeroToRawFull_weak j T p)
+
+/-- Both old null clocks and the entire actual rectangle parameter survive the application. -/
+theorem square_apply (n : ℕ) (r s : unitInterval)
+    (x : (prespectrum (Localization.sourceModel j T)).space n) :
+    (square j T p).level n (r, (s, x)) =
+      InputNullSquare.family (Rows.enlargement j T).hom (Rows.restriction j T).hom
+        (enlargementPair j T p) (restrictionPair j T p)
+        (sourceMap j T p) (middleMap T p) (targetMap j T p)
+        (enlargement_square j T p) (restriction_square j T p)
+        (zeroToRawFull j T p) (zeroToRawFull_weak j T p) n (r, (s, x)) := rfl
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization.Parameter.Projection

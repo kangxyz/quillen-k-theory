@@ -1,0 +1,65 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerChart
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerOuterCone
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientMovingSquareReferenceRows
+/-! All-point recovery of the original source-map first half with all three clocks retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+  Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+variable (k : laurent ⟶ polynomial)
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+
+local notation "H" => lowerLaurentBinary f g
+local notation "KZ" => BassH0Merge.normalizedMap (k.app Z)
+local notation "S" => NativeSquareFiveSimplex.source (laurent.map c) (k.app W)
+
+/-- The actual bottom chart row uses its selected last-triple anchor. -/
+def lowerChartBottomAnchor : (G).functor ≅ (KZ ≫ H).functor :=
+  DoubleSquareCommonSimplex.lastSourceIso
+    (polynomial.map g) (polynomial.map f) (laurent.map g) (laurent.map f)
+    (k.app Z) (k.app Y) (k.app X) (k.naturality g).symm (k.naturality f).symm ≪≫
+    NormalizedTripleSimplex.rightFirst (laurent.map f) (laurent.map g) (k.app Z)
+
+/-- The original terminal source-square anchor identifies its actual polynomial precomposition. -/
+def lowerChartTerminalAnchor : (S).functor ≅ (MC ≫ KZ).functor :=
+  NativeSquareModelNormalization.rightIso (laurent.map c) (k.app W) (k.app Z)
+    (polynomial.map c) (k.naturality c)
+
+/-- The lower reference is attached through the literal terminal square and bottom-chart anchors. -/
+def lowerChartAnchor : (MC ≫ G).functor ≅ (lowerChartReference f g c k).functor :=
+  isoWhiskerLeft (MC).functor (lowerChartBottomAnchor f g k) ≪≫
+    (Functor.associator (MC).functor (KZ).functor (H).functor).symm ≪≫
+    isoWhiskerRight (lowerChartTerminalAnchor c k).symm (H).functor
+
+/-- The exact lower chart family now lies in the genuine arbitrary-polynomial carrier reference. -/
+def anchoredLowerChart : C(I × I, |CommonReferenceNerve.CutOpenCarrier.parameterSSet (MC ≫ G)|) :=
+  (mapParameter (CommonReferenceProduct.reanchor (lowerChartAnchor f g c k))).comp
+    (lowerChart f g c k)
+
+/-- Reference transport leaves both original native lower-half clocks untouched. -/
+theorem anchoredLowerChart_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj W))).space n) :
+    pointwisePrespectrumFamily (MC ≫ G) n (anchoredLowerChart f g c k (r, s)) x =
+      (InputCompositionCharts.laurentComposition f g).level n
+        (r, (boundedFlatPerfectPrespectrumSquareHomotopy (laurent.map c) (k.app W)
+          (k.app Z) (polynomial.map c) (k.naturality c)).level n (s, x)) :=
+  (pointwise_reanchor (lowerChartAnchor f g c k) n (lowerChart f g c k (r, s)) x).trans
+    (lowerChart_native f g c k n r s x)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

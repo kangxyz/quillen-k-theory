@@ -1,0 +1,98 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionMap
+
+/-! Regression of original whole composition faces, native parameters and raw step endpoints. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputComposition
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The extension retains all six original faces simultaneously, before native evaluation. -/
+theorem original_faces (r s t : unitInterval) :
+    InputCompositionCarrierCube.carrierCube f g ![0, s, t] =
+        InputCompositionCarrierCharts.inputFace f g (s, t) ∧
+      InputCompositionCarrierCube.carrierCube f g ![1, s, t] =
+        InputCompositionCarrierTerminal.face f g (s, t) ∧
+      InputCompositionCarrierCube.carrierCube f g ![r, 0, t] =
+        InputCompositionCarrierBottom.face f g (r, t) ∧
+      InputCompositionCarrierCube.carrierCube f g ![r, 1, t] =
+        InputCompositionCarrierTop.face f g (r, t) ∧
+      InputCompositionCarrierCube.carrierCube f g ![r, s, 0] =
+        InputCompositionCarrierCharts.chartFace f g plus plus_projection (r, s) ∧
+      InputCompositionCarrierCube.carrierCube f g ![r, s, 1] =
+        InputCompositionCarrierCharts.chartFace f g minus minus_projection (r, s) :=
+  ⟨InputCompositionCarrierCube.cube_zero f g s t,
+    InputCompositionCarrierCube.cube_one f g s t,
+    InputCompositionCarrierCube.cube_bottom f g r t,
+    InputCompositionCarrierCube.cube_top f g r t,
+    InputCompositionCarrierCube.cube_left f g r s,
+    InputCompositionCarrierCube.cube_right f g r s⟩
+
+/-- Native square descent preserves the whole three-clock overlap family, not just its vertices. -/
+theorem entire_overlap (n : ℕ) :
+    (fun (r s t : unitInterval)
+      (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) ↦
+      (InputComposition.comparisonSquare f g).level n (r, (s,
+        HomotopyPushout.cylinder (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z)) n (t, x)))) =
+    (fun r s t x ↦ CommonReferenceNerve.compactPrespectrumFamily
+      (InputCompositionCarrierCharts.source f g) (InputCompositionCarrierCube.carrierCube f g)
+      n (![r, s, t], x)) := by
+  funext r s t x
+  exact InputComposition.comparisonSquare_cylinder f g n r s t x
+
+/-- Both separately prescribed paused charts survive the same whole comparison square. -/
+theorem original_charts (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputComposition.comparisonSquare f g).level n (r, (s,
+      (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+        (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) =
+        (InputCompositionCharts.plusChart f g).level n (r, (s, x)) ∧
+      (InputComposition.comparisonSquare f g).level n (r, (s,
+        (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+          (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) =
+        (InputCompositionCharts.minusChart f g).level n (r, (s, x)) :=
+  ⟨InputComposition.comparisonSquare_inl f g n r s x,
+    InputComposition.comparisonSquare_inr f g n r s x⟩
+
+/-- Whole raw composition starts and ends at the literal original direct and composite maps. -/
+theorem original_step_endpoints (n : ℕ) (γ : (step Z).space n) :
+    (InputComposition.mapHomotopy f g).level n (0, γ) = (map (f ≫ g)).map n γ ∧
+      (InputComposition.mapHomotopy f g).level n (1, γ) = (map f).map n ((map g).map n γ) :=
+  ⟨(InputComposition.mapHomotopy f g).at_zero n γ,
+    (InputComposition.mapHomotopy f g).at_one n γ⟩
+
+/-- Loop time remains independent throughout the entire original cone composition homotopy. -/
+theorem entire_loop_family (n : ℕ) :
+    (fun (r s : unitInterval) (γ : (step Z).space n) ↦
+      Path.toContinuousMap ((InputComposition.mapHomotopy f g).level n (r, γ)) s) =
+    (fun r s γ ↦ (InputComposition.coneHomotopy f g).level n
+      (r, Path.toContinuousMap γ s)) := by
+  funext r s γ
+  exact InputComposition.mapHomotopy_apply f g n r s γ
+
+/-- The raw composition homotopy still receives the exact original source-null conjugated seed. -/
+theorem original_seed_word (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    Path.toContinuousMap
+      ((InputComposition.mapHomotopy f g).level n (r, (transition Z).map n x)) s =
+      (InputComposition.coneHomotopy f g).level n
+        (r, (((unitHomotopy Z).postcomp (mappingConeInclusion (comparison Z))).conjugateToZero
+          (sourceNull Z)).level n (s, x)) :=
+  InputComposition.mapHomotopy_transition_apply f g n r s x
+
+end QuillenTest.GlobalRawBassInputComposition

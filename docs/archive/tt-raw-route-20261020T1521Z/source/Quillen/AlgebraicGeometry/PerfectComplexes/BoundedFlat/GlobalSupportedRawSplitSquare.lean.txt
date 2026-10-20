@@ -1,0 +1,61 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawStep
+public import Quillen.Topology.Prespectrum.SplitSquareSourceNull
+
+/-!
+# The original supported raw square as a split-square input object
+
+The reusable split-square interface contains the actual supported spectra, geometric maps and
+original positive and inverse splitting tracks. Its span, comparison, cone-loop stage and
+specified positive source-null recover the existing constructions literally. This adapter
+does not replace the localization nullhomotopy by the Bass source-null.
+-/
+@[expose] public section
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+
+/-- The actual supported chart package with both original split tracks. -/
+def splitSquare (A : Scheme.QuasiCompactOpenPairs.{u}) : SplitSquare.{u+1} where
+  A := rawSpectrum A.obj
+  P := rawSpectrum (Geometry.polynomial A)
+  L := rawSpectrum (Geometry.laurent A)
+  pi := rawMap (Geometry.projection A)
+  p := rawMap (Geometry.plus A)
+  m := rawMap (Geometry.minus A)
+  l := rawMap (Geometry.laurentProjection A)
+  Dp := plusHomotopy A
+  Dm := minusHomotopy A
+
+/-- The complete overlap is the original positive-reverse/negative-forward track. -/
+theorem splitSquare_squareHomotopy (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (splitSquare A).squareHomotopy = squareHomotopy A := rfl
+
+/-- The span is the existing actual supported double cylinder. -/
+theorem splitSquare_span (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (splitSquare A).span = span A := rfl
+
+/-- The whole descended map is the existing original supported comparison. -/
+theorem splitSquare_comparison (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (splitSquare A).comparison = comparison A := rfl
+
+/-- The first stage is the existing parameter-looped cone. -/
+theorem splitSquare_step (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (splitSquare A).step = step A := rfl
+
+/-- The entire chosen positive source leg is unchanged. -/
+theorem splitSquare_sourceLeg (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (splitSquare A).sourceLeg = sourceLeg A := rfl
+
+/-- Both halves of the specified Bass source-null are retained literally. -/
+theorem splitSquare_sourceNull (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (splitSquare A).sourceNull = sourceNull A := rfl
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

@@ -1,0 +1,55 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSelectedPolynomial
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartCone
+/-! The actual selected polynomial prewhiskering branch and its common-cone scalar placement. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial)
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "M" => NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+  (projection.app Z) c (projection.naturality c)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "ε'" => CutOpenPrecomp.anchor S P K G ε
+
+/-- Exact recovery of the original two selected interiors, without changing either clock. -/
+theorem selectedPolynomial_original (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    CutOpenCarrier.nativeEval (S ≫ P) K (S ≫ G) ε' ε' n
+      (selectedPolynomial f g c k ((r, s), t)) x =
+      (InputCompositionPolynomialScalar.nullSquare f g k).level n
+        (r, (s, (boundedFlatPerfectPrespectrumSquareHomotopy
+          (polynomial.map c) (projection.app W) (projection.app Z) c
+          (projection.naturality c)).level n (t, x))) := by
+  have he : prespectrumFamily S M n (NativeSquareFiveSimplex.parameter t, x) =
+      (boundedFlatPerfectPrespectrumSquareHomotopy (polynomial.map c) (projection.app W)
+        (projection.app Z) c (projection.naturality c)).level n (t, x) := by
+    rw [prespectrumFamily_eq]
+    exact NativeSquareFiveSimplex.native (polynomial.map c) (projection.app W)
+      (projection.app Z) c (projection.naturality c) n t x
+  exact (selectedPolynomial_native f g c k n r s t x).trans
+    (congrArg (fun y ↦ (InputCompositionPolynomialScalar.nullSquare f g k).level n (r, (s, y))) he)
+
+/-- The selected positive branch lands in the shared whole overlap scalar cone. -/
+def selectedPlus := (prePlusConeMap f g c).comp (selectedPolynomial f g c plus)
+
+/-- The negative branch keeps its distinct original vertex in the same overlap scalar cone. -/
+def selectedMinus := (preMinusConeMap f g c).comp (selectedPolynomial f g c minus)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

@@ -1,0 +1,145 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionMap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNull
+
+/-!
+# Whole null rails for composition of the original raw input maps
+
+The fixed source-null is evaluated along the actual cone composition homotopy. The fixed
+target-null is evaluated after the original base composition homotopy. Both moving squares
+retain their Laurent endpoints and independent null, composition, and structure coordinates.
+These are two boundary surfaces, without a comparison between the chosen null-comparison
+surfaces or a higher seed composition claim.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionNull
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The original source-null after the literal composite of both actual cone maps. -/
+def oldComposite : Homotopy
+    ((boundedFlatPerfectPrespectrumMap (laurentProjection.app Z) ≫
+      (boundedFlatPerfectPrespectrumMap (laurent.map g) ≫
+        boundedFlatPerfectPrespectrumMap (laurent.map f))) ≫
+          mappingConeInclusion (comparison X)) (Quillen.LoopPrespectrum.zeroHom _ _) :=
+  ((sourceNull Z).postcomp (coneMap g ≫ coneMap f)).cast (by
+    apply Hom.ext
+    funext n
+    ext x
+    rfl) (by
+      apply Hom.ext
+      funext n
+      ext x
+      exact (coneMap g ≫ coneMap f).map_point n)
+
+/-- The actual Laurent composition, preceded by the original Laurent projection. -/
+def oldLeft :=
+  (Homotopy.precomp (boundedFlatPerfectPrespectrumMap (laurentProjection.app Z))
+    (InputCompositionCharts.laurentComposition f g)).postcomp
+      (mappingConeInclusion (comparison X))
+
+/-- The fixed source-null follows the complete actual cone composition homotopy. -/
+def sourceSquare :
+    (InputNull.originalOldNull (f ≫ g)).Square (oldComposite f g) (oldLeft f g)
+      (Quillen.LoopPrespectrum.Homotopy.refl (Quillen.LoopPrespectrum.zeroHom _ _)) where
+  level n := ⟨fun z ↦ (InputComposition.coneHomotopy f g).level n
+    (z.1, (sourceNull Z).level n z.2), by fun_prop⟩
+  at_zero n s x := (InputComposition.coneHomotopy f g).at_zero n
+    ((sourceNull Z).level n (s, x))
+  at_one n s x := (InputComposition.coneHomotopy f g).at_one n
+    ((sourceNull Z).level n (s, x))
+  left n r x := by
+    change (InputComposition.coneHomotopy f g).level n
+      (r, (sourceNull Z).level n (0, x)) = _
+    rw [(sourceNull Z).at_zero]
+    exact InputComposition.coneHomotopy_inclusion f g n r
+      ((boundedFlatPerfectPrespectrumMap (laurentProjection.app Z)).map n x)
+  right n r x := by
+    change (InputComposition.coneHomotopy f g).level n
+      (r, (sourceNull Z).level n (1, x)) = _
+    rw [(sourceNull Z).at_one]
+    exact (InputComposition.coneHomotopy f g).at_point n r
+  at_point n r s := by
+    change (InputComposition.coneHomotopy f g).level n
+      (r, (sourceNull Z).level n (s, _)) = _
+    rw [(sourceNull Z).at_point, (InputComposition.coneHomotopy f g).at_point]
+  comm n r s x t := by
+    change (InputComposition.coneHomotopy f g).level (n + 1)
+      (r, (sourceNull Z).level (n + 1) (s, _)) = _
+    rw [(sourceNull Z).comm, (InputComposition.coneHomotopy f g).comm]
+    rfl
+
+/-- Every point retains the original source-null and both independent homotopy times. -/
+theorem sourceSquare_apply (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (sourceSquare f g).level n (r, (s, x)) =
+      (InputComposition.coneHomotopy f g).level n (r, (sourceNull Z).level n (s, x)) := rfl
+
+/-- The source rail uses only the original Laurent half and the positive cone-cylinder half. -/
+theorem sourceSquare_apply_halves (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (sourceSquare f g).level n (r, (s, x)) =
+      if hs : (s : ℝ) ≤ 1 / 2 then
+        (mappingConeInclusion (comparison X)).map n
+          ((InputCompositionCharts.laurentComposition f g).level n
+            (r, (plusHomotopy Z).level n
+              (⟨2 * s, (unitInterval.mul_pos_mem_iff zero_lt_two).2 ⟨s.2.1, hs⟩⟩, x)))
+      else (InputComposition.comparisonConeNullSquare f g).level n
+        (r, (⟨2 * s - 1,
+          unitInterval.two_mul_sub_one_mem_iff.2 ⟨(not_le.1 hs).le, s.2.2⟩⟩,
+            (sourceLeg Z).map n x)) := by
+  change (InputComposition.coneHomotopy f g).level n
+    (r, ((((plusHomotopy Z).postcomp (mappingConeInclusion (comparison Z))).levelHomotopy n).trans
+      ((Homotopy.precomp (sourceLeg Z)
+        (mappingConeHomotopy (comparison Z))).levelHomotopy n)) (s, x)) = _
+  rw [ContinuousMap.HomotopyRel.trans_apply]
+  split
+  · exact InputComposition.coneHomotopy_inclusion f g n r _
+  · exact InputComposition.coneHomotopy_cylinder f g n r _ _
+
+/-- The original target-null preceded by the literal composite of both base maps. -/
+def newComposite : Homotopy
+    (((boundedFlatPerfectPrespectrumMap g ≫ boundedFlatPerfectPrespectrumMap f) ≫
+      boundedFlatPerfectPrespectrumMap (laurentProjection.app X)) ≫
+        mappingConeInclusion (comparison X)) (Quillen.LoopPrespectrum.zeroHom _ _) :=
+  (Homotopy.precomp (boundedFlatPerfectPrespectrumMap g ≫ boundedFlatPerfectPrespectrumMap f)
+    (sourceNull X)).cast (Category.assoc _ _ _).symm rfl
+
+/-- The original base composition followed by the fixed Laurent projection and cone inclusion. -/
+def newLeft :=
+  ((boundedFlatPerfectPrespectrumCompHomotopy f g).postcomp
+    (boundedFlatPerfectPrespectrumMap (laurentProjection.app X) ≫
+      mappingConeInclusion (comparison X))).cast
+        (Category.assoc _ _ _).symm (Category.assoc _ _ _).symm
+
+/-- The fixed target-null retains the whole independent base composition homotopy. -/
+def targetSquare :
+    (InputNull.originalNewNull (f ≫ g)).Square (newComposite f g) (newLeft f g)
+      (Quillen.LoopPrespectrum.Homotopy.refl (Quillen.LoopPrespectrum.zeroHom _ _)) :=
+  (Homotopy.Square.interchange (boundedFlatPerfectPrespectrumCompHomotopy f g)
+    (sourceNull X)).ofBoundaryLevels _ _ _ _
+      (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl) (fun _ ↦ rfl)
+
+/-- Both original times survive the target interchange without any new pause or reassociation. -/
+theorem targetSquare_apply (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (targetSquare f g).level n (r, (s, x)) =
+      (sourceNull X).level n
+        (s, (boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r, x)) := rfl
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionNull

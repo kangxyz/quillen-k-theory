@@ -1,0 +1,53 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompParameterNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputDescNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCharts
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BinaryNativePath
+/-! The original thirty-one-node input comparison before the original Laurent binary path. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+/-- The original three-node Laurent composition reference. -/
+abbrev lowerLaurentBinary := BinaryNormalizationSimplex.sourceMap (laurent.map f) (laurent.map g)
+
+/-- Every original Laurent binary node retains its actual normalization isomorphism. -/
+def lowerLaurentNodes : Fin 3 → Node (lowerLaurentBinary f g) := fun i ↦
+  ⟨![BinaryNormalizationSimplex.sourceMap (laurent.map f) (laurent.map g),
+    BinaryNormalizationSimplex.intermediateMap (laurent.map f) (laurent.map g),
+    BinaryNormalizationSimplex.targetMap (laurent.map f) (laurent.map g)] i,
+    Fin.cases (Iso.refl _) (Fin.cases
+      (BinaryNormalizationSimplex.first (laurent.map f) (laurent.map g))
+      (Fin.cases (BinaryNormalizationSimplex.total (laurent.map f) (laurent.map g))
+        (fun j ↦ Fin.elim0 j))) i⟩
+
+/-- The complete original binary path, with no replacement normalization or clock. -/
+def lowerLaurentPath := (binaryPath (k := 2) 0 1 2).map
+  (parameter (lowerLaurentBinary f g) (lowerLaurentNodes f g)).continuous
+
+/-- The literal composite reference of the original input descent and Laurent binary path. -/
+abbrev lowerLaurentReference := InputDescSimplex.reference c ≫ lowerLaurentBinary f g
+
+/-- All three original coordinates remain independent in the actual lower-half Laurent family. -/
+def lowerLaurent : C((I × I) × I,
+    |CutOpenCarrier.parameterSSet (lowerLaurentReference f g c)|) :=
+  (FinitePrecomp.parameter (InputDescSimplex.reference c) (InputDescSimplex.nodes c)
+    (lowerLaurentBinary f g)).comp
+      ⟨fun z ↦ (lowerLaurentPath f g z.1.1, BassH0Diagram.parameter (z.1.2, z.2)),
+        by fun_prop⟩
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

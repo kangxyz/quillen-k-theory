@@ -1,0 +1,70 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassChartRelativeTransportPolynomialRecovery
+
+/-! Arbitrary polynomial-reference structure and original positive/inverse endpoint regressions. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassChartRelativeTransport
+open CommonReferenceNerve ChartRelativeTransport
+
+/-- Structure time stays independent for an unrestricted polynomial-reference source model. -/
+theorem arbitrary_reference_structure {X Y : Scheme.{u}} (a : X ⟶ Y)
+    (k : laurent ⟶ polynomial) {V : Model.{u + 1}}
+    (P : V ⟶ modelOf (boundedFlatPerfectWaldhausen (polynomial.obj Y)))
+    (G : V ⟶ modelOf (boundedFlatPerfectWaldhausen (laurent.obj Y)))
+    (eps : G.functor ≅ (P ≫ InputCompositionTerminalAttach.arrow (k.app Y)).functor)
+    (n : ℕ) (z : sourceCarrier k P G eps) (x : (prespectrum V).space n) (t : I) :
+    CutOpenCarrier.nativeEval (targetPolynomial a P)
+      (InputCompositionTerminalAttach.arrow (k.app X)) (targetLaurent a k P)
+      (targetAnchor a k P) (targetAnchor a k P) (n + 1) (transport a k P G eps z)
+      ((prespectrum V).structureMap n x t) =
+      (CutOpenCarrier.nativeCone (InputCompositionTerminalAttach.arrow (k.app X))).structureMap n
+        ((chartConeMap a k).map n (CutOpenCarrier.nativeEval P
+          (InputCompositionTerminalAttach.arrow (k.app Y)) G eps eps n z x)) t := by
+  rw [CutOpenCarrier.nativeEval_structure, transport_native]
+
+variable {W X Y Z : Scheme.{u}} (a : W ⟶ X) (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+
+/-- The transported positive square retains the original direct-map endpoint. -/
+theorem positive_direct (n : ℕ) (s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityPositive.inclusion W).map n
+      (CutOpenCarrier.nativeEval (targetPolynomial a P)
+        (InputCompositionTerminalAttach.arrow (plus.app W)) (targetLaurent a plus P)
+        (targetAnchor a plus P) (targetAnchor a plus P) n
+        (postCorrectedSquare a f g plus (0, s)) x) =
+      (coneMap a).map n ((coneMap (f ≫ g)).map n
+        (Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s, (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x))) :=
+  (plus_postCorrectedSquare_native a f g n 0 s x).trans
+    (congrArg ((coneMap a).map n) ((InputComposition.coneHomotopy f g).at_zero n _))
+
+/-- The inverse endpoint retains the literal original nested composite, without reassociation. -/
+theorem inverse_composite (n : ℕ) (s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityNegative.inclusion W).map n
+      (CutOpenCarrier.nativeEval (targetPolynomial a P)
+        (InputCompositionTerminalAttach.arrow (minus.app W)) (targetLaurent a minus P)
+        (targetAnchor a minus P) (targetAnchor a minus P) n
+        (postCorrectedSquare a f g minus (1, s)) x) =
+      (coneMap a).map n ((coneMap f).map n ((coneMap g).map n
+        (Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)))) :=
+  (minus_postCorrectedSquare_native a f g n 1 s x).trans
+    (congrArg ((coneMap a).map n) ((InputComposition.coneHomotopy f g).at_one n _))
+end QuillenTest.GlobalRawBassChartRelativeTransport

@@ -1,0 +1,212 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0BottomRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0TopMiddleRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCorrectedCarrier
+/-!
+# Exact old-left and new-left scalar joins
+
+The Laurent square's two full binary sides agree with the original source and target null
+rails. Their complete reference rows are identified through geometric projection equalities
+and already proved original corner nodes, then evaluated on the unchanged product clocks.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u v
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier
+open CommonReferenceNerve CommonReferenceProduct BassH0Merge BassH1Join
+attribute [local irreducible] boundedFlatNormalizedPullback
+private theorem post_families_match_maps {V W T : Model.{u}} {Idx : Type v}
+    (F : V ⟶ T) (J J' : W ⟶ T) (H : V ⟶ W) (heJ : J = J')
+    (D : Idx → Node H) {N M : Idx → Node F}
+    {ρ : F.functor ≅ (H ≫ J).functor} {ηM : F.functor ≅ (H ≫ J').functor}
+    (hN : ∀ i, N i = postReferenceNode F J ρ (D i))
+    (hM : ∀ i, M i = postReferenceNode F J' ηM (D i))
+    (j : Idx) (he : N j = M j) (i : Idx) : N i = M i := by
+  subst J'
+  exact post_families_match F J H D hN hM j he i
+
+private theorem post_refl_anchor {V W T : Model.{u}}
+    (F : V ⟶ T) (H : V ⟶ W) (J : W ⟶ T)
+    (η : F.functor ≅ (H ≫ J).functor) (N : Node H) :
+    postReferenceNode F J (η ≪≫ isoWhiskerLeft H.functor (Iso.refl J.functor)) N =
+      postReferenceNode F J η N := by
+  rw [isoWhiskerLeft_refl]
+  exact congrArg (fun e ↦ postReferenceNode F J e N) (Iso.trans_refl η)
+
+private theorem pre_refl_anchor {V W T : Model.{u}}
+    (F : V ⟶ T) (H : V ⟶ W) (J : W ⟶ T)
+    (η : F.functor ≅ (H ≫ J).functor) (N : Node J) :
+    preReferenceNode F H (η ≪≫ isoWhiskerRight (Iso.refl H.functor) J.functor) N =
+      preReferenceNode F H η N := by
+  rw [isoWhiskerRight_refl]
+  exact congrArg (fun e ↦ preReferenceNode F H e N) (Iso.trans_refl η)
+
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+private theorem projection_map (V : Scheme.{u}) :
+    BassH0Merge.normalizedMap (laurentProjection.app V) = InputIdentityProjection.source V := by
+  apply Model.Hom.ext
+  exact congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+    (congrArg boundedFlatNormalizedPullback (plus_projection V).symm)
+
+/-- The direct composite normalization anchor at the right boundary. -/
+abbrev rightAnchor := (outerIso f g).symm ≪≫
+  BinaryNormalizationSimplex.total (laurentProjection.app X) (f ≫ g)
+
+/-- The pasted two-map normalization anchor at the left boundary. -/
+abbrev leftAnchor := (outerIso f g).symm ≪≫
+  (DoubleSquareCommonSimplex.lastSourceIso g f (laurent.map g) (laurent.map f)
+    (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+    (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm ≪≫
+    NormalizedTripleSimplex.rightFirst (laurent.map f) (laurent.map g) (laurentProjection.app Z))
+
+theorem right_row (i : Fin 3) :
+    nodes f g (CoefficientMovingSquareRows.sourceSide i) =
+      postReferenceNode (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+        (BassH0Merge.normalizedMap (laurentProjection.app X)) (rightAnchor f g)
+        (BassH0Merge.binaryNodes f g i) := by
+  have h := congrArg (BassH0Merge.anchorNode (outerIso f g).symm)
+    (CoefficientMovingSquareRows.source_side_nodes g f (laurent.map g) (laurent.map f)
+      (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+      (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm i)
+  exact h.trans (anchor_post_node _ _ _ _)
+
+theorem left_row (i : Fin 3) :
+    nodes f g (CoefficientMovingSquareRows.targetSide i) =
+      preReferenceNode (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+        (BassH0Merge.normalizedMap (laurentProjection.app Z)) (leftAnchor f g)
+        (BassH0Merge.binaryNodes (laurent.map f) (laurent.map g) i) := by
+  have h := congrArg (BassH0Merge.anchorNode (outerIso f g).symm)
+    (CoefficientMovingSquareRows.target_side_nodes g f (laurent.map g) (laurent.map f)
+      (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+      (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm i)
+  exact h.trans (BassMOuterJoin.anchor_pre_node _ _ _ _)
+
+open InputCompositionTopPieces
+
+theorem target_product_row (i : Fin 3) :
+    middleNodes f g (Quillen.SimplexGrid.index 2 4 (i, 0)) =
+      postReferenceNode (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+        (InputIdentityProjection.source X) (middleAnchor f g)
+        (BassH0Merge.binaryNodes f g i) := by
+  have h := product_column_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (baseSource f g) (baseVertices f g) (baseReferences f g)
+    (InputIdentityProjection.source X) (fun j ↦ (InputIdentityProjection.nodes X j).1)
+    (fun j ↦ (InputIdentityProjection.nodes X j).2) (middleAnchor f g) i 0
+  change _ = postReferenceNode _ _
+    (middleAnchor f g ≪≫ isoWhiskerLeft (baseSource f g).functor (Iso.refl _)) _ at h
+  have hb : (⟨baseVertices f g i, baseReferences f g i⟩ : Node (baseSource f g)) =
+      BassH0Merge.binaryNodes f g i := by
+    fin_cases i <;> rfl
+  exact h.trans ((post_refl_anchor _ _ _ _ _).trans
+    (congrArg (postReferenceNode _ _ (middleAnchor f g)) hb))
+
+theorem source_product_row (i : Fin 3) :
+    InputCompositionCarrierBottom.nodes f g (Quillen.SimplexGrid.index 4 2 (0, i)) =
+      preReferenceNode (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+        (InputIdentityProjection.source Z) (InputCompositionCarrierBottom.sourceIso f g)
+        (BassH0Merge.binaryNodes (laurent.map f) (laurent.map g) i) := by
+  have h := product_row_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (InputIdentityProjection.source Z) (fun j ↦ (InputIdentityProjection.nodes Z j).1)
+    (fun j ↦ (InputIdentityProjection.nodes Z j).2)
+    (InputCompositionCarrierBottom.laurentSource f g)
+    (InputCompositionCarrierBottom.laurentVertices f g)
+    (InputCompositionCarrierBottom.laurentReferences f g)
+    (InputCompositionCarrierBottom.sourceIso f g) 0 i
+  change _ = preReferenceNode _ _
+    (InputCompositionCarrierBottom.sourceIso f g ≪≫
+      isoWhiskerRight (Iso.refl _) (InputCompositionCarrierBottom.laurentSource f g).functor) _ at h
+  have hb : (⟨InputCompositionCarrierBottom.laurentVertices f g i,
+      InputCompositionCarrierBottom.laurentReferences f g i⟩ :
+      Node (InputCompositionCarrierBottom.laurentSource f g)) =
+      BassH0Merge.binaryNodes (laurent.map f) (laurent.map g) i := by
+    fin_cases i <;> rfl
+  exact h.trans ((pre_refl_anchor _ _ _ _ _).trans
+    (congrArg (preReferenceNode _ _ (InputCompositionCarrierBottom.sourceIso f g)) hb))
+
+theorem right_nodes (i : Fin 3) :
+    nodes f g (CoefficientMovingSquareRows.sourceSide i) =
+      middleNodes f g (Quillen.SimplexGrid.index 2 4 (i, 0)) := by
+  apply post_families_match_maps (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (BassH0Merge.normalizedMap (laurentProjection.app X)) (InputIdentityProjection.source X)
+    (baseSource f g) (projection_map X) (BassH0Merge.binaryNodes f g)
+    (right_row f g) (target_product_row f g) 0 ?_ i
+  exact (outer_nodes f g 4).trans
+    ((input_nodes (f ≫ g) 4).symm.trans (InputCompositionH0TopMiddleRows.plus_nodes f g 0))
+
+theorem left_nodes (i : Fin 3) :
+    nodes f g (CoefficientMovingSquareRows.targetSide i) =
+      InputCompositionCarrierBottom.nodes f g (Quillen.SimplexGrid.index 4 2 (0, i)) := by
+  apply BassMOuterJoin.pre_families_match_maps (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (BassH0Merge.normalizedMap (laurentProjection.app Z)) (InputIdentityProjection.source Z)
+    (InputCompositionCarrierBottom.laurentSource f g) (projection_map Z)
+    (BassH0Merge.binaryNodes (laurent.map f) (laurent.map g))
+    (left_row f g) (source_product_row f g) 0 ?_ i
+  exact (outer_nodes f g 2).trans
+    ((input_nodes (f ≫ g) 2).symm.trans (InputCompositionH0BottomRows.plus_nodes f g 0))
+
+
+/-- The source-side row inclusion in the eighteen-node moving square. -/
+def sourceEdge : ⦋2⦌ ⟶ ⦋17⦌ := SimplexCategory.Hom.mk
+  ⟨CoefficientMovingSquareRows.sourceSide, CoefficientMovingSquareRows.side_rows_monotone 0⟩
+/-- The target-side row inclusion in the eighteen-node moving square. -/
+def targetEdge : ⦋2⦌ ⟶ ⦋17⦌ := SimplexCategory.Hom.mk
+  ⟨CoefficientMovingSquareRows.targetSide, CoefficientMovingSquareRows.side_rows_monotone 1⟩
+
+theorem surface_right (r : unitInterval) :
+    surface f g (r, 1) = InputNullCompositionPolynomialCarrier.targetPositive f g (r, 0) := by
+  change parameter _ (nodes f g)
+    (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 1)) =
+      parameter _ (middleNodes f g)
+        (Quillen.SimplexGrid.parameter 2 4
+          (binaryPath (k := 2) 0 1 2 r, binaryPath (k := 4) 0 1 2 0))
+  rw [CoefficientMovingSquareRows.moving_right_row, Path.source,
+    Quillen.SimplexGrid.parameter_column]
+  exact (parameter_eq_of_face_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (nodes f g) (middleNodes f g) sourceEdge (Quillen.SimplexGrid.columnFace 2 4 0)
+    (fun i ↦ (right_nodes f g i).symm) (binaryPath (k := 2) 0 1 2 r)).symm
+
+theorem surface_left (r : unitInterval) :
+    surface f g (r, 0) = InputNullCompositionPolynomialCarrier.sourcePositive f g (r, 0) := by
+  change parameter _ (nodes f g)
+    (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, 0)) =
+      parameter _ (InputCompositionCarrierBottom.nodes f g)
+        (Quillen.SimplexGrid.parameter 4 2
+          (binaryPath (k := 4) 0 1 2 0, binaryPath (k := 2) 0 1 2 r))
+  rw [CoefficientMovingSquareRows.moving_left_row, Path.source,
+    Quillen.SimplexGrid.parameter_row]
+  exact (parameter_eq_of_face_nodes (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+    (nodes f g) (InputCompositionCarrierBottom.nodes f g) targetEdge
+    (Quillen.SimplexGrid.rowFace 4 2 0)
+    (fun i ↦ (left_nodes f g i).symm) (binaryPath (k := 2) 0 1 2 r)).symm
+
+theorem face_left (r : unitInterval) :
+    face f g (r, 0) = InputNullCompositionPolynomialCarrier.sourceRail f g (r, 0) := by
+  rw [InputNullCompositionPolynomialCarrier.sourceRail, Quillen.ScalarRectangle.concatSecond_zero]
+  change CutOpenCarrier.laurentInclusion _ _ _ _ _ (surface f g (r, 0)) =
+    CutOpenCarrier.laurentInclusion _ _ _ _ _
+      (InputNullCompositionPolynomialCarrier.sourcePositive f g (r, 0))
+  rw [surface_left]
+
+theorem face_right (r : unitInterval) :
+    face f g (r, 1) = InputNullCompositionPolynomialCarrier.targetRail f g (r, 0) := by
+  rw [InputNullCompositionPolynomialCarrier.targetRail, Quillen.ScalarRectangle.concatSecond_zero]
+  change CutOpenCarrier.laurentInclusion _ _ _ _ _ (surface f g (r, 1)) =
+    CutOpenCarrier.laurentInclusion _ _ _ _ _
+      (InputNullCompositionPolynomialCarrier.targetPositive f g (r, 0))
+  rw [surface_right]
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier

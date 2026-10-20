@@ -23,7 +23,7 @@ invalid input; preserve the prepared workspace and matching evidence.
 ## Aglib candidates
 
 The [`Quillen/Aglib/` source tree](../Quillen/Aglib/README.md) holds maintained
-general-theory source developed in Quillen for later inclusion in Aglib. Follow the [shared candidate policy](https://github.com/kangxyz/aglib/blob/main/doc/DEVELOPMENT.md#downstream-candidates-for-aglib).
+general-theory source developed in Quillen for later inclusion in Aglib. Follow the [shared candidate policy](https://github.com/kangxyz/aglib/blob/main/docs/DEVELOPMENT.md#downstream-candidates-for-aglib).
 
 Use `Quillen/Aglib/` as the source location and `Quillen.Aglib` as the temporary
 module prefix. Mirror the intended Aglib mathematical path below it. Keep

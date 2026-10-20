@@ -15,4 +15,8 @@
 `ModuleCat.scalarBaseChangeNatTrans` and `scalarBaseChangeNatTrans_unit` retain
 the whole candidate natural transformation and its actual unit equation.
 They are distinct from Aglib's per-module `scalarBaseChangeMap`; no component
-comparison is asserted. `Consumer.PublicLibraries` imports both public roots.
+comparison with that native API is asserted. The local
+[`CartesianBaseChange`](CartesianBaseChange.lean) leaf additionally proves
+`scalarBaseChangeMap_eq_isoApp`, the pure-tensor formula and invertibility
+of this natural transformation for an actual ring pushout, without flatness
+or finite-generation assumptions. `Consumer.PublicLibraries` imports both public roots.

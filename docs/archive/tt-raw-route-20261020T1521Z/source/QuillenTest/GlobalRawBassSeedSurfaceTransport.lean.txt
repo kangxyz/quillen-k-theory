@@ -1,0 +1,45 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedSurfaceTransport
+
+/-! The transported typed boundary recovers the original native composite null word. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassSeedSurfaceTransport
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Typed source recovery uses the whole surface theorem at its original zero clock. -/
+theorem original_composite_source (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CommonReferenceNerve.CutOpenCarrier.nativeEval
+        (InputIdentitySeedCarrier.polyRef (f ≫ g)) (InputIdentitySeedCarrier.chart (X := X))
+        (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+        (InputIdentitySeedCarrier.ordinary (f ≫ g)) (InputIdentitySeedCarrier.shifted (f ≫ g))
+        n (SeedSurfaceTransport.oldNull f g s) x) =
+      (InputCompositionNull.oldComposite f g).level n (s, x) := by
+  rw [← SeedSurfaceTransport.comparison_source]
+  exact (SeedSurfaceTransport.surface_native f g n 0 s x).trans
+    (((InputCompositionNull.firstComparison f g).level n).apply_zero (s, x))
+
+/-- The chart stage on every polynomial movement value is the maintained whole product face. -/
+theorem original_product_clock (r s : unitInterval) :
+    SeedSurfaceTransport.chartParameter f g (s, InputIdentitySeedCarrier.movement g r) =
+      InputCompositionTerminalProducts.face f g
+        AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex.plus
+        plus_projection (s, r) ∧
+    SeedSurfaceTransport.comparison f g (0, s) = SeedSurfaceTransport.oldNull f g s :=
+  ⟨SeedSurfaceTransport.chartParameter_movement f g r s,
+    (SeedSurfaceTransport.comparison f g).map_zero_left s⟩
+
+end QuillenTest.GlobalRawBassSeedSurfaceTransport

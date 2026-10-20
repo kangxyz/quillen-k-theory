@@ -1,0 +1,54 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSelectedRecovery
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartPreConePositiveNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartPreConeNegativeNative
+/-! The actual selected polynomial prewhiskering branch and its common-cone scalar placement. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+/-- The actual selected plus branch evaluates to the literal original nested square word. -/
+theorem selectedPlus_original (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    ProjectionReference.FourEdge.coneEval X
+      (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g) n
+      (selectedPlus f g c ((r, s), t)) x =
+    (InputIdentityPositive.inclusion X).map n
+      ((InputCompositionPolynomialScalar.nullSquare f g plus).level n
+        (r, (s, (boundedFlatPerfectPrespectrumSquareHomotopy
+          (polynomial.map c) (projection.app W) (projection.app Z) c
+          (projection.naturality c)).level n (t, x)))) := by
+  exact (prePlusConeMap_native f g c n (selectedPolynomial f g c plus ((r, s), t)) x).trans
+    (congrArg ((InputIdentityPositive.inclusion X).map n)
+      (selectedPolynomial_original f g c plus n r s t x))
+
+/-- The actual selected minus branch evaluates to the literal original nested square word. -/
+theorem selectedMinus_original (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    ProjectionReference.FourEdge.coneEval X
+      (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g) n
+      (selectedMinus f g c ((r, s), t)) x =
+    (InputIdentityNegative.inclusion X).map n
+      ((InputCompositionPolynomialScalar.nullSquare f g minus).level n
+        (r, (s, (boundedFlatPerfectPrespectrumSquareHomotopy
+          (polynomial.map c) (projection.app W) (projection.app Z) c
+          (projection.naturality c)).level n (t, x)))) := by
+  exact (preMinusConeMap_native f g c n (selectedPolynomial f g c minus ((r, s), t)) x).trans
+    (congrArg ((InputIdentityNegative.inclusion X).map n)
+      (selectedPolynomial_original f g c minus n r s t x))
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

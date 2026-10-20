@@ -1,0 +1,33 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputBinarySurface
+
+/-! The native simplex recovers both original chosen tracks without changing comparisons. -/
+
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.LoopPrespectrum.Homotopy.RelHomotopy
+open Quillen.PerfectComplexes.GlobalSupportedRawBass
+open Quillen.PerfectComplexes.GlobalSupportedRawBass.InputBinary
+open scoped unitInterval
+universe u
+variable {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+example (n : ℕ) (s : I) (x : (rawSpectrum Z).space n) :
+    prespectrumSimplexFamily (simplex f g) n
+      (Quillen.TheoremB.compositionTriangleHomotopy (0, s), x) =
+      (normalizedCompositionHomotopy f g).level n (s, x) :=
+  (relative_native_value f g n 0 s x).trans
+    (surfaceValue_zero (compositionComparison f g) n s x)
+
+example (n : ℕ) (s : I) (x : (rawSpectrum Z).space n) :
+    prespectrumSimplexFamily (simplex f g) n
+      (Quillen.TheoremB.compositionTriangleHomotopy (1, s), x) =
+      (compositionHomotopy f g).level n (s, x) :=
+  (relative_native_value f g n 1 s x).trans
+    (surfaceValue_one (compositionComparison f g) n s x)

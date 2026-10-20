@@ -12,7 +12,9 @@ Strict-perfect and locally perfect complexes have different models and compariso
 - [Original raw Bass evaluation and coherence](BoundedFlat/RawEvaluation.md)
 - [Original classes and geometric connecting maps](BoundedFlat/GeometricBoundary.md)
 - [Scheme Bass groups](Bass/README.md)
-- [Classical comparison boundaries](Development.md)
+- [Tensor-generated Bass construction and same-null localization](BoundedFlat/TensorBassConstruction.md)
+- [Fine Bass model interface](BoundedFlat/FineBassK.md)
+- [TT localization and additional comparisons](Development.md)
 
 ## Objects and conventions
 
@@ -34,9 +36,15 @@ This guide owns the perfect objects, supported/relative models, and their
 connective geometric localization comparisons. The generic spectrum and
 Bass-recursion interfaces are in [spectral and Bass interfaces](../../KTheory/Bass/README.md);
 scheme K/G and generic sheaf geometry are in [scheme K/G guide](../Scheme/README.md).
-The original current-stage full-open lift has an all-integer stable localization theorem in the [bounded-flat comparison guide](BoundedFlat/BassComparison.md#native-current-stage-full-open-localization). Identification with classical
-Thomason–Trobaugh localization retains the boundary in
-[classical comparison boundaries](Development.md).
+The [tensor-generated Bass realization](BoundedFlat/TensorBassConstruction.md)
+directly realizes TT §§6.3–6.4 and proves original Theorem 7.4: for qcqs `X`
+and quasi-compact open `U`, its basic canonical-null homotopy-fiber lift is a
+stable equivalence in every integer degree. The auxiliary lift has the same
+conclusion for closed support `Z` with quasi-compact complement. The
+[bounded-flat comparison guide](BoundedFlat/BassComparison.md#native-current-stage-full-open-localization)
+gives the exact endpoints and whole-null comparisons. A full multiplicative
+API and comparison with the [prescribed raw implementation](Development.md#comparison-with-the-prescribed-raw-point-set-implementation)
+remain additional tasks.
 The K-theory declarations below belong to `Quillen.PerfectComplexes` unless another
 namespace is specified. Their source is under
 `Quillen.AlgebraicGeometry.PerfectComplexes`. The general sheaf-complex interfaces
@@ -70,15 +78,15 @@ See [PerfectSupport.lean](PerfectSupport.lean).
 
 ## Remaining obligations
 
-The following comparison targets remain separate from the constructed
-strict/fine/current/normalized interfaces.
+The following targets remain separate from the proved TT 7.4 localization
+statements and the constructed strict/fine/current/normalized interfaces.
 
-- Identify the specified classical raw spectrum, forward Laurent cup/boundary
-  transitions and whole localization null diagram through all required
-  ambient, open and auxiliary-supported stages. The current-stage and
-  normalized-row lifts already have internal same-null localization,
-  original negative-class comparisons and signed positive geometric formulas.
-  Their full classical correspondence is the additional target.
+- Compare with the separately prescribed raw point-set spectrum, forward
+  Laurent cup/boundary transitions and whole localization null diagram through
+  the required ambient, open and auxiliary-supported stages. Retain that
+  implementation's chosen class maps and boundary conventions. The direct
+  tensor recipe already proves TT 7.4; this additional comparison is not a
+  premise of that theorem.
 - Complete the raw cone/step composition cube and higher compatibility of
   the chosen input-null, identity and composition data. Whole one-step
   evaluation naturality, the initial mixed seed relative comparison, raw map
@@ -99,18 +107,22 @@ strict/fine/current/normalized interfaces.
   quasi-compact bases; arbitrary-base-map naturality remains separate. The
   older finite-coefficient retract criterion keeps its uniform-window input.
 - Extend perfect preservation to the claimed general-source/unbounded
-  direct-image scope and general bounded-below flat-base-change invertibility
-  beyond the available QC-single and open specializations.
-- Extend strict/local equivalence to arbitrary nonaffine schemes and perfect
-  pullback to arbitrary non-quasi-compact schemes; compare Waldhausen and
-  triangulated-derived Grothendieck presentations.
+  direct-image scope. Any further perfect-model or K-theory base-change
+  comparison should distinguish the [available native D+ theorem](../../Aglib/AlgebraicGeometry/Modules/BaseChange/Derived/README.md#canonical-base-change-mates):
+  its direct-image morphism is quasi-compact and quasi-separated, its base leg
+  is flat, and the original homology sheaves are quasicoherent.
+- Extend strict/local equivalence to arbitrary nonaffine schemes and extend
+  the current `PerfectKFunctor` beyond quasi-compact schemes; compare
+  Waldhausen and triangulated-derived Grothendieck presentations. Existing
+  [strict-perfect, flat locally-perfect and bounded-flat pullbacks](../../Aglib/AlgebraicGeometry/Modules/PerfectComplexes/README.md#remaining-comparisons)
+  already have their respective non-quasi-compact geometric interfaces.
 - Supply any separately required general stable cofiber excision, replacement
   cofiber preservation and higher raw-spectrum coherence. The categorical
   stable localization has no asserted standard stable model structure or
   triangulation.
 
-[Classical comparison boundaries](Development.md) fixes the target and its
-source locators. The [cross-family scope summary](../../../docs/SCOPE.md)
+The [TT localization and comparison guide](Development.md) fixes the targets
+and their source locators. The [cross-family scope summary](../../../docs/SCOPE.md)
 links the other source owners.
 
 ## Source interfaces
@@ -139,6 +151,7 @@ links the other source owners.
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIdentityModels` | Original projection Model isomorphisms at the integer parameter, with support-forgetting and full-restriction squares |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliarySupportMaps`, `ParameterAuxiliaryCurrentFiber`, `ParameterAuxiliaryCurrentLocalization` | Actual union/auxiliary/inverse-open rows, original maps and whole null; all-signed current lift under compact P,Q,T and quasi-separated Q |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliaryNormalizedRowLocalization`, `ParameterNormalizedBasicLocalization` | Independent normalized-row path-space lifts, maps, nulls and stable localization with their original compact-open hypotheses |
+| [`ReturnedTensorGeneratedTrace`](BoundedFlat/ReturnedTensorGeneratedTrace.lean), [`ReturnedTensorRecursiveRecognition`](BoundedFlat/ReturnedTensorRecursiveRecognition.lean) | Actual forward left-[T] input, all-stage generated recursion and specified stable-roof recognition used for TT 7.4 |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientFinePerfectConnecting`, `CoefficientAuxiliaryFinePerfectConnecting` | Single-minus geometric boundary formulas on every original perfect class, including K₁ to supported K₀ |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterNormalizedBasicOriginalBoundary`, `ParameterAuxiliaryNormalizedRowBoundary` | Original negative groups and degree casts in intrinsic normalized-row boundary squares |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputNaturality`, `GlobalRawBassInputIdentitySeedSquare` | Whole raw one-step evaluation naturality and the prescribed transition-identity square |

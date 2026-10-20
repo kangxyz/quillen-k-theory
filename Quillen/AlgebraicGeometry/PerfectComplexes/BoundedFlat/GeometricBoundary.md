@@ -7,7 +7,12 @@ degrees the fixed original class maps give an explicit minus sign between
 the stable boundary and the geometric Waldhausen boundary. The original
 negative-class squares use their separately defined localization boundary.
 These conclusions retain their conventions; they do not constitute a
-single all-integer comparison with a classical raw spectrum.
+single all-integer comparison with the separately prescribed raw spectrum.
+The [tensor-generated realization](TensorBassConstruction.md) directly proves
+original TT 7.4 using the actual support maps and whole acyclicity null.
+That theorem does not require equality with an independently prescribed
+boundary presentation. The extra class and boundary comparisons below keep
+their stated maps, signs and domains.
 
 ## Degrees, classes and the original null
 
@@ -281,8 +286,9 @@ existing absolute `supportedNegativeLocalizationConnecting` in every index.
 Its assumptions are precisely compact quasi-separated `Q` and compact `U`.
 The positive geometric formula above and this original negative square have
 different stated domains and conventions; joining their ranges does not
-construct the remaining raw-spectrum, transition and same-null classical
-comparison.
+construct the additional comparison with the prescribed raw spectrum,
+transitions and whole null. That comparison is separate from the direct
+TT 7.4 localization theorem.
 
 Source and validation identities belong to the
 [evidence registry](../../../../docs/evidence/README.md#tt-source-and-validation-records).

@@ -1,0 +1,105 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetLaurentReanchor
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSpanReanchor
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetConeMap
+
+/-!
+# The whole original cone action commutes with input reanchoring
+
+The entire Laurent action, the original tip, the whole H0 surface on the first half and the
+whole target span on the second half satisfy the strict scalar square. Descent through the
+original unreduced cone therefore retains every original parameter family and clock. No
+replacement action, native injectivity or unknown filler is used.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u v
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetCone
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct CommonReferenceNerve.CutOpenCarrier
+open FourEdgeTree Quillen.NativePathCells
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+local notation "U" => normalizedMap (coefficientMap P f)
+local notation "Ja" => normalizedMap (polynomialProjection P a)
+local notation "Jb" => normalizedMap (polynomialProjection P b)
+local notation "Fa" => WholeReference.reference P a E
+local notation "Fa'" => WholeReference.reference P a E'
+local notation "Fb" => WholeReference.reference P b (E ≫ U)
+local notation "Fb'" => WholeReference.reference P b (E' ≫ U)
+
+/-- The original full cone action and the specified input reanchoring commute strictly. -/
+theorem coneMap_reanchor (z : scalarCone P a E) :
+    Reanchor.cone P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)
+        (coneMap P f E z) =
+      coneMap P f E' (Reanchor.cone P a E E' δ z) := by
+  have h := SetDescent.funext (beta P a E) (SSet.stdSimplex.isTerminalObj₀.from _)
+    (fun y ↦ Reanchor.cone P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)
+      (coneMap P f E y))
+    (fun y ↦ coneMap P f E' (Reanchor.cone P a E E' δ y))
+  apply congrFun (h ?_ ?_ ?_) z
+  · rintro ⟨y, ⟨t⟩⟩
+    change Reanchor.cone P b _ _ _
+      (coneMap P f E (cylinder E Ja Fa (beta P a E) (y, t))) =
+      coneMap P f E' (Reanchor.cone P a E E' δ
+        (cylinder E Ja Fa (beta P a E) (y, t)))
+    rcases cover t with ⟨s, rfl⟩ | ⟨s, rfl⟩
+    · rw [Reanchor.cone_cylinder, coneMap_lower, coneMap_lower,
+        Reanchor.cone_laurent, surface_reanchor]
+    · rw [Reanchor.cone_cylinder, coneMap_upper, coneMap_upper,
+        Reanchor.cone_cylinder, TargetSpan.treeMap_reanchor]
+  · intro y
+    change Reanchor.cone P b _ _ _
+      (coneMap P f E (laurentInclusion E Ja Fa (beta P a E) y)) =
+      coneMap P f E' (Reanchor.cone P a E E' δ
+        (laurentInclusion E Ja Fa (beta P a E) y))
+    rw [Reanchor.cone_laurent, coneMap_laurent, coneMap_laurent]
+    change Reanchor.cone P b _ _ _
+      (laurentInclusion (E ≫ U) Jb Fb (beta P b (E ≫ U)) (laurent P f E y)) =
+      laurentInclusion (E' ≫ U) Jb Fb' (beta P b (E' ≫ U))
+        (laurent P f E' (mapParameter (reanchor _) y))
+    rw [Reanchor.cone_laurent, laurent_input_reanchor]
+  · intro y
+    have hy : y = (default : |tipSSet|) := Subsingleton.elim _ _
+    subst y
+    change Reanchor.cone P b _ _ _
+      (coneMap P f E (tip E Ja Fa (beta P a E))) =
+      coneMap P f E' (Reanchor.cone P a E E' δ (tip E Ja Fa (beta P a E)))
+    rw [Reanchor.cone_tip, coneMap_tip, coneMap_tip, Reanchor.cone_tip]
+
+/-- The complete scalar action/reanchoring diagram is an equality of continuous maps. -/
+theorem coneMap_reanchor_square :
+    (Reanchor.cone P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)).comp
+        (coneMap P f E) =
+      (coneMap P f E').comp (Reanchor.cone P a E E' δ) := by
+  ext z
+  exact coneMap_reanchor P f E E' δ z
+
+/-- Any already specified scalar family retains every external and original cone coordinate. -/
+theorem coneMap_reanchor_family {T : Type v} [TopologicalSpace T]
+    (p : C(T, scalarCone P a E)) :
+    (Reanchor.cone P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)).comp
+        ((coneMap P f E).comp p) =
+      (coneMap P f E').comp ((Reanchor.cone P a E E' δ).comp p) := by
+  ext z
+  exact coneMap_reanchor P f E E' δ (p z)
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetCone

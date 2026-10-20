@@ -1,0 +1,33 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionProjectionConeCorrected
+/-! Regression for actual whole corrected chart endpoint attachments. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry
+open Quillen.PerfectComplexes.GlobalRawBass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputCompositionProjectionEndpoints
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The whole positive corrected square attaches with both original free coordinates. -/
+theorem positive_whole_endpoint (r s : unitInterval) :
+    InputCompositionProjectionAttachment.plusConeMap f g
+      ((InputCompositionPolynomialScalar.correctedSquare f g plus).parameter (r,s)) =
+        InputCompositionOverlapScalar.correctedFamily f g ((r,s),0) :=
+  InputCompositionProjectionAttachment.plus_corrected f g r s
+
+/-- The whole inverse corrected square attaches without exchanging its two coordinates. -/
+theorem inverse_whole_endpoint (r s : unitInterval) :
+    InputCompositionProjectionAttachment.minusConeMap f g
+      ((InputCompositionPolynomialScalar.correctedSquare f g minus).parameter (r,s)) =
+        InputCompositionOverlapScalar.correctedFamily f g ((r,s),1) :=
+  InputCompositionProjectionAttachment.minus_corrected f g r s
+end QuillenTest.GlobalRawBassInputCompositionProjectionEndpoints

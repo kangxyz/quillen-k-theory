@@ -1,0 +1,51 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterRowSquare
+import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterProjection
+
+/-! Independent original-null consumers on literal polynomial and Laurent parameter rows. -/
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open scoped Topology unitInterval
+universe u
+namespace Consumer.GlobalSupportedRawParameterNull
+open GlobalSectionChangeIndex SupportedParameterSwap GlobalSupportedRawBass
+open GlobalSupportedRawBass.Localization.Parameter
+variable {U X S : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+  (p : S ⟶ integerBase) [QuasiCompact p]
+
+/-- The client receives every point of the original fixed-factor null under the genuine swap. -/
+theorem old_null (n : ℕ) (s : I)
+    (x : (prespectrum ((ParameterAuxiliarySupport.fiber j T).obj (op S))).space n) :
+    (prespectrumMap (sectionIso p (Rows.target j T)).hom).map n
+        (((ParameterAuxiliarySupport.fullNull j T).homotopy (op S)).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionIso p (Rows.source j T)).hom).map n x) :=
+  strictNull_recovery j T p n s x
+
+/-- The actual original two-row word and complete original nulls bound the constructed square. -/
+def exact_square :
+    (postSectionNull j T p).Square (preRawNull j T p) (rowWord j T p)
+      (Quillen.LoopPrespectrum.Homotopy.refl
+        (Quillen.LoopPrespectrum.zeroHom (prespectrum (strictSource j T p))
+          (prespectrum (targetModel j T p)))) :=
+  rowSquare j T p
+
+/-- The client can use the untouched original base-null clock under actual parameter projection. -/
+theorem projected_null (n : ℕ) (s : I)
+    (x : (prespectrum (ParameterIdentity.sectionSource j T)).space n) :
+    (prespectrumMap (sectionProjection p (Rows.target j T))).map n
+        ((ParameterIdentity.sectionNull j T).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionProjection p (Rows.source j T))).map n x) :=
+  strictNull_projection j T p n s x
+
+end Consumer.GlobalSupportedRawParameterNull

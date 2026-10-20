@@ -1,0 +1,255 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPolynomialCarrier
+public import Quillen.Topology.Prespectrum.CarrierSquareDescentEvaluation
+public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionBottomSeams
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPositiveFactor
+
+/-! The explicit corrected scalar square and source rail with all original clocks. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH1Join
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionPolynomialCarrier
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+local notation "F" => InputIdentitySeedCarrier.polyRef (f ≫ g)
+local notation "G" => InputIdentitySeedCarrier.laurentRef (f ≫ g)
+local notation "J" => InputIdentitySeedCarrier.chart (X := X)
+local notation "ε" => InputIdentitySeedCarrier.ordinary (f ≫ g)
+local notation "ε'" => InputIdentitySeedCarrier.shifted (f ≫ g)
+open Quillen.SimplexParameters Quillen.ScalarRectangle Quillen.NativePathCells
+
+/-- The actual uncorrected moving-null row, with the ordinary tip fixed. -/
+def movingNullPath (r : unitInterval) :
+    Path (nullMovingFirst f g (r, 0)) (InputIdentitySeedCone.tip (f ≫ g) false) where
+  toFun s := nullMoving f g (r, s)
+  continuous_toFun := by fun_prop
+  source' := concatSecond_zero _ _ _ r
+  target' := nullMoving_tip f g r
+
+/-- The entire bottom edge is retained as a path, not replaced by endpoint data. -/
+def nullBottom : Path (nullMovingFirst f g (0, 0)) (nullMovingFirst f g (1, 0)) where
+  toFun r := nullMovingFirst f g (r, 0)
+  continuous_toFun := by fun_prop
+  source' := rfl
+  target' := rfl
+
+/-- The scalar square comes from the explicit Laurent/cylinder construction above. -/
+def movingSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g 0)
+    (movingNullPath f g 1) (nullBottom f g)
+    (Path.refl (InputIdentitySeedCone.tip (f ≫ g) false)) where
+  parameter := nullMoving f g
+  at_zero _ := rfl
+  at_one _ := rfl
+  left r := concatSecond_zero _ _ _ r
+  right r := nullMoving_tip f g r
+
+/-- The first original half of the last chart row. -/
+def finalChartFirst : Path (nullMovingFirst f g (1, 0))
+    (nullMovingFirst f g (1, lower 1)) where
+  toFun s := nullMovingFirst f g (1, lower s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [lower]))
+  target' := rfl
+
+/-- The second original half of the last chart row; its middle endpoint is exact. -/
+def finalChartSecond : Path (nullMovingFirst f g (1, lower 1))
+    (nullMovingFirst f g (1, 1)) where
+  toFun s := nullMovingFirst f g (1, upper s)
+  continuous_toFun := by fun_prop
+  source' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [lower, upper]))
+  target' := congrArg (fun t ↦ nullMovingFirst f g (1, t))
+    (Subtype.ext (by norm_num [upper]))
+
+/-- The last cylinder row, attached at its original scalar seam. -/
+def finalCylinder : Path (nullMovingFirst f g (1, 1))
+    (InputIdentitySeedCone.tip (f ≫ g) false) where
+  toFun s := nullMovingSecond f g (1, s)
+  continuous_toFun := by fun_prop
+  source' := (nullMoving_seam f g 1).symm
+  target' := CutOpenCarrier.cylinderMinus_one F J G ε ε' (pausedPolynomial f g 1)
+
+/-- Splitting the chart at its original half height recovers the entire original row. -/
+theorem finalChart_halves (s : unitInterval) :
+    ((finalChartFirst f g).trans (finalChartSecond f g)) s =
+      nullMovingFirst f g (1, s) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower]
+    rfl
+  · rw [path_upper]
+    rfl
+
+/-- The uncorrected final row has precisely the left-associated three-piece word. -/
+theorem movingNullPath_one :
+    ((finalChartFirst f g).trans (finalChartSecond f g)).trans (finalCylinder f g) =
+      movingNullPath f g 1 := by
+  apply Path.ext
+  funext s
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [path_lower, finalChart_halves]
+    exact (nullMoving_lower f g 1 t).symm
+  · rw [path_upper]
+    exact (nullMoving_upper f g 1 t).symm
+
+/-- The prescribed correction is the literal path associator of the three original pieces. -/
+def finalCorrection : (movingNullPath f g 1).Homotopy
+    ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g))) :=
+  (Path.Homotopy.transAssoc (finalChartFirst f g) (finalChartSecond f g)
+    (finalCylinder f g)).cast (movingNullPath_one f g) rfl
+
+/-- The full chosen boundary recipe retains both horizontal compositions and the terminal pause. -/
+def correctedBoundary : (movingNullPath f g 0).Homotopy
+    (((nullBottom f g).trans
+      ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g)))).trans
+        (Path.refl (InputIdentitySeedCone.tip (f ≫ g) false)).symm) :=
+  (movingSquare f g).toBoundary.trans
+    (((Path.Homotopy.refl (nullBottom f g)).hcomp (finalCorrection f g)).hcomp
+      (Path.Homotopy.refl (Path.refl (InputIdentitySeedCone.tip (f ≫ g) false)).symm))
+
+/-- The actual corrected scalar square descends the literal boundary recipe. -/
+def correctedSquare : Quillen.CarrierPathSquare.Square (movingNullPath f g 0)
+    ((finalChartFirst f g).trans ((finalChartSecond f g).trans (finalCylinder f g)))
+    (nullBottom f g) (Path.refl (InputIdentitySeedCone.tip (f ≫ g) false)) :=
+  Quillen.CarrierPathSquare.boundarySquare (correctedBoundary f g)
+
+/-- Every collapsed parameter is recovered exactly, preserving the complete correction interior. -/
+theorem correctedSquare_collapse (z : unitInterval × unitInterval) :
+    (correctedSquare f g).parameter (Quillen.ThreeSideSquare.collapse z) =
+      correctedBoundary f g z :=
+  Quillen.CarrierPathSquare.boundaryParameter_collapse (correctedBoundary f g) z
+
+/-- The Laurent part evaluates to the actual paused positive chart square. -/
+theorem nullMovingFirst_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (nullMovingFirst f g (r, s)) x =
+      (mappingConeInclusion (InputIdentityPositive.chart X)).map n
+        ((InputCompositionCharts.plusChart f g).level n
+          (r, (s, (boundedFlatPerfectPrespectrumMap (projection.app Z)).map n x))) := by
+  change CutOpenCarrier.nativeEval F J G ε ε' n
+    (CutOpenCarrier.laurentInclusion F J G ε ε'
+      (InputCompositionCarrierCharts.chartFace f g plus plus_projection (r, s))) x = _
+  rw [CutOpenCarrier.nativeEval_laurentInclusion, pointwisePrespectrumFamily_eq_compact]
+  exact congrArg ((mappingConeInclusion (InputIdentityPositive.chart X)).map n)
+    (InputCompositionCarrierCharts.plusFace_native f g n r s x)
+
+/-- The original polynomial pause is recovered at every scalar time. -/
+theorem pausedPolynomial_native (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily F n (pausedPolynomial f g r) x =
+      (InputCompositionPositive.polynomialTrack f g).level n
+        (r, (boundedFlatPerfectPrespectrumMap (projection.app Z)).map n x) := by
+  rcases cover r with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [pausedPolynomial, path_lower]
+    change pointwisePrespectrumFamily F n (surface f g (t, 0)) x = _
+    rw [surface_native, (InputCompositionPolynomial.square f g).left]
+    exact (Homotopy.trans_lower_cell
+      (InputCompositionPolynomial.polynomialComposition f g)
+      (Quillen.LoopPrespectrum.Homotopy.refl _) n t _).symm
+  · rw [pausedPolynomial, path_upper]
+    change pointwisePrespectrumFamily F n (surface f g (1, 0)) x = _
+    rw [surface_native, (InputCompositionPolynomial.square f g).left]
+    change (InputCompositionPolynomial.polynomialComposition f g).level n (1, _) = _
+    rw [Homotopy.at_one]
+    exact (Homotopy.trans_upper_cell
+      (InputCompositionPolynomial.polynomialComposition f g)
+      (Quillen.LoopPrespectrum.Homotopy.refl _) n t _).symm
+
+/-- The complete cylinder uses the original paused polynomial input and independent height. -/
+theorem nullMovingSecond_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (nullMovingSecond f g (r, s)) x =
+      (mappingConeHomotopy (InputIdentityPositive.chart X)).level n
+        (s, (InputCompositionPositive.polynomialTrack f g).level n
+          (r, (boundedFlatPerfectPrespectrumMap (projection.app Z)).map n x)) := by
+  change CutOpenCarrier.nativeEval F J G ε ε' n
+    (CutOpenCarrier.cylinderMinus F J G ε ε' (pausedPolynomial f g r, s)) x = _
+  rw [CutOpenCarrier.nativeEval_cylinderMinus, pausedPolynomial_native]
+  rfl
+
+/-- The uncorrected native square is the original positive moving-null construction. -/
+def nativeMovingSquare := coneSquareNullMovingSquare
+  (InputIdentityPositive.chart Z) (InputIdentityPositive.chart X)
+  (plusSquareHomotopy (f ≫ g)) (InputCompositionPositive.compositeComparison f g)
+  (InputCompositionPositive.polynomialTrack f g)
+  (InputCompositionCharts.laurentComposition f g)
+  (InputCompositionPositive.comparisonSquare f g)
+
+/-- Both complete original half surfaces agree at every input and every clock. -/
+theorem nullMoving_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (nullMoving f g (r, s)) x =
+      (nativeMovingSquare f g).level n
+        (r, (s, (boundedFlatPerfectPrespectrumMap (projection.app Z)).map n x)) := by
+  rcases cover s with ⟨t, rfl⟩ | ⟨t, rfl⟩
+  · rw [nullMoving_lower, nullMovingFirst_native]
+    unfold nativeMovingSquare coneSquareNullMovingSquare
+    rw [Homotopy.Square.nativePastePaths_lower]
+    rfl
+  · rw [nullMoving_upper, nullMovingSecond_native]
+    unfold nativeMovingSquare coneSquareNullMovingSquare
+    rw [Homotopy.Square.nativePastePaths_upper]
+    rfl
+
+/-- The original collapse is preserved by evaluation on the entire moving square. -/
+theorem movingBoundary_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n ((movingSquare f g).toBoundary (r, s)) x =
+      (nativeMovingSquare f g).toBoundary.level n
+        (r, (s, (boundedFlatPerfectPrespectrumMap (projection.app Z)).map n x)) :=
+  nullMoving_native f g n (Quillen.ThreeSideSquare.collapse (r, s)).1
+    (Quillen.ThreeSideSquare.collapse (r, s)).2 x
+
+/-- The source Laurent half meets the actual positive bottom row before evaluation. -/
+theorem sourcePositive_end (r : unitInterval) :
+    sourcePositive f g (r, 1) = InputCompositionCarrierBottom.face f g (r, 0) := by
+  change parameter G (InputCompositionCarrierBottom.nodes f g)
+    (Quillen.SimplexGrid.parameter 4 2
+      (binaryPath (k := 4) 0 1 2 1, binaryPath (k := 2) 0 1 2 r)) =
+    parameter G (InputCompositionCarrierBottom.nodes f g)
+    (Quillen.SimplexGrid.parameter 4 2
+      (InputIdentityProjection.parameter 0, binaryPath (k := 2) 0 1 2 r))
+  rw [Path.target, Path.source]
+
+/-- Corrected square descent keeps the full scalar seam, not merely its native image. -/
+theorem sourceRail_seam (r : unitInterval) :
+    sourceFirst f g (r, 1) = (correctedSquare f g).parameter (r, 0) := by
+  rw [(correctedSquare f g).left]
+  change CutOpenCarrier.laurentInclusion F J G ε ε' (sourcePositive f g (r, 1)) =
+    CutOpenCarrier.laurentInclusion F J G ε ε'
+      (InputCompositionCarrierCharts.chartFace f g plus plus_projection (r, 0))
+  rw [sourcePositive_end, InputCompositionBottomSeams.bottom_plus]
+
+/-- Both original source halves now form an explicit continuous scalar surface. -/
+def sourceRail : C(unitInterval × unitInterval, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  concatSecond (sourceFirst f g) (correctedSquare f g).parameter (sourceRail_seam f g)
+
+/-- The Laurent half retains its original half-height speed. -/
+theorem sourceRail_lower (r s : unitInterval) :
+    sourceRail f g (r, lower s) = sourceFirst f g (r, s) :=
+  concatSecond_lower _ _ _ r s
+
+/-- The corrected cylinder half retains both original independent clocks. -/
+theorem sourceRail_upper (r s : unitInterval) :
+    sourceRail f g (r, upper s) = (correctedSquare f g).parameter (r, s) :=
+  concatSecond_upper _ _ _ r s
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionPolynomialCarrier

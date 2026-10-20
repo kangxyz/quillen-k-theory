@@ -1,0 +1,100 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalReference
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeProjectionBinaryRows
+
+/-!
+# The full target Bass row of the original H0 diagram
+
+The two original target binary rows retain their common full normalized source. The inverse
+chart uses its actual projection equality transport. No native-value cancellation is used.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge BassH1Join CommonReferenceNerve
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+local notation "U" => InputCompositionTerminalAttach.arrow f
+local notation "F" => InputDescSimplex.reference f
+
+/-- The complete target binary row occupies the original final three rectangle labels. -/
+def terminalChartRow : Fin 3 → Fin 18 := ![15, 16, 17]
+
+/-- Every positive target node retains its entire original precomposed binary reference. -/
+theorem terminal_plus_nodes (i : Fin 3) :
+    InputDescSimplex.chartNodes f plus plus_projection (terminalChartRow i) =
+      preReferenceNode F U (terminalBaseAnchor f)
+        (binaryNodes (plus.app X) (projection.app X) i) := by
+  have h (j : Fin 3) := native_target_row
+    (projection.app Y) (plus.app Y)
+    (projection.app X) (plus.app X)
+    f (polynomial.map f)
+    (laurent.map f)
+    (projection.naturality f)
+    (plus.naturality f)
+    (laurentProjection.app Y) (plus_projection Y) j
+  have he := (h 0).symm.trans ((terminal_normal_node f).trans
+    (preReferenceNode_source F U (terminalBaseAnchor f)).symm)
+  have hi : DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i) =
+      terminalChartRow i := by fin_cases i <;> rfl
+  have hh := (h i).trans (preBinaryNodes_of_source he i)
+  rw [hi] at hh
+  exact hh
+
+/-- The inverse target row uses its distinct chart and exact shared-source transport. -/
+theorem terminal_minus_nodes (i : Fin 3) :
+    InputDescSimplex.chartNodes f minus minus_projection (terminalChartRow i) =
+      preReferenceNode F U
+        (terminalBaseAnchor f ≪≫ isoWhiskerLeft (U).functor (InputIdentityProjection.sourceIso X))
+        (binaryNodes (minus.app X) (projection.app X) i) := by
+  have h (j : Fin 3) := native_target_row
+    (projection.app Y) (minus.app Y)
+    (projection.app X) (minus.app X)
+    f (polynomial.map f)
+    (laurent.map f)
+    (projection.naturality f)
+    (minus.naturality f)
+    (laurentProjection.app Y) (minus_projection Y) j
+  have hc := (InputDescSimplex.shared_nodes f 4).symm.trans (terminal_normal_node f)
+  have ht := preReferenceNode_source_transport F U (InputIdentityProjection.source_eq X)
+    (terminalBaseAnchor f)
+  have he := (h 0).symm.trans (hc.trans (ht.trans
+    (preReferenceNode_source F U
+      (terminalBaseAnchor f ≪≫
+        isoWhiskerLeft (U).functor (InputIdentityProjection.sourceIso X))).symm))
+  have hi : DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i) =
+      terminalChartRow i := by fin_cases i <;> rfl
+  have hh := (h i).trans (preBinaryNodes_of_source he i)
+  rw [hi] at hh
+  exact hh
+
+/-- The two original target paths retain their common center and separate raw intermediates. -/
+def terminalRow : Fin 5 → Fin 31 := ![26, 27, 28, 29, 30]
+
+/-- The full five-node terminal Bass family is literally precomposed by the coefficient map. -/
+theorem terminal_nodes (i : Fin 5) :
+    InputDescSimplex.nodes f (terminalRow i) =
+      preReferenceNode F U (terminalBaseAnchor f) (InputIdentityProjection.nodes X i) := by
+  fin_cases i
+  · exact (InputDescSimplex.plus_nodes f 15).trans (terminal_plus_nodes f 0)
+  · exact (InputDescSimplex.plus_nodes f 16).trans (terminal_plus_nodes f 1)
+  · exact (InputDescSimplex.plus_nodes f 17).trans (terminal_plus_nodes f 2)
+  · refine (InputDescSimplex.minus_nodes f 16).trans ((terminal_minus_nodes f 1).trans ?_)
+    exact (pre_anchor_node F U (terminalBaseAnchor f) (InputIdentityProjection.sourceIso X)
+      (binaryNodes (minus.app X) (projection.app X) 1)).symm
+  · refine (InputDescSimplex.minus_nodes f 17).trans ((terminal_minus_nodes f 2).trans ?_)
+    exact (pre_anchor_node F U (terminalBaseAnchor f) (InputIdentityProjection.sourceIso X)
+      (binaryNodes (minus.app X) (projection.app X) 2)).symm
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

@@ -1,0 +1,103 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawSplitSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawTripleTrack
+public import Quillen.Topology.Prespectrum.ContravariantCompositionTracks
+
+/-!
+# Actual supported raw input chart pastings
+
+Every arrow of the existing quasi-compact open-pair category gives actual polynomial and
+Laurent pair arrows. Their original split pullback tracks form the four input squares.
+The proved supported triple comparison supplies both entire chart pastings through the
+generic three-route construction. No spectral square filler is an additional hypothesis.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.Bass
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+
+/-- The actual supported contravariant tracks, with their proved original associativity cell. -/
+def compositionTracks : ContravariantCompositionTracks Scheme.OpenPairs.{u} where
+  obj := rawSpectrum
+  map := rawMap
+  composition := compositionHomotopy
+  associativity := tripleComparison
+
+namespace InputGeometry
+variable {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+
+/-- The existing polynomial pair map, retaining its entire open-pair square. -/
+abbrev polynomialMap : Geometry.polynomial A ⟶ Geometry.polynomial B :=
+  Scheme.quasiCompactOpenPairsInclusion.map (pairPolynomialFunctor.map f)
+
+/-- The existing Laurent pair map, retaining both entries of the product square. -/
+abbrev laurentMap : Geometry.laurent A ⟶ Geometry.laurent B :=
+  Scheme.quasiCompactOpenPairsInclusion.map (pairLaurentFunctor.map f)
+
+/-- Polynomial projection naturality is the original equality of whole pair arrows. -/
+theorem projection_naturality :
+    polynomialMap f ≫ Geometry.projection B = Geometry.projection A ≫ f.hom := by
+  simpa only [Functor.map_comp, Functor.id_map, Functor.id_obj,
+    Scheme.quasiCompactOpenPairsInclusion, ObjectProperty.ι_obj, ObjectProperty.ι_map,
+    ObjectProperty.FullSubcategory.comp_hom,
+    polynomialMap, Geometry.polynomial, Geometry.projection] using
+    congrArg Scheme.quasiCompactOpenPairsInclusion.map (pairPolynomialProjection.naturality f)
+
+/-- Positive-chart naturality retains the actual product pullbacks. -/
+theorem plus_naturality :
+    laurentMap f ≫ Geometry.plus B = Geometry.plus A ≫ polynomialMap f := by
+  simpa only [Functor.map_comp] using
+    congrArg Scheme.quasiCompactOpenPairsInclusion.map (pairPlus.naturality f)
+
+/-- The inverse chart has its own original whole pair-arrow naturality equation. -/
+theorem minus_naturality :
+    laurentMap f ≫ Geometry.minus B = Geometry.minus A ≫ polynomialMap f := by
+  simpa only [Functor.map_comp] using
+    congrArg Scheme.quasiCompactOpenPairsInclusion.map (pairMinus.naturality f)
+
+/-- Both charts use this same actual Laurent projection square. -/
+theorem laurentProjection_naturality :
+    laurentMap f ≫ Geometry.laurentProjection B = Geometry.laurentProjection A ≫ f.hom := by
+  simpa only [Functor.map_comp, Functor.id_map, Functor.id_obj,
+    Scheme.quasiCompactOpenPairsInclusion, ObjectProperty.ι_obj, ObjectProperty.ι_map,
+    ObjectProperty.FullSubcategory.comp_hom,
+    laurentMap, Geometry.laurent, Geometry.laurentProjection] using
+    congrArg Scheme.quasiCompactOpenPairsInclusion.map (pairLaurentProjection.naturality f)
+
+end InputGeometry
+
+variable {A B : Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+
+/-- All actual supported chart squares and both proved whole pastings form one input. -/
+def splitInput : SplitSquare.Input (splitSquare B) (splitSquare A) where
+  a := rawMap f.hom
+  b := rawMap (InputGeometry.polynomialMap f)
+  c := rawMap (InputGeometry.laurentMap f)
+  Q := compositionTracks.square _ _ _ _ (InputGeometry.projection_naturality f)
+  Hp := compositionTracks.square _ _ _ _ (InputGeometry.plus_naturality f)
+  Hm := compositionTracks.square _ _ _ _ (InputGeometry.minus_naturality f)
+  T := compositionTracks.square _ _ _ _ (InputGeometry.laurentProjection_naturality f)
+  Jp := compositionTracks.projectionComparison
+    (Geometry.projection B) (Geometry.plus B) (Geometry.projection A) (Geometry.plus A)
+    f.hom (InputGeometry.polynomialMap f) (InputGeometry.laurentMap f)
+    (InputGeometry.projection_naturality f) (InputGeometry.plus_naturality f)
+    (Geometry.laurentProjection B) (Geometry.laurentProjection A)
+    (Geometry.plus_projection B) (Geometry.plus_projection A)
+  Jm := compositionTracks.projectionComparison
+    (Geometry.projection B) (Geometry.minus B) (Geometry.projection A) (Geometry.minus A)
+    f.hom (InputGeometry.polynomialMap f) (InputGeometry.laurentMap f)
+    (InputGeometry.projection_naturality f) (InputGeometry.minus_naturality f)
+    (Geometry.laurentProjection B) (Geometry.laurentProjection A)
+    (Geometry.minus_projection B) (Geometry.minus_projection A)
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass

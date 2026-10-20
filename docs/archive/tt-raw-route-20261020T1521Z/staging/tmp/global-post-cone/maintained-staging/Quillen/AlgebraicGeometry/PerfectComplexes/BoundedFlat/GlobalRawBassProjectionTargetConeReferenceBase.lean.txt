@@ -1,0 +1,79 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalBoundary
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetSource
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceReanchorAttachment
+
+/-! The original target surface in the literal target Laurent reference, with its proved full source
+  seam. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetCone
+open BassH0Merge CommonReferenceNerve FourEdge
+attribute [local irreducible] boundedFlatNormalizedPullback
+
+private theorem map_comp {V W V' W' V'' W'' : Model.{u}}
+    {F : V ⟶ W} {G : V' ⟶ W'} {H : V'' ⟶ W''}
+    (h : CommonReferenceNerve.Node F → CommonReferenceNerve.Node G)
+    (g : CommonReferenceNerve.Node G → CommonReferenceNerve.Node H)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node F))|) :
+    mapParameter (fun N ↦ g (h N)) y = mapParameter g (mapParameter h y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter F y
+  simp only [mapParameter_parameter]
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "U" => InputCompositionTerminalAttach.arrow f
+local notation "Ja" => projectionMap Y
+
+/-- The actual full H0 reference is transported into the literal target Laurent reference. -/
+def toTargetNode : CommonReferenceNerve.Node (Target.reference f E) →
+    CommonReferenceNerve.Node (ProjectionReference.reference X (E ≫ U)) :=
+  CommonReferenceProduct.reanchor (Target.terminalBoundaryAnchor f E).symm
+
+/-- The Laurent source map retains its full original coefficient postcomposition anchor. -/
+def sourceNode (N : CommonReferenceNerve.Node (ProjectionReference.reference Y E)) :
+    CommonReferenceNerve.Node (ProjectionReference.reference X (E ≫ U)) :=
+  toTargetNode f E (Target.sourceBoundaryNode f E N)
+
+/-- The actual complete Laurent coefficient map in the target reference. -/
+def laurent : C(|nerve (Codiscrete (CommonReferenceNerve.Node (ProjectionReference.reference Y
+  E)))|,
+    |nerve (Codiscrete (CommonReferenceNerve.Node (ProjectionReference.reference X (E ≫ U))))|) :=
+  mapParameter (sourceNode f E)
+
+/-- The original whole H0 target surface, with its full reference transport and unchanged time. -/
+def surface : C(FourEdgeTree.space E Ja × I,
+    |nerve (Codiscrete (CommonReferenceNerve.Node (ProjectionReference.reference X (E ≫ U))))|) :=
+  (mapParameter (toTargetNode f E)).comp (Target.tree f E)
+
+/-- The full original Laurent map is the source of this unchanged surface. -/
+theorem surface_zero (z : FourEdgeTree.space E Ja) :
+    surface f E (z, 0) = laurent f E (SSet.toTop.map (FourEdge.beta Y E) z) := by
+  change mapParameter (toTargetNode f E) (Target.tree f E (z, 0)) = _
+  rw [Target.tree_source]
+  exact (map_comp (Target.sourceBoundaryNode f E) (toTargetNode f E) _).symm
+
+/-- Full reference transport preserves every native level, including the actual loop input. -/
+theorem toTarget_native (n : ℕ)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (Target.reference f E)))|)
+    (x : (prespectrum V).space n) :
+    pointwisePrespectrumFamily (ProjectionReference.reference X (E ≫ U)) n
+      (mapParameter (toTargetNode f E) y) x =
+    pointwisePrespectrumFamily (Target.reference f E) n y x :=
+  pointwise_reanchor (Target.terminalBoundaryAnchor f E).symm n y x
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetCone

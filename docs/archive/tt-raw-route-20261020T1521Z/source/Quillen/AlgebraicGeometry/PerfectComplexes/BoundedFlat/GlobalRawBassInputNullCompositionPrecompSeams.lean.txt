@@ -1,0 +1,122 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPrecomp
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MReferenceRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPolynomialCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullPasting
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedNull
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH0TopRows
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCompactPrecompAttachment
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenMap
+
+/-! Explicit full-reference ordinary-sheet transport for the second comparison. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor AlgebraicGeometry
+open Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionPrecomp
+open CommonReferenceNerve InputIdentitySeedCarrier
+open Quillen.PerfectComplexes.BassH1Join Quillen.PerfectComplexes.BassH0Merge
+private theorem cancel_associator {V W T U : Type*} [Category V] [Category W]
+    [Category T] [Category U] (P : V ⥤ W) (H : W ⥤ T) (J : T ⥤ U)
+    (L : W ⥤ U) (M : V ⥤ U) (b : L ≅ H ⋙ J) (c : M ≅ P ⋙ L) :
+    (c ≪≫ isoWhiskerLeft P b) ≪≫ Functor.associator P H J ≪≫
+      isoWhiskerLeft P b.symm = c := by
+  apply Iso.ext
+  ext A
+  simp
+
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- One original complete row node identifies both actual second-row references. -/
+theorem second_reference :
+    InputCompositionH1TopRows.movingSecondAnchor f g plus plus_projection =
+      InputCompositionH1TopRows.inputSecondAnchor f g plus plus_projection := by
+  have h := (InputCompositionH1TopRows.moving_second f g plus plus_projection 0).symm.trans
+    ((InputCompositionH1TopRows.plus_second_nodes f g 0).trans
+      (InputCompositionH1TopRows.input_second f g plus plus_projection 0))
+  have hs := eq_of_heq (Sigma.mk.inj h).2
+  change InputCompositionH1TopRows.movingSecondAnchor f g plus plus_projection ≪≫
+      isoWhiskerLeft (InputCompositionTerminalAttach.arrow g).functor
+        (isoWhiskerRight (InputCompositionTerminalProducts.polynomialNodes f 0).2
+          (InputCompositionTopPieces.chartMap (X := X) plus).functor) =
+    InputCompositionH1TopRows.inputSecondAnchor f g plus plus_projection ≪≫
+      isoWhiskerLeft (InputCompositionTerminalAttach.arrow g).functor
+        (isoWhiskerRight (InputCompositionTerminalProducts.polynomialNodes f 0).2
+          (InputCompositionTopPieces.chartMap (X := X) plus).functor) at hs
+  have hc := congrArg (fun e ↦ e ≪≫
+    (isoWhiskerLeft (InputCompositionTerminalAttach.arrow g).functor
+      (isoWhiskerRight (InputCompositionTerminalProducts.polynomialNodes f 0).2
+        (InputCompositionTopPieces.chartMap (X := X) plus).functor)).symm) hs
+  simpa only [Iso.trans_assoc, Iso.self_symm_id, Iso.trans_refl] using hc
+
+/-- The actual second polynomial reference keeps its complete ordinary attachment. -/
+theorem polynomial_attachment_reference : ordinary (f ≫ g) ≪≫
+    isoWhiskerRight (polynomialAnchor f g) (chart (X := X)).functor =
+    InputCompositionH1TopRows.movingSecondAnchor f g plus plus_projection := by
+  unfold polynomialAnchor
+  calc
+    _ = (ordinary (f ≫ g) ≪≫
+        isoWhiskerRight (InputCompositionH0TopRows.outerIso f g).symm
+          (InputCompositionTopPieces.chartMap (X := X) plus).functor) ≪≫
+        isoWhiskerRight (InputCompositionH1TopRows.secondBaseAnchor f g)
+          (InputCompositionTopPieces.chartMap (X := X) plus).functor := by
+            simp only [isoWhiskerRight_trans, Iso.trans_assoc]
+            rfl
+    _ = _ := congrArg (fun e ↦ e ≪≫
+      isoWhiskerRight (InputCompositionH1TopRows.secondBaseAnchor f g)
+        (InputCompositionTopPieces.chartMap (X := X) plus).functor)
+      (InputNullCompositionPolynomialCarrier.polynomial_reference f g)
+
+/-- The forced ordinary Laurent attachment is the selected terminal precomposition anchor. -/
+theorem laurent_anchor : laurentAnchor f g = InputCompositionTerminalAttach.preAnchor f g := by
+  have hc := congrArg (fun e ↦ e ≪≫
+    Functor.associator (premap g).functor (polyRef f).functor (chart (X := X)).functor ≪≫
+      isoWhiskerLeft (premap g).functor (ordinary f).symm)
+    ((polynomial_attachment_reference f g).trans (second_reference f g))
+  refine (show laurentAnchor f g =
+    InputCompositionH1TopRows.inputSecondAnchor f g plus plus_projection ≪≫
+      Functor.associator (premap g).functor (polyRef f).functor (chart (X := X)).functor ≪≫
+        isoWhiskerLeft (premap g).functor (ordinary f).symm from by
+          simpa only [laurentAnchor, Iso.trans_assoc] using hc).trans ?_
+  exact cancel_associator (premap g).functor (polyRef f).functor
+    (chart (X := X)).functor (laurentRef f).functor (laurentRef (f ≫ g)).functor
+    (ordinary f) (InputCompositionTerminalAttach.preAnchor f g)
+
+/-- All Laurent nodes retain precisely the prescribed original terminal precomposition. -/
+theorem laurent_node (N : Node (laurentRef f)) :
+    laurentNode f g N = InputCompositionTerminalAttach.preNode f g N := by
+  unfold laurentNode
+  rw [laurent_anchor]
+  rfl
+
+/-- The complete second polynomial row is the fixed-reference precomposed seed row. -/
+theorem polynomial_second_nodes (i : Fin 5) :
+    InputNullCompositionPolynomialCarrier.polynomialNode f g
+      (InputCompositionTopPieces.polynomialNodes f g (CoefficientMovingSquareRows.secondRow i)) =
+      polynomialNode f g (InputIdentitySeedCarrier.polynomialNodes f i) := by
+  have h := congrArg (BassH0Merge.anchorNode (InputCompositionH0TopRows.outerIso f g).symm)
+    (CoefficientMovingSquareRows.second_row_nodes g f
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex.polynomial.map g)
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex.polynomial.map f)
+      (projection.app Z) (projection.app Y) (projection.app X)
+      (projection.naturality g).symm (projection.naturality f).symm i)
+  exact h.trans (BassMOuterJoin.anchor_pre_node (premap g)
+    (InputCompositionH0TopRows.outerIso f g).symm
+    (InputCompositionH1TopRows.secondBaseAnchor f g)
+    (InputIdentitySeedCarrier.polynomialNodes f i))
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionPrecomp

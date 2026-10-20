@@ -18,11 +18,11 @@ specified by the declaration and its linked topic guide.
 | --- | --- | --- |
 | Exact structure `E` | `E.QCategory`, `E.KSpace`, `E.kBasepoint`, `E.K n`, `E.SmallK n` | [Exact categories](README.md) |
 | Exact functor `F` | `F.mapQ`, `F.KMap n`, `F.smallKMap n` | [Exact functors](README.md#exact-functors-and-their-canonical-maps) |
-| Bundled small exact category | `Quillen.SmallExactCategory.ofExactStructure`, `KFunctor n` | [Size conventions](../CategoryTheory/SmallModel/README.md#equivalences-and-universe-boundaries) |
+| Bundled small exact category | `CategoryTheory.ExactCategory.SmallExactCategory.ofExactStructure`, `KFunctor n` | [Size conventions](../CategoryTheory/SmallModel/README.md#equivalences-and-universe-boundaries) |
 | Waldhausen structure `W` | `W.Delooping`, `W.kBasepoint`, `W.K n` | [Waldhausen theory](../Waldhausen/README.md) |
 | Bundled small Waldhausen category | `Quillen.Waldhausen.SmallWaldhausenCategory.KFunctor n` | [Chosen zero and functoriality](../Waldhausen/README.md#exact-functors-and-the-chosen-zero) |
 | Scheme `X` | `AlgebraicGeometry.Scheme.K X n`, `G X n`, `restrictK`, `restrictG`, `KToG` | [Scheme K/G-theory](../AlgebraicGeometry/Scheme/README.md) |
-| Strict/local perfect complexes | `Quillen.PerfectComplexes.StrictPerfect`, `Perfect`, `StrictK`, `PerfectK` | [Perfect complexes](../AlgebraicGeometry/PerfectComplexes/README.md#complexes-and-support) |
+| Strict/local perfect complexes | `AlgebraicGeometry.Scheme.Modules.Complex.StrictPerfect`, `Perfect`; `Quillen.PerfectComplexes.StrictK`, `PerfectK` | [Perfect complexes](../AlgebraicGeometry/PerfectComplexes/README.md#complexes-and-support) |
 | Commuting path square | `Path.Homotopy.squareProjectionReturnMap`, `squareProjectionReturnTrack` | [Original path returns](../Topology/Path/SquareProjectionReturn.lean) |
 | Based prespectrum | `Quillen.LoopPrespectrum`, signed stable groups, actual fibers and telescopes | [Spectra](../Topology/Prespectrum/README.md) |
 | Ring-indexed Bass recursion | `Quillen.Bass.negativeKFunctor i` on `CommRingCat` | [Bass groups](Bass/README.md#bass-cokernels-and-the-original-laurent-seed) |
@@ -81,7 +81,7 @@ equivalences, bundled small categories, and small-model functoriality.
 The classical K₀ comparison has its own imports. General exact structures and
 exact functors come from `Aglib.CategoryTheory.ExactCategory`; their declaration
 namespace is `CategoryTheory.ExactCategory`. Quillen supplies the Q-construction
-and K-map extensions in that native namespace. `Quillen.SmallExactCategory` is the
+and K-map extensions in that native namespace. `CategoryTheory.ExactCategory.SmallExactCategory` is the
 bundled application category.
 
 | Full import | Focused public names |
@@ -132,7 +132,7 @@ The pointwise forms `KMap_id_apply` and `KMap_comp_apply` are in `KTheory.API`.
 For a category with matching object and morphism universe `u`,
 `SmallExactCategory.ofExactStructure E` packages the existing structure.
 [`Quillen.KTheory.Functor`](Functor.lean) defines
-`Quillen.SmallExactCategory.KFunctor n : SmallExactCategory.{u} ⥤ GrpCat.{u}`.
+`CategoryTheory.ExactCategory.SmallExactCategory.KFunctor n : SmallExactCategory.{u} ⥤ GrpCat.{u}`.
 Its arrows are actual exact functors, and its maps are precisely their `KMap n`.
 
 ## Further comparisons and client examples

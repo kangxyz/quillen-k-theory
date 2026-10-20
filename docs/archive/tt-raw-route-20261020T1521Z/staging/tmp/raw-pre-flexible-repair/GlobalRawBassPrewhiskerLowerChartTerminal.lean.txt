@@ -1,0 +1,113 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartBottom
+/-! The genuine initial polynomial-square seam retaining its original binary total. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct CutOpenCarrier
+attribute [local irreducible] boundedFlatNormalizedPullback
+private theorem composite_pre_node {U V W T : Model.{u}}
+    (S : U ⟶ W) (A : U ⟶ V) (D : V ⟶ W) (P : W ⟶ T)
+    (θ : S.functor ≅ (A ≫ D).functor) (N : Node P) :
+    node (S ≫ P) S P (Iso.refl _) ⟨A ≫ D, θ⟩ N =
+      preNode (S ≫ P) A (H := D ≫ P)
+        (isoWhiskerRight θ P.functor ≪≫
+          Functor.associator A.functor D.functor P.functor) (precompNode D N) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext x
+  simp only [node, Iso.refl_trans, mapIso_hom, Iso.prod_hom, uncurry_obj_map,
+    whiskeringLeft_obj_obj, whiskeringLeft_obj_map, NatTrans.comp_app, comp_obj,
+    whiskeringLeft_map_app_app, whiskerLeft_app, NatTrans.naturality, precompNode, preNode,
+    reanchor, isoWhiskerLeft_twice, Iso.trans_assoc, Iso.self_symm_id_assoc, Iso.trans_hom,
+    isoWhiskerRight_hom, isoWhiskerLeft_hom, whiskerRight_app, associator_hom_app,
+    Category.comp_id]
+  exact (N.2.hom.naturality (θ.hom.app x)).symm
+
+
+private theorem parameter_square
+    {U₁ V₁ U₂ V₂ U₃ V₃ U₄ V₄ : Model.{u}}
+    {F₁ : U₁ ⟶ V₁} {F₂ : U₂ ⟶ V₂} {F₃ : U₃ ⟶ V₃} {F₄ : U₄ ⟶ V₄}
+    (a : Node F₁ → Node F₂) (b : Node F₂ → Node F₄)
+    (c : Node F₁ → Node F₃) (d : Node F₃ → Node F₄)
+    (h : ∀ N, b (a N) = d (c N)) (y : |parameterSSet F₁|) :
+    mapParameter b (mapParameter a y) = mapParameter d (mapParameter c y) := by
+  obtain ⟨p, N, w, rfl⟩ := exists_parameter F₁ y
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter,
+    mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter F₄ ns w) (funext fun i ↦ h (N i))
+
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+  (k : laurent ⟶ polynomial)
+local notation "S" => NativeSquareFiveSimplex.source (laurent.map c) (k.app W)
+local notation "M" => NativeSquareFiveSimplex.nodes (laurent.map c) (k.app W)
+  (k.app Z) (polynomial.map c) (k.naturality c)
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "KZ" => BassH0Merge.normalizedMap (k.app Z)
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "H" => lowerLaurentBinary f g
+local notation "θ" => lowerChartTerminalAnchor c k
+local notation "σ" => lowerChartBottomAnchor f g k
+local notation "ξ" => lowerChartAnchor f g c k
+
+/-- Every entire Laurent node agrees at the actual terminal chart-square seam. -/
+theorem lowerChart_terminal_node (N : Node H) :
+    reanchor ξ (FinitePrecomp.node S H (M 4) N) =
+      precompNode MC (reanchor σ (precompNode KZ N)) := by
+  have ht : FinitePrecomp.node S H (M 4) N =
+      preNode (S ≫ H) MC («H» := KZ ≫ H)
+        (isoWhiskerRight θ (H).functor ≪≫
+          Functor.associator (MC).functor (KZ).functor (H).functor) (precompNode KZ N) := by
+    change node (S ≫ H) S H (Iso.refl _) (M 4) N = _
+    rw [NativeSquareModelNormalization.nodes_four]
+    exact composite_pre_node S MC KZ H θ N
+  have ha : ξ ≪≫ (isoWhiskerRight θ (H).functor ≪≫
+      Functor.associator (MC).functor (KZ).functor (H).functor) =
+      isoWhiskerLeft (MC).functor σ := by
+    simp only [lowerChartAnchor, ← isoWhiskerRight_symm, Iso.trans_assoc,
+      Iso.symm_self_id_assoc, Iso.symm_self_id, Iso.trans_refl]
+  rw [ht]
+  have hp : reanchor ξ (preNode (S ≫ H) MC
+      (isoWhiskerRight θ (H).functor ≪≫
+        Functor.associator (MC).functor (KZ).functor (H).functor) (precompNode KZ N)) =
+      preNode (MC ≫ G) MC (ξ ≪≫ (isoWhiskerRight θ (H).functor ≪≫
+        Functor.associator (MC).functor (KZ).functor (H).functor)) (precompNode KZ N) := by
+    simp only [preNode, reanchor, Iso.trans_assoc]
+  rw [hp, ha]
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  simp only [preNode, precompNode, reanchor, isoWhiskerLeft_trans]
+
+/-- The whole lower polynomial chart meets the unchanged upper chosen-square bottom. -/
+theorem lowerChart_terminal (r : I) :
+    anchoredLowerChart f g c k (r, 1) =
+      mapParameter (precompNode MC) (InputCompositionPolynomialScalar.chartSurface f g k (r, 0)) :=
+        by
+  rw [chartSurface_bottom]
+  change mapParameter (reanchor ξ)
+    (FinitePrecomp.parameter S M H (lowerLaurentPath f g r, NativeSquareFiveSimplex.parameter 1))
+      = _
+  simp only [Path.target]
+  have hv := FiniteParameter.parameter_vertex H (S ≫ H)
+    (fun N i ↦ FinitePrecomp.node S H (M i) N) 4 (lowerLaurentPath f g r)
+  exact (congrArg (mapParameter (reanchor ξ)) hv).trans
+    (parameter_square (fun N ↦ FinitePrecomp.node S H (M 4) N) (reanchor ξ)
+      (fun N ↦ reanchor σ (precompNode KZ N)) (precompNode MC)
+      (lowerChart_terminal_node f g c k) (lowerLaurentPath f g r))
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

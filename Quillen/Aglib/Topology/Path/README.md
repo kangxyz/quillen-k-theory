@@ -42,3 +42,8 @@ Bass coherence supplied by their Quillen consumers.
 under an arbitrary evaluator satisfying its ten path and three whole-square equations.
 It reuses `EvaluationOperations`; the polynomial cap Laurent-bottom recovery is its
 application consumer. All reassociation, cancellation and endpoint-cast clocks remain literal.
+
+`AssociatorEvaluationComparison` compares two evaluations of the exact three-path
+associator from pointwise equality on each complete path. The target evaluation is
+continuous; the source evaluation is arbitrary. Its current consumer is the original
+carrier-square correction descent, which remains outside the candidate subtree.

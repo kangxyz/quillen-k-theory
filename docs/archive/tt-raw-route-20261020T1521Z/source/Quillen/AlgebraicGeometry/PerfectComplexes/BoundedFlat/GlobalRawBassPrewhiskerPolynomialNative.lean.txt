@@ -1,0 +1,58 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerPolynomialHalf
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenPrecompNative
+public import Quillen.Topology.Path.ScalarRectangleConcatenation
+/-!
+Every genuine polynomial lower-half input follows the original chart square.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+variable (k : laurent ⟶ polynomial)
+open CommonReferenceNerve CutOpenCarrier
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "ε'" => CutOpenPrecomp.anchor MC P K G ε
+local notation "Q" => outerPolynomialCarrier f g c k
+
+/-- Every genuine polynomial lower-half input follows the original chart square. -/
+theorem polynomialLower_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj W))).space n) :
+    nativeEval (MC ≫ P) K (MC ≫ G) ε' ε' n (polynomialLower f g c k (r, s)) x =
+      (Quillen.LoopPrespectrum.mappingConeInclusion
+        (InputCompositionPolynomialScalar.chartP k X)).map n
+        ((InputCompositionCharts.laurentComposition f g).level n
+          (r, (boundedFlatPerfectPrespectrumSquareHomotopy (laurent.map c) (k.app W)
+            (k.app Z) (polynomial.map c) (k.naturality c)).level n (s, x))) := by
+  change nativeEval (MC ≫ P) K (MC ≫ G) ε' ε' n
+    (laurentInclusion (MC ≫ P) K (MC ≫ G) ε' ε' (anchoredLowerChart f g c k (r, s))) x = _
+  rw [nativeEval_laurentInclusion, anchoredLowerChart_native]
+  rfl
+
+/-- The entire genuine polynomial upper half retains the selected original corrected square. -/
+theorem polynomialUpper_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj W))).space n) :
+    nativeEval (MC ≫ P) K (MC ≫ G) ε' ε' n (polynomialUpper f g c k (r, s)) x =
+      (InputCompositionPolynomialScalar.nullSquare f g k).level n
+        (r, (s, (boundedFlatPerfectPrespectrumMap (polynomial.map c)).map n x)) := by
+  exact (CutOpenPrecomp.map_native MC P K G ε ε n
+    ((InputCompositionPolynomialScalar.correctedSquare f g k).parameter (r, s)) x).trans
+      (InputCompositionPolynomialScalar.correctedSquare_native f g k n r s _)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

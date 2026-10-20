@@ -1,0 +1,44 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionRectangleSquareRows
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteEdge
+/-! The nonmonotone original polynomial word is used only through its four ordered edges. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+
+/-- Original primitive edges, rather than a nonexistent monotone five-node face, restrict the
+word. -/
+theorem outer_polynomial_parameter_row {V W V' W' : Model.{u}}
+    (E : V ⟶ W) (F : V' ⟶ W') {k : ℕ}
+    (g : Node E → Fin (k + 1) → Node F)
+    (α : ⦋17⦌ ⟶ ⦋k⦌) (y : |nerve (Codiscrete (Node E))|) (t : I) :
+    FiniteParameter.parameter E F g (y, ProjectionRectangleParameters.Ppath α t) =
+      FiniteParameter.parameter E F
+        (fun N i ↦ g N (α.toOrderHom (ProjectionRectangleSquareRows.polynomialRow i)))
+        (y, NativeSquareFiveSimplex.parameter t) := by
+  rw [← ProjectionRectangleSquareRows.polynomial_parameter]
+  obtain ⟨i, z, hz⟩ := BassH1Support.square_path_in t
+  rw [← hz, ← StdSimplex.map_comp]
+  let row := α.toOrderHom ∘ ProjectionRectangleSquareRows.polynomialRow
+  have hm : Monotone (row ∘ (BassH1Support.edgeFace i).toOrderHom) :=
+    α.toOrderHom.monotone.comp (ProjectionRectangleSquareRows.primitive_rows_monotone 1 i)
+  let h : ⦋1⦌ ⟶ ⦋k⦌ := SimplexCategory.Hom.mk ⟨row ∘
+    (BassH1Support.edgeFace i).toOrderHom, hm⟩
+  exact (FiniteParameter.parameter_restrict E F g h y z).symm.trans
+    (FiniteParameter.parameter_restrict E F (fun N j ↦ g N (row j))
+      (BassH1Support.edgeFace i) y z)
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

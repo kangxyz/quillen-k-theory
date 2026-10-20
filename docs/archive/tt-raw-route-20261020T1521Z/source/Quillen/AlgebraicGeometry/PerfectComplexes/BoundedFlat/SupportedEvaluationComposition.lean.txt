@@ -1,0 +1,255 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedEvaluationModelComposition
+public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumHomotopyNaturality
+public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumTransformationTransport
+public import Quillen.Topology.Prespectrum.RelativeHomotopyLevels
+public import Quillen.Topology.Prespectrum.RelativeHomotopyHorizontal
+public import Quillen.Topology.Prespectrum.RelativeHomotopyWhiskering
+
+/-!
+# Original supported evaluation and geometric composition tracks
+
+The actual normalized supported Model pasting realizes to a relative homotopy between the
+two original evaluation routes. The target route uses the original split geometric composition
+  track,
+not a replacement track. Every spectrum level and independent structure parameter is retained.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.SupportedTensorEvaluation
+open GlobalSectionChangeIndex
+
+/-- The original supported comparison retains all spectrum and structure parameters. -/
+def evaluationComparison {X Y : Scheme.OpenPairs.{u}} (f : X ⟶ Y) :
+    Homotopy
+      (prespectrumMap (supportedPairModelMap f) ≫
+        prespectrumMap (evaluationModel (X := op X.obj.right) X.obj.hom))
+      (prespectrumMap (evaluationModel (X := op Y.obj.right) Y.obj.hom) ≫
+        GlobalSupportedRawBass.rawMap f) :=
+  (prespectrumTransformationHomotopy
+    (V := supportedModel (X := op Y.obj.right) Y.obj.hom)
+    (W := modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom))
+    (F := supportedPairModelMap f ≫ evaluationModel (X := op X.obj.right) X.obj.hom)
+    (G := evaluationModel (X := op Y.obj.right) Y.obj.hom ≫ evaluationRawMap f)
+    (evaluationComparisonIso f).hom
+    (fun K => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+      (inferInstanceAs (IsIso ((evaluationComparisonIso f).app K).hom)))).cast
+        (prespectrumFunctor.map_comp _ _) (prespectrumFunctor.map_comp _ _)
+
+/-- The actual small-model target composition is the original total supported geometric track. -/
+theorem evaluationRawCompHomotopy_level {X Y Z : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) :
+    (prespectrumTransformationHomotopy
+      (V := modelOf (boundedFlatPerfectSupportedWaldhausen Z.obj.hom))
+      (W := modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom))
+      (F := evaluationRawMap (f ≫ g)) (G := evaluationRawMap g ≫ evaluationRawMap f)
+      (evaluationRawCompIso f g).hom
+      (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)).level n =
+      (GlobalSupportedRawBass.normalizedCompositionHomotopy f g).level n := rfl
+
+private theorem first_route_heq
+    {A B C D E : Type*} [Category A] [Category B] [Category C] [Category D] [Category E]
+    (J : A ⥤ B) (K : B ⥤ C) (L : A ⥤ C) (P : C ⥤ E)
+    (M : B ⥤ D) (N : D ⥤ E) (h : L = J ⋙ K) (η : K ⋙ P ≅ M ⋙ N) :
+    HEq ((eqToIso (congrArg (fun S => S ⋙ P) h) ≪≫
+      Functor.associator J K P ≪≫ isoWhiskerLeft J η ≪≫
+      (Functor.associator J M N).symm).hom) (whiskerLeft J η.hom) := by
+  subst h
+  apply heq_of_eq
+  ext x
+  simp
+
+/-- Strict source transport retains every point of the original precomposed evaluation. -/
+theorem evaluationCompositionFirstHomotopy_level {X Y Z : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) :
+    (prespectrumTransformationHomotopy
+      (V := supportedModel (X := op Z.obj.right) Z.obj.hom)
+      (W := modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom))
+      (F := supportedPairModelMap (f ≫ g) ≫ evaluationModel (X := op X.obj.right) X.obj.hom)
+      (G := (supportedPairModelMap g ≫ evaluationModel (X := op Y.obj.right) Y.obj.hom) ≫
+        evaluationRawMap f)
+      (evaluationCompositionFirstIso f g).hom
+      (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)).level n =
+      (Homotopy.precomp (prespectrumMap (supportedPairModelMap g))
+        (evaluationComparison f)).level n := by
+  have hF : supportedPairModelMap (f ≫ g) ≫ evaluationModel (X := op X.obj.right) X.obj.hom =
+      supportedPairModelMap g ≫ (supportedPairModelMap f ≫ evaluationModel (X := op X.obj.right)
+        X.obj.hom) :=
+    (congrArg (fun S => S ≫ evaluationModel (X := op X.obj.right) X.obj.hom)
+      (pairSupported.map_comp g.op f.op)).trans (Category.assoc _ _ _)
+  have hG := Category.assoc (supportedPairModelMap g) (evaluationModel (X := op Y.obj.right)
+    Y.obj.hom) (evaluationRawMap f)
+  trans (prespectrumTransformationHomotopy
+    (F := supportedPairModelMap g ≫ (supportedPairModelMap f ≫ evaluationModel (X := op
+      X.obj.right) X.obj.hom))
+    (G := supportedPairModelMap g ≫ (evaluationModel (X := op Y.obj.right) Y.obj.hom ≫
+      evaluationRawMap f))
+    (whiskerLeft (supportedPairModelMap g).functor (evaluationComparisonIso f).hom)
+    (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)).level n
+  · apply prespectrumTransformationHomotopy_level_eq_of_heq hF hG
+    exact first_route_heq (supportedPairModelMap g).functor (supportedPairModelMap f).functor
+      (supportedPairModelMap (f ≫ g)).functor (evaluationModel (X := op X.obj.right)
+        X.obj.hom).functor
+      (evaluationModel (X := op Y.obj.right) Y.obj.hom).functor (evaluationRawMap f).functor
+      (supportedReindex_comp f g) (evaluationComparisonIso f)
+  · exact prespectrumTransformationHomotopy_precomp_level
+      (F := supportedPairModelMap f ≫ evaluationModel (X := op X.obj.right) X.obj.hom)
+      (G := evaluationModel (X := op Y.obj.right) Y.obj.hom ≫ evaluationRawMap f)
+        (evaluationComparisonIso f).hom
+      (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)
+      (supportedPairModelMap g) n
+
+/-- The second Model track retains the actual supported raw postcomposition of original
+  evaluation. -/
+theorem evaluationCompositionSecondHomotopy_level {X Y Z : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) :
+    (prespectrumTransformationHomotopy
+      (V := supportedModel (X := op Z.obj.right) Z.obj.hom)
+      (W := modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom))
+      (F := (supportedPairModelMap g ≫ evaluationModel (X := op Y.obj.right) Y.obj.hom) ≫
+        evaluationRawMap f)
+      (G := (evaluationModel (X := op Z.obj.right) Z.obj.hom ≫ evaluationRawMap g) ≫
+        evaluationRawMap f)
+      (evaluationCompositionSecondIso f g).hom
+      (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)).level n =
+      ((evaluationComparison g).postcomp (GlobalSupportedRawBass.rawMap f)).level n :=
+  prespectrumTransformationHomotopy_postcomp_level
+    (F := supportedPairModelMap g ≫ evaluationModel (X := op Y.obj.right) Y.obj.hom)
+    (G := evaluationModel (X := op Z.obj.right) Z.obj.hom ≫ evaluationRawMap g)
+      (evaluationComparisonIso g).hom
+    (fun _ => (boundedFlatPerfectSupportedWaldhausen Y.obj.hom).smallModel.weq_iso _
+        inferInstance)
+    (evaluationRawMap f) n
+
+private theorem target_route_heq
+    {A B C D : Type*} [Category A] [Category B] [Category C] [Category D]
+    (J : A ⥤ B) (F : B ⥤ D) (G : B ⥤ C) (H : C ⥤ D) (η : F ≅ G ⋙ H) :
+    HEq ((isoWhiskerLeft J η ≪≫ (Functor.associator J G H).symm).hom)
+      (whiskerLeft J η.hom) := by
+  apply heq_of_eq
+  ext x
+  simp
+
+/-- The target Model track is original evaluation followed by total geometric composition. -/
+theorem evaluationCompositionTargetHomotopy_level {X Y Z : Scheme.OpenPairs.{u}}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) :
+    (prespectrumTransformationHomotopy
+      (V := supportedModel (X := op Z.obj.right) Z.obj.hom)
+      (W := modelOf (boundedFlatPerfectSupportedWaldhausen X.obj.hom))
+      (F := evaluationModel (X := op Z.obj.right) Z.obj.hom ≫ evaluationRawMap (f ≫ g))
+      (G := (evaluationModel (X := op Z.obj.right) Z.obj.hom ≫ evaluationRawMap g) ≫
+        evaluationRawMap f)
+      (evaluationCompositionTargetIso f g).hom
+      (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)).level n =
+      (Homotopy.precomp (prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom))
+        (GlobalSupportedRawBass.normalizedCompositionHomotopy f g)).level n := by
+  trans (prespectrumTransformationHomotopy
+    (F := evaluationModel (X := op Z.obj.right) Z.obj.hom ≫ evaluationRawMap (f ≫ g))
+    (G := evaluationModel (X := op Z.obj.right) Z.obj.hom ≫ (evaluationRawMap g ≫
+      evaluationRawMap f))
+    (whiskerLeft (evaluationModel (X := op Z.obj.right) Z.obj.hom).functor (evaluationRawCompIso
+      f g).hom)
+    (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)).level n
+  · apply prespectrumTransformationHomotopy_level_eq_of_heq rfl (Category.assoc _ _ _)
+    exact target_route_heq (evaluationModel (X := op Z.obj.right) Z.obj.hom).functor
+      (evaluationRawMap (f ≫ g)).functor
+      (evaluationRawMap g).functor (evaluationRawMap f).functor (evaluationRawCompIso f g)
+  · rw [prespectrumTransformationHomotopy_precomp_level
+      (F := evaluationRawMap (f ≫ g)) (G := evaluationRawMap g ≫ evaluationRawMap f)
+      (evaluationRawCompIso f g).hom
+      (fun _ => (boundedFlatPerfectSupportedWaldhausen X.obj.hom).smallModel.weq_iso _
+        inferInstance)
+      (evaluationModel (X := op Z.obj.right) Z.obj.hom)]
+    apply ContinuousMap.ext
+    rintro ⟨s, x⟩
+    exact DFunLike.congr_fun (evaluationRawCompHomotopy_level f g n)
+      (s, (prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom)).map n x)
+
+/-- Original evaluation followed by total normalized geometric composition. -/
+def evaluationCompositionTotalRoute {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    Homotopy
+      (prespectrumMap (supportedPairModelMap (f ≫ g)) ≫ prespectrumMap (evaluationModel (X := op
+        X.obj.right) X.obj.hom))
+      ((prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom) ≫
+        GlobalSupportedRawBass.rawMap g) ≫
+        GlobalSupportedRawBass.rawMap f) :=
+  ((evaluationComparison (f ≫ g)).trans
+    (Homotopy.precomp (prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom))
+      (GlobalSupportedRawBass.normalizedCompositionHomotopy f g))).cast rfl (Category.assoc _ _
+        _).symm
+
+/-- Original evaluation followed by the unchanged two-part geometric composition track. -/
+def evaluationCompositionSplitRoute {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    Homotopy
+      (prespectrumMap (supportedPairModelMap (f ≫ g)) ≫ prespectrumMap (evaluationModel (X := op
+        X.obj.right) X.obj.hom))
+      ((prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom) ≫
+        GlobalSupportedRawBass.rawMap g) ≫
+        GlobalSupportedRawBass.rawMap f) :=
+  ((evaluationComparison (f ≫ g)).trans
+    (Homotopy.precomp (prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom))
+      (GlobalSupportedRawBass.compositionHomotopy f g))).cast rfl (Category.assoc _ _ _).symm
+
+/-- The other route retains both unchanged evaluation tracks and their original whiskering. -/
+def evaluationCompositionWhiskeredRoute {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    Homotopy
+      (prespectrumMap (supportedPairModelMap (f ≫ g)) ≫ prespectrumMap (evaluationModel (X := op
+        X.obj.right) X.obj.hom))
+      ((prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom) ≫
+        GlobalSupportedRawBass.rawMap g) ≫
+        GlobalSupportedRawBass.rawMap f) :=
+  ((Homotopy.precomp (prespectrumMap (supportedPairModelMap g)) (evaluationComparison f)).cast
+    ((Category.assoc _ _ _).symm.trans
+      (congrArg (fun S => S ≫ prespectrumMap (evaluationModel (X := op X.obj.right) X.obj.hom))
+        (((pairSupported ⋙ prespectrumFunctor).map_comp g.op f.op).symm)))
+    (Category.assoc _ _ _).symm).trans
+      ((evaluationComparison g).postcomp (GlobalSupportedRawBass.rawMap f))
+
+/-- The actual Model comparison has exactly the two original total and whiskered routes. -/
+def evaluationCompositionTotalWhiskered {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    (evaluationCompositionTotalRoute f g).RelHomotopy
+      (evaluationCompositionWhiskeredRoute f g) := by
+  apply (evaluationModelCompositionRelHomotopy f g).ofLevels
+  · intro n
+    apply Homotopy.trans_level_congr
+    · rfl
+    · exact (evaluationCompositionTargetHomotopy_level f g n).symm
+  · intro n
+    apply Homotopy.trans_level_congr
+    · exact (evaluationCompositionFirstHomotopy_level f g n).symm
+    · exact (evaluationCompositionSecondHomotopy_level f g n).symm
+
+/-- The genuine normalization triangle restores the existing split geometric target track. -/
+def evaluationCompositionTotalSplit {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    (evaluationCompositionTotalRoute f g).RelHomotopy
+      (evaluationCompositionSplitRoute f g) :=
+  ((Homotopy.RelHomotopy.refl (evaluationComparison (f ≫ g))).hcomp
+    (Homotopy.RelHomotopy.precomp (prespectrumMap (evaluationModel (X := op Z.obj.right) Z.obj.hom))
+      (GlobalSupportedRawBass.compositionComparison f g))).cast rfl (Category.assoc _ _ _).symm
+
+/-- The whole original supported evaluation composition relation, with no supplied filler. -/
+def evaluationCompositionRelHomotopy {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    (evaluationCompositionSplitRoute f g).RelHomotopy
+      (evaluationCompositionWhiskeredRoute f g) :=
+  (evaluationCompositionTotalSplit f g).symm.trans (evaluationCompositionTotalWhiskered f g)
+
+end Quillen.PerfectComplexes.SupportedTensorEvaluation

@@ -1,0 +1,62 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialRecovery
+
+/-! Reconstruct original cone-composition values for arbitrary continuous polynomial families. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u v
+namespace Consumer.GlobalRawBassInputCompositionPolynomialRecovery
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+  {T : Type v} [TopologicalSpace T]
+
+/-- An external continuous polynomial input may vary independently of both comparison clocks. -/
+def reconstructPositive (n : ℕ) (r s : C(T, unitInterval))
+    (a : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n)) :
+    C(T, (mappingCone (comparison X)).space n) :=
+  ((InputIdentityPositive.inclusion X).map n).comp
+    ((InputCompositionPolynomialScalar.correctedFamily f g plus n).comp
+      ⟨fun z ↦ ((r z, s z), a z), by fun_prop⟩)
+
+/-- Reconstruction retains the chosen original whole-cone homotopy, not just its endpoints. -/
+theorem reconstructPositive_original (n : ℕ) (r s : C(T, unitInterval))
+    (a : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n))
+    (z : T) :
+    reconstructPositive f g n r s a z =
+      (InputComposition.coneHomotopy f g).level n
+        (r z, Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s z, (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n (a z))) :=
+  InputCompositionPolynomialScalar.plus_coneHomotopy f g n (r z) (s z) (a z)
+
+/-- The inverse-coordinate chart has its own genuine arbitrary-input continuous reconstruction. -/
+def reconstructInverse (n : ℕ) (r s : C(T, unitInterval))
+    (a : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n)) :
+    C(T, (mappingCone (comparison X)).space n) :=
+  ((InputIdentityNegative.inclusion X).map n).comp
+    ((InputCompositionPolynomialScalar.correctedFamily f g minus n).comp
+      ⟨fun z ↦ ((r z, s z), a z), by fun_prop⟩)
+
+/-- Every varying inverse-chart input recovers the same fixed original whole-cone choice. -/
+theorem reconstructInverse_original (n : ℕ) (r s : C(T, unitInterval))
+    (a : C(T, (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n))
+    (z : T) :
+    reconstructInverse f g n r s a z =
+      (InputComposition.coneHomotopy f g).level n
+        (r z, Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+          (s z, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+            (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n (a z))) :=
+  InputCompositionPolynomialScalar.minus_coneHomotopy f g n (r z) (s z) (a z)
+
+end Consumer.GlobalRawBassInputCompositionPolynomialRecovery

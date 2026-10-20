@@ -1,0 +1,61 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialRecovery
+
+/-! Original direct/composite boundary regression on arbitrary polynomial cylinder inputs. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputCompositionPolynomialRecovery
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The positive scalar family starts at the original direct cone map on arbitrary input. -/
+theorem positive_direct_boundary (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (InputCompositionPolynomialScalar.correctedFamily f g plus n ((0, s), x)) =
+        (coneMap (f ≫ g)).map n
+          (Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+            (s, (HomotopyPushout.inl (boundedFlatPerfectPrespectrumMap (projection.app Z))
+              (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x)) :=
+  (InputCompositionPolynomialScalar.plus_coneHomotopy f g n 0 s x).trans
+    ((InputComposition.coneHomotopy f g).at_zero n _)
+
+/-- The inverse scalar family ends at the literal original two-map composite. -/
+theorem inverse_composite_boundary (n : ℕ) (s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityNegative.inclusion X).map n
+      (InputCompositionPolynomialScalar.correctedFamily f g minus n ((1, s), x)) =
+        (coneMap f).map n ((coneMap g).map n
+          (Quillen.ReducedMappingCone.cylinder _ _ ((comparison Z).map n)
+            (s, (HomotopyPushout.inr (boundedFlatPerfectPrespectrumMap (projection.app Z))
+              (boundedFlatPerfectPrespectrumMap (projection.app Z))).map n x))) :=
+  (InputCompositionPolynomialScalar.minus_coneHomotopy f g n 1 s x).trans
+    ((InputComposition.coneHomotopy f g).at_one n _)
+
+/-- Structure time remains independent even after inclusion into the original whole cone. -/
+theorem inverse_whole_structure (n : ℕ) (r s t : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).space n) :
+    (InputIdentityNegative.inclusion X).map (n + 1)
+      (InputCompositionPolynomialScalar.correctedFamily f g minus (n + 1) ((r, s),
+        (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj Z))).structureMap n
+          x t)) =
+      (mappingCone (comparison X)).structureMap n
+        ((InputIdentityNegative.inclusion X).map n
+          (InputCompositionPolynomialScalar.correctedFamily f g minus n ((r, s), x))) t := by
+  exact (congrArg ((InputIdentityNegative.inclusion X).map (n + 1))
+    (InputCompositionPolynomialScalar.correctedFamily_structure f g minus n r s x t)).trans
+      (congrArg (fun p ↦ p t) ((InputIdentityNegative.inclusion X).comm n _))
+
+end QuillenTest.GlobalRawBassInputCompositionPolynomialRecovery

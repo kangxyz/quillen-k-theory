@@ -1,6 +1,12 @@
 # Affine Bass steps and quotient-graded sections
 
-The affine raw step, fine full-open section model, and quotient-graded model have different weak classes and comparison maps. The constructions below retain the original Laurent unit, chosen pullback opens, and whole localization null. [Bounded-flat comparisons](../BoundedFlat/BassComparison.md) give the global and finite-stage interfaces; [comparison boundaries](../Development.md) record the classical TT gap.
+The affine raw step, fine full-open section model, and quotient-graded model
+have different weak classes and comparison maps. The constructions below
+retain the original Laurent unit, chosen pullback opens, and whole localization
+null. [Bounded-flat comparisons](../BoundedFlat/BassComparison.md) give the
+global and finite-stage interfaces. The [tensor-generated realization](../BoundedFlat/TensorBassConstruction.md)
+proves original TT 7.4 directly; [additional comparison targets](../Development.md#comparison-with-the-prescribed-raw-point-set-implementation)
+retain the separately prescribed raw implementation.
 
 ## Objects and conventions
 
@@ -82,12 +88,12 @@ the actual fine completion endpoint, the same whole-null fiber lift and the
 original signed connecting identity. Pointwise fine section evaluation is
 stable with its explicit universe lift and chosen-zero normalization;
 evaluation through the seeds, iterates and telescope remains separate.
-See the [TT localization roadmap](../Development.md).
+See the [TT localization and comparison guide](../Development.md).
 
 For the fine ambient and supported telescopes, the original-group
-identifications and finite-stage ranges are now supplied under the hypotheses
-above. Full all-iterate comparison with the original raw geometric towers and
-classical nonconnective identification remain open. Native global C/F/G Models now have
+identifications and finite-stage ranges are supplied under the hypotheses
+above. Full all-iterate comparison with the separately prescribed raw geometric
+towers remains open. Native global C/F/G Models have
 their original Laurent seeds, canonical nulls, actual finite/telescope maps and
 graded contraction. The original coarse-to-fine completion restriction is
 stable for qcqs ambient schemes and quasi-compact opens. Basic global supported
@@ -99,11 +105,14 @@ are constructed. The native auxiliary fiber-forget localization now has
 its actual union-support fiber, original seed/whole-null transfer and telescope
 cone/fiber comparison, including the signed boundary. Final fine stability
 requires compact P,Q,T and quasi-separated Q; the structural identities and
-fiber-to-coarse stability need only the open immersion. The older raw-cell
-evaluation route and classical nonconnective Thomason–Trobaugh identification
-retain their separate boundaries. The native basic-pair current-stage theorem
-is described above.
-The connective S-spectrum comparison does not settle these questions.
+fiber-to-coarse stability need only the open immersion. The direct
+tensor-generated construction recognizes the Bass recipe and proves both
+localization statements of TT 7.4 in every integer degree. The older raw-cell
+evaluation route retains its additional comparison and coherence obligations
+in [raw evaluation](../BoundedFlat/RawEvaluation.md). The
+[native basic and auxiliary current-stage theorems](../BoundedFlat/BassComparison.md#native-current-stage-full-open-localization)
+give the exact stable lifts. Pointwise connective S-spectrum comparison alone
+does not supply these construction and whole-null results.
 The conditional `Bass.TwoChartStableSpan` and `TwoChartStableSequence` now
 provide the signed span quotient, natural all-degree Bass short exact row,
 and actual cycles/image right-term identification. Their original plus

@@ -1,0 +1,110 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawParameterZero
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationZero
+
+/-!
+# The unchanged projection on literal parameter localization nulls
+
+The full selected-zero Model projection is the original pair-product projection. Its recovery
+through the parameter-first factor swap includes the original integer-base pair projection.
+The actual right-factor rows commute with this projection and preserve every time of the
+original base section null. No geometric normalization track or cone filler is inferred.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.Bass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalSectionChangeIndex.SupportedParameterSwap
+variable {S : Scheme.{u}}
+
+/-- The actual right-factor pair projection in the unchanged section diagram. -/
+def sectionProjection (p : S ⟶ integerBase) [QuasiCompact p]
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    pairSupported.obj (op A.obj) ⟶ sectionModel p A :=
+  pairSupported.map ((pairBaseProductProjection p).app A).hom.op
+
+private theorem map_op_square {C D : Type*} [Category C] [Category D]
+    (F : Cᵒᵖ ⥤ D) {A B X Y : C} (f : A ⟶ B) (q : B ⟶ Y)
+    (p : A ⟶ X) (g : X ⟶ Y) (h : f ≫ q = p ≫ g) :
+    F.map q.op ≫ F.map f.op = F.map g.op ≫ F.map p.op := by
+  rw [← F.map_comp, ← F.map_comp]
+  exact congrArg (fun k ↦ F.map k.op) h
+
+/-- The entire projection square, on both supported entries and selected zeros. -/
+theorem sectionProjection_naturality (p : S ⟶ integerBase) [QuasiCompact p]
+    {A B : Scheme.QuasiCompactOpenPairs.{u}} (g : A ⟶ B) :
+    pairSupported.map g.hom.op ≫ sectionProjection p A =
+      sectionProjection p B ≫ sectionMap p g := by
+  apply map_op_square pairSupported
+  exact congrArg (fun k ↦ k.hom) ((pairBaseProductProjection p).naturality g).symm
+
+private theorem map_op_three {C D : Type*} [Category C] [Category D]
+    (F : Cᵒᵖ ⥤ D) {A B X Y : C} (f : A ⟶ B) (g : B ⟶ X)
+    (h : X ⟶ Y) (k : A ⟶ Y) (e : f ≫ g ≫ h = k) :
+    (F.map h.op ≫ F.map g.op) ≫ F.map f.op = F.map k.op := by
+  rw [← F.map_comp, ← F.map_comp]
+  exact congrArg (fun z ↦ F.map z.op) e
+
+/-- The factor-swap route recovers the full actual Model projection, with no zero replacement. -/
+theorem sectionProjection_recovery (p : S ⟶ integerBase) [QuasiCompact p]
+    (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    ((ParameterIdentity.supportedIso A.obj.obj.hom).hom ≫
+        (ParameterModels.supported A.obj.obj.hom).map p.op) ≫ (sectionIso p A).hom =
+      sectionProjection p A :=
+  map_op_three pairSupported _ _ _ _ (pairIso_projection p A)
+
+end Quillen.PerfectComplexes.GlobalSectionChangeIndex.SupportedParameterSwap
+
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization.Parameter
+open GlobalSectionChangeIndex GlobalSectionChangeIndex.SupportedParameterSwap
+open GlobalSectionChangeIndex.ParameterIdentity
+variable {U X S : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
+  [CompactSpace U] [CompactSpace X] (T : X.Opens)
+  (p : S ⟶ integerBase) [QuasiCompact p]
+
+private theorem paste_squares {C : Type*} [Category C] {A B C₀ D E F : C}
+    (a : A ⟶ B) (b : B ⟶ C₀) (c : D ⟶ E) (d : E ⟶ F)
+    (e₀ : A ⟶ D) (e₁ : B ⟶ E) (e₂ : C₀ ⟶ F)
+    (h₀ : a ≫ e₁ = e₀ ≫ c) (h₁ : b ≫ e₂ = e₁ ≫ d) :
+    (a ≫ b) ≫ e₂ = e₀ ≫ (c ≫ d) := by
+  rw [Category.assoc, h₁, ← Category.assoc, h₀, Category.assoc]
+
+/-- The actual projection commutes with both original section row arrows together. -/
+theorem composite_projection :
+    sectionComposite j T ≫ sectionProjection p (Rows.target j T) =
+      sectionProjection p (Rows.source j T) ≫ strictComposite j T p :=
+  paste_squares (sectionEnlargement j T) (sectionRestriction j T)
+    (strictEnlargement j T p) (strictRestriction j T p)
+    (sectionProjection p (Rows.source j T)) (sectionProjection p (Rows.middle T))
+    (sectionProjection p (Rows.target j T))
+    (sectionProjection_naturality p (Rows.enlargement j T))
+    (sectionProjection_naturality p (Rows.restriction j T))
+
+/-- Every original null time commutes with the unchanged literal parameter projection. -/
+theorem strictNull_projection (n : ℕ) (s : I)
+    (x : (prespectrum (sectionSource j T)).space n) :
+    (prespectrumMap (sectionProjection p (Rows.target j T))).map n
+        ((sectionNull j T).level n (s, x)) =
+      (strictNull j T p).level n
+        (s, (prespectrumMap (sectionProjection p (Rows.source j T))).map n x) :=
+  prespectrumCompositeZeroNullHomotopy_naturality
+    (sectionEnlargement j T) (sectionRestriction j T)
+    (strictEnlargement j T p) (strictRestriction j T p)
+    (sectionProjection p (Rows.source j T)) (sectionProjection p (Rows.target j T))
+    (composite_projection j T p)
+    (zeroToSectionFull j T) (zeroToStrictFull j T p)
+    (zeroToSectionFull_weak j T) (zeroToStrictFull_weak j T p) n s x
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization.Parameter

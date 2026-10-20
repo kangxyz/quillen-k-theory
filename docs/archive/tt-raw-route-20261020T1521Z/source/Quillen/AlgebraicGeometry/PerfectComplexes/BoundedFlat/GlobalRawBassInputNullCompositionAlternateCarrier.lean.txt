@@ -1,0 +1,111 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionTypedJ1
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionRailEndpoints
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentSides
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentBoundary
+public import Quillen.Topology.Path.CarrierSquareBoundary
+/-! The literal scalar alternate null comparison with its terminal pause retained. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionAlternateCarrier
+open CommonReferenceNerve InputIdentitySeedCarrier
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open InputNullCompositionCompositeCarrier InputNullCompositionRailEndpoints
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The final transported null endpoint is the ordinary composite tip. -/
+theorem tip_eq : InputIdentitySeedCone.tip (f ≫ g) false = finalPath f g 1 := by
+  exact (InputNullCompositionPrecomp.transport_tip f g).symm.trans
+    (InputNullCompositionPrecomp.newNull f g).target.symm
+
+/-- The original composite source null, retyped only at its terminal tip. -/
+def oldPath := (initialPath f g).cast rfl (tip_eq f g)
+/-- The original composite target null, retyped only at its terminal tip. -/
+def newPath := (finalPath f g).cast rfl (tip_eq f g)
+
+/-- The whole original J1 with the ordinary terminal tip as its typed endpoint. -/
+def j1 : (oldPath f g).Homotopy
+    (((firstPath f g).trans (secondPath f g)).trans (newPath f g)) :=
+  ((InputNullCompositionCompositeCarrier.comparison f g).pathCast rfl (tip_eq f g)).cast
+    rfl (by ext s; rfl)
+
+/-- The complete original source rail left edge. -/
+def sourceLeft : Path
+    ((InputIdentitySeedNull.oldNull (f ≫ g) false) 0) (firstPath f g 0) where
+  toFun r := InputNullCompositionPolynomialCarrier.sourceRail f g (r,0)
+  continuous_toFun := by fun_prop
+  source' := sourceRail_zero f g 0
+  target' := (sourceRail_one f g 0).trans
+    ((SeedSurfaceTransport.oldNull f g).source.trans
+      (SeedSurfaceTransport.laurentMovement f g).source.symm)
+
+/-- The direct original null word with its literal scalar starting point. -/
+def oldDirect := (InputIdentitySeedNull.oldNull (f ≫ g) false).cast
+  (InputIdentitySeedNull.oldNull (f ≫ g) false).source rfl
+
+/-- The direct Laurent path followed by the complete original new-null word. -/
+def targetDirect := ((InputIdentitySeedRectangle.laurentMovement (f ≫ g) false).trans
+    (InputIdentitySeedNull.newNull (f ≫ g) false)).cast
+  (InputIdentitySeedNull.oldNull (f ≫ g) false).source rfl
+
+/-- The actual source rail with all four proved original scalar boundaries. -/
+def sourceSquare : Quillen.CarrierPathSquare.Square (oldDirect f g) (oldPath f g)
+    (sourceLeft f g) (Path.refl (InputIdentitySeedCone.tip (f ≫ g) false)) where
+  parameter := InputNullCompositionPolynomialCarrier.sourceRail f g
+  at_zero := sourceRail_zero f g
+  at_one := sourceRail_one f g
+  left _ := rfl
+  right := sourceRail_tip f g
+
+/-- Paste the actual Laurent face and target-null rail at their proved whole edge. -/
+def targetParameter := concatSecond (InputNullCompositionLaurentCarrier.face f g)
+  (InputNullCompositionPolynomialCarrier.targetRail f g)
+  (InputNullCompositionLaurentCarrier.face_right f g)
+
+/-- The literal target-word square with its original binary path subdivision. -/
+def targetSquare : Quillen.CarrierPathSquare.Square (targetDirect f g)
+    (((firstPath f g).trans (secondPath f g)).trans (newPath f g))
+    (sourceLeft f g) (Path.refl (InputIdentitySeedCone.tip (f ≫ g) false)) where
+  parameter := targetParameter f g
+  at_zero s := by
+    change targetParameter f g (0,s) =
+      ((InputIdentitySeedRectangle.laurentMovement (f ≫ g) false).trans
+        (InputIdentitySeedNull.newNull (f ≫ g) false)) s
+    rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+    · rw [targetParameter, concatSecond_lower]
+      exact (InputNullCompositionLaurentCarrier.face_zero f g t).trans
+        (path_lower _ _ t).symm
+    · rw [targetParameter, concatSecond_upper]
+      exact (targetRail_zero f g t).trans (path_upper _ _ t).symm
+  at_one s := by
+    rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+    · rw [targetParameter, concatSecond_lower, path_lower]
+      exact InputNullCompositionLaurentCarrier.face_one f g t
+    · rw [targetParameter, concatSecond_upper, path_upper]
+      exact targetRail_one f g t
+  left r := by
+    rw [targetParameter, concatSecond_zero]
+    exact InputNullCompositionLaurentCarrier.face_left f g r
+  right r := by
+    rw [targetParameter, concatSecond_one]
+    exact targetRail_tip f g r
+
+/-- The prescribed alternate comparison, including the unremoved terminal pause. -/
+def alternate : (oldDirect f g).Homotopy (targetDirect f g) :=
+  (sourceSquare f g).toBoundary.trans
+    ((((Path.Homotopy.refl (sourceLeft f g)).hcomp (j1 f g)).hcomp
+      (Path.Homotopy.refl ((Path.refl (InputIdentitySeedCone.tip (f ≫ g) false)).symm))).trans
+        (targetSquare f g).toBoundary.symm)
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionAlternateCarrier

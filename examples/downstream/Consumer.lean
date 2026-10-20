@@ -60,6 +60,7 @@ public import Consumer.EmptySupportedModels
 public import Consumer.ExactFunctor
 public import Consumer.FiberConnecting
 public import Consumer.FiberLiftHomotopyNaturality
+public import Consumer.FineBassK
 public import Consumer.FiniteFieldKTwo
 public import Consumer.FiniteFlatPushforward
 public import Consumer.FiniteHELP
@@ -131,6 +132,7 @@ public import Consumer.MilnorDvrNormalization
 public import Consumer.MilnorInterfaces
 public import Consumer.MilnorKTwoEquivalence
 public import Consumer.MixedComparison
+public import Consumer.MixedWeakZeroGrid
 public import Consumer.N4Cancellation
 public import Consumer.N4RestrictedComparison
 public import Consumer.N4RestrictedUniqueness
@@ -195,6 +197,8 @@ public import Consumer.StrictFiniteFlatPushforward
 public import Consumer.SupportedParameterDoubleCorrection
 public import Consumer.SupportedParameterDoubleUnit
 public import Consumer.SupportedUnitInterchange
+public import Consumer.TargetOverlapReanchor
+public import Consumer.TensorBassConstruction
 public import Consumer.Topology
 public import Consumer.TwistedWhiteheadSuppliedCovers
 public import Consumer.UnreducedConeHomology
@@ -203,6 +207,7 @@ public import Consumer.WaldhausenAdditivity
 public import Consumer.WaldhausenFibration
 public import Consumer.WaldhausenGrothendieckComparison
 public import Consumer.WaldhausenStableConnecting
+public import Consumer.WeakZeroProductConeComparison
 
 /-!
 Independently compiled downstream consumers of the public library.

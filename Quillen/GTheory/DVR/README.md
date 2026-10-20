@@ -33,11 +33,6 @@ are `∂{u,π}=ū` and `∂{π,u}=ū⁻¹`.
 proves `localizationKMap_injective_of_residueSection` for the original
 generic finite-module G map in every degree when the actual residue map
 has a ring section. The native test realizes this for `PowerSeries ℚ`.
-A separate, unapplied R5 origin proposal constructs the section from the
-existing geometric triangles and strictly checks its original trait G/K
-pullback injectivity; independent ordinary mathematical review accepted it.
-The genuine-model scheme corollaries retain the normality input of the
-existing diagram constructor.
 
 [`UnitPairGeneration`](UnitPairGeneration.lean)
 proves `unitPairSpan_eq_top_of_residueSection` for the original lower G2 of the
@@ -79,4 +74,3 @@ Original generic/closed scheme K-pullbacks and target-only K-to-lower-G transpor
 have negative mapped-symbol values; applying `N` to the closed residue field
 requires its explicit characteristic-zero hypothesis. These statements preserve
 the original maps and do not identify an arbitrary DVR Milnor presentation.
-Separate R5 sheaf-stalk/model proposals remain unapplied here.

@@ -1,0 +1,131 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalPolynomialNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalChartJoin
+
+/-! The terminal chart maps on arbitrary genuine polynomial reference nodes. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target
+open BassH0Merge BassH1Join CommonReferenceNerve
+
+private theorem product_total_node {V W T : Model.{u}}
+    (F : V ⟶ T) (D : V ⟶ W) (H G : W ⟶ T)
+    (γ : F.functor ≅ (D ≫ H).functor) (δ : H.functor ≅ G.functor)
+    (N : CommonReferenceNerve.Node D) :
+    CommonReferenceProduct.node F D H γ N ⟨G, δ⟩ =
+      postReferenceNode F G (γ ≪≫ isoWhiskerLeft D.functor δ) N := by
+  have hp : (Functor.uncurry.obj (whiskeringLeft _ _ _)).mapIso (N.2.prod δ) =
+      isoWhiskerLeft D.functor δ ≪≫ isoWhiskerRight N.2 G.functor := by
+    apply Iso.ext
+    ext X
+    exact δ.hom.naturality (N.2.hom.app X)
+  change (⟨N.1 ≫ G, γ ≪≫ _⟩ : CommonReferenceNerve.Node F) =
+    ⟨N.1 ≫ G, (γ ≪≫ isoWhiskerLeft D.functor δ) ≪≫ isoWhiskerRight N.2 G.functor⟩
+  rw [hp, Iso.trans_assoc]
+
+private theorem whisker_anchor {V A B C D : Model.{u}}
+    (E : V ⟶ A) (J : A ⟶ B) (K : B ⟶ C) (L : C ⟶ D)
+    (F : A ⟶ D) (H : B ⟶ D) (G : A ⟶ C)
+    (e : G.functor ≅ (J ≫ K).functor) (γ : F.functor ≅ (J ≫ H).functor)
+    (δ : H.functor ≅ (K ≫ L).functor) (θ : F.functor ≅ (G ≫ L).functor)
+    (h : γ ≪≫ isoWhiskerLeft J.functor δ = θ ≪≫ isoWhiskerRight e L.functor) :
+    isoWhiskerLeft E.functor γ ≪≫ isoWhiskerLeft (E ≫ J).functor δ =
+      isoWhiskerLeft E.functor θ ≪≫ isoWhiskerRight (isoWhiskerLeft E.functor e) L.functor := by
+  apply Iso.ext
+  ext X
+  exact congrArg (fun η ↦ η.hom.app (E.functor.obj X)) h
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "Ja" => InputCompositionTerminalAttach.arrow (projection.app Y)
+local notation "U" => InputCompositionTerminalAttach.arrow f
+local notation "Pb" => TargetSpan.polynomialPost f
+local notation "H" => NativeSquareFiveSimplex.source (polynomial.map f) (projection.app Y)
+
+private theorem terminal_chart_node_of_anchor
+    (α : laurent ⟶ polynomial)
+    (ha : ∀ Z, α.app Z ≫ projection.app Z = laurentProjection.app Z)
+    (hb : ∀ Z, α.app Z ≫ projection.app Z = laurentProjection.app Z)
+    (h : canonicalAnchor f α ha ≪≫
+      isoWhiskerLeft (Ja).functor (squareNodes f α 4).2 =
+      terminalPolynomialAnchor f α hb ≪≫
+        isoWhiskerRight (NativeSquareFiveSimplex.nodes (polynomial.map f) (projection.app Y)
+          (projection.app X) f (projection.naturality f) 2).2
+          (InputCompositionTerminalAttach.arrow (α.app X)).functor)
+    (N : CommonReferenceNerve.Node (polynomialReference Y E)) :
+    chartNodes f E α ha N 4 =
+      terminalBoundaryNode f E (ProjectionReference.chartNode X α hb (E ≫ U)
+        (TargetSpan.polynomialMapNode f E N)) := by
+  let K := InputCompositionTerminalAttach.arrow (α.app X)
+  let δ := NativeSquareFiveSimplex.sourceIso
+    (laurent.map f) (α.app Y)
+    (α.app X) (polynomial.map f)
+    (α.naturality f) ≪≫
+      BinaryNormalizationSimplex.total (α.app X)
+        (polynomial.map f)
+  let e := BinaryNormalizationSimplex.total
+    (polynomial.map f) (projection.app Y)
+  have hs : squareNodes f α 4 =
+      (⟨Pb ≫ K, δ⟩ : CommonReferenceNerve.Node (squareSource f α)) := by
+    apply Sigma.ext (Model.Hom.ext rfl)
+    exact heq_of_eq rfl
+  have he : TargetSpan.polynomialMapAnchor f E =
+      TargetSpan.polynomialSquareAnchor f E ≪≫ isoWhiskerLeft E.functor e := by
+    change (_ ≪≫ _) ≪≫ Iso.refl _ = _
+    exact Iso.trans_refl _
+  change CommonReferenceProduct.node (reference f E) (polynomialReference Y E)
+    (squareSource f α) (chartAnchor f E α ha) N
+    (squareNodes f α 4) =
+      anchorNode (terminalBoundaryAnchor f E)
+        (postReferenceNode (ProjectionReference.reference X (E ≫ U)) K
+          (isoWhiskerLeft (E ≫ U).functor (ProjectionReference.chartEndpoint X α hb))
+          (postReferenceNode (TargetSpan.polynomialReference f E) Pb
+            (TargetSpan.polynomialMapAnchor f E) N))
+  rw [hs, product_total_node, anchor_post_node, post_post_node, he,
+    isoWhiskerRight_trans, ← Iso.trans_assoc, terminal_polynomial_product_anchor]
+  apply congrArg (fun η ↦ postReferenceNode (reference f E) (Pb ≫ K) η N)
+  have hh : canonicalAnchor f α ha ≪≫
+      isoWhiskerLeft (Ja).functor δ =
+    terminalPolynomialAnchor f α hb ≪≫ isoWhiskerRight e K.functor := h
+  exact whisker_anchor E Ja Pb K (InputDescSimplex.reference f)
+    (squareSource f α) H e
+    (canonicalAnchor f α ha) δ
+    (terminalPolynomialAnchor f α hb) hh
+
+/-- The entire positive polynomial input keeps its full target reference. -/
+theorem chart_terminal_plus_node
+    (N : CommonReferenceNerve.Node (polynomialReference Y E)) :
+    chartNodes f E (plus) (plus_projection) N 4 =
+      terminalBoundaryNode f E
+        (ProjectionReference.chartNode X plus plus_projection (E ≫ U)
+          (TargetSpan.polynomialMapNode f E N)) :=
+  terminal_chart_node_of_anchor f E (plus)
+    (plus_projection) (plus_projection)
+    (TerminalChartJoin.positive_anchor f) N
+
+/-- The entire inverse polynomial input retains its separate final chart anchor. -/
+theorem chart_terminal_minus_node
+    (N : CommonReferenceNerve.Node (polynomialReference Y E)) :
+    chartNodes f E (minus) (minus_projection) N 4 =
+      terminalBoundaryNode f E
+        (ProjectionReference.chartNode X minus minus_projection (E ≫ U)
+          (TargetSpan.polynomialMapNode f E N)) :=
+  terminal_chart_node_of_anchor f E (minus)
+    (minus_projection) (minus_projection)
+    (TerminalChartJoin.negative_anchor f) N
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.Target

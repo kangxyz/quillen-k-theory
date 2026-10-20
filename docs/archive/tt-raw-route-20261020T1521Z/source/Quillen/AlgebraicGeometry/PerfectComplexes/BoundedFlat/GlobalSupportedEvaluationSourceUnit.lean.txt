@@ -1,0 +1,209 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedEvaluationSource
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedEvaluationUnit
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterLaurentTrack
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseLaurentParameter
+public import Quillen.KTheory.Bass.SchemeCoefficientSeedNaturality
+
+/-!
+# The original supported forward unit under the actual source-square recovery
+
+The original affine Laurent comparison followed by the genuine pair symmetry preserves
+the forward coordinate. Original strict reindexing therefore preserves the actual supported
+identity unit and every time of its realized track. The same whole square recovers the old
+null/unit/null seed, using the unchanged full-clock strict source null at both endpoints.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+  (integerRing laurentSpecIso laurentSpecIso_hom_fst)
+open AlgebraicGeometry.Scheme.PolynomialLaurent.IntegerSpec
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients.IntegerRow
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open Quillen.FunctorIdentityAutomorphism Quillen.KTheory.Bass
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedEvaluation.Source
+open GlobalSectionChangeIndex GlobalSectionChangeIndex.SupportedParameterSwap
+open GlobalSupportedRawBass ParameterLaurentUnit
+
+private theorem projection_triangle {C : Type*} [Category C] (F : C ⥤ C)
+    (π : F ⟶ 𝟭 C) {S T W : C} (f : S ⟶ T) (e : W ⟶ F.obj S)
+    (r : W ⟶ S) (h : e ≫ π.app S = r) :
+    (e ≫ F.map f) ≫ π.app T = r ≫ f := by
+  rw [Category.assoc, π.naturality, Functor.id_map, ← Category.assoc, h]
+
+private theorem scalar_square {W X Y Z : Scheme.{u}}
+    (a : W ⟶ X) (b : X ⟶ Y) (c : W ⟶ Z) (d : Z ⟶ Y)
+    (h : a ≫ b = c ≫ d) (r : (Γ(Y, ⊤))ˣ) :
+    Units.map a.appTop.hom.toMonoidHom (Units.map b.appTop.hom.toMonoidHom r) =
+      Units.map c.appTop.hom.toMonoidHom (Units.map d.appTop.hom.toMonoidHom r) := by
+  rw [AlgebraicGeometry.Scheme.BaseChange.Coefficients.IntegerRow.unitPullback_comp,
+    AlgebraicGeometry.Scheme.BaseChange.Coefficients.IntegerRow.unitPullback_comp, h]
+
+/-- The original Laurent corner is the actual affine parameter map after pair symmetry. -/
+def laurentPairMap (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Geometry.laurent A ⟶ GlobalSupportedParameter.pair A.obj.obj.hom
+      (GlobalIndex.laurent.obj integerBase) :=
+  (pairIso (laurentProjection integerRing) A).hom ≫
+    GlobalSupportedParameter.pairMap A.obj.obj.hom (laurentSpecIso integerRing).hom
+
+/-- The complete Laurent corner is precisely original pullback along this genuine pair map. -/
+theorem sourceModelIso_laurent_map (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sourceModelIso A).hom.right.right = pairSupported.map (laurentPairMap A).op := by
+  rw [sourceModelIso_laurent]
+  change pairSupported.map
+      (GlobalSupportedParameter.pairMap A.obj.obj.hom (laurentSpecIso integerRing).hom).op ≫
+        pairSupported.map (pairIso (laurentProjection integerRing) A).hom.op = _
+  rw [← pairSupported.map_comp]
+  rfl
+
+/-- The actual ambient projection keeps both original Laurent-coordinate maps. -/
+theorem laurentPairMap_projection (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (laurentPairMap A).hom.right ≫
+        (baseProductProjection (toIntegerBase A.obj.obj.right)).app
+          (GlobalIndex.laurent.obj integerBase) =
+      pullback.snd (toIntegerBase A.obj.obj.right) (laurentProjection integerRing) ≫
+        (laurentSpecIso integerRing).hom := by
+  exact projection_triangle
+    (baseProductFunctor (toIntegerBase A.obj.obj.right))
+    (baseProductProjection (toIntegerBase A.obj.obj.right))
+    (laurentSpecIso integerRing).hom (pairIso (laurentProjection integerRing) A).hom.hom.right
+    (pullback.snd (toIntegerBase A.obj.obj.right) (laurentProjection integerRing))
+    (pairIso_right_fst (laurentProjection integerRing) A)
+
+/-- The entire original source-corner pullback preserves the forward Laurent coordinate. -/
+theorem laurentPairMap_scalar (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Units.map (laurentPairMap A).hom.right.appTop.hom.toMonoidHom
+        (projectedLaurentScalar A.obj.obj.right (op integerBase)) =
+      GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right) := by
+  exact (scalar_square (laurentPairMap A).hom.right
+    ((baseProductProjection (toIntegerBase A.obj.obj.right)).app
+      (GlobalIndex.laurent.obj integerBase))
+    (pullback.snd (toIntegerBase A.obj.obj.right) (laurentProjection integerRing))
+    (laurentSpecIso integerRing).hom (laurentPairMap_projection A)
+    (GlobalSchemeLaurentTrack.laurentScalar (op integerBase))).trans
+      (congrArg
+        (Units.map (pullback.snd (toIntegerBase A.obj.obj.right)
+          (laurentProjection integerRing)).appTop.hom.toMonoidHom)
+        (nativeLaurentUnit_spec integerRing))
+
+private theorem supportedPair_unit {A B : Scheme.OpenPairs.{u}} (g : A ⟶ B)
+    (r : (Γ(B.obj.right, ⊤))ˣ) (s : (Γ(A.obj.right, ⊤))ˣ)
+    (h : Units.map g.hom.right.appTop.hom.toMonoidHom r = s) :
+    Preserves (pairSupported.map g.op).functor
+      (SupportedTensorEvaluation.unit (X := op B.obj.right) B.obj.hom r)
+      (SupportedTensorEvaluation.unit (X := op A.obj.right) A.obj.hom s) := by
+  intro K
+  apply ObjectProperty.hom_ext
+  change (globalModel.map g.hom.right.op).functor.map
+      (((SupportedTensorEvaluation.unit (X := op B.obj.right) B.obj.hom r).hom.app K).hom) =
+    ((SupportedTensorEvaluation.unit (X := op A.obj.right) A.obj.hom s).hom.app
+      ((supportedPairReindex g).obj K)).hom
+  rw [show ((SupportedTensorEvaluation.unit (X := op B.obj.right) B.obj.hom r).hom.app K).hom =
+      (globalUnit (op B.obj.right) r).hom.app K.obj from
+      map_lift_hom (supported (X := op B.obj.right) B.obj.hom).ι _ K,
+    show ((SupportedTensorEvaluation.unit (X := op A.obj.right) A.obj.hom s).hom.app
+        ((supportedPairReindex g).obj K)).hom =
+      (globalUnit (op A.obj.right) s).hom.app
+        ((globalModel.map g.hom.right.op).functor.obj K.obj) from
+      map_lift_hom (supported (X := op A.obj.right) A.obj.hom).ι _ _]
+  exact globalUnit_reindex_of_eq g.hom.right.op r s h K.obj
+
+/-- Original reindexing preserves the original forward supported identity unit. -/
+theorem sourceModelIso_unit (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Preserves (sourceModelIso A).hom.right.right.functor
+      (ParameterLaurentTrack.supportedUnit A.obj.obj.hom (op integerBase))
+      (SupportedTensorEvaluation.unit (X := op (Geometry.laurent A).obj.right)
+        (Geometry.laurent A).obj.hom
+        (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right))) := by
+  rw [sourceModelIso_laurent_map]
+  exact supportedPair_unit (laurentPairMap A)
+    (projectedLaurentScalar A.obj.obj.right (op integerBase))
+    (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right))
+    (laurentPairMap_scalar A)
+
+/-- The original Laurent coefficient map obeys the same complete source Model square. -/
+theorem sourceModelIso_coefficient (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (parameterModels A).map (GeometricSeedCospan.coefficient.app (op integerBase)) ≫
+        (sourceModelIso A).hom.right.right =
+      (sourceModelIso A).hom.left.left ≫
+        pairSupported.map (Geometry.laurentProjection A).op := by
+  have h : GeometricSeedCospan.coefficient.app (op integerBase) ≫
+      (laurentSpecIso integerRing).hom.op = (laurentProjection integerRing).op := by
+    apply Quiver.Hom.unop_inj
+    exact laurentSpecIso_hom_fst integerRing
+  rw [sourceModelIso_laurent, sourceModelIso_base, ← Category.assoc,
+    ← CategoryTheory.Functor.map_comp, h]
+  exact parameterProjection_square (laurentProjection integerRing) A
+
+/-- The original forward scalar acts on the actual strict supported Laurent projection. -/
+def sectionUnitHomotopy (A : Scheme.QuasiCompactOpenPairs.{u}) :=
+  SupportedTensorEvaluation.sectionUnitHomotopy (Geometry.laurentProjection A)
+    (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right))
+
+/-- Every source comparison time preserves the entire original forward scalar track. -/
+theorem sourceUnit_square (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (s : unitInterval) (x : (parameterSquare A).left.left.space n) :
+    (sourceSquareIso A).hom.right.right.map n
+        (((ParameterLaurentTrack.supportedTrack A.obj.obj.hom).homotopy
+          (op integerBase)).level n (s, x)) =
+      (sectionUnitHomotopy A).level n
+        (s, (sourceSquareIso A).hom.left.left.map n x) := by
+  have h := sourceModelIso_coefficient A
+  exact prespectrumIsoHomotopy_square_apply _ _ _ _ _ _ h
+    (onFunctor_whisker_square _ _ _ _ (eqToHom (congrArg Model.Hom.functor h))
+      (ParameterLaurentTrack.supportedUnit A.obj.obj.hom (op integerBase))
+      (SupportedTensorEvaluation.unit (X := op (Geometry.laurent A).obj.right)
+        (Geometry.laurent A).obj.hom
+        (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right)))
+      (sourceModelIso_unit A).whisker) n s x
+
+/-- The original forward scalar with only its actual strict diagonal endpoint transported. -/
+def sectionTrack (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Homotopy ((sectionSquare A).left.hom ≫ (sectionSquare A).hom.right)
+      ((sectionSquare A).left.hom ≫ (sectionSquare A).hom.right) :=
+  (sectionUnitHomotopy A).cast (sectionSquare_source A).symm (sectionSquare_source A).symm
+
+/-- The unchanged original parameter track, with its original strict diagonal endpoint. -/
+def parameterTrack (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    Homotopy ((parameterSquare A).left.hom ≫ (parameterSquare A).hom.right)
+      ((parameterSquare A).left.hom ≫ (parameterSquare A).hom.right) :=
+  GeometricSeedCospan.sourceTrack (parameterModels A ⋙ prespectrumFunctor)
+    (ParameterLaurentTrack.supportedTrack A.obj.obj.hom).homotopy (op integerBase)
+
+/-- Both strict diagonal casts retain every original forward unit time. -/
+theorem sourceTrack_square (A : Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+    (s : unitInterval) (x : (parameterSquare A).left.left.space n) :
+    (sourceSquareIso A).hom.right.right.map n ((parameterTrack A).level n (s, x)) =
+      (sectionTrack A).level n (s, (sourceSquareIso A).hom.left.left.map n x) :=
+  sourceUnit_square A n s x
+
+/-- The strict section seed uses the original full-clock source null and forward unit. -/
+def sectionSeed (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (sectionSquare A).left.left ⟶
+      parameterLooping (mappingCone (StrictSquare.comparison (sectionSquare A))) :=
+  ((sectionTrack A).postcomp
+    (mappingConeInclusion (StrictSquare.comparison (sectionSquare A)))).nullLoopMap
+      (StrictSquare.sourceNullHomotopy (sectionSquare A))
+
+/-- The original all-scheme seed is recovered literally along the actual whole square. -/
+theorem sourceSeed_recovery (A : Scheme.QuasiCompactOpenPairs.{u}) :
+    (SchemeNaturalSeed.seed (ParameterLaurentTrack.supportedTrack A.obj.obj.hom)).app
+        (op integerBase) ≫ (sourceStepIso A).hom =
+      (sourceSquareIso A).hom.left.left ≫ sectionSeed A := by
+  rw [SchemeCoefficientSeedNaturality.scheme_seed_eq]
+  exact StrictSquare.sourceSeed_naturality (sourceSquareIso A).hom
+    (parameterTrack A) (sectionTrack A) (sourceTrack_square A)
+
+end Quillen.PerfectComplexes.GlobalSupportedEvaluation.Source

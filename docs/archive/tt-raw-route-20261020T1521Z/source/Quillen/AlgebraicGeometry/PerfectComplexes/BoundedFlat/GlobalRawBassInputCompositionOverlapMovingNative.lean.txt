@@ -1,0 +1,95 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionOverlapCorrection
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpanTreeNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionMap
+public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
+/-! Exact native recovery of both original moving-null halves on overlap-cylinder inputs. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open Quillen.ScalarRectangle Quillen.NativePathCells
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar
+open CommonReferenceNerve InputCompositionTopPieces InputCompositionSpanScalar
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "E" => baseSource f g
+
+/-- The original native overlap-cylinder input at its unchanged height. -/
+def overlapInput (n : ℕ) (t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :=
+  HomotopyPushout.cylinder (boundedFlatPerfectPrespectrumMap (projection.app Z))
+    (boundedFlatPerfectPrespectrumMap (projection.app Z)) n (t,x)
+
+/-- Evaluate the overlap-indexed scalar family at the original native input. -/
+def eval (n : ℕ) (t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n)
+    (z : Carrier f g) := ProjectionReference.FourEdge.coneEval X E n (z t) x
+
+/-- The whole first half recovers the original comparison square on overlap inputs. -/
+theorem nullMovingFirst_native (n : ℕ) (t r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    eval f g n t x (nullMovingFirst f g (r,s)) =
+      (mappingConeInclusion (comparison X)).map n
+        ((InputComposition.comparisonSquare f g).level n (r,(s,overlapInput n t x))) := by
+  change ProjectionReference.FourEdge.coneEval X E n
+    (FourEdgeTree.laurentInclusion E (ProjectionReference.projectionMap X)
+      (ProjectionReference.reference X E) (ProjectionReference.FourEdge.beta X E)
+      (originalOverlapCube f g ![r,s,t])) x = _
+  rw [ProjectionReference.FourEdge.coneEval_laurent]
+  change (mappingConeInclusion (comparison X)).map n
+    (pointwisePrespectrumFamily _ n (originalOverlapCube f g ![r,s,t]) x) = _
+  rw [originalOverlapCube_native]
+  rfl
+
+/-- The whole second half recovers the original moving cone cylinder. -/
+theorem nullMovingSecond_native (n : ℕ) (t r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    eval f g n t x (nullMovingSecond f g (r,s)) =
+      (mappingConeHomotopy (comparison X)).level n
+        (s,(InputCompositionSpan.homotopy f g).level n (r,overlapInput n t x)) := by
+  change ProjectionReference.FourEdge.coneEval X E n
+    (FourEdgeTree.cylinder E (ProjectionReference.projectionMap X)
+      (ProjectionReference.reference X E) (ProjectionReference.FourEdge.beta X E)
+      (treeComposition f g (r,t),s)) x = _
+  rw [ProjectionReference.FourEdge.coneEval_cylinder, treeComposition_native]
+  rfl
+
+/-- The original uncorrected moving-null square with both chosen tracks. -/
+def nativeMovingSquare := coneSquareNullMovingSquare (comparison Z) (comparison X)
+  (inputComparisonHomotopy (f ≫ g)) (InputCompositionCharts.compositeComparison f g)
+  (InputCompositionSpan.homotopy f g) (InputCompositionCharts.laurentComposition f g)
+  (InputComposition.comparisonSquare f g)
+
+/-- Every value of the complete moving family recovers the original native square. -/
+theorem nullMoving_native (n : ℕ) (t r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    eval f g n t x (nullMoving f g (r,s)) =
+      (nativeMovingSquare f g).level n (r,(s,overlapInput n t x)) := by
+  rcases cover s with ⟨v,rfl⟩ | ⟨v,rfl⟩
+  · rw [nullMoving_lower, nullMovingFirst_native]
+    unfold nativeMovingSquare coneSquareNullMovingSquare
+    rw [Homotopy.Square.nativePastePaths_lower]
+    rfl
+  · rw [nullMoving_upper, nullMovingSecond_native]
+    unfold nativeMovingSquare coneSquareNullMovingSquare
+    rw [Homotopy.Square.nativePastePaths_upper]
+    rfl
+
+/-- The original three-side boundary retains its exact collapse parameter. -/
+theorem movingBoundary_native (n : ℕ) (t r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    eval f g n t x ((movingSquare f g).toBoundary (r,s)) =
+      (nativeMovingSquare f g).toBoundary.level n (r,(s,overlapInput n t x)) :=
+  nullMoving_native f g n t (Quillen.ThreeSideSquare.collapse (r,s)).1
+    (Quillen.ThreeSideSquare.collapse (r,s)).2 x
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionOverlapScalar

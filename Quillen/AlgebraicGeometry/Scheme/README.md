@@ -127,7 +127,7 @@ These clients do not add the remaining geometric comparisons.
 | `Scheme.Pullback`, `Scheme.FlatPullback` | `AlgebraicGeometry.Scheme.pullbackK`, `KFunctor`, `pullbackG`, `GFlatFunctor`, `KToG_pullback` |
 | `Scheme.FinitePushforward`, `Scheme.FiniteFlatPushforward` | `AlgebraicGeometry.Scheme.GFinitePushforwardFunctor`, `KFiniteFlatPushforwardFunctor` |
 | `Scheme.Regular` | `AlgebraicGeometry.Scheme.KToGRegularAffineEquiv`, `KToGRegularEquiv` |
-| `PerfectComplexes.Basic`, `PerfectComplexes.Local` | `Quillen.PerfectComplexes.StrictK`, `PerfectK` |
+| `PerfectComplexes.Basic`, `PerfectComplexes.KTheory` | `Quillen.PerfectComplexes.StrictK`, `PerfectK` |
 | `PerfectComplexes.OpenFunctor` | `perfectOpenKMap`, `perfectOpenKRestrict`, `perfectKRestrict` |
 | `PerfectComplexes.OpenLongExactSequence` | `perfectOpenConnectingHom`, `perfectOpen_positiveLongExactSequence` |
 | `PerfectComplexes.GlobalLocalization` | Actual open endpoint, positive comparison and degree-zero image |

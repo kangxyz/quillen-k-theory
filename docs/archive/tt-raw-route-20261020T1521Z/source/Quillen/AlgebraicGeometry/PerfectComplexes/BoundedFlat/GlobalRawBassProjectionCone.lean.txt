@@ -1,0 +1,198 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionFourEdgeNative
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeCone
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeCompactFamily
+public import Quillen.Topology.Prespectrum.MappingCone
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFourEdgeLaws
+
+/-!
+# A whole-reference scalar cone for the original global Bass comparison
+
+The actual global five-node attachment supplies a contractible unreduced scalar cone.
+Its evaluator retains both whole polynomial summands, the Laurent nerve, every original
+four-edge overlap point and the independent cone height. Compact input families are jointly
+continuous, based and compatible with the independent native structure time.
+
+This presents the original global comparison cone. It does not assert a scalar lift of a
+chosen composition homotopy or a higher-stage Bass successor.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits MonoidalCategory AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u v
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge
+open CommonReferenceNerve CommonReferenceNerve.CutOpenCarrier FourEdgeTree
+variable (X : Scheme.{u}) {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen X))
+local notation "J" => projectionMap X
+local notation "F" => reference X E
+local notation "β" => beta X E
+
+/-- The native mapping cone of the original global Bass comparison. -/
+abbrev nativeBassCone :=
+  LoopPrespectrum.mappingCone (comparison X)
+/-- The realized unreduced cone on the four-edge whole-reference tree. -/
+abbrev scalarCone := FourEdgeTree.coneSpace E J F β
+
+/-- Evaluate a Laurent parameter and include its value in the native Bass cone at level `n`. -/
+def laurentValue (n : ℕ) (z : |parameterSSet F|) (x : (prespectrum V).space n) :
+    (nativeBassCone X).space n :=
+  (LoopPrespectrum.mappingConeInclusion (comparison X)).map n
+    (pointwisePrespectrumFamily F n z x)
+
+/-- Evaluate the four-edge tree in the native cone cylinder at the supplied cone height. -/
+def coneCylinderValue (n : ℕ) (z : FourEdgeTree.space E J × TopCat.I.{u + 1})
+    (x : (prespectrum V).space n) : (nativeBassCone X).space n :=
+  ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+    (z.2.down, FourEdgeTree.nativeEval E J n z.1 x)
+
+/-- The actual whole-reference compatibility supplies the entire cylinder attachment. -/
+theorem coneCylinderValue_zero (n : ℕ) (z : FourEdgeTree.space E J) :
+    coneCylinderValue X E n (z, ULift.up 0) =
+      laurentValue X E n (SSet.toTop.map β z) := by
+  funext x
+  dsimp only [coneCylinderValue, laurentValue]
+  rw [ReducedMappingCone.cylinder_zero, beta_native]; rfl
+
+theorem coneCylinderValue_one (n : ℕ) (z : FourEdgeTree.space E J) :
+    coneCylinderValue X E n (z, ULift.up 1) =
+      fun _ ↦ (nativeBassCone X).point n := by
+  funext x
+  exact ReducedMappingCone.cylinder_one _ _ _ _
+
+/-- The original native cone value is descended through the single unreduced cone pushout. -/
+def coneEval (n : ℕ) :
+    scalarCone X E → (prespectrum V).space n → (nativeBassCone X).space n :=
+  FourEdgeTree.SetDescent.value β (SSet.stdSimplex.isTerminalObj₀.from _)
+    (laurentValue X E n) (fun _ _ ↦ (nativeBassCone X).point n)
+    (coneCylinderValue X E n) (coneCylinderValue_zero X E n)
+    (coneCylinderValue_one X E n)
+
+theorem coneEval_laurent (n : ℕ) (z : |parameterSSet F|) (x : (prespectrum V).space n) :
+    coneEval X E n (FourEdgeTree.laurentInclusion E J F β z) x =
+      laurentValue X E n z x :=
+  congrFun (FourEdgeTree.SetDescent.value_left _ _ _ _ _ _ _ z) x
+
+theorem coneEval_tip (n : ℕ) (x : (prespectrum V).space n) :
+    coneEval X E n (FourEdgeTree.tip E J F β) x = (nativeBassCone X).point n :=
+  congrFun (FourEdgeTree.SetDescent.value_right _ _ _ _ _ _ _ _) x
+
+theorem coneEval_cylinder (n : ℕ) (z : FourEdgeTree.space E J) (t : I)
+    (x : (prespectrum V).space n) :
+    coneEval X E n (FourEdgeTree.cylinder E J F β (z, t)) x =
+      ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+        (t, FourEdgeTree.nativeEval E J n z x) :=
+  congrFun (FourEdgeTree.SetDescent.value_cylinder _ _ _ _ _ _ _ (z, ULift.up t)) x
+
+/-- Every native input retains both the original overlap time and the independent cone time. -/
+theorem coneEval_overlapCylinder (n : ℕ) (y : |parameterSSet E|) (s t : I)
+    (x : (prespectrum V).space n) :
+    coneEval X E n (FourEdgeTree.overlapCylinder E J F β ((y, s), t)) x =
+      ReducedMappingCone.cylinder _ _ ((comparison X).map n)
+        (t, LoopPrespectrum.HomotopyPushout.cylinder (prespectrumMap J) (prespectrumMap J) n
+          (s, pointwisePrespectrumFamily E n y x)) := by
+  change coneEval X E n (FourEdgeTree.cylinder E J F β
+    (FourEdgeTree.overlap E J (y, s), t)) x = _
+  rw [coneEval_cylinder, FourEdgeTree.nativeEval_overlap]; rfl
+
+/-- Compact parameterizations retain joint continuity in the genuine native input. -/
+theorem coneEval_compact_continuous {S : Type v} [TopologicalSpace S] [CompactSpace S]
+    (p : C(S, scalarCone X E)) (n : ℕ) :
+    Continuous (fun z : S × (prespectrum V).space n ↦ coneEval X E n (p z.1) z.2) := by
+  apply FourEdgeTree.SetDescent.value_compact_continuous
+  · intro S _ _ q
+    exact ((LoopPrespectrum.mappingConeInclusion
+      (comparison X)).map n).continuous.comp
+        (pointwisePrespectrumFamily_compact_continuous F q n)
+  · intro S _ _ q
+    exact continuous_const
+  · intro S _ _ q
+    let q' : C(S, FourEdgeTree.space E J) := ⟨fun s ↦ (q s).1, by fun_prop⟩
+    exact (ReducedMappingCone.cylinder _ _
+      ((comparison X).map n)).continuous.comp
+        ((show Continuous (fun z : S × (prespectrum V).space n ↦ (q z.1).2.down) by
+          fun_prop).prodMk (FourEdgeTree.nativeEval_compact_continuous E J q' n))
+
+/-- The resulting actual native cone family is continuous on every compact scalar family. -/
+def compactConeFamily {S : Type v} [TopologicalSpace S] [CompactSpace S]
+    (p : C(S, scalarCone X E)) (n : ℕ) :
+    C(S × (prespectrum V).space n, (nativeBassCone X).space n) :=
+  ⟨fun z ↦ coneEval X E n (p z.1) z.2, coneEval_compact_continuous X E p n⟩
+
+/-- The same complete unreduced scalar cone is contractible without collapsing its baseline. -/
+theorem scalarCone_contractible : ContractibleSpace (scalarCone X E) :=
+  FourEdgeTree.coneSpace_contractible E J F β
+
+/-- Every scalar cone point sends the actual native base point to the base point. -/
+theorem coneEval_point (n : ℕ) (z : scalarCone X E) :
+    coneEval X E n z ((prespectrum V).point n) = (nativeBassCone X).point n := by
+  have h := SetDescent.funext β
+    (SSet.stdSimplex.isTerminalObj₀.from (FourEdgeTree.simplicial E J))
+    (fun z ↦ coneEval X E n z ((prespectrum V).point n))
+    (fun _ ↦ (nativeBassCone X).point n)
+    (fun z ↦ by
+      have hc := coneEval_cylinder X E n z.1 z.2.down ((prespectrum V).point n)
+      rw [nativeEval_point] at hc
+      exact hc.trans (ReducedMappingCone.cylinder_base _ _ _ _))
+    (fun y ↦ by
+      change coneEval X E n (laurentInclusion E J F β y) ((prespectrum V).point n) = _
+      rw [coneEval_laurent]
+      change (LoopPrespectrum.mappingConeInclusion
+        (comparison X)).map n
+          (pointwisePrespectrumFamily F n y ((prespectrum V).point n)) = _
+      rw [pointwisePrespectrumFamily_point]
+      rfl)
+    (fun y ↦ by
+      have hy : y = (default : |tipSSet.{u + 1}|) := Subsingleton.elim _ _
+      subst y
+      exact coneEval_tip X E n _)
+  exact congrFun h z
+
+/-- The entire scalar cone preserves the original structure loop at its independent time. -/
+theorem coneEval_structure (n : ℕ) (z : scalarCone X E)
+    (x : (prespectrum V).space n) (r : I) :
+    coneEval X E (n + 1) z ((prespectrum V).structureMap n x r) =
+      (nativeBassCone X).structureMap n (coneEval X E n z x) r := by
+  have h := SetDescent.funext β
+    (SSet.stdSimplex.isTerminalObj₀.from (FourEdgeTree.simplicial E J))
+    (fun z ↦ coneEval X E (n + 1) z ((prespectrum V).structureMap n x r))
+    (fun z ↦ (nativeBassCone X).structureMap n (coneEval X E n z x) r)
+    (fun z ↦ by
+      change coneEval X E (n + 1) (cylinder E J F β (z.1, z.2.down))
+        ((prespectrum V).structureMap n x r) =
+          (nativeBassCone X).structureMap n
+            (coneEval X E n (cylinder E J F β (z.1, z.2.down)) x) r
+      rw [coneEval_cylinder, coneEval_cylinder, nativeEval_structure]
+      rfl)
+    (fun y ↦ by
+      change coneEval X E (n + 1) (laurentInclusion E J F β y)
+        ((prespectrum V).structureMap n x r) =
+          (nativeBassCone X).structureMap n (coneEval X E n
+            (laurentInclusion E J F β y) x) r
+      rw [coneEval_laurent, coneEval_laurent]
+      change (LoopPrespectrum.mappingConeInclusion
+        (comparison X)).map (n + 1)
+          (pointwisePrespectrumFamily F (n + 1) y ((prespectrum V).structureMap n x r)) = _
+      rw [pointwisePrespectrumFamily_structure]
+      rfl)
+    (fun y ↦ by
+      have hy : y = (default : |tipSSet.{u + 1}|) := Subsingleton.elim _ _
+      subst y
+      change coneEval X E (n + 1) (tip E J F β) ((prespectrum V).structureMap n x r) =
+        (nativeBassCone X).structureMap n (coneEval X E n (tip E J F β) x) r
+      rw [coneEval_tip, coneEval_tip]
+      exact (congrArg (fun p ↦ p r) ((nativeBassCone X).map_point n)).symm)
+  exact congrFun h z
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.FourEdge

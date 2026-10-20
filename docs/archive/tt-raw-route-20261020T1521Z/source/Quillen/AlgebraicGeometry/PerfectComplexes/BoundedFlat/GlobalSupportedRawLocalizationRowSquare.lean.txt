@@ -1,0 +1,103 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationNull
+public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoSquareRoute
+public import Quillen.Topology.Prespectrum.HomotopySquareBoundary
+public import Quillen.Topology.Prespectrum.RelativeHomotopyHorizontal
+public import Quillen.Topology.Prespectrum.RelativeHomotopyComposition
+
+/-!
+# The original two-row evaluation word on the geometric localization null square
+
+The base square has the single track of the actual pasted natural isomorphism as its moving
+edge. The original transformation-composition triangle compares that edge with precomposition
+of the second evaluation track followed by postcomposition of the first. Its literal half-clock
+is retained. The boundary comparison and its fixed quotient recover a square with this entire
+original two-row word and the same two nulls. No cone-null or span-overlap cube is asserted.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open scoped Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization
+open GlobalSectionChangeIndex GlobalSectionChangeIndex.ParameterAuxiliarySupport
+open GlobalSectionChangeIndex.ParameterIdentity SupportedTensorEvaluation
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- The original two evaluation tracks before retyping their composite endpoints. -/
+def modelRowWord :=
+  IsoSquareRoute.word (sectionEnlargement f T) (sectionRestriction f T)
+    (rawEnlargement f T) (rawRestriction f T)
+    (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+    (evaluationComparisonIso (enlargementPair f T))
+    (evaluationComparisonIso (supportRestrictionPair f T))
+
+/-- The original selected transformation-composition triangle for the two actual row edges. -/
+def modelRowComparison :=
+  IsoSquareRoute.comparison (sectionEnlargement f T) (sectionRestriction f T)
+    (rawEnlargement f T) (rawRestriction f T)
+    (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+    (evaluationComparisonIso (enlargementPair f T))
+    (evaluationComparisonIso (supportRestrictionPair f T))
+
+/-- The actual row word, with only the two original prespectrum endpoints retyped. -/
+def rowWord :=
+  (modelRowWord f T).cast
+    ((prespectrumFunctor.map_comp (sectionComposite f T) (targetEvaluation f T)).trans
+      (congrArg (fun k ↦ k ≫ prespectrumMap (targetEvaluation f T))
+        (prespectrumFunctor.map_comp (sectionEnlargement f T) (sectionRestriction f T))))
+    ((prespectrumFunctor.map_comp (sourceEvaluation f T) (rawComposite f T)).trans
+      (congrArg (fun k ↦ prespectrumMap (sourceEvaluation f T) ≫ k)
+        (prespectrumFunctor.map_comp (rawEnlargement f T) (rawRestriction f T))))
+
+/-- The complete single-edge comparison recovers the original two-row half-clock word. -/
+def rowComparison : (evaluationTrack f T).RelHomotopy (rowWord f T) :=
+  (modelRowComparison f T).ofLevels (evaluationTrack f T) (rowWord f T)
+    (fun _ ↦ rfl) (fun _ ↦ rfl)
+
+/-- Retyping leaves the entire actual transformation-composition triangle unchanged. -/
+theorem rowComparison_whole_level (n : ℕ) :
+    ((rowComparison f T).level n).toContinuousMap =
+      ((IsoSquareRoute.triangle (sectionEnlargement f T) (sectionRestriction f T)
+        (rawEnlargement f T) (rawRestriction f T)
+        (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+        (evaluationComparisonIso (enlargementPair f T))
+        (evaluationComparisonIso (supportRestrictionPair f T))).level n).toContinuousMap :=
+  (Homotopy.RelHomotopy.ofLevels_whole_level (modelRowComparison f T)
+    (evaluationTrack f T) (rowWord f T) (fun _ ↦ rfl) (fun _ ↦ rfl) n).trans
+      (IsoSquareRoute.comparison_whole_level
+        (sectionEnlargement f T) (sectionRestriction f T)
+        (rawEnlargement f T) (rawRestriction f T)
+        (sourceEvaluation f T) (evaluationModel (X := op Q) T.ι) (targetEvaluation f T)
+        (evaluationComparisonIso (enlargementPair f T))
+        (evaluationComparisonIso (supportRestrictionPair f T)) n)
+
+/-- Replace only the moving boundary using the original relative triangle and fixed collapse. -/
+def rowBoundary : (postSectionNull f T).RelHomotopy
+    (((rowWord f T).trans (preRawNull f T)).trans
+      (LoopPrespectrum.Homotopy.refl
+        (LoopPrespectrum.zeroHom (prespectrum (sectionSource f T))
+          (prespectrum (targetModel f T)))).symm) :=
+  (evaluationSquare f T).toBoundary.trans
+    (((rowComparison f T).hcomp (Homotopy.RelHomotopy.refl (preRawNull f T))).hcomp
+      (Homotopy.RelHomotopy.refl _))
+
+/-- The two original nulls bound a genuine square with the original two-row evaluation word. -/
+def rowSquare :
+    (postSectionNull f T).Square (preRawNull f T) (rowWord f T)
+      (LoopPrespectrum.Homotopy.refl
+        (LoopPrespectrum.zeroHom (prespectrum (sectionSource f T))
+          (prespectrum (targetModel f T)))) :=
+  (rowBoundary f T).toSquare
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.Localization

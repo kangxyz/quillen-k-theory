@@ -1,0 +1,30 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReferenceWhiskeringFamily
+/-! Full reference isomorphism cancellation from a shared node. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor Quillen.Waldhausen.IteratedS
+universe u v
+namespace Quillen.PerfectComplexes.BassH1Join
+variable {V₀ W₀ V W : Model.{u}} {I : Type v}
+  (F : V ⟶ W) (P : V ⟶ V₀) (J : W₀ ⟶ W) (H : V₀ ⟶ W₀)
+  (D : I → Σ G : V₀ ⟶ W₀, H.functor ≅ G.functor)
+/-- Pre Post anchor eq of node for the exact original reference and parameter data. -/
+theorem prePost_anchor_eq_of_node
+    {ρ σ : F.functor ≅ (P ≫ H ≫ J).functor} (j : I)
+    (he : prePostNodes F P J H D ρ j = prePostNodes F P J H D σ j) : ρ = σ := by
+  have hs : (prePostNodes F P J H D ρ j).2 = (prePostNodes F P J H D σ j).2 :=
+    eq_of_heq (Sigma.mk.inj he).2
+  change ρ ≪≫ isoWhiskerLeft P.functor (isoWhiskerRight (D j).2 J.functor) =
+    σ ≪≫ isoWhiskerLeft P.functor (isoWhiskerRight (D j).2 J.functor) at hs
+  have hc := congrArg
+    (fun η ↦ η ≪≫ (isoWhiskerLeft P.functor (isoWhiskerRight (D j).2 J.functor)).symm) hs
+  have hρ : ρ = σ := by simpa only [Iso.trans_assoc, Iso.self_symm_id, Iso.trans_refl] using hc
+  exact hρ
+end Quillen.PerfectComplexes.BassH1Join

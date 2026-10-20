@@ -1,0 +1,122 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSpanReference
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSpanCells
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeReanchorRealization
+
+/-!
+# Reanchoring the entire original target span map
+
+The two polynomial summands, both portions of the reversed positive square, the unchanged
+central overlap and the reversed inverse square commute separately. Six-cell extensionality
+then proves the whole target-tree square before beta or native evaluation.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u v
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetSpan
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct FourEdgeTree
+
+private theorem postcomp_reanchor {A B C : Model.{u}} {E E' : A ⟶ B}
+    (δ : E'.functor ≅ E.functor) (U : B ⟶ C)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) :
+    mapParameter (reanchor (F₀ := E' ≫ U) (F₁ := E ≫ U) (isoWhiskerRight δ U.functor))
+        (mapParameter (postcompNode U) y) =
+      mapParameter (postcompNode U) (mapParameter (reanchor δ) y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter E y
+  simp only [mapParameter_parameter]
+  apply congrArg (fun ns ↦ CommonReferenceNerve.parameter (E' ≫ U) ns z)
+  funext i
+  exact (Reanchor.post_whiskering δ U (N i)).symm
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+local notation "U" => coefficientPost P f
+local notation "Ja" => sourceProjection P f
+local notation "Jb" => targetProjection P f
+
+/-- The entire target span map commutes with the actual reference change before target beta. -/
+theorem treeMap_reanchor (z : FourEdgeTree.space E Ja) :
+    Reanchor.tree P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)
+        (treeMap P f E z) =
+      treeMap P f E' (Reanchor.tree P a E E' δ z) := by
+  have h := funext_cells E Ja
+    (fun y ↦ Reanchor.tree P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)
+      (treeMap P f E y))
+    (fun y ↦ treeMap P f E' (Reanchor.tree P a E E' δ y))
+  apply congrFun (h ?_ ?_ ?_ ?_ ?_ ?_) z
+  · intro y
+    rw [Reanchor.tree_plus, treeMap_plus, treeMap_plus]
+    change Reanchor.tree P b _ _ _
+      (SSet.toTop.map (plusVertex (input P f E) Jb) (polynomialMap P f E y)) =
+      SSet.toTop.map (plusVertex (input P f E') Jb)
+        (polynomialMap P f E' (mapParameter (reanchor _) y))
+    rw [Reanchor.tree_plus, polynomialMap_reanchor]
+  · intro y
+    rw [Reanchor.tree_minus, treeMap_minus, treeMap_minus]
+    change Reanchor.tree P b _ _ _
+      (SSet.toTop.map (minusVertex (input P f E) Jb) (polynomialMap P f E y)) =
+      SSet.toTop.map (minusVertex (input P f E') Jb)
+        (polynomialMap P f E' (mapParameter (reanchor _) y))
+    rw [Reanchor.tree_minus, polynomialMap_reanchor]
+  · intro y t
+    rw [Reanchor.tree_edge12, treeMap_edge12, treeMap_edge12]
+    change Reanchor.tree P b _ _ _
+      (SSet.toTop.map (plusVertex (input P f E) Jb)
+        (polynomialSquare P f E (y, Quillen.NativePathCells.lower (unitInterval.symm t)))) =
+      SSet.toTop.map (plusVertex (input P f E') Jb)
+        (polynomialSquare P f E'
+          (mapParameter (reanchor δ) y, Quillen.NativePathCells.lower (unitInterval.symm t)))
+    rw [Reanchor.tree_plus, polynomialSquare_reanchor]
+  · intro y t
+    rw [Reanchor.tree_edge01, treeMap_edge01, treeMap_edge01]
+    change Reanchor.tree P b _ _ _
+      (SSet.toTop.map (plusVertex (input P f E) Jb)
+        (polynomialSquare P f E (y, unitInterval.symm (Quillen.NativePathCells.lower t)))) =
+      SSet.toTop.map (plusVertex (input P f E') Jb)
+        (polynomialSquare P f E'
+          (mapParameter (reanchor δ) y, unitInterval.symm (Quillen.NativePathCells.lower t)))
+    rw [Reanchor.tree_plus, polynomialSquare_reanchor]
+  · intro y t
+    rw [Reanchor.tree_edge03, treeMap_edge03, treeMap_edge03]
+    change Reanchor.tree P b _ _ _
+      (FourEdgeTree.overlap (input P f E) Jb (mapParameter (postcompNode U) y, t)) =
+      FourEdgeTree.overlap (input P f E') Jb
+        (mapParameter (postcompNode U) (mapParameter (reanchor δ) y), t)
+    rw [Reanchor.tree_overlap, postcomp_reanchor]
+  · intro y t
+    rw [Reanchor.tree_edge34, treeMap_edge34, treeMap_edge34]
+    change Reanchor.tree P b _ _ _
+      (SSet.toTop.map (minusVertex (input P f E) Jb)
+        (polynomialSquare P f E (y, unitInterval.symm t))) =
+      SSet.toTop.map (minusVertex (input P f E') Jb)
+        (polynomialSquare P f E' (mapParameter (reanchor δ) y, unitInterval.symm t))
+    rw [Reanchor.tree_minus, polynomialSquare_reanchor]
+
+/-- External parameters are preserved on the complete target-tree square. -/
+theorem treeMap_reanchor_family {T : Type v} [TopologicalSpace T]
+    (p : C(T, FourEdgeTree.space E Ja)) :
+    (Reanchor.tree P b (E ≫ U) (E' ≫ U) (isoWhiskerRight δ (U).functor)).comp
+        ((treeMap P f E).comp p) =
+      (treeMap P f E').comp ((Reanchor.tree P a E E' δ).comp p) := by
+  ext z
+  exact treeMap_reanchor P f E E' δ (p z)
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetSpan

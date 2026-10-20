@@ -1,0 +1,72 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerProjectionReference
+/-! The genuine terminal seam in the shared overlap polynomial reference. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+private theorem reanchor_pre {U V W : Model.{u}} (A : U ⟶ V)
+    {F F' : U ⟶ W} {H : V ⟶ W} (ρ : F.functor ≅ F'.functor)
+    (η : F'.functor ≅ (A ≫ H).functor) (N : Node H) :
+    reanchor ρ (preNode F' A η N) = preNode F A (ρ ≪≫ η) N := by
+  simp only [reanchor, preNode, Iso.trans_assoc]
+
+private theorem pre_reanchor {U V W : Model.{u}} (A : U ⟶ V)
+    {F : U ⟶ W} {B H : V ⟶ W} (ρ : F.functor ≅ (A ≫ B).functor)
+    (η : B.functor ≅ H.functor) (N : Node H) :
+    reanchor ρ (precompNode A (reanchor η N)) =
+      preNode F A (ρ ≪≫ isoWhiskerLeft A.functor η) N := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  simp only [reanchor, preNode, precompNode, isoWhiskerLeft_trans, Iso.trans_assoc]
+
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "J" => ProjectionReference.projectionMap X
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "D" => InputCompositionCarrierCharts.projectionMap (Z := Z)
+local notation "θ" => NativeSquareModelNormalization.rightIso
+  (polynomial.map c) (projection.app W) (projection.app Z) c (projection.naturality c)
+
+/-- At the real internal span seam, complete reference nodes agree before evaluation. -/
+theorem terminal_reanchored_node (N : Node P) :
+    reanchor (projectionSeamAnchor f g c)
+      (node (S ≫ P) S P (Iso.refl _)
+        (NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+          (projection.app Z) c (projection.naturality c) 4) N) =
+    reanchor (Functor.associator (A).functor (E).functor (J).functor)
+      (precompNode A (InputCompositionProjectionAttachment.polynomialNode f g N)) := by
+  dsimp only [InputCompositionProjectionAttachment.polynomialNode]
+  have ha : projectionSeamAnchor f g c ≪≫
+      (isoWhiskerRight θ (P).functor ≪≫
+        Functor.associator (A).functor (D).functor (P).functor) =
+      Functor.associator (A).functor (E).functor (J).functor ≪≫
+        isoWhiskerLeft (A).functor (InputCompositionProjectionAttachment.polynomialAnchor f g) := by
+    simp only [projectionSeamAnchor, ← isoWhiskerRight_symm, Iso.trans_assoc,
+      Iso.symm_self_id_assoc, Iso.symm_self_id, Iso.trans_refl]
+  exact (congrArg (reanchor (projectionSeamAnchor f g c))
+    (terminal_polynomial_node f g c N)).trans
+      ((reanchor_pre A _ _ (precompNode D N)).trans
+        ((congrArg (fun η ↦ preNode (((A ≫ E) ≫ J)) A (H := D ≫ P) η (precompNode D N)) ha).trans
+          (pre_reanchor A (F := (A ≫ E) ≫ J) (B := E ≫ J) (H := D ≫ P)
+            (Functor.associator (A).functor (E).functor (J).functor)
+            (InputCompositionProjectionAttachment.polynomialAnchor f g)
+            (precompNode D N)).symm))
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

@@ -1,0 +1,126 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetConeReference
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionCone
+public import Quillen.Topology.Path.ScalarRectangleConcatenation
+
+/-! The original two-half target action on the same unreduced ordinary cone and its original tip. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.Waldhausen.IteratedS Quillen.NativePathCells
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetCone
+open BassH0Merge CommonReferenceNerve FourEdge CommonReferenceNerve.CutOpenCarrier FourEdgeTree
+variable {X Y : Scheme.{u}} (f : X ⟶ Y)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen Y))
+local notation "U" => InputCompositionTerminalAttach.arrow f
+local notation "Ja" => projectionMap Y
+local notation "Jb" => projectionMap X
+local notation "Eb" => E ≫ U
+local notation "Fb" => ProjectionReference.reference X Eb
+local notation "βb" => FourEdge.beta X Eb
+local notation "T" => FourEdge.scalarCone X Eb
+
+/-- The original Laurent global action followed by the target cone inclusion. -/
+def laurentMap : C(|parameterSSet (ProjectionReference.reference Y E)|, T) :=
+  (laurentInclusion Eb Jb Fb βb).comp (laurent f E)
+
+/-- The source cone tip maps to the one original target cone tip. -/
+def tipMap : C(|tipSSet.{u + 1}|, T) := ContinuousMap.const _ (tip Eb Jb Fb βb)
+
+/-- The exact common midpoint is the target attachment of the actual target span map. -/
+def midpoint : C(FourEdgeTree.space E Ja, T) :=
+  ⟨fun z ↦ laurentInclusion Eb Jb Fb βb
+    (SSet.toTop.map βb (TargetSpan.treeMap f E z)), by fun_prop⟩
+
+/-- The first original half retains the entire H0 surface, including every full reference. -/
+def firstHomotopy :
+    ((laurentMap f E).comp (SSet.toTop.map (FourEdge.beta Y E)).hom).Homotopy
+      (midpoint f E) where
+  toContinuousMap := ⟨fun z ↦ laurentInclusion Eb Jb Fb βb (surface f E (z.2, z.1)),
+    by fun_prop⟩
+  map_zero_left z := by
+    change laurentInclusion Eb Jb Fb βb (surface f E (z, 0)) = _
+    rw [surface_zero]; rfl
+  map_one_left z := by
+    change laurentInclusion Eb Jb Fb βb (surface f E (z, 1)) = _
+    rw [surface_one]; rfl
+
+/-- The second original half uses the actual target tree input at the unchanged cone height. -/
+def secondHomotopy : (midpoint f E).Homotopy
+    ((tipMap f E).comp (SSet.toTop.map
+      (SSet.stdSimplex.isTerminalObj₀.from (FourEdgeTree.simplicial E Ja))).hom) where
+  toContinuousMap := ⟨fun z ↦ cylinder Eb Jb Fb βb (TargetSpan.treeMap f E z.2, z.1),
+    by fun_prop⟩
+  map_zero_left z := cone_cylinder_zero Eb Jb Fb βb _
+  map_one_left z := cone_cylinder_one Eb Jb Fb βb _
+
+/-- Literal first-half/second-half concatenation; there is no extra cone or extra tip. -/
+def cylinderHomotopy := (firstHomotopy f E).trans (secondHomotopy f E)
+
+/-- Descent through the original unreduced cone retains its entire Laurent baseline. -/
+def coneMap : C(FourEdge.scalarCone Y E, T) :=
+  DoubleCylinder.homotopyDesc _ _
+    (DoubleCylinder.realized_isPushout (FourEdge.beta Y E) (SSet.stdSimplex.isTerminalObj₀.from _))
+    (laurentMap f E) (tipMap f E) (cylinderHomotopy f E)
+
+/-- The whole Laurent inclusion carries the exact source global action. -/
+theorem coneMap_laurent (y : |parameterSSet (ProjectionReference.reference Y E)|) :
+    coneMap f E (laurentInclusion E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) y) =
+      laurentMap f E y := by
+  change coneMap f E (SSet.toTop.map (FourEdgeTree.left _ _) y) = _
+  rw [FourEdgeTree.left, SetDescent.eval_realized_left]
+  exact congrArg (fun k ↦ k y)
+    (DoubleCylinder.homotopyDesc_left _ _
+      (DoubleCylinder.realized_isPushout (FourEdge.beta Y E) (SSet.stdSimplex.isTerminalObj₀.from
+        _))
+      (laurentMap f E) (tipMap f E) (cylinderHomotopy f E))
+
+/-- The original source tip maps to the original target tip. -/
+theorem coneMap_tip :
+    coneMap f E (tip E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E)) =
+      tip Eb Jb Fb βb := by
+  change coneMap f E (SSet.toTop.map (FourEdgeTree.right _ _) _) = _
+  rw [FourEdgeTree.right, SetDescent.eval_realized_right]
+  exact congrArg (fun k ↦ k (default : |tipSSet.{u + 1}|))
+    (DoubleCylinder.homotopyDesc_right _ _
+      (DoubleCylinder.realized_isPushout (FourEdge.beta Y E) (SSet.stdSimplex.isTerminalObj₀.from
+        _))
+      (laurentMap f E) (tipMap f E) (cylinderHomotopy f E))
+
+/-- The complete cone cylinder keeps the literal nested original concatenation. -/
+theorem coneMap_cylinder (z : FourEdgeTree.space E Ja) (t : I) :
+    coneMap f E (cylinder E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) (z, t)) =
+      cylinderHomotopy f E (t, z) :=
+  DoubleCylinder.homotopyDesc_apply_cylinder _ _
+    (DoubleCylinder.realized_isPushout (FourEdge.beta Y E) (SSet.stdSimplex.isTerminalObj₀.from _))
+    (laurentMap f E) (tipMap f E) (cylinderHomotopy f E) t z
+
+/-- The first half has the original H0 surface at twice the source height. -/
+theorem coneMap_lower (z : FourEdgeTree.space E Ja) (t : I) :
+    coneMap f E
+      (cylinder E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) (z, lower t)) =
+    laurentInclusion Eb Jb Fb βb (surface f E (z, t)) := by
+  rw [coneMap_cylinder]
+  exact ScalarRectangle.homotopy_lower (firstHomotopy f E) (secondHomotopy f E) t z
+
+/-- The second half retains the original target cylinder at its unchanged rescaled height. -/
+theorem coneMap_upper (z : FourEdgeTree.space E Ja) (t : I) :
+    coneMap f E
+      (cylinder E Ja (ProjectionReference.reference Y E) (FourEdge.beta Y E) (z, upper t)) =
+    cylinder Eb Jb Fb βb (TargetSpan.treeMap f E z, t) := by
+  rw [coneMap_cylinder]
+  exact ScalarRectangle.homotopy_upper (firstHomotopy f E) (secondHomotopy f E) t z
+
+end Quillen.PerfectComplexes.GlobalRawBass.ProjectionReference.TargetCone

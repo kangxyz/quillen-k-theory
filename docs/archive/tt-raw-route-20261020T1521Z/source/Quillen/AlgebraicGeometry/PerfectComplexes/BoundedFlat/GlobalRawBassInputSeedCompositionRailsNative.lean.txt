@@ -1,0 +1,139 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionBoundary
+/-! Whole native recovery of the actual source and target conjugated seed rails. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionRails
+open CommonReferenceNerve InputIdentitySeedCarrier Quillen.ScalarRectangle Quillen.NativePathCells
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- The fixed positive carrier is evaluated through its actual full-cone inclusion. -/
+def evaluate (n : ℕ)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n)
+    (z : Carrier (f ≫ g)) :=
+  (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval (polyRef (f ≫ g)) (chart (X := X)) (laurentRef (f ≫ g))
+      (ordinary (f ≫ g)) (shifted (f ≫ g)) n z x)
+
+/-- The complete ordinary source null is the actual cone-composition action. -/
+theorem sourceNull_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (InputNullCompositionPolynomialCarrier.sourceRail f g (r,s)) =
+      (InputComposition.coneHomotopy f g).level n (r,(sourceNull Z).level n (s,x)) := by
+  unfold evaluate
+  rw [InputNullCompositionPolynomialCarrier.sourceRail_native]
+  exact InputCompositionPositive.sourceRail_factor f g n r s x
+
+/-- The complete shifted source null has the same original native value at its distinct tip. -/
+theorem sourceShifted_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (InputNullCompositionShiftedRails.shiftedSourceRail f g (r,s)) =
+      (InputComposition.coneHomotopy f g).level n (r,(sourceNull Z).level n (s,x)) := by
+  unfold evaluate
+  rw [InputNullCompositionShiftedRails.sourceRail_native]
+  exact InputCompositionPositive.sourceRail_factor f g n r s x
+
+/-- The complete ordinary target null is the actual base-composition action. -/
+theorem targetNull_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (InputNullCompositionPolynomialCarrier.targetRail f g (r,s)) =
+      (sourceNull X).level n (s,(boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r,x)) := by
+  unfold evaluate
+  rw [InputNullCompositionPolynomialCarrier.targetRail_native]
+  exact DFunLike.congr_fun (InputIdentityPositive.sourceNull_factor X n) _
+
+/-- The complete shifted target null retains that value without identifying its scalar sheet. -/
+theorem targetShifted_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (InputNullCompositionShiftedRails.shiftedTargetRail f g (r,s)) =
+      (sourceNull X).level n (s,(boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r,x)) := by
+  unfold evaluate
+  rw [InputNullCompositionShiftedRails.targetRail_native]
+  exact DFunLike.congr_fun (InputIdentityPositive.sourceNull_factor X n) _
+
+/-- Both original source-unit and composition coordinates survive evaluation. -/
+theorem sourceUnit_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (sourceUnit f g (r,s)) =
+      (InputComposition.coneHomotopy f g).level n
+        (r,((unitHomotopy Z).postcomp (mappingConeInclusion (comparison Z))).level n (s,x)) := by
+  change (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.laurentInclusion F J G ε ε'
+        (InputCompositionUnitProducts.sourceSurface f g (r,s))) x) = _
+  rw [CutOpenCarrier.nativeEval_laurentInclusion]
+  rw [pointwisePrespectrumFamily_eq_compact (laurentRef (f ≫ g))
+    (InputCompositionUnitProducts.sourceSurface f g),
+    InputCompositionUnitProducts.source_native]
+  rfl
+
+/-- Both original target-unit and composition coordinates survive evaluation. -/
+theorem targetUnit_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (targetUnit f g (r,s)) =
+      ((unitHomotopy X).postcomp (mappingConeInclusion (comparison X))).level n
+        (s,(boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r,x)) := by
+  change (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.laurentInclusion F J G ε ε'
+        (InputCompositionUnitProducts.targetSurface f g (r,s))) x) = _
+  rw [CutOpenCarrier.nativeEval_laurentInclusion]
+  rw [pointwisePrespectrumFamily_eq_compact (laurentRef (f ≫ g))
+    (InputCompositionUnitProducts.targetSurface f g),
+    InputCompositionUnitProducts.target_native]
+  rfl
+
+/-- The full source rail is the original map-composition track on the original seed loop. -/
+theorem source_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (sourceRail f g (r,s)) =
+      Path.toContinuousMap ((InputSeedCompositionBoundary.sourceRail f g).level n (r,x)) s := by
+  rw [InputSeedCompositionBoundary.sourceRail_apply]
+  unfold Homotopy.conjugateToZero
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [sourceRail, concatSecond_lower, Homotopy.trans_lower_cell]
+    exact sourceNull_native f g n r (unitInterval.symm t) x
+  · rw [sourceRail, concatSecond_upper, Homotopy.trans_upper_cell]
+    rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [sourceTail, concatSecond_lower, Homotopy.trans_lower_cell]
+      exact sourceUnit_native f g n r v x
+    · rw [sourceTail, concatSecond_upper, Homotopy.trans_upper_cell]
+      exact sourceShifted_native f g n r v x
+
+/-- The full target rail is the original transition after the original base-composition track. -/
+theorem target_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    evaluate f g n x (targetRail f g (r,s)) =
+      Path.toContinuousMap ((InputSeedCompositionBoundary.targetRail f g).level n (r,x)) s := by
+  change evaluate f g n x (targetRail f g (r,s)) =
+    (((unitHomotopy X).postcomp (mappingConeInclusion (comparison X))).conjugateToZero
+      (sourceNull X)).level n (s,(boundedFlatPerfectPrespectrumCompHomotopy f g).level n (r,x))
+  unfold Homotopy.conjugateToZero
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [targetRail, concatSecond_lower, Homotopy.trans_lower_cell]
+    exact targetNull_native f g n r (unitInterval.symm t) x
+  · rw [targetRail, concatSecond_upper, Homotopy.trans_upper_cell]
+    rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [targetTail, concatSecond_lower, Homotopy.trans_lower_cell]
+      exact targetUnit_native f g n r v x
+    · rw [targetTail, concatSecond_upper, Homotopy.trans_upper_cell]
+      exact targetShifted_native f g n r v x
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionRails

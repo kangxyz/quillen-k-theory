@@ -1,0 +1,112 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawLocalizationIdentity
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliarySupportNull
+
+/-!
+# The original selected-zero null on geometric supported section rows
+
+Both row arrows are the actual open-pair maps in the strict section Model diagram.
+The transformation out of zero is defined directly by the original chosen zero.
+Its weakness follows from the actual integer-base Model isomorphisms and the old
+auxiliary vanishing theorem. Their strict square then identifies the complete
+reversed null track with the original parameter null. No geometric raw pullback
+map or higher-stage cone null is defined by conjugation here.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Products
+open Quillen.Waldhausen.IteratedS
+universe u
+namespace Quillen.PerfectComplexes.GlobalSectionChangeIndex.ParameterIdentity
+open ParameterAuxiliarySupport
+
+private theorem zero_weak_of_model_iso {V W T U : Model.{u}}
+    (F : V ⟶ W) (G : T ⟶ U) (a : V ⟶ T) (b : W ≅ U)
+    (h : F ≫ b.hom = a ≫ G)
+    (η : (zeroHom T U).functor ⟶ G.functor)
+    (hη : ∀ S, U.waldhausen.weq (η.app S)) (S : V) :
+    W.waldhausen.weq (W.waldhausen.isZero.to_ (F.functor.obj S)) := by
+  have hF : F = a ≫ G ≫ b.inv := by
+    calc
+      F = (F ≫ b.hom) ≫ b.inv := by simp only [Category.assoc, b.hom_inv_id, Category.comp_id]
+      _ = a ≫ G ≫ b.inv := by rw [h, Category.assoc]
+  have ho : F.functor.obj S = b.inv.functor.obj (G.functor.obj (a.functor.obj S)) :=
+    congrArg (fun k : V ⟶ W => k.functor.obj S) hF
+  let k : W.waldhausen.zero ⟶ F.functor.obj S :=
+    eqToHom b.inv.zero.symm ≫ b.inv.functor.map (η.app (a.functor.obj S)) ≫ eqToHom ho.symm
+  have hk : W.waldhausen.weq k :=
+    W.waldhausen.weq.comp_mem _ _ (W.waldhausen.weq_iso _ inferInstance)
+      (W.waldhausen.weq.comp_mem _ _ (b.inv.exact.weak _ (hη (a.functor.obj S)))
+        (W.waldhausen.weq_iso _ inferInstance))
+  exact (W.waldhausen.isZero.eq_of_src k
+    (W.waldhausen.isZero.to_ (F.functor.obj S))) ▸ hk
+
+variable {P Q : Scheme.{u}} (f : P ⟶ Q) [IsOpenImmersion f] (T : Q.Opens)
+
+/-- Original sections vanishing on the actual union open. -/
+abbrev sectionSource : Model.{u+1} := pairSupported.obj (op (supportOpenPair (unionOpen f T)))
+
+/-- Original sections vanishing on the actual auxiliary open. -/
+abbrev sectionMiddle : Model.{u+1} := pairSupported.obj (op (supportOpenPair T))
+
+/-- Original sections vanishing on the actual inverse-image open. -/
+abbrev sectionTarget : Model.{u+1} := pairSupported.obj (op (supportOpenPair (inverseOpen f T)))
+
+/-- The actual open-pair support enlargement, independent of the parameter identification. -/
+def sectionEnlargement : sectionSource f T ⟶ sectionMiddle T :=
+  pairSupported.map (enlargementPair f T).op
+
+/-- The actual open-pair restriction, independent of the parameter identification. -/
+def sectionRestriction : sectionMiddle T ⟶ sectionTarget f T :=
+  pairSupported.map (supportRestrictionPair f T).op
+
+/-- The original two-arrow composite on the literal supported section Models. -/
+def sectionComposite : sectionSource f T ⟶ sectionTarget f T :=
+  sectionEnlargement f T ≫ sectionRestriction f T
+
+/-- The unique transformation from the actual chosen zero to the unchanged section composite. -/
+def zeroToSectionFull :
+    (zeroHom (sectionSource f T) (sectionTarget f T)).functor ⟶
+      (sectionComposite f T).functor where
+  app S := (sectionTarget f T).waldhausen.isZero.to_ ((sectionComposite f T).functor.obj S)
+  naturality _ _ _ := (sectionTarget f T).waldhausen.isZero.eq_of_src _ _
+
+/-- Original union-support vanishing makes the chosen-zero transformation genuinely weak. -/
+theorem zeroToSectionFull_weak (S : sectionSource f T) :
+    (sectionTarget f T).waldhausen.weq ((zeroToSectionFull f T).app S) :=
+  zero_weak_of_model_iso (sectionComposite f T)
+    ((enlargement f T).app (op integerBase) ≫ (restriction f T).app (op integerBase))
+    (supportedIso (unionOpen f T).ι).hom (supportedIso (inverseOpen f T).ι)
+    (supportedIso_localization_composite f T)
+    (zeroToFull f T (op integerBase)) (zeroToFull_weak f T (op integerBase)) S
+
+/-- Reverse the original chosen-zero transformation on the actual two section arrows. -/
+def sectionNull :=
+  prespectrumCompositeZeroNullHomotopy (sectionEnlargement f T) (sectionRestriction f T)
+    (zeroToSectionFull f T) (zeroToSectionFull_weak f T)
+
+/-- The projection comparison recovers the old canonical null at every unchanged time. -/
+theorem sectionNull_recovery (n : ℕ) (s : unitInterval)
+    (x : (prespectrum (sectionSource f T)).space n) :
+    (prespectrumMap (supportedIso (inverseOpen f T).ι).hom).map n
+      ((sectionNull f T).level n (s, x)) =
+    ((fullNull f T).homotopy (op integerBase)).level n
+      (s, (prespectrumMap (supportedIso (unionOpen f T).ι).hom).map n x) :=
+  prespectrumCompositeZeroNullHomotopy_naturality
+    (sectionEnlargement f T) (sectionRestriction f T)
+    ((enlargement f T).app (op integerBase)) ((restriction f T).app (op integerBase))
+    (supportedIso (unionOpen f T).ι).hom (supportedIso (inverseOpen f T).ι).hom
+    (supportedIso_localization_composite f T)
+    (zeroToSectionFull f T) (zeroToFull f T (op integerBase))
+    (zeroToSectionFull_weak f T) (zeroToFull_weak f T (op integerBase)) n s x
+
+end Quillen.PerfectComplexes.GlobalSectionChangeIndex.ParameterIdentity

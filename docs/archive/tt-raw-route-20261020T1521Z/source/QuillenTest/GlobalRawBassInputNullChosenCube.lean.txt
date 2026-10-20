@@ -1,0 +1,39 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionChosenCube
+
+/-! Regression of the two exact chosen null-comparison faces and their fixed original boundary. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open Quillen.Waldhausen.IteratedS
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputNullChosenCube
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+open InputNullCompositionChosenCube
+
+/-- Both entire endpoint comparisons are the original selected data, not substitutes. -/
+theorem original_comparisons (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (chosenComparison f g n (0,(r,(s,x))) =
+      (InputNull.originalNullComparison (f ≫ g)).level n (r,(s,x))) ∧
+    (chosenComparison f g n (1,(r,(s,x))) =
+      (InputCompositionNull.alternateComparison f g).level n (r,(s,x))) :=
+  ⟨(chosenComparison f g n).map_zero_left _, (chosenComparison f g n).map_one_left _⟩
+
+/-- Relative comparison time fixes the entire original source-null word. -/
+theorem fixed_old_word (n : ℕ) (q s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    chosenComparison f g n (q,(0,(s,x))) =
+      (InputNull.originalOldNull (f ≫ g)).level n (s,x) :=
+  ((chosenComparison f g n).eq_fst q (x := (0,(s,x))) (Or.inl rfl)).trans
+    (((InputNull.originalNullComparison (f ≫ g)).level n).map_zero_left (s,x))
+
+end QuillenTest.GlobalRawBassInputNullChosenCube

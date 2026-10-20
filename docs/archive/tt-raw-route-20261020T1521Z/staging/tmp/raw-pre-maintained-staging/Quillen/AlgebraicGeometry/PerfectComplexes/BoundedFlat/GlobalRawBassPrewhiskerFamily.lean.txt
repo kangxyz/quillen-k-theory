@@ -1,0 +1,93 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerPolynomialOriginal
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerOverlapOriginal
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSourceAttachment
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSourceZero
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerOverlapTips
+public import Quillen.Topology.Prespectrum.PushoutConeFamilyRecovery
+/-!
+The exact chosen whole raw prewhiskering, with all original double-quotient cells.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve Quillen.LoopPrespectrum
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+/-- The exact chosen whole raw prewhiskering, with all original double-quotient cells. -/
+def rawPreFamily : PushoutConeFamily I
+    (boundedFlatPerfectPrespectrumMap (projection.app W))
+    (boundedFlatPerfectPrespectrumMap (projection.app W))
+    (comparison W) (mappingCone (comparison X)) :=
+  PushoutConeFamily.ofHomotopy
+    (Homotopy.precomp (GlobalRawBass.coneMap c) (InputComposition.coneHomotopy f g))
+
+/-- Descending these cells recovers the entire original chosen homotopy on every cone point. -/
+theorem rawPreFamily_desc (n : ℕ) (r : I) (x : (mappingCone (comparison W)).space n) :
+    (rawPreFamily f g c).desc n (r, x) =
+      (InputComposition.coneHomotopy f g).level n (r, (GlobalRawBass.coneMap c).map n x) :=
+  PushoutConeFamily.ofHomotopy_desc
+    (Homotopy.precomp (GlobalRawBass.coneMap c) (InputComposition.coneHomotopy f g)) n r x
+
+/-- The genuine plus scalar branch is the entire corresponding original family cell. -/
+theorem rawPreFamily_plus (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj W))).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.polynomialReference f g)
+        (InputCompositionPolynomialScalar.chart (X := X) plus)
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.laurentReference f g plus)
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g plus))
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g plus)) n
+        (polynomialPrewhisker f g c plus (r, s)) x) =
+      (rawPreFamily f g c).plus n (r, (s, x)) :=
+  polynomialPrewhisker_plus_original f g c n r s x
+
+/-- The genuine minus scalar branch is the entire corresponding original family cell. -/
+theorem rawPreFamily_minus (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (polynomial.obj W))).space n) :
+    (InputIdentityNegative.inclusion X).map n
+      (CutOpenCarrier.nativeEval
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.polynomialReference f g)
+        (InputCompositionPolynomialScalar.chart (X := X) minus)
+        (BassH0Merge.normalizedMap (polynomial.map c) ≫
+          InputCompositionPolynomialScalar.laurentReference f g minus)
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g minus))
+        (CutOpenPrecomp.anchor _ _ _ _ (InputCompositionPolynomialScalar.anchor f g minus)) n
+        (polynomialPrewhisker f g c minus (r, s)) x) =
+      (rawPreFamily f g c).minus n (r, (s, x)) :=
+  polynomialPrewhisker_minus_original f g c n r s x
+
+/-- The whole overlap scalar branch is the corresponding original family cell. -/
+theorem rawPreFamily_overlap (n : ℕ) (r s t : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen W)).space n) :
+    ProjectionReference.FourEdge.coneEval X
+      (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g) n
+      (overlapPrewhisker f g c ((r, s), t)) x =
+        (rawPreFamily f g c).overlap n (r, (s, (t, x))) :=
+  overlapPrewhisker_original f g c n r s t x
+
+/-- The original Laurent family supplies the fourth full scalar cell. -/
+theorem rawPreFamily_laurent (n : ℕ) (r : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (laurent.obj W))).space n) :
+    (mappingConeInclusion (comparison X)).map n
+      (pointwisePrespectrumFamily (zeroLaurentReference f g c) n (zeroLaurent f g c r) x) =
+        (rawPreFamily f g c).laurent n (r, x) := by
+  rw [zeroLaurent_native]
+  rfl
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

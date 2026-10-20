@@ -1,0 +1,88 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSurfaceReanchor
+
+/-!
+# Input reanchoring of the entire original Laurent action
+
+The full source projection anchor is natural on every original Laurent reference node.
+Combining it with the terminal transport square proves the entire Laurent action square,
+without restricting to the beta image or cancelling any native evaluation map.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+local notation "U" => normalizedMap (coefficientMap P f)
+
+/-- The full source H0 anchor commutes on every original Laurent node. -/
+theorem Target.sourceBoundaryNode_reanchor
+    (N : CommonReferenceNerve.Node (WholeReference.reference P a E)) :
+    Target.sourceBoundaryNode P f E'
+        (reanchor (isoWhiskerRight δ (BassProjectionPath.source P a).functor) N) =
+      reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor)
+        (Target.sourceBoundaryNode P f E N) := by
+  have hE : Target.sourceBoundaryAnchor P f E =
+      isoWhiskerLeft E.functor (CoefficientBassSeedTargetH0Reference.h0ProjectionIso P f) := by
+    change isoWhiskerLeft E.functor
+      (CoefficientBassSeedTargetH0Reference.h0ProjectionIso P f) ≪≫ Iso.refl _ = _
+    exact Iso.trans_refl _
+  have hE' : Target.sourceBoundaryAnchor P f E' =
+      isoWhiskerLeft E'.functor (CoefficientBassSeedTargetH0Reference.h0ProjectionIso P f) := by
+    change isoWhiskerLeft E'.functor
+      (CoefficientBassSeedTargetH0Reference.h0ProjectionIso P f) ≪≫ Iso.refl _ = _
+    exact Iso.trans_refl _
+  unfold Target.sourceBoundaryNode
+  rw [hE, hE']
+  exact Reanchor.chart_whiskering δ (BassProjectionPath.source P a)
+    (Target.sourcePost P f) (BassH0Diagram.reference P f)
+    (CoefficientBassSeedTargetH0Reference.h0ProjectionIso P f) N
+
+/-- Both original reference transports commute on complete Laurent-action nodes. -/
+theorem TargetCone.sourceNode_input_reanchor
+    (N : CommonReferenceNerve.Node (WholeReference.reference P a E)) :
+    reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+        (BassProjectionPath.source P b).functor) (TargetCone.sourceNode P f E N) =
+      TargetCone.sourceNode P f E'
+        (reanchor (isoWhiskerRight δ (BassProjectionPath.source P a).functor) N) := by
+  change reanchor _ (TargetCone.toTargetNode P f E (Target.sourceBoundaryNode P f E N)) =
+    TargetCone.toTargetNode P f E' (Target.sourceBoundaryNode P f E' (reanchor _ N))
+  rw [TargetCone.toTargetNode_reanchor, ← Target.sourceBoundaryNode_reanchor]
+
+/-- The whole Laurent square holds before cone inclusion and on every original scalar point. -/
+theorem TargetCone.laurent_input_reanchor
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node (WholeReference.reference P a E)))|) :
+    mapParameter (reanchor (isoWhiskerRight (isoWhiskerRight δ (U).functor)
+        (BassProjectionPath.source P b).functor)) (TargetCone.laurent P f E y) =
+      TargetCone.laurent P f E'
+        (mapParameter
+          (reanchor (isoWhiskerRight δ (BassProjectionPath.source P a).functor)) y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter (WholeReference.reference P a E) y
+  change mapParameter _ (mapParameter _ (CommonReferenceNerve.parameter _ N z)) =
+    mapParameter _ (mapParameter _ (CommonReferenceNerve.parameter _ N z))
+  simp only [mapParameter_parameter]
+  apply congrArg (fun ns ↦ CommonReferenceNerve.parameter
+    (WholeReference.reference P b (E' ≫ U)) ns z)
+  funext i
+  exact TargetCone.sourceNode_input_reanchor P f E E' δ (N i)
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge

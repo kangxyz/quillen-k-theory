@@ -1,0 +1,157 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInputBinary
+public import Quillen.Waldhausen.SConstruction.Iterated.OriginalTriangleSurfaceValue
+
+/-!
+# The complete originally chosen supported binary comparison
+
+The finite native scalar family equals the exact originally selected relative comparison
+at every level, both independent times and every original input. The evaluation interface
+has a generic definitional equality to the original level evaluation; no homotopy is replaced.
+-/
+
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory
+open scoped Topology unitInterval
+universe u
+open CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.LoopPrespectrum.Homotopy.RelHomotopy
+open scoped Simplicial
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass.InputBinary
+open SupportedTensorEvaluation
+variable {X Y Z : Scheme.OpenPairs.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- Isolate the first small-model transformation before projecting any relative surface. -/
+theorem first_hom_explicit :
+    (first f g).hom = whiskerLeft AsSmall.down
+      (whiskerRight
+        (Waldhausen.normalizedWeakTransformation
+          (boundedFlatPerfectSupportedPullback_exact (f ≫ g))
+          ((boundedFlatPerfectSupportedPullback_exact g).comp
+            (boundedFlatPerfectSupportedPullback_exact f))
+          (boundedFlatPerfectSupportedPullbackCompIso f g).hom) AsSmall.up) := by
+  change whiskerLeft AsSmall.down (whiskerRight (geometricIso f g).hom AsSmall.up) = _
+  rw [geometricIso_hom]
+  rfl
+
+/-- Isolate the second small-model transformation without dependent homotopy transports. -/
+theorem second_hom_explicit :
+    (second f g).hom = whiskerLeft AsSmall.down
+      (whiskerRight
+        (exactNormalizationCompIso (boundedFlatPerfectSupportedPullback_exact g)
+          (boundedFlatPerfectSupportedPullback_exact f)).hom AsSmall.up) := rfl
+
+/-- The original small-model composition cell, named before any boundary retyping. -/
+def originalSmallTriangle :=
+  originalPrespectrumTransformationCompositionHomotopy
+    (boundedFlatPerfectSupportedWaldhausen Z.obj.hom)
+    (boundedFlatPerfectSupportedWaldhausen X.obj.hom)
+    (boundedFlatPerfectSupportedPullback_exact (f ≫ g)).rebase
+    ((boundedFlatPerfectSupportedPullback_exact g).comp
+      (boundedFlatPerfectSupportedPullback_exact f)).rebase
+    ((boundedFlatPerfectSupportedPullback_exact g).rebase.comp
+      (boundedFlatPerfectSupportedPullback_exact f).rebase)
+    (Quillen.rebaseFunctor_obj_base _ _ _ _)
+    (Quillen.rebaseFunctor_obj_base _ _ _ _)
+    ((congrArg (normalizedPullback f).obj (Quillen.rebaseFunctor_obj_base _ _ _ _)).trans
+      (Quillen.rebaseFunctor_obj_base _ _ _ _))
+    (Waldhausen.normalizedWeakTransformation (boundedFlatPerfectSupportedPullback_exact (f ≫ g))
+      ((boundedFlatPerfectSupportedPullback_exact g).comp
+        (boundedFlatPerfectSupportedPullback_exact f))
+      (boundedFlatPerfectSupportedPullbackCompIso f g).hom)
+    (exactNormalizationCompIso (boundedFlatPerfectSupportedPullback_exact g)
+      (boundedFlatPerfectSupportedPullback_exact f)).hom
+    (Waldhausen.normalizedWeakTransformation_weak _ _ _
+      (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen X.obj.hom).weq_iso _ inferInstance))
+    (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen X.obj.hom).weq_iso _ inferInstance)
+
+attribute [local irreducible] originalCompositionTransport
+  originalPrespectrumTransformationCompositionHomotopy
+
+
+/-- All original transported triangle parameters are retained without rewriting its cell. -/
+theorem triangle_original_value (n : ℕ) (r s : I) (x : (rawSpectrum Z).space n) :
+    surfaceValue (compositionTriangle f g) n r s x =
+      surfaceValue (originalSmallTriangle f g) n r s x := by
+  have result := originalCompositionTransport_value
+    (F := normalizedPullback (f ≫ g)) (G := intermediate f g)
+    (H := normalizedPullback g ⋙ normalizedPullback f)
+    (boundedFlatPerfectSupportedWaldhausen Z.obj.hom)
+    (boundedFlatPerfectSupportedWaldhausen X.obj.hom)
+    (boundedFlatPerfectSupportedPullback_exact (f ≫ g)).rebase
+    ((boundedFlatPerfectSupportedPullback_exact g).comp
+      (boundedFlatPerfectSupportedPullback_exact f)).rebase
+    ((boundedFlatPerfectSupportedPullback_exact g).rebase.comp
+      (boundedFlatPerfectSupportedPullback_exact f).rebase)
+    (Quillen.rebaseFunctor_obj_base _ _ _ _)
+    (Quillen.rebaseFunctor_obj_base _ _ _ _)
+    ((congrArg (normalizedPullback f).obj (Quillen.rebaseFunctor_obj_base _ _ _ _)).trans
+      (Quillen.rebaseFunctor_obj_base _ _ _ _))
+    (Waldhausen.normalizedWeakTransformation (boundedFlatPerfectSupportedPullback_exact (f ≫ g))
+      ((boundedFlatPerfectSupportedPullback_exact g).comp
+        (boundedFlatPerfectSupportedPullback_exact f))
+      (boundedFlatPerfectSupportedPullbackCompIso f g).hom)
+    (exactNormalizationCompIso (boundedFlatPerfectSupportedPullback_exact g)
+      (boundedFlatPerfectSupportedPullback_exact f)).hom
+    (normalizedCompositionIso f g).hom
+    (Waldhausen.normalizedWeakTransformation_weak _ _ _
+      (fun _ ↦ (boundedFlatPerfectSupportedWaldhausen X.obj.hom).weq_iso _ inferInstance))
+    (fun A ↦ (boundedFlatPerfectSupportedWaldhausen X.obj.hom).weq_iso _
+      (NatIso.hom_app_isIso (exactNormalizationCompIso
+        (boundedFlatPerfectSupportedPullback_exact g)
+        (boundedFlatPerfectSupportedPullback_exact f)) A))
+    (fun A ↦ (boundedFlatPerfectSupportedWaldhausen X.obj.hom).weq_iso _
+      (NatIso.hom_app_isIso (normalizedCompositionIso f g) A))
+    (normalizedCompositionIso_hom f g).symm
+    n r s x
+  exact result
+
+
+/-- Only the independent small-model cell is rewritten. -/
+theorem small_native_value (n : ℕ) (r s : I) (x : (rawSpectrum Z).space n) :
+    surfaceValue (originalSmallTriangle f g) n r s x =
+      surfaceValue (prespectrumTransformationCompositionHomotopy (first f g).hom (second f g).hom
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)) n r s x := by
+  simp only [originalSmallTriangle, originalPrespectrumTransformationCompositionHomotopy,
+    second_hom_explicit f g]
+  rfl
+
+/-- The chosen triangle retains every original scalar input. -/
+theorem triangle_native_value (n : ℕ) (r s : I) (x : (rawSpectrum Z).space n) :
+    surfaceValue (compositionTriangle f g) n r s x =
+      surfaceValue (prespectrumTransformationCompositionHomotopy (first f g).hom (second f g).hom
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)) n r s x :=
+  (triangle_original_value f g n r s x).trans (small_native_value f g n r s x)
+
+/-- Boundary retyping changes none of the original chosen surface values. -/
+theorem comparison_triangle_value (n : ℕ) (r s : I) (x : (rawSpectrum Z).space n) :
+    surfaceValue (compositionComparison f g) n r s x =
+      surfaceValue (compositionTriangle f g) n r s x :=
+  surfaceValue_eq_of_level_eq (compositionComparison f g) (compositionTriangle f g) n
+    (compositionComparison_whole_level f g n) r s x
+
+/-- The native scalar family is the exact chosen original relative comparison everywhere. -/
+theorem relative_native_value (n : ℕ) (r s : I) (x : (rawSpectrum Z).space n) :
+    prespectrumSimplexFamily (simplex f g) n
+      (Quillen.TheoremB.compositionTriangleHomotopy (r, s), x) =
+      surfaceValue (compositionComparison f g) n r s x := by
+  have hn := surfaceValue_eq_level
+    (prespectrumTransformationCompositionHomotopy (first f g).hom (second f g).hom
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)
+        (fun _ ↦ (rawModel X).waldhausen.weq_iso _ inferInstance)) n r s x
+  exact (whole_triangle f g n r s x).trans
+    (hn.symm.trans ((triangle_native_value f g n r s x).symm.trans
+      (comparison_triangle_value f g n r s x).symm))
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass.InputBinary

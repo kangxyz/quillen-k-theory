@@ -1,0 +1,97 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerSelectedSeams
+public import Quillen.Topology.Path.ScalarRectangleConcatenation
+/-!
+A whole original square-time slice at a fixed source-span coordinate.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "Q" => ProjectionReference.FourEdge.scalarCone X
+  (BassH0Merge.normalizedMap c ≫ InputCompositionTopPieces.baseSource f g)
+
+/-- A whole original square-time slice at a fixed source-span coordinate. -/
+def selectedSlice (F : C((I × I) × I, Q)) (t : I) : C(I × I, Q) :=
+  ⟨fun z ↦ F (z, t), by fun_prop⟩
+
+/-- The complete positive selected branch with its original direction and clock. -/
+def upperPlusTrack : ContinuousMap.Homotopy
+    (selectedSlice f g c (selectedPlus f g c) 0) (selectedSlice f g c (selectedPlus f g c) 1) where
+  toFun z := selectedPlus f g c (z.2, z.1)
+  continuous_toFun := by fun_prop
+  map_zero_left _ := rfl
+  map_one_left _ := rfl
+
+/-- The original corrected overlap follows the proved complete positive seam. -/
+def upperMiddleTrack : ContinuousMap.Homotopy
+    (selectedSlice f g c (selectedPlus f g c) 1) (selectedSlice f g c (selectedOverlap f g c) 1)
+      where
+  toFun z := selectedOverlap f g c (z.2, z.1)
+  continuous_toFun := by fun_prop
+  map_zero_left z := (selectedPlus_one f g c z.1 z.2).symm
+  map_one_left _ := rfl
+
+/-- The distinct negative branch is reversed exactly as in the original span word. -/
+def upperMinusTrack : ContinuousMap.Homotopy
+    (selectedSlice f g c (selectedOverlap f g c) 1) (selectedSlice f g c (selectedMinus f g c) 0)
+      where
+  toFun z := selectedMinus f g c (z.2, unitInterval.symm z.1)
+  continuous_toFun := by fun_prop
+  map_zero_left z := by
+    change selectedMinus f g c (z, unitInterval.symm 0) = selectedOverlap f g c (z, 1)
+    simpa only [unitInterval.symm_zero] using selectedMinus_one f g c z.1 z.2
+  map_one_left _ := by simp only [unitInterval.symm_one]; rfl
+
+/-- The actual right-associated three-piece word, not a reparameterized replacement. -/
+def upperSpanTrack := (upperPlusTrack f g c).trans
+  ((upperMiddleTrack f g c).trans (upperMinusTrack f g c))
+
+/-- The whole upper-span scalar family is jointly continuous in both original square times. -/
+def upperSpan : C((I × I) × I, Q) :=
+  ⟨fun z ↦ upperSpanTrack f g c (z.2, z.1), by fun_prop⟩
+
+/-- First original half, including its shared endpoint. -/
+theorem upperSpan_lower (r s t : I) :
+    upperSpan f g c ((r, s), lower t) = selectedPlus f g c ((r, s), t) :=
+  homotopy_lower (upperPlusTrack f g c)
+    ((upperMiddleTrack f g c).trans (upperMinusTrack f g c)) t (r, s)
+
+/-- Middle original quarter, with its complete chosen overlap interior. -/
+theorem upperSpan_middle (r s t : I) :
+    upperSpan f g c ((r, s), upper (lower t)) = selectedOverlap f g c ((r, s), t) := by
+  exact (homotopy_upper (upperPlusTrack f g c)
+    ((upperMiddleTrack f g c).trans (upperMinusTrack f g c)) (lower t) (r, s)).trans
+      (homotopy_lower (upperMiddleTrack f g c) (upperMinusTrack f g c) t (r, s))
+
+/-- Last original quarter keeps the literal reversed negative source-square clock. -/
+theorem upperSpan_upper (r s t : I) :
+    upperSpan f g c ((r, s), upper (upper t)) =
+      selectedMinus f g c ((r, s), unitInterval.symm t) := by
+  exact (homotopy_upper (upperPlusTrack f g c)
+    ((upperMiddleTrack f g c).trans (upperMinusTrack f g c)) (upper t) (r, s)).trans
+      (homotopy_upper (upperMiddleTrack f g c) (upperMinusTrack f g c) t (r, s))
+
+/-- The initial full scalar face is the original positive branch's node-two endpoint. -/
+theorem upperSpan_zero (r s : I) :
+    upperSpan f g c ((r, s), 0) = selectedPlus f g c ((r, s), 0) :=
+  (upperSpanTrack f g c).map_zero_left (r, s)
+
+/-- The terminal full scalar face is the original negative branch's node-two endpoint. -/
+theorem upperSpan_one (r s : I) :
+    upperSpan f g c ((r, s), 1) = selectedMinus f g c ((r, s), 0) :=
+  (upperSpanTrack f g c).map_one_left (r, s)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

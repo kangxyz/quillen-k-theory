@@ -1,0 +1,45 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCorrectedNative
+
+/-! Regression of the full scalar source rail and its exact chosen native recovery. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open scoped Topology unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputNullSourceCarrier
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+open InputNullCompositionPolynomialCarrier
+
+/-- The complete scalar source surface recovers the maintained original source square. -/
+theorem original_source_square (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CommonReferenceNerve.CutOpenCarrier.nativeEval
+        (InputIdentitySeedCarrier.polyRef (f ≫ g)) (InputIdentitySeedCarrier.chart (X := X))
+        (InputIdentitySeedCarrier.laurentRef (f ≫ g))
+        (InputIdentitySeedCarrier.ordinary (f ≫ g)) (InputIdentitySeedCarrier.shifted (f ≫ g)) n
+        (sourceRail f g (r, s)) x) =
+      (InputCompositionNull.sourceSquare f g).level n (r, (s, x)) :=
+  (sourceRail_original f g n r s x).trans
+    (InputCompositionNull.sourceSquare_apply f g n r s x).symm
+
+/-- Both half-height cells retain the exact Laurent and corrected-cylinder surfaces. -/
+theorem original_half_cells (r s : unitInterval) :
+    sourceRail f g (r, Quillen.NativePathCells.lower s) = sourceFirst f g (r, s) ∧
+    sourceRail f g (r, Quillen.NativePathCells.upper s) = (correctedSquare f g).parameter (r, s) :=
+  ⟨sourceRail_lower f g r s, sourceRail_upper f g r s⟩
+
+end QuillenTest.GlobalRawBassInputNullSourceCarrier

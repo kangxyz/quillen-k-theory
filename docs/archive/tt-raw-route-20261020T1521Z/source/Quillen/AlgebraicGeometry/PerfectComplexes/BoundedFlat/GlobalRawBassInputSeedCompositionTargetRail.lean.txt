@@ -1,0 +1,130 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionPrecompOrdinary
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionShiftedRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionRailEndpoints
+/-! The complete shifted target null rail joins the actual full second seed transport. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionTargetRail
+open CommonReferenceNerve InputIdentitySeedCarrier Quillen.SimplexParameters Quillen.NativePathCells
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- The whole ordinary Laurent target edge agrees at the parameter-nerve level. -/
+theorem targetPositive_one (s : I) :
+    InputNullCompositionPolynomialCarrier.targetPositive f g (1,s) =
+      mapParameter (InputNullCompositionPrecomp.laurentNode f g)
+        (parameter (laurentRef f) (InputDescSimplex.nodes f)
+          (ProjectionRectangleParameters.K BassH0Diagram.plusFace s)) := by
+  have hn : InputNullCompositionPrecomp.laurentNode f g =
+      InputCompositionTerminalAttach.preNode f g :=
+    funext (InputNullCompositionPrecomp.laurent_node f g)
+  change parameter G (InputCompositionTopPieces.middleNodes f g)
+    (Quillen.SimplexGrid.parameter 2 4 (binaryPath (k:=2) 0 1 2 1, binaryPath (k:=4) 0 1 2 s)) = _
+  rw [hn, Path.target, Quillen.SimplexGrid.parameter_row, mapParameter_parameter]
+  have h := parameter_eq_of_face_nodes G
+    (fun i ↦ InputCompositionTerminalAttach.preNode f g (InputDescSimplex.nodes f i))
+    (InputCompositionTopPieces.middleNodes f g) BassH1Join.firstMiddleFace
+    (Quillen.SimplexGrid.rowFace 2 4 2)
+    (fun i ↦ (InputCompositionH1TopMiddleRows.whole_nodes f g i).symm)
+    (binaryPath (k:=4) 0 1 2 s)
+  refine h.trans ?_
+  exact congrArg (fun z ↦ parameter G
+    (fun i ↦ InputCompositionTerminalAttach.preNode f g (InputDescSimplex.nodes f i)) z)
+    (map_binaryPath BassH1Join.firstMiddleFace 0 1 2 s)
+
+/-- The complete arbitrary Laurent parameter preserves the chosen unit shift. -/
+theorem shift_parameter (y : |CutOpenCarrier.parameterSSet (laurentRef f)|) :
+    mapParameter (InputNullCompositionPrecomp.laurentNode f g)
+      (mapParameter (BassH0Merge.anchorNode (commonUnit f)) y) =
+    mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+      (mapParameter (InputNullCompositionPrecomp.laurentNode f g) y) := by
+  obtain ⟨k,N,z,rfl⟩ := exists_parameter (laurentRef f) y
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter,
+    mapParameter_parameter]
+  apply congrArg (fun ns ↦ parameter G ns z)
+  funext i
+  rw [InputNullCompositionPrecomp.laurent_node, InputNullCompositionPrecomp.laurent_node]
+  exact (InputCompositionUnitShift.pre_shift f g (N i)).symm
+
+/-- The shifted Laurent half joins the actual complete second-carrier map. -/
+theorem targetFirst_one (s : I) :
+    SeedShiftedSheet.inclusion (f ≫ g)
+      (InputNullCompositionOrdinaryRails.targetFirst f g (1,s)) =
+      InputSeedCompositionPrecomp.transport f g
+        (InputIdentitySeedRectangle.newPositive f true s) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (SeedOrdinarySheet.laurent (f ≫ g)
+      (InputNullCompositionPolynomialCarrier.targetPositive f g (1,s))) = _
+  rw [SeedShiftedSheet.inclusion_laurent]
+  change CutOpenCarrier.laurentInclusion F J G ε ε'
+    (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+      (InputNullCompositionPolynomialCarrier.targetPositive f g (1,s))) =
+    InputSeedCompositionPrecomp.transport f g
+      (CutOpenCarrier.laurentInclusion (polyRef f) J (laurentRef f) (ordinary f) (shifted f)
+        (mapParameter (BassH0Merge.anchorNode (commonUnit f))
+          (parameter (laurentRef f) (InputDescSimplex.nodes f)
+            (ProjectionRectangleParameters.K BassH0Diagram.plusFace s))))
+  rw [InputSeedCompositionPrecomp.transport_laurent, shift_parameter, targetPositive_one]
+
+/-- The shifted cylinder half retains its complete polynomial endpoint and height. -/
+theorem targetSecond_one (s : I) :
+    SeedShiftedSheet.inclusion (f ≫ g)
+      (InputNullCompositionOrdinaryRails.targetSecond f g (1,s)) =
+      InputSeedCompositionPrecomp.transport f g
+        (InputIdentitySeedRectangle.newCone f true s) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (SeedOrdinarySheet.cylinder (f ≫ g)
+      (InputNullCompositionPolynomialCarrier.surface f g (1,1),s)) = _
+  rw [SeedShiftedSheet.inclusion_cylinder]
+  change CutOpenCarrier.cylinderPlus F J G ε ε'
+    (InputNullCompositionPolynomialCarrier.surface f g (1,1),s) =
+    InputSeedCompositionPrecomp.transport f g
+      (CutOpenCarrier.cylinderPlus (polyRef f) J (laurentRef f) (ordinary f) (shifted f)
+        (movement f 1,s))
+  rw [InputSeedCompositionPrecomp.transport_cylinderPlus]
+  have hu : upper (1 : I) = 1 := Subtype.ext (by norm_num [upper])
+  exact congrArg (fun y ↦ CutOpenCarrier.cylinderPlus F J G ε ε' (y,s))
+    (by simpa only [hu] using InputNullCompositionRailEndpoints.polynomial_one_upper f g 1)
+
+/-- The entire shifted target rail joins the original second new null at its full time. -/
+theorem targetRail_one (s : I) :
+    InputNullCompositionShiftedRails.shiftedTargetRail f g (1,s) =
+      InputSeedCompositionPrecomp.transport f g (InputIdentitySeedNull.newNull f true s) := by
+  change SeedShiftedSheet.inclusion (f ≫ g)
+    (InputNullCompositionOrdinaryRails.targetRail f g (1,s)) = _
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [InputNullCompositionOrdinaryRails.targetRail_lower,
+      InputIdentitySeedNull.newNull, path_lower]
+    exact targetFirst_one f g t
+  · rw [InputNullCompositionOrdinaryRails.targetRail_upper,
+      InputIdentitySeedNull.newNull, path_upper]
+    exact targetSecond_one f g t
+
+/-- The unchanged ordinary target rail ends at the full second-carrier map. -/
+theorem ordinary_targetRail_one (s : I) :
+    InputNullCompositionPolynomialCarrier.targetRail f g (1,s) =
+      InputSeedCompositionPrecomp.transport f g (InputIdentitySeedNull.newNull f false s) := by
+  rw [InputNullCompositionRailEndpoints.targetRail_one]
+  symm
+  exact Path.Evaluation.path_trans (InputSeedCompositionPrecomp.transport f g) _ _ _ _
+    (fun t ↦ InputSeedCompositionPrecomp.transport_ordinary f g (SeedOrdinarySheet.newPositive f t))
+    (fun t ↦ InputSeedCompositionPrecomp.transport_ordinary f g (SeedOrdinarySheet.newCone f t)) s
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionTargetRail

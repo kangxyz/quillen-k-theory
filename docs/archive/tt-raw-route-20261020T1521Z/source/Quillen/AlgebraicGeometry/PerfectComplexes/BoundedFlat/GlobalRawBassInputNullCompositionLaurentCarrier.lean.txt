@@ -1,0 +1,167 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullPasting
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedNull
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveReanchorFamily
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierCharts
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentityProjection
+public import Quillen.Waldhausen.SConstruction.Iterated.RealizationSimplexComposition
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveWhiskering
+public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
+
+/-!
+# The original Laurent composition face in the fixed composite null carrier
+
+The eighteen original Laurent projection nodes are reanchored by their actual naturality
+identity. The complete two-clock face retains the original moving square and evaluates,
+through the positive-cone inclusion, to the original Laurent null-composition square.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.SimplexParameters
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier
+open CommonReferenceNerve CommonReferenceProduct
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+/-- The genuine geometric source of the original Laurent composition rectangle. -/
+abbrev laurentSource := NormalizedTripleSimplex.sourceMap (laurentProjection.app X) f g
+
+/-- All original Laurent rectangle nodes and their complete source references. -/
+abbrev laurentNodes := DoubleSquareMergedSimplex.nodes
+  g f (laurent.map g) (laurent.map f)
+  (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+  (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm
+
+/-- The original Laurent rectangle simplex on the literal three scheme projections. -/
+def laurentSimplex := DoubleSquareMergedSimplex.simplex
+  g f (laurent.map g) (laurent.map f)
+  (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+  (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm
+
+private theorem laurent_rectangle_lift :
+    HomotopyLift (laurentSimplex f g) DoubleSquareScalarPaths.rectangleParameter
+      (InputCompositionTransformations.rectangle laurentProjection f g) :=
+  DoubleSquareScalarPaths.original_rectangle_nativeLift
+    g f (laurent.map g) (laurent.map f)
+    (laurentProjection.app Z) (laurentProjection.app Y) (laurentProjection.app X)
+    (laurentProjection.naturality g).symm (laurentProjection.naturality f).symm
+
+private theorem laurent_comparison_lift :
+    HomotopyLift (laurentSimplex f g)
+      DoubleSquareScalarPaths.originalComparisonParameter
+      (InputCompositionTransformations.comparison laurentProjection f g) := by
+  intro n r s x
+  exact (HomotopyLift.symmPath _
+    (laurent_rectangle_lift f g)) n r s x
+
+private theorem laurent_target_path :
+    PathLift (laurentSimplex f g)
+      DoubleSquareScalarPaths.targetChart
+        (InputCompositionTransformations.targetTrack laurentProjection f g) := by
+  let S := laurentSimplex f g
+  have h := HomotopyLift.target S (laurent_comparison_lift f g)
+  have h' := PathLift.trans_left S h
+  intro n t x
+  have hv := (PathLift.trans_left S h') n (unitInterval.symm t) x
+  change prespectrumSimplexFamily S n
+      (DoubleSquareScalarPaths.targetChart (unitInterval.symm (unitInterval.symm t)), x) =
+    (InputCompositionTransformations.targetTrack laurentProjection f g).level n
+      (unitInterval.symm (unitInterval.symm t), x) at hv
+  rw [unitInterval.symm_symm] at hv
+  exact hv
+
+private theorem laurent_source_path :
+    PathLift (laurentSimplex f g)
+      DoubleSquareScalarPaths.sourceChart
+        (InputCompositionTransformations.sourceTrack laurentProjection f g) := by
+  let S := laurentSimplex f g
+  exact PathLift.trans_right S (HomotopyLift.target S (laurent_comparison_lift f g))
+
+private theorem laurent_outer_path :
+    PathLift (laurentSimplex f g)
+      DoubleSquareScalarPaths.outerSquarePath
+        (InputCompositionTransformations.square laurentProjection (f ≫ g)) := by
+  let S := laurentSimplex f g
+  exact PathLift.trans_right S
+    (PathLift.trans_left S (HomotopyLift.target S (laurent_comparison_lift f g)))
+
+private theorem laurent_boundary_lift :
+    HomotopyLift (laurentSimplex f g)
+      DoubleSquareScalarPaths.coefficientBoundaryParameter
+      (InputCompositionTransformations.boundary laurentProjection f g) :=
+  HomotopyLift.boundaryOfComparison (laurentSimplex f g)
+    (laurent_target_path f g) (laurent_outer_path f g) (laurent_source_path f g)
+    (laurent_comparison_lift f g)
+
+/-- The original scalar boundary word recovers the frozen laurent Square at every point. -/
+theorem laurent_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    prespectrumSimplexFamily (laurentSimplex f g) n
+      (DoubleSquareScalarPaths.coefficientMovingSquareParameter (r, s), x) =
+      (InputCompositionTransformations.movingSquare laurentProjection f g).level n (r, (s, x)) :=
+  HomotopyLift.toSquare _ (laurent_boundary_lift f g) n r s x
+
+
+/-- The original naturality equality changes only the common reference. -/
+def outerIso : (laurentSource f g).functor ≅
+    (InputIdentitySeedCarrier.laurentRef (f ≫ g)).functor :=
+  eqToIso (congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
+    (congrArg boundedFlatNormalizedPullback (laurentProjection.naturality (f ≫ g)).symm))
+
+/-- The eighteen Laurent nodes reanchored at the composite reference model. -/
+def nodes (i : Fin 18) : Node (InputIdentitySeedCarrier.laurentRef (f ≫ g)) :=
+  reanchor (outerIso f g).symm (laurentNodes f g i)
+
+/-- The original moving-square scalar surface in the common Laurent nerve. -/
+def surface : C(unitInterval × unitInterval,
+    |nerve (Codiscrete (Node (InputIdentitySeedCarrier.laurentRef (f ≫ g))))|) :=
+  (parameter (InputIdentitySeedCarrier.laurentRef (f ≫ g)) (nodes f g)).comp
+    DoubleSquareScalarPaths.coefficientMovingSquareParameter
+
+theorem surface_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily (InputIdentitySeedCarrier.laurentRef (f ≫ g)) n
+      (surface f g (r, s)) x =
+      (InputCompositionTransformations.movingSquare laurentProjection f g).level n (r, (s, x)) := by
+  change pointwisePrespectrumFamily _ n (parameter _ _ _) x = _
+  rw [pointwisePrespectrumFamily_parameter]
+  change prespectrumFamily _ (ModelSimplex.reanchorNodes (outerIso f g).symm
+    (laurentNodes f g)) n _ = _
+  rw [prespectrumFamily_reanchor, prespectrumFamily_eq]
+  exact laurent_native f g n r s x
+
+local notation "F" => InputIdentitySeedCarrier.polyRef (f ≫ g)
+local notation "G" => InputIdentitySeedCarrier.laurentRef (f ≫ g)
+local notation "J" => InputIdentitySeedCarrier.chart (X := X)
+local notation "ε" => InputIdentitySeedCarrier.ordinary (f ≫ g)
+local notation "ε'" => InputIdentitySeedCarrier.shifted (f ≫ g)
+
+/-- The moving-square surface included in the fixed cut-open carrier. -/
+def face : C(unitInterval × unitInterval, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  (CutOpenCarrier.laurentInclusion F J G ε ε').comp (surface f g)
+
+theorem face_native (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval F J G ε ε' n (face f g (r, s)) x) =
+      (InputCompositionNull.laurentSquare f g).level n (r, (s, x)) := by
+  change (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.laurentInclusion F J G ε ε' (surface f g (r, s))) x) = _
+  rw [CutOpenCarrier.nativeEval_laurentInclusion, surface_native]
+  rfl
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputNullCompositionLaurentCarrier

@@ -1,0 +1,38 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentBoundary
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentSides
+
+/-! The original native left paths are recovered through the full scalar rail attachments. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.GlobalRawBass
+open scoped unitInterval
+universe u
+namespace QuillenTest.GlobalRawBassInputNullCompositionLaurent
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+example (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    InputNullCompositionCompositeCarrier.evaluate f g n x
+        (InputNullCompositionPolynomialCarrier.sourceRail f g (r, 0)) =
+      (InputCompositionNull.oldLeft f g).level n (r, x) := by
+  rw [← InputNullCompositionLaurentCarrier.face_left]
+  exact InputNullCompositionLaurentCarrier.face_left_native f g n r x
+
+example (n : ℕ) (r : unitInterval)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    InputNullCompositionCompositeCarrier.evaluate f g n x
+        (InputNullCompositionPolynomialCarrier.targetRail f g (r, 0)) =
+      (InputCompositionNull.newLeft f g).level n (r, x) := by
+  rw [← InputNullCompositionLaurentCarrier.face_right]
+  exact InputNullCompositionLaurentCarrier.face_right_native f g n r x
+
+end QuillenTest.GlobalRawBassInputNullCompositionLaurent

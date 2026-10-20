@@ -1,0 +1,63 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeSquareModelNormalization
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomialScalarCarrier
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceProductNodes
+/-! The genuine terminal polynomial-square seam before any native evaluation. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+private theorem composite_pre_node {U V W T : Model.{u}}
+    (S : U ⟶ W) (A : U ⟶ V) (D : V ⟶ W) (P : W ⟶ T)
+    (θ : S.functor ≅ (A ≫ D).functor) (N : Node P) :
+    node (S ≫ P) S P (Iso.refl _) ⟨A ≫ D, θ⟩ N =
+      preNode (S ≫ P) A (H := D ≫ P)
+        (isoWhiskerRight θ P.functor ≪≫
+          Functor.associator A.functor D.functor P.functor) (precompNode D N) := by
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  apply Iso.ext
+  ext x
+  simp only [node, Iso.refl_trans, mapIso_hom, Iso.prod_hom, uncurry_obj_map,
+    whiskeringLeft_obj_obj, whiskeringLeft_obj_map, NatTrans.comp_app, comp_obj,
+    whiskeringLeft_map_app_app, whiskerLeft_app, NatTrans.naturality, precompNode, preNode,
+    reanchor, isoWhiskerLeft_twice, Iso.trans_assoc, Iso.self_symm_id_assoc, Iso.trans_hom,
+    isoWhiskerRight_hom, isoWhiskerLeft_hom, whiskerRight_app, associator_hom_app,
+    Category.comp_id]
+  exact (N.2.hom.naturality (θ.hom.app x)).symm
+
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "D" => BassH0Merge.normalizedMap (projection.app Z)
+local notation "θ" => NativeSquareModelNormalization.rightIso
+  (polynomial.map c) (projection.app W) (projection.app Z) c (projection.naturality c)
+
+/-- The last full node of the original source square equals actual projection then pullback,
+with its complete reference isomorphism, on every polynomial output node. -/
+theorem terminal_polynomial_node (N : Node P) :
+    node (S ≫ P) S P (Iso.refl _)
+      (NativeSquareFiveSimplex.nodes (polynomial.map c) (projection.app W)
+        (projection.app Z) c (projection.naturality c) 4) N =
+    CommonReferenceProduct.preNode (S ≫ P) A (H := D ≫ P)
+      (isoWhiskerRight θ (P).functor ≪≫
+        Functor.associator (A).functor (D).functor (P).functor) (precompNode D N) := by
+  rw [NativeSquareModelNormalization.nodes_four]
+  exact composite_pre_node S A D P θ N
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

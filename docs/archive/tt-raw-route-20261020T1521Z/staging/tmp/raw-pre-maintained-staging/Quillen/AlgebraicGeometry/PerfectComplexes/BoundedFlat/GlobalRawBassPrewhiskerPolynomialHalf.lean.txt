@@ -1,0 +1,95 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerLowerChartTerminal
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerInitialCarrier
+public import Quillen.Topology.Path.ScalarRectangleConcatenation
+/-!
+The entire source-map first half lies in the genuine carrier's Laurent part.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.NativePathCells Quillen.ScalarRectangle
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+variable (k : laurent ⟶ polynomial)
+open CommonReferenceNerve CutOpenCarrier
+local notation "MC" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+local notation "ε'" => CutOpenPrecomp.anchor MC P K G ε
+local notation "Q" => outerPolynomialCarrier f g c k
+
+/-- The entire source-map first half lies in the genuine carrier's Laurent part. -/
+def polynomialLower : C(I × I, Q) :=
+  (laurentInclusion (MC ≫ P) K (MC ≫ G) ε' ε').comp (anchoredLowerChart f g c k)
+
+/-- The second half retains the complete original chosen corrected polynomial square. -/
+def polynomialUpper : C(I × I, Q) :=
+  ⟨fun z ↦ CutOpenPrecomp.map MC P K G ε ε
+    ((InputCompositionPolynomialScalar.correctedSquare f g k).parameter z), by fun_prop⟩
+
+/-- The actual scalar half-height attachment holds for every composition time. -/
+theorem polynomial_half_height (r : I) :
+    polynomialLower f g c k (r, 1) = polynomialUpper f g c k (r, 0) := by
+  change laurentInclusion (MC ≫ P) K (MC ≫ G) ε' ε'
+    (anchoredLowerChart f g c k (r, 1)) =
+      CutOpenPrecomp.map MC P K G ε ε
+        ((InputCompositionPolynomialScalar.correctedSquare f g k).parameter (r, 0))
+  rw [(InputCompositionPolynomialScalar.correctedSquare f g k).left]
+  change laurentInclusion (MC ≫ P) K (MC ≫ G) ε' ε' _ =
+    CutOpenPrecomp.map MC P K G ε ε
+      (laurentInclusion P K G ε ε (InputCompositionPolynomialScalar.chartSurface f g k (r, 0)))
+  rw [CutOpenPrecomp.map_laurent]
+  exact congrArg (laurentInclusion (MC ≫ P) K (MC ≫ G) ε' ε')
+    (lowerChart_terminal f g c k r)
+
+/-- Fix the actual cone height without mixing it with composition time. -/
+def polynomialSlice (F : C(I × I, Q)) (s : I) : C(I, Q) :=
+  ⟨fun r ↦ F (r, s), by fun_prop⟩
+
+/-- The original lower half uses its full checked scalar endpoint. -/
+def polynomialLowerTrack : ContinuousMap.Homotopy
+    (polynomialSlice f g c k (polynomialLower f g c k) 0)
+    (polynomialSlice f g c k (polynomialUpper f g c k) 0) where
+  toFun z := polynomialLower f g c k (z.2, z.1)
+  continuous_toFun := by fun_prop
+  map_zero_left _ := rfl
+  map_one_left r := polynomial_half_height f g c k r
+
+/-- The original upper half retains its chosen correction interior. -/
+def polynomialUpperTrack : ContinuousMap.Homotopy
+    (polynomialSlice f g c k (polynomialUpper f g c k) 0)
+    (polynomialSlice f g c k (polynomialUpper f g c k) 1) where
+  toFun z := polynomialUpper f g c k (z.2, z.1)
+  continuous_toFun := by fun_prop
+  map_zero_left _ := rfl
+  map_one_left _ := rfl
+
+/-- The genuine arbitrary-polynomial prewhiskering sector with the original two half clocks. -/
+def polynomialPrewhisker : C(I × I, Q) :=
+  ⟨fun z ↦ ((polynomialLowerTrack f g c k).trans
+    (polynomialUpperTrack f g c k)) (z.2, z.1), by fun_prop⟩
+
+/-- Every point of the original first half is retained. -/
+theorem polynomialPrewhisker_lower (r s : I) :
+    polynomialPrewhisker f g c k (r, lower s) = polynomialLower f g c k (r, s) :=
+  homotopy_lower (polynomialLowerTrack f g c k) (polynomialUpperTrack f g c k) s r
+
+/-- Every point of the original second half is retained. -/
+theorem polynomialPrewhisker_upper (r s : I) :
+    polynomialPrewhisker f g c k (r, upper s) = polynomialUpper f g c k (r, s) :=
+  homotopy_upper (polynomialLowerTrack f g c k) (polynomialUpperTrack f g c k) s r
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

@@ -1,0 +1,45 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCutOpenFinitePrecompNodes
+/-! Both full attachment squares for finite source-family precomposition. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor Convexity
+open scoped Simplicial Topology
+universe u
+namespace Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp
+open CutOpenCarrier
+variable {U V W T : Model.{u}} (A : U ⟶ V)
+variable {q : ℕ} (M : Fin (q + 1) → Node A)
+
+/-- Every finite output simplex keeps the output-first, source-second product grid. -/
+theorem parameter_characteristic (H : V ⟶ W) {p : ℕ} (N : Fin (p + 1) → Node H)
+    (z : StdSimplex ℝ (Fin (p + 1))) (w : StdSimplex ℝ (Fin (q + 1))) :
+    parameter A M H (CommonReferenceNerve.parameter H N z, w) =
+      CommonReferenceNerve.parameter (A ≫ H)
+        (FiniteParameter.gridNodes H (A ≫ H) (fun N i ↦ node A H (M i) N) N)
+        (SimplexGrid.parameter.{u} p q (z, w)) :=
+  FiniteParameter.parameter_characteristic H (A ≫ H) _ N z w
+
+/-- Either attaching anchor commutes at every nerve point and finite source parameter. -/
+theorem attachment_parameter (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
+    (ε : G.functor ≅ (F ≫ J).functor) (y : |parameterSSet F|)
+    (w : StdSimplex ℝ (Fin (q + 1))) :
+    parameter A M G (mapParameter (attachPostcompNode F J G ε) y, w) =
+      mapParameter (attachPostcompNode (A ≫ F) J (A ≫ G)
+        (CutOpenPrecomp.anchor A F J G ε)) (parameter A M F (y, w)) := by
+  obtain ⟨p, N, z, rfl⟩ := exists_parameter F y
+  rw [mapParameter_parameter, parameter_characteristic, parameter_characteristic,
+    mapParameter_parameter]
+  apply congrArg (fun ns ↦ CommonReferenceNerve.parameter (A ≫ G) ns
+    (SimplexGrid.parameter.{u} p q (z, w)))
+  funext i
+  exact attachment_node A F J G ε (M ((SimplexGrid.indexEquiv p q).symm i).2)
+    (N ((SimplexGrid.indexEquiv p q).symm i).1)
+
+end Quillen.Waldhausen.IteratedS.CommonReferenceNerve.FinitePrecomp

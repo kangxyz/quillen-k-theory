@@ -1,0 +1,82 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetChartReanchor
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetCells
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeReanchorRealization
+
+/-!
+# The complete target tree commutes with input reanchoring
+
+The two whole polynomial sectors and four original overlap cylinders determine the entire
+scalar tree. Their full-node naturality therefore gives a strict scalar equality with the
+original comparison time unchanged. Arbitrary external parameter families retain their
+independent coordinates.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u v
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.Target
+
+open BassH0Merge CommonReferenceNerve CommonReferenceProduct CommonReferenceNerve.FourEdgeTree
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+  {V : Model.{u + 1}}
+  (E E' : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+  (δ : E'.functor ≅ E.functor)
+local notation "J" => normalizedMap (polynomialProjection P a)
+
+/-- All six complete cells give the strict reanchoring square for the original target tree. -/
+theorem tree_reanchor (z : FourEdgeTree.space E J) (s : I) :
+    mapParameter (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor))
+        (tree P f E (z, s)) =
+      tree P f E' (Reanchor.tree P a E E' δ z, s) := by
+  have h := funext_cells E J
+    (fun y ↦ mapParameter
+      (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor))
+      (tree P f E (y, s)))
+    (fun y ↦ tree P f E' (Reanchor.tree P a E E' δ y, s))
+  apply congrFun (h ?_ ?_ ?_ ?_ ?_ ?_) z
+  · intro y
+    rw [Reanchor.tree_plus, tree_plus, tree_plus]
+    exact chart_reanchor P f E E' δ (underToLaurent R) (laurentPlus_projection P a) y s
+  · intro y
+    rw [Reanchor.tree_minus, tree_minus, tree_minus]
+    exact chart_reanchor P f E E' δ (underToLaurentInvert R) (laurentMinus_projection P a) y s
+  · intro y t
+    rw [Reanchor.tree_edge12, tree_edge12, tree_edge12]
+    exact cell_reanchor P f E E' δ clock12 y s t
+  · intro y t
+    rw [Reanchor.tree_edge01, tree_edge01, tree_edge01]
+    exact cell_reanchor P f E E' δ clock01 y s t
+  · intro y t
+    rw [Reanchor.tree_edge03, tree_edge03, tree_edge03]
+    exact cell_reanchor P f E E' δ clock03 y s t
+  · intro y t
+    rw [Reanchor.tree_edge34, tree_edge34, tree_edge34]
+    exact cell_reanchor P f E E' δ clock34 y s t
+
+/-- Reanchoring commutes on the whole external family, without identifying any coordinates. -/
+theorem tree_reanchor_family {S : Type v} [TopologicalSpace S]
+    (p : C(S, FourEdgeTree.space E J)) :
+    (mapParameter (reanchor (isoWhiskerRight δ (BassH0Diagram.reference P f).functor))).comp
+        ((tree P f E).comp (p.prodMap (ContinuousMap.id I))) =
+      (tree P f E').comp
+        (((Reanchor.tree P a E E' δ).comp p).prodMap (ContinuousMap.id I)) := by
+  ext ⟨z, s⟩
+  exact tree_reanchor P f E E' δ (p z) s
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.Target

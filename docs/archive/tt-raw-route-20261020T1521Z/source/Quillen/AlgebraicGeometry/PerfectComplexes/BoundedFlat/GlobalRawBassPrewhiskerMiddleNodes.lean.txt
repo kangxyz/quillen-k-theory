@@ -1,0 +1,95 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerMiddleReference
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassReferenceProductPrecomp
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionTargetTerminalRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopPieces
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassProjectionReference
+/-! Actual global projection naturality anchors the original lower-half Laurent family. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve BassH0Merge
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+
+
+/-- Every complete projection/Laurent product node uses the actual normalized middle anchor. -/
+theorem middle_product_node
+    (N : Node (InputIdentityProjection.source Z)) (M : Node (lowerLaurentBinary f g)) :
+    CommonReferenceProduct.reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node (InputDescSimplex.reference c) (lowerLaurentBinary f g)
+        (preReferenceNode (InputDescSimplex.reference c) (BassH0Merge.normalizedMap c)
+          (ProjectionReference.Target.terminalBaseAnchor c) N) M) =
+    precompNode (BassH0Merge.normalizedMap c)
+      (CommonReferenceProduct.reanchor
+        ((InputCompositionTopPieces.middleAnchor f g).symm ≪≫
+          InputCompositionCarrierBottom.sourceIso f g)
+        (CommonReferenceProduct.node (InputCompositionCarrierBottom.productSource f g)
+          (InputIdentityProjection.source Z) (lowerLaurentBinary f g) (Iso.refl _) N M)) := by
+  have h : lowerLaurentAnchor f g c ≪≫
+      isoWhiskerRight (ProjectionReference.Target.terminalBaseAnchor c)
+        (lowerLaurentBinary f g).functor =
+      isoWhiskerLeft (BassH0Merge.normalizedMap c).functor
+        ((InputCompositionTopPieces.middleAnchor f g).symm ≪≫
+          InputCompositionCarrierBottom.sourceIso f g) :=
+    (congrArg (fun e ↦ lowerLaurentAnchor f g c ≪≫ e)
+      (middleTerminalAssociator f g c)).symm.trans
+      ((middleReference f g c).trans (Iso.refl_trans
+        (isoWhiskerLeft (BassH0Merge.normalizedMap c).functor
+          ((InputCompositionTopPieces.middleAnchor f g).symm ≪≫
+            InputCompositionCarrierBottom.sourceIso f g))))
+  exact CommonReferenceProduct.finite_precomp_node (BassH0Merge.normalizedMap c)
+    (InputIdentityProjection.source Z) (lowerLaurentBinary f g) (InputDescSimplex.reference c)
+    (ProjectionReference.reference X (InputCompositionTopPieces.baseSource f g))
+    (ProjectionReference.Target.terminalBaseAnchor c) (lowerLaurentAnchor f g c)
+    ((InputCompositionTopPieces.middleAnchor f g).symm ≪≫
+      InputCompositionCarrierBottom.sourceIso f g) h N M
+
+
+/-- All fifteen actual middle-grid nodes retain the complete original thirty-one-node anchors. -/
+theorem middle_grid_node (i : Fin 3) (j : Fin 5) :
+    CommonReferenceProduct.reanchor (lowerLaurentAnchor f g c)
+      (FinitePrecomp.node (InputDescSimplex.reference c) (lowerLaurentBinary f g)
+        (InputDescSimplex.nodes c (ProjectionReference.Target.terminalRow j))
+        (lowerLaurentNodes f g i)) =
+    precompNode (BassH0Merge.normalizedMap c)
+      (CommonReferenceProduct.reanchor (InputCompositionTopPieces.middleAnchor f g).symm
+        (InputCompositionCarrierBottom.nodes f g (Quillen.SimplexGrid.index 4 2 (j, i)))) := by
+  refine (congrArg (fun N ↦ CommonReferenceProduct.reanchor (lowerLaurentAnchor f g c)
+    (FinitePrecomp.node (InputDescSimplex.reference c) (lowerLaurentBinary f g)
+      N (lowerLaurentNodes f g i))) (ProjectionReference.Target.terminal_nodes c j)).trans ?_
+  refine (middle_product_node f g c (InputIdentityProjection.nodes Z j)
+    (lowerLaurentNodes f g i)).trans ?_
+  apply congrArg (precompNode (BassH0Merge.normalizedMap c))
+  let Q (z : Fin 5 × Fin 3) : Node (InputCompositionCarrierBottom.productSource f g) :=
+    ⟨(InputIdentityProjection.nodes Z z.1).1 ≫ (lowerLaurentNodes f g z.2).1,
+      (Functor.uncurry.obj (whiskeringLeft _ _ _)).mapIso
+        ((InputIdentityProjection.nodes Z z.1).2.prod (lowerLaurentNodes f g z.2).2)⟩
+  have hd : InputCompositionCarrierBottom.productNodes f g
+      (Quillen.SimplexGrid.index 4 2 (j, i)) = Q (j, i) :=
+    congrArg Q (Quillen.SimplexGrid.decode_index 4 2 (j, i))
+  have hh := congrArg (fun N ↦ CommonReferenceProduct.reanchor
+    (InputCompositionTopPieces.middleAnchor f g).symm
+      (CommonReferenceProduct.reanchor (InputCompositionCarrierBottom.sourceIso f g) N)) hd
+  refine Eq.trans ?_ hh.symm
+  apply Sigma.ext
+  · rfl
+  apply heq_of_eq
+  simp only [CommonReferenceProduct.reanchor, CommonReferenceProduct.node,
+    Iso.refl_trans, Iso.trans_assoc]
+  rfl
+
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

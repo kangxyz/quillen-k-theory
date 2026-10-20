@@ -1,0 +1,63 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionLaurentSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputIdentitySeedUnitSeams
+/-!
+# Separate ordinary and unit-shifted Laurent composition faces
+
+The chosen unit surface uses different full reference paths before and after the unit.
+Both complete Laurent rectangles have the same original native evaluation, but their
+scalar points are not identified. Their direct boundaries recover the exact chosen
+unit parameter, including its inverse-first binary movement word.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitLaurent
+open CommonReferenceNerve InputIdentitySeedCarrier InputIdentitySeedUnitNodes
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+/-- The entire ordinary Laurent rectangle with its original common reference. -/
+abbrev lowerSurface := InputNullCompositionLaurentCarrier.surface f g
+
+/-- The entire upper rectangle uses the actual forward unit on every full reference. -/
+def upperSurface :=
+  (mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))).comp (lowerSurface f g)
+
+/-- Both native rectangle clocks are unchanged by the actual unit reanchoring. -/
+theorem upper_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily (laurentRef (f ≫ g)) n
+      (upperSurface f g (r, s)) x =
+      (InputCompositionTransformations.movingSquare
+        laurentProjection f g).level n
+          (r, (s, x)) :=
+  (InputIdentitySeedUnitSeams.shifted_native (f ≫ g) n
+    (lowerSurface f g (r, s)) x).trans
+      (InputNullCompositionLaurentCarrier.surface_native f g n r s x)
+
+/-- The ordinary direct boundary is literally the chosen lower five-node word. -/
+theorem lower_direct (s : I) : lowerSurface f g (0, s) =
+    parameter (source (f ≫ g)) (nodes (f ≫ g)) ((C0.symm.trans D0) s) :=
+  (InputNullCompositionLaurentCarrier.surface_zero f g s).trans
+    (InputIdentitySeedUnitSeams.outer_parameter (f ≫ g) s)
+
+/-- The shifted direct boundary is literally the separate chosen upper five-node word. -/
+theorem upper_direct (s : I) : upperSurface f g (0, s) =
+    parameter (source (f ≫ g)) (nodes (f ≫ g)) ((C1.symm.trans D1) s) := by
+  change mapParameter (BassH0Merge.anchorNode (commonUnit (f ≫ g)))
+    (lowerSurface f g (0, s)) = _
+  rw [InputNullCompositionLaurentCarrier.surface_zero]
+  exact InputIdentitySeedUnitSeams.shifted_outer_parameter (f ≫ g) s
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionUnitLaurent

@@ -1,0 +1,453 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedOrdinarySheet
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionPolynomialCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionNullPasting
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionH1TopRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalColumns
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameter
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveReanchorFamily
+
+/-! Actual positive-chart-then-cylinder transport of the complete ordinary seed carrier.
+No strict carrier-map substitution, native injectivity, or supplied filler is used. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor AlgebraicGeometry Convexity
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+open Quillen.PerfectComplexes.BassReferenceMerge Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.SeedSurfaceTransport
+open CommonReferenceNerve CommonReferenceProduct InputCompositionTopPieces
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => InputIdentitySeedCarrier.polyRef (f ≫ g)
+local notation "G" => InputIdentitySeedCarrier.laurentRef (f ≫ g)
+local notation "J" => InputIdentitySeedCarrier.chart (X := X)
+local notation "ε" => InputIdentitySeedCarrier.ordinary (f ≫ g)
+local notation "ε'" => InputIdentitySeedCarrier.shifted (f ≫ g)
+local notation "Fg" => InputIdentitySeedCarrier.polyRef g
+local notation "Gg" => InputIdentitySeedCarrier.laurentRef g
+local notation "Jg" => InputIdentitySeedCarrier.chart (X := Y)
+local notation "εg" => InputIdentitySeedCarrier.ordinary g
+
+/-- The target polynomial reference follows the actual first row of the moving square. -/
+def polynomialAnchor : (F).functor ≅
+    (Fg ≫ normalizedMap (polynomial.map f)).functor :=
+  (InputCompositionH0TopRows.outerIso f g).symm ≪≫
+    InputCompositionH1TopRows.firstBaseAnchor f g
+
+/-- The full polynomial node transported to the composite reference. -/
+def polynomialNode (N : Node Fg) : Node F :=
+  postReferenceNode F (normalizedMap (polynomial.map f)) (polynomialAnchor f g) N
+
+/-- The polynomial nerve map induced by the full reference transport. -/
+def polynomialParameter : C(|CutOpenCarrier.parameterSSet Fg|, |CutOpenCarrier.parameterSSet F|) :=
+  mapParameter (polynomialNode f g)
+
+/-- The original five chart nodes act on every polynomial nerve node, not just endpoints. -/
+def chartNode (N : Node Fg) (i : Fin 5) : Node G :=
+  CommonReferenceProduct.node G Fg (InputCompositionTerminalProducts.chartSource f plus)
+    (InputCompositionTerminalProducts.sourceIso f g plus plus_projection) N
+    (InputCompositionTerminalProducts.chartNodes f plus i)
+
+theorem chartNode_column (N : Node Fg) (i : Fin 5) : chartNode f g N i =
+    postReferenceNode G (InputCompositionTerminalProducts.chartNodes f plus i).1
+      (InputCompositionTerminalProducts.sourceIso f g plus plus_projection ≪≫
+        isoWhiskerLeft (Fg).functor
+          (InputCompositionTerminalProducts.chartNodes f plus i).2) N := by
+  apply congrArg (fun e ↦
+    (⟨N.1 ≫ (InputCompositionTerminalProducts.chartNodes f plus i).1, e⟩ : Node G))
+  exact product_column_reference_iso N.2
+    (InputCompositionTerminalProducts.chartNodes f plus i).2
+    (InputCompositionTerminalProducts.sourceIso f g plus plus_projection)
+
+/-- At chart time zero the whole arbitrary polynomial node is the postcomposed attachment. -/
+theorem chartNode_zero (N : Node Fg) :
+    chartNode f g N 2 = InputCompositionTerminalAttach.postNode f g
+      (attachPostcompNode Fg Jg Gg εg N) := by
+  rw [chartNode_column]
+  change postReferenceNode G (InputCompositionTerminalColumns.columnPostmap f plus)
+      (InputCompositionTerminalColumns.productAnchor f g plus plus_projection) N = _
+  rw [← InputCompositionTerminalColumns.column_reference]
+  exact (post_post_node G (InputCompositionTerminalAttach.arrow (plus.app Y))
+    (InputCompositionTerminalAttach.arrow (laurent.map f)) Fg εg
+    (InputCompositionTerminalAttach.postAnchor f g) N).symm
+
+/-- One already proved complete first-row node cancels its actual reference isomorphism. -/
+theorem first_reference :
+    InputCompositionH1TopRows.movingFirstAnchor f g plus plus_projection =
+      InputCompositionH1TopRows.productAnchor f g plus plus_projection := by
+  have h := (InputCompositionH1TopRows.moving_first f g plus plus_projection 0).symm.trans
+    ((InputCompositionH1TopRows.plus_first_nodes f g 0).trans
+      (InputCompositionH1TopRows.product_column f g plus plus_projection 0))
+  have hs := eq_of_heq (Sigma.mk.inj h).2
+  change InputCompositionH1TopRows.movingFirstAnchor f g plus plus_projection ≪≫
+      isoWhiskerRight (InputCompositionTerminalProducts.polynomialNodes g 0).2
+        (InputCompositionH1TopRows.firstPostmap f plus).functor =
+    InputCompositionH1TopRows.productAnchor f g plus plus_projection ≪≫
+      isoWhiskerRight (InputCompositionTerminalProducts.polynomialNodes g 0).2
+        (InputCompositionH1TopRows.firstPostmap f plus).functor at hs
+  have hc := congrArg (fun e ↦ e ≪≫
+    (isoWhiskerRight (InputCompositionTerminalProducts.polynomialNodes g 0).2
+      (InputCompositionH1TopRows.firstPostmap f plus).functor).symm) hs
+  simpa only [Iso.trans_assoc, Iso.self_symm_id, Iso.trans_refl] using hc
+
+/-- The last chart reference is exactly the ordinary attachment of the polynomial postmap. -/
+theorem polynomial_attachment_reference :
+    ε ≪≫ isoWhiskerRight (polynomialAnchor f g) (J).functor =
+      InputCompositionH1TopRows.productAnchor f g plus plus_projection := by
+  unfold polynomialAnchor
+  calc
+    _ = (ε ≪≫ isoWhiskerRight (InputCompositionH0TopRows.outerIso f g).symm
+        (chartMap (X := X) plus).functor) ≪≫
+      isoWhiskerRight (InputCompositionH1TopRows.firstBaseAnchor f g)
+        (chartMap (X := X) plus).functor := by
+          simp only [isoWhiskerRight_trans, Iso.trans_assoc]
+          rfl
+    _ = InputCompositionH1TopRows.movingFirstAnchor f g plus plus_projection :=
+      congrArg (fun e ↦ e ≪≫ isoWhiskerRight
+        (InputCompositionH1TopRows.firstBaseAnchor f g) (chartMap (X := X) plus).functor)
+        (InputNullCompositionPolynomialCarrier.polynomial_reference f g)
+    _ = _ := first_reference f g
+
+theorem chartNode_one (N : Node Fg) : chartNode f g N 4 =
+    attachPostcompNode F J G ε (polynomialNode f g N) := by
+  rw [chartNode_column]
+  change postReferenceNode G (normalizedMap (polynomial.map f) ≫ J)
+      (InputCompositionH1TopRows.productAnchor f g plus plus_projection) N = _
+  rw [← polynomial_attachment_reference]
+  exact (post_post_node G (normalizedMap (polynomial.map f)) J Fg
+    (polynomialAnchor f g) ε N).symm
+
+attribute [local semireducible] boundedFlatNormalizedPullback
+
+/-- Entire arbitrary polynomial nerve times the original five-node chart path. -/
+def chartParameter : C(I × |CutOpenCarrier.parameterSSet Fg|,
+    |CutOpenCarrier.parameterSSet G|) :=
+  (FiniteParameter.parameter Fg G (chartNode f g)).comp
+    ⟨fun z ↦ (z.2, NativeSquareFiveSimplex.parameter z.1), by fun_prop⟩
+
+theorem chartParameter_zero (y : |CutOpenCarrier.parameterSSet Fg|) :
+    chartParameter f g (0, y) = mapParameter (InputCompositionTerminalAttach.postNode f g)
+      (mapParameter (attachPostcompNode Fg Jg Gg εg) y) := by
+  change FiniteParameter.parameter Fg G (chartNode f g)
+    (y, NativeSquareFiveSimplex.parameter 0) = _
+  rw [Path.source, FiniteParameter.parameter_vertex]
+  obtain ⟨m, N, z, rfl⟩ := exists_parameter Fg y
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter G ns z) (funext fun i ↦ chartNode_zero f g (N i))
+
+theorem chartParameter_one (y : |CutOpenCarrier.parameterSSet Fg|) :
+    chartParameter f g (1, y) = mapParameter (attachPostcompNode F J G ε)
+      (polynomialParameter f g y) := by
+  change FiniteParameter.parameter Fg G (chartNode f g)
+    (y, NativeSquareFiveSimplex.parameter 1) = _
+  rw [Path.target, FiniteParameter.parameter_vertex]
+  obtain ⟨m, N, z, rfl⟩ := exists_parameter Fg y
+  change mapParameter _ (parameter _ _ _) = mapParameter _ (mapParameter _ (parameter _ _ _))
+  rw [mapParameter_parameter, mapParameter_parameter, mapParameter_parameter]
+  exact congrArg (fun ns ↦ parameter G ns z) (funext fun i ↦ chartNode_one f g (N i))
+
+/-- The Laurent map induced by the prescribed terminal postcomposition node. -/
+def laurentMap : C(|CutOpenCarrier.parameterSSet Gg|, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  (CutOpenCarrier.laurentInclusion F J G ε ε').comp
+    (mapParameter (InputCompositionTerminalAttach.postNode f g))
+
+/-- The common boundary between the chart stage and the final cone cylinder. -/
+def middle : C(|CutOpenCarrier.parameterSSet Fg|, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  (CutOpenCarrier.laurentInclusion F J G ε ε').comp
+    ((mapParameter (attachPostcompNode F J G ε)).comp (polynomialParameter f g))
+
+/-- The constant map to the ordinary tip of the composite carrier. -/
+def tipMap : C(|CutOpenCarrier.tipSSet.{u + 1}|, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  ContinuousMap.const _ (CutOpenCarrier.tipMinus F J G ε ε')
+
+/-- First half: the original positive chart homotopy, without flattening its five-node path. -/
+def chartHomotopy : ((laurentMap f g).comp
+    (SSet.toTop.map (CutOpenCarrier.attaching Fg Jg Gg εg)).hom).Homotopy (middle f g) where
+  toContinuousMap := (CutOpenCarrier.laurentInclusion F J G ε ε').comp (chartParameter f g)
+  map_zero_left y := congrArg (CutOpenCarrier.laurentInclusion F J G ε ε')
+    (chartParameter_zero f g y)
+  map_one_left y := congrArg (CutOpenCarrier.laurentInclusion F J G ε ε')
+    (chartParameter_one f g y)
+
+/-- Second half: the actual final cylinder, retaining its own full height coordinate. -/
+def cylinderHomotopy : (middle f g).Homotopy
+    ((tipMap f g).comp (SSet.toTop.map (CutOpenCarrier.erase Fg)).hom) where
+  toContinuousMap := ⟨fun z ↦ CutOpenCarrier.cylinderMinus F J G ε ε'
+    (polynomialParameter f g z.2, z.1), by fun_prop⟩
+  map_zero_left y := CutOpenCarrier.cylinderMinus_zero F J G ε ε' _
+  map_one_left y := CutOpenCarrier.cylinderMinus_one F J G ε ε' _
+
+/-- This literal concatenation is the original cone-map half split. -/
+def cylinderTrack := (chartHomotopy f g).trans (cylinderHomotopy f g)
+
+/-- Descent acts on the whole ordinary carrier, not merely its two endpoints or seed vertices. -/
+def transport : C(SeedOrdinarySheet.Sheet g, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  DoubleCylinder.homotopyDesc
+    (SSet.toTop.map (CutOpenCarrier.attaching Fg Jg Gg εg))
+    (SSet.toTop.map (CutOpenCarrier.erase Fg))
+    (CutOpenCarrier.first_isPushout Fg Jg Gg εg)
+    (laurentMap f g) (tipMap f g) (cylinderTrack f g)
+
+theorem transport_cylinder (y : |CutOpenCarrier.parameterSSet Fg|) (s : I) :
+    transport f g (SeedOrdinarySheet.cylinder g (y, s)) = cylinderTrack f g (s, y) :=
+  DoubleCylinder.homotopyDesc_apply_cylinder _ _ _ _ _ _ s y
+
+theorem transport_laurent (y : |CutOpenCarrier.parameterSSet Gg|) :
+    transport f g (SeedOrdinarySheet.laurent g y) = laurentMap f g y := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.first_isPushout Fg Jg Gg εg).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack f g))
+      (DoubleCylinder.homotopyEndMap (laurentMap f g) (tipMap f g))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack f g))) (Sum.inl y)
+  exact (congrArg (transport f g)
+    (FourEdgeTree.SetDescent.eval_realized_left _ _ y)).trans h
+
+theorem transport_tip : transport f g (SeedOrdinarySheet.tip g) =
+    CutOpenCarrier.tipMinus F J G ε ε' := by
+  have h := ConcreteCategory.congr_hom
+    ((CutOpenCarrier.first_isPushout Fg Jg Gg εg).inr_desc
+      (DoubleCylinder.homotopyCylinderMap _ _ _ _ (cylinderTrack f g))
+      (DoubleCylinder.homotopyEndMap (laurentMap f g) (tipMap f g))
+      (DoubleCylinder.homotopyDescent_square _ _ _ _ (cylinderTrack f g)))
+        (Sum.inr (default : |CutOpenCarrier.tipSSet.{u + 1}|))
+  exact (congrArg (transport f g)
+    (FourEdgeTree.SetDescent.eval_realized_right _ _ _)).trans h
+
+/-- The full original comparison is transported with both original clocks unchanged. -/
+def surface : C(I × I, InputIdentitySeedCarrier.Carrier (f ≫ g)) :=
+  (transport f g).comp (SeedOrdinarySheet.pastedNull g).toContinuousMap
+
+/-- On the entire original polynomial movement the chart is the maintained terminal product face.
+This is a scalar carrier identity, not merely equality after native evaluation. -/
+theorem chartParameter_movement (r s : I) :
+    chartParameter f g (s, InputIdentitySeedCarrier.movement g r) =
+      InputCompositionTerminalProducts.face f g plus plus_projection (s, r) := by
+  change FiniteParameter.parameter Fg G (chartNode f g)
+    (parameter Fg (InputIdentitySeedCarrier.polynomialNodes g)
+      (NativeSquareFiveSimplex.parameter r), NativeSquareFiveSimplex.parameter s) = _
+  rw [FiniteParameter.parameter_characteristic]
+  rfl
+
+/-- Typed original old-positive path under the concrete transport. -/
+abbrev oldPositive := (SeedOrdinarySheet.oldPositive g).map (transport f g).continuous
+/-- Typed original positive movement; its original clock is untouched. -/
+abbrev positiveMovement := (SeedOrdinarySheet.positiveMovement g).map (transport f g).continuous
+/-- Typed complete polynomial movement under the transport. -/
+abbrev polynomialMovement := (SeedOrdinarySheet.polynomialMovement g).map (transport f g).continuous
+/-- Typed entire original Laurent movement, not an endpoint replacement. -/
+abbrev laurentMovement := (SeedOrdinarySheet.laurentMovement g).map (transport f g).continuous
+/-- Typed original new-positive path. -/
+abbrev newPositive := (SeedOrdinarySheet.newPositive g).map (transport f g).continuous
+/-- The original old cone path includes the actual inserted chart stage. -/
+abbrev oldCone := (SeedOrdinarySheet.oldCone g).map (transport f g).continuous
+/-- The original new cone path has the same concrete inserted chart stage. -/
+abbrev newCone := (SeedOrdinarySheet.newCone g).map (transport f g).continuous
+
+/-- The original source null word with its prescribed association. -/
+abbrev oldNull := (oldPositive f g).trans ((positiveMovement f g).trans (oldCone f g))
+/-- The final positive and cone word with its prescribed association. -/
+abbrev newNull := (newPositive f g).trans (newCone f g)
+
+/-- The complete typed comparison retains the literal original source and target associations. -/
+def comparison : (oldNull f g).Homotopy ((laurentMovement f g).trans (newNull f g)) :=
+  ((SeedOrdinarySheet.pastedNull g).map (transport f g)).cast
+    (by
+      exact ((SeedOrdinarySheet.oldPositive g).map_trans
+        ((SeedOrdinarySheet.positiveMovement g).trans (SeedOrdinarySheet.oldCone g))
+        (transport f g).continuous).trans
+        (congrArg (fun p ↦ (oldPositive f g).trans p)
+          ((SeedOrdinarySheet.positiveMovement g).map_trans (SeedOrdinarySheet.oldCone g)
+            (transport f g).continuous)))
+    (by
+      exact ((SeedOrdinarySheet.laurentMovement g).map_trans
+        ((SeedOrdinarySheet.newPositive g).trans (SeedOrdinarySheet.newCone g))
+        (transport f g).continuous).trans
+        (congrArg (fun p ↦ (laurentMovement f g).trans p)
+          ((SeedOrdinarySheet.newPositive g).map_trans (SeedOrdinarySheet.newCone g)
+            (transport f g).continuous)))
+
+/-- The typed comparison is precisely the previously exposed entire continuous surface. -/
+theorem comparison_apply (r s : I) : comparison f g (r, s) = surface f g (r, s) := rfl
+
+theorem comparison_source (s : I) : surface f g (0, s) = oldNull f g s :=
+  (comparison f g).map_zero_left s
+
+theorem comparison_target (s : I) : surface f g (1, s) =
+    ((laurentMovement f g).trans (newNull f g)) s :=
+  (comparison f g).map_one_left s
+
+/-- Both literal cone paths expose the unchanged original two-half cylinder word. -/
+theorem oldCone_apply (s : I) : oldCone f g s =
+    cylinderTrack f g (s, InputIdentitySeedCarrier.movement g 0) :=
+  transport_cylinder f g _ s
+
+theorem newCone_apply (s : I) : newCone f g s =
+    cylinderTrack f g (s, InputIdentitySeedCarrier.movement g 1) :=
+  transport_cylinder f g _ s
+
+/-- The arbitrary whole-nerve chart family is the unchanged original positive square. -/
+theorem chartParameter_native (n : ℕ) (s : I)
+    (y : |CutOpenCarrier.parameterSSet Fg|)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily G n (chartParameter f g (s, y)) x =
+      (plusSquareHomotopy f).level n (s, pointwisePrespectrumFamily Fg n y x) := by
+  obtain ⟨m, N, z, rfl⟩ := exists_parameter Fg y
+  change pointwisePrespectrumFamily G n
+    (FiniteParameter.parameter Fg G (chartNode f g)
+      (parameter Fg N z, NativeSquareFiveSimplex.parameter s)) x = _
+  rw [FiniteParameter.parameter_characteristic, pointwisePrespectrumFamily_parameter,
+    pointwisePrespectrumFamily_parameter]
+  let P : Fin (Quillen.SimplexGrid.dimension m 4 + 1) →
+      Node (Fg ≫ InputCompositionTerminalProducts.chartSource f plus) :=
+    fun i ↦ ⟨CommonReferenceProduct.vertices (fun j ↦ (N j).1)
+      (fun j ↦ (InputCompositionTerminalProducts.chartNodes f plus j).1) i,
+      CommonReferenceProduct.references Fg (fun j ↦ (N j).1) (fun j ↦ (N j).2)
+        (InputCompositionTerminalProducts.chartSource f plus)
+        (fun j ↦ (InputCompositionTerminalProducts.chartNodes f plus j).1)
+        (fun j ↦ (InputCompositionTerminalProducts.chartNodes f plus j).2) i⟩
+  change prespectrumFamily G (ModelSimplex.reanchorNodes
+    (InputCompositionTerminalProducts.sourceIso f g plus plus_projection) P) n _ = _
+  rw [prespectrumFamily_reanchor, prespectrumFamily_eq]
+  refine (CommonReferenceProduct.prespectrum_comp Fg
+    (fun j ↦ (N j).1) (fun j ↦ (N j).2)
+    (InputCompositionTerminalProducts.chartSource f plus)
+    (fun j ↦ (InputCompositionTerminalProducts.chartNodes f plus j).1)
+    (fun j ↦ (InputCompositionTerminalProducts.chartNodes f plus j).2)
+    n x z (NativeSquareFiveSimplex.parameter s)).trans ?_
+  rw [prespectrumFamily_eq]
+  exact NativeSquareFiveSimplex.native (laurent.map f) (plus.app Y)
+    (plus.app X) (polynomial.map f) (plus.naturality f) n s _
+
+theorem polynomial_native (n : ℕ) (y : |CutOpenCarrier.parameterSSet Fg|)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    pointwisePrespectrumFamily F n (polynomialParameter f g y) x =
+      (boundedFlatPerfectPrespectrumMap (polynomial.map f)).map n
+        (pointwisePrespectrumFamily Fg n y x) :=
+  pointwisePrespectrumFamily_attachPostcomp Fg (normalizedMap (polynomial.map f)) F
+    (polynomialAnchor f g) n y x
+
+/-- No cylinder clock is replaced: both sides have the same original half-time test. -/
+theorem cylinderTrack_native (n : ℕ) (s : I)
+    (y : |CutOpenCarrier.parameterSSet Fg|)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (cylinderTrack f g (s, y)) x =
+      (InputIdentityPositive.coneMap f).map n
+        (ReducedMappingCone.cylinder _ _ ((InputIdentityPositive.chart Y).map n)
+          (s, pointwisePrespectrumFamily Fg n y x)) := by
+  change CutOpenCarrier.nativeEval F J G ε ε' n
+    (((chartHomotopy f g).trans (cylinderHomotopy f g)) (s, y)) x =
+      ((((plusSquareHomotopy f).postcomp
+        (mappingConeInclusion (InputIdentityPositive.chart X))).levelHomotopy n).trans
+        ((Homotopy.precomp (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+          (mappingConeHomotopy (InputIdentityPositive.chart X))).levelHomotopy n))
+        (s, pointwisePrespectrumFamily Fg n y x)
+  rw [ContinuousMap.Homotopy.trans_apply, ContinuousMap.HomotopyRel.trans_apply]
+  split_ifs
+  · change CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.laurentInclusion F J G ε ε' (chartParameter f g (_, y))) x = _
+    rw [CutOpenCarrier.nativeEval_laurentInclusion, chartParameter_native]
+    rfl
+  · change CutOpenCarrier.nativeEval F J G ε ε' n
+      (CutOpenCarrier.cylinderMinus F J G ε ε' (polynomialParameter f g y, _)) x = _
+    rw [CutOpenCarrier.nativeEval_cylinderMinus, polynomial_native]
+    rfl
+
+/-- Native recovery on the Laurent summand retains the actual postcomposition map. -/
+theorem laurent_native (n : ℕ) (y : |CutOpenCarrier.parameterSSet Gg|)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (laurentMap f g y) x =
+      (InputIdentityPositive.coneMap f).map n
+        (CutOpenCarrier.nativeEval Fg Jg Gg εg (InputIdentitySeedCarrier.shifted g) n
+          (SeedOrdinarySheet.inclusion g (SeedOrdinarySheet.laurent g y)) x) := by
+  change CutOpenCarrier.nativeEval F J G ε ε' n
+    (CutOpenCarrier.laurentInclusion F J G ε ε'
+      (mapParameter (InputCompositionTerminalAttach.postNode f g) y)) x = _
+  rw [CutOpenCarrier.nativeEval_laurentInclusion,
+    SeedOrdinarySheet.inclusion_laurent, CutOpenCarrier.nativeEval_laurentInclusion]
+  have hp := pointwisePrespectrumFamily_attachPostcomp Gg
+    (InputCompositionTerminalAttach.arrow (laurent.map f))
+    G (InputCompositionTerminalAttach.postAnchor f g) n y x
+  refine (congrArg ((mappingConeInclusion (InputIdentityPositive.chart X)).map n) hp).trans ?_
+  exact (congrArg (fun k ↦ k.map n (pointwisePrespectrumFamily Gg n y x))
+    (mappingConeSquareMap_inclusion (InputIdentityPositive.chart Y)
+      (InputIdentityPositive.chart X) (boundedFlatPerfectPrespectrumMap (polynomial.map f))
+      (boundedFlatPerfectPrespectrumMap (laurent.map f)) (plusSquareHomotopy f))).symm
+
+/-- All points of the actual first pushout recover the genuine positive cone map. -/
+theorem transport_native (n : ℕ) (z : SeedOrdinarySheet.Sheet g)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    CutOpenCarrier.nativeEval F J G ε ε' n (transport f g z) x =
+      (InputIdentityPositive.coneMap f).map n
+        (CutOpenCarrier.nativeEval Fg Jg Gg εg (InputIdentitySeedCarrier.shifted g) n
+          (SeedOrdinarySheet.inclusion g z) x) := by
+  rcases Types.eq_or_eq_of_isPushout
+    ((CutOpenCarrier.first_isPushout Fg Jg Gg εg).map (forget TopCat)) z with
+      ⟨⟨y, t⟩, hz⟩ | ⟨y | y, hz⟩
+  · change DoubleCylinder.realizedCylinder (CutOpenCarrier.attaching Fg Jg Gg εg)
+      (CutOpenCarrier.erase Fg) (y, t) = z at hz
+    rw [← hz]
+    change CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (SeedOrdinarySheet.cylinder g (y, t.down))) x = _
+    rw [transport_cylinder]
+    change CutOpenCarrier.nativeEval F J G ε ε' n (cylinderTrack f g (t.down, y)) x =
+      (InputIdentityPositive.coneMap f).map n
+        (CutOpenCarrier.nativeEval Fg Jg Gg εg (InputIdentitySeedCarrier.shifted g) n
+          (CutOpenCarrier.cylinderMinus Fg Jg Gg εg (InputIdentitySeedCarrier.shifted g)
+            (y, t.down)) x)
+    rw [CutOpenCarrier.nativeEval_cylinderMinus]
+    exact cylinderTrack_native f g n t.down y x
+  · change DoubleCylinder.realizedEnds (CutOpenCarrier.attaching Fg Jg Gg εg)
+      (CutOpenCarrier.erase Fg) (Sum.inl y) = z at hz
+    rw [← hz, ← FourEdgeTree.SetDescent.eval_realized_left]
+    change CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (SeedOrdinarySheet.laurent g y)) x = _
+    rw [transport_laurent]
+    exact laurent_native f g n y x
+  · change DoubleCylinder.realizedEnds (CutOpenCarrier.attaching Fg Jg Gg εg)
+      (CutOpenCarrier.erase Fg) (Sum.inr y) = z at hz
+    rw [← hz, ← FourEdgeTree.SetDescent.eval_realized_right]
+    have hy : y = (default : |CutOpenCarrier.tipSSet.{u + 1}|) := Subsingleton.elim _ _
+    rw [hy]
+    change CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (SeedOrdinarySheet.tip g)) x = _
+    rw [transport_tip]
+    change CutOpenCarrier.nativeEval F J G ε ε' n (CutOpenCarrier.tipMinus F J G ε ε') x =
+      (InputIdentityPositive.coneMap f).map n
+        (CutOpenCarrier.nativeEval Fg Jg Gg εg (InputIdentitySeedCarrier.shifted g) n
+          (CutOpenCarrier.tipMinus Fg Jg Gg εg (InputIdentitySeedCarrier.shifted g)) x)
+    rw [CutOpenCarrier.nativeEval_tipMinus, CutOpenCarrier.nativeEval_tipMinus]
+    exact ((InputIdentityPositive.coneMap f).map_point n).symm
+
+/-- Exact recovery of the prescribed firstComparison at every native point and both clocks. -/
+theorem surface_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval F J G ε ε' n (surface f g (r, s)) x) =
+      (InputCompositionNull.firstComparison f g).level n (r, (s, x)) := by
+  change (InputIdentityPositive.inclusion X).map n
+    (CutOpenCarrier.nativeEval F J G ε ε' n
+      (transport f g (SeedOrdinarySheet.pastedNull g (r, s))) x) = _
+  rw [transport_native]
+  have hf := congrArg (fun k ↦ k.map n
+    (CutOpenCarrier.nativeEval Fg Jg Gg εg (InputIdentitySeedCarrier.shifted g) n
+      (SeedOrdinarySheet.inclusion g (SeedOrdinarySheet.pastedNull g (r, s))) x))
+    (InputIdentityPositive.coneMap_factor f)
+  change (GlobalRawBass.coneMap f).map n
+    ((InputIdentityPositive.inclusion Y).map n _) =
+      (InputIdentityPositive.inclusion X).map n ((InputIdentityPositive.coneMap f).map n _) at hf
+  rw [← hf, SeedOrdinarySheet.pastedNull_whole]
+  rfl
+
+end Quillen.PerfectComplexes.GlobalRawBass.SeedSurfaceTransport

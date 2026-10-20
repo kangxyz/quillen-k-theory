@@ -1,0 +1,157 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassSeedFullPostTransportNative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionPrecompOrdinary
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionShiftedJoins
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionUnitMiddleRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputSeedCompositionBoundary
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputNullCompositionCompositeCarrier
+/-! Whole first and second original seed surfaces with their complete scalar middle word. -/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionComposite
+open CommonReferenceNerve InputIdentitySeedCarrier Quillen.ScalarRectangle Quillen.NativePathCells
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+local notation "F" => polyRef (f ≫ g)
+local notation "G" => laurentRef (f ≫ g)
+local notation "J" => chart (X := X)
+local notation "ε" => ordinary (f ≫ g)
+local notation "ε'" => shifted (f ≫ g)
+
+/-- The ordinary middle null is equal as a full scalar word. -/
+theorem middle_ordinary (s : I) :
+    SeedFullPostTransport.transport f g (InputIdentitySeedNull.newNull g false s) =
+      InputSeedCompositionPrecomp.transport f g (InputIdentitySeedNull.oldNull f false s) := by
+  have h1 : SeedFullPostTransport.transport f g (InputIdentitySeedNull.newNull g false s) =
+      SeedSurfaceTransport.newNull f g s :=
+    Path.Evaluation.path_trans (SeedFullPostTransport.transport f g) _ _ _ _
+      (fun t ↦ SeedFullPostTransport.transport_first f g (SeedOrdinarySheet.newPositive g t))
+      (fun t ↦ SeedFullPostTransport.transport_first f g (SeedOrdinarySheet.newCone g t)) s
+  have h2 : InputSeedCompositionPrecomp.transport f g (InputIdentitySeedNull.oldNull f false s) =
+      InputNullCompositionPrecomp.oldNull f g s :=
+    Path.Evaluation.path_trans (InputSeedCompositionPrecomp.transport f g) _ _ _ _
+      (fun t ↦ InputSeedCompositionPrecomp.transport_ordinary f g
+        (SeedOrdinarySheet.oldPositive f t))
+      (fun t ↦ Path.Evaluation.path_trans (InputSeedCompositionPrecomp.transport f g) _ _ _ _
+        (fun v ↦ InputSeedCompositionPrecomp.transport_ordinary f g
+          (SeedOrdinarySheet.positiveMovement f v))
+        (fun v ↦ InputSeedCompositionPrecomp.transport_ordinary f g
+          (SeedOrdinarySheet.oldCone f v)) t) s
+  exact h1.trans ((InputNullCompositionCompositeCarrier.middle_word f g s).trans h2.symm)
+
+/-- The entire middle unit retains its original two full reference nodes. -/
+theorem middle_unit (s : I) :
+    SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.newUnit g s) =
+      InputSeedCompositionPrecomp.transport f g (InputIdentitySeedConjugation.oldUnit f s) := by
+  change SeedFullPostTransport.transport f g
+    (CutOpenCarrier.laurentInclusion (polyRef g) (chart (X := Y)) (laurentRef g)
+      (ordinary g) (shifted g)
+      (parameter (laurentRef g) (InputIdentitySeedUnitNodes.nodes g)
+          (InputIdentitySeedUnitNodes.W s))) =
+    InputSeedCompositionPrecomp.transport f g
+      (CutOpenCarrier.laurentInclusion (polyRef f) J (laurentRef f) (ordinary f) (shifted f)
+        (parameter (laurentRef f) (InputIdentitySeedUnitNodes.nodes f)
+          (InputIdentitySeedUnitNodes.V s)))
+  rw [SeedFullPostTransport.transport_laurent, InputSeedCompositionPrecomp.transport_laurent]
+  have hn : InputNullCompositionPrecomp.laurentNode f g =
+      InputCompositionTerminalAttach.preNode f g :=
+    funext (InputNullCompositionPrecomp.laurent_node f g)
+  rw [hn]
+  exact congrArg (CutOpenCarrier.laurentInclusion F J G ε ε')
+    (InputCompositionUnitMiddleRows.middle_path f g s)
+
+/-- The complete original middle conjugate word agrees, not just its native image. -/
+theorem middle_word (s : I) :
+    SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.targetWord g s) =
+      InputSeedCompositionPrecomp.transport f g (InputIdentitySeedConjugation.sourceWord f s) := by
+  rcases cover s with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [InputIdentitySeedConjugation.targetWord, InputIdentitySeedConjugation.sourceWord,
+      path_lower, path_lower]
+    exact middle_ordinary f g (unitInterval.symm t)
+  · rw [InputIdentitySeedConjugation.targetWord, InputIdentitySeedConjugation.sourceWord,
+      path_upper, path_upper]
+    rcases cover t with ⟨v,rfl⟩ | ⟨v,rfl⟩
+    · rw [path_lower, path_lower]
+      exact middle_unit f g v
+    · rw [path_upper, path_upper]
+      exact InputSeedCompositionShiftedJoins.middle_word f g v
+
+/-- The whole two surface boundary agrees at the original common comparison time. -/
+theorem seam (s : I) : SeedFullPostTransportNative.surface f g (1,s) =
+    InputSeedCompositionPrecomp.surface f g (0,s) := by
+  change SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.comparison g (1,s)) = _
+  rw [InputIdentitySeedConjugation.comparison_target, InputSeedCompositionPrecomp.surface_source]
+  exact middle_word f g s
+
+/-- Both original comparison clocks retain their literal first/second halves. -/
+def surface := concatFirst (SeedFullPostTransportNative.surface f g)
+  (InputSeedCompositionPrecomp.surface f g) (seam f g)
+
+/-- The complete first boundary of the composed scalar seed. -/
+theorem surface_start (s : I) : surface f g (0,s) =
+    SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.sourceWord g s) := by
+  rw [surface, concatFirst_zero]
+  exact congrArg (SeedFullPostTransport.transport f g)
+    (InputIdentitySeedConjugation.comparison_source g s)
+
+/-- The complete final boundary of the composed scalar seed. -/
+theorem surface_finish (s : I) : surface f g (1,s) =
+    InputSeedCompositionPrecomp.transport f g (InputIdentitySeedConjugation.targetWord f s) := by
+  rw [surface, concatFirst_one]
+  exact InputSeedCompositionPrecomp.surface_target f g s
+
+/-- The ordinary tip is fixed along the entire first comparison. -/
+theorem first_zero (r : I) : SeedFullPostTransportNative.surface f g (r,0) =
+    CutOpenCarrier.tipMinus F J G ε ε' := by
+  change SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.comparison g (r,0)) = _
+  rw [InputIdentitySeedConjugation.comparison_zero]
+  change SeedFullPostTransport.transport f g
+    (SeedOrdinarySheet.inclusion g (SeedOrdinarySheet.tip g)) = _
+  rw [SeedFullPostTransport.transport_first, SeedSurfaceTransport.transport_tip]
+
+/-- The shifted tip is fixed along the entire first comparison. -/
+theorem first_one (r : I) : SeedFullPostTransportNative.surface f g (r,1) =
+    CutOpenCarrier.tipPlus F J G ε ε' := by
+  change SeedFullPostTransport.transport f g (InputIdentitySeedConjugation.comparison g (r,1)) = _
+  rw [InputIdentitySeedConjugation.comparison_one]
+  exact SeedFullPostTransport.transport_tipPlus f g
+
+/-- The ordinary tip is fixed along both original comparison halves. -/
+theorem surface_zero (r : I) : surface f g (r,0) = CutOpenCarrier.tipMinus F J G ε ε' := by
+  rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [surface, concatFirst_lower]
+    exact first_zero f g t
+  · rw [surface, concatFirst_upper]
+    exact InputSeedCompositionPrecomp.surface_zero f g t
+
+/-- The shifted tip is fixed along both original comparison halves. -/
+theorem surface_one (r : I) : surface f g (r,1) = CutOpenCarrier.tipPlus F J G ε ε' := by
+  rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [surface, concatFirst_lower]
+    exact first_one f g t
+  · rw [surface, concatFirst_upper]
+    exact InputSeedCompositionPrecomp.surface_one f g t
+
+/-- Both independent comparison and output-loop coordinates recover the original composite seed. -/
+theorem surface_native (n : ℕ) (r s : I)
+    (x : (originalPrespectrum (boundedFlatPerfectWaldhausen Z)).space n) :
+    (InputIdentityPositive.inclusion X).map n
+      (CutOpenCarrier.nativeEval F J G ε ε' n (surface f g (r,s)) x) =
+      Path.toContinuousMap ((InputSeedCompositionBoundary.compositeInput f g).level n (r,x)) s := by
+  rcases cover r with ⟨t,rfl⟩ | ⟨t,rfl⟩
+  · rw [surface, concatFirst_lower, InputSeedCompositionBoundary.composite_lower]
+    exact SeedFullPostTransportNative.surface_native f g n t s x
+  · rw [surface, concatFirst_upper, InputSeedCompositionBoundary.composite_upper]
+    exact InputSeedCompositionPrecomp.surface_native f g n t s x
+
+end Quillen.PerfectComplexes.GlobalRawBass.InputSeedCompositionComposite

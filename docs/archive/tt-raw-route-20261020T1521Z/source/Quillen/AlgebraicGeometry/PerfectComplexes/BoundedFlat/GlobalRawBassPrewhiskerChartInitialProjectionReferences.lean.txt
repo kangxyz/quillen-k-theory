@@ -1,0 +1,58 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartInitialProjectionNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassPrewhiskerChartOverlapProjectionSeam
+/-!
+The genuine polynomial source projection retains the original node-two total.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex
+universe u
+namespace Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker
+open CommonReferenceNerve CommonReferenceProduct
+attribute [local irreducible] boundedFlatNormalizedPullback
+variable {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (c : Z ⟶ W)
+local notation "E" => InputCompositionTopPieces.baseSource f g
+local notation "A" => BassH0Merge.normalizedMap c
+local notation "S" => NativeSquareFiveSimplex.source (polynomial.map c) (projection.app W)
+local notation "P" => InputCompositionPolynomialScalar.polynomialReference f g
+local notation "J" => ProjectionReference.projectionMap X
+local notation "D" => BassH0Merge.normalizedMap (projection.app W)
+local notation "M" => BassH0Merge.normalizedMap (polynomial.map c)
+local notation "δ" => NativeSquareModelNormalization.total (polynomial.map c) (projection.app W)
+
+/-- The genuine polynomial source projection retains the original node-two total. -/
+def initialPolynomialProjectionAnchor : (((A ≫ E) ≫ J)).functor ≅ (D ≫ (M ≫ P)).functor :=
+  initialSourceAnchor D M S δ ((A ≫ E) ≫ J) P (projectionSeamAnchor f g c)
+
+variable (k : laurent ⟶ polynomial)
+  (hk : ∀ V, k.app V ≫ projection.app V = laurentProjection.app V)
+local notation "G" => InputCompositionPolynomialScalar.laurentReference f g k
+local notation "K" => InputCompositionPolynomialScalar.chart (X := X) k
+local notation "L" => ProjectionReference.reference X (A ≫ E)
+local notation "ε" => InputCompositionPolynomialScalar.anchor f g k
+
+/-- The Laurent projection preserves both original chart and source-square anchors. -/
+def initialLaurentProjectionAnchor : (L).functor ≅ (D ≫ (M ≫ G)).functor :=
+  initialSourceAnchor D M S δ L G (projectionLaurentSeamAnchor f g c k hk)
+
+/-- The two actual projection attachments commute before evaluating any native point. -/
+theorem initialProjection_attachment :
+    initialLaurentProjectionAnchor f g c k hk ≪≫
+        CutOpenPrecomp.anchor D (M ≫ P) K (M ≫ G) (CutOpenPrecomp.anchor M P K G ε) =
+      ProjectionReference.chartAnchor X k hk (A ≫ E) ≪≫
+        isoWhiskerRight (initialPolynomialProjectionAnchor f g c) (K).functor :=
+  initialSource_attachment D M S δ ((A ≫ E) ≫ J) L P G K
+    (projectionSeamAnchor f g c) (projectionLaurentSeamAnchor f g c k hk)
+    (ProjectionReference.chartAnchor X k hk (A ≫ E)) ε
+    (projectionSeam_attachment f g c k hk)
+end Quillen.PerfectComplexes.GlobalRawBass.InputCompositionPrewhisker

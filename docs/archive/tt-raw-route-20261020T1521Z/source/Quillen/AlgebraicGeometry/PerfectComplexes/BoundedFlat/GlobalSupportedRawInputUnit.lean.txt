@@ -1,0 +1,110 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawInput
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawUnitTrack
+public import Quillen.Topology.Prespectrum.RelativeHomotopyIntertwining
+
+/-!
+# Original supported forward units across actual input squares
+
+The original forward Laurent scalar is preserved by the actual product pair arrow.
+Its supported scalar tracks intertwine with the entire original split Laurent projection
+square, using the proved geometric and binary-normalization unit comparisons.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
+universe u
+namespace Quillen.PerfectComplexes.GlobalSupportedRawBass
+variable {A B : Scheme.QuasiCompactOpenPairs.{u}} (g : A ⟶ B)
+
+/-- Every actual pair map preserves the original pulled-back forward Laurent coordinate. -/
+theorem laurentUnit_map :
+    Units.map (InputGeometry.laurentMap g).hom.right.appTop.hom.toMonoidHom
+      (GlobalSchemeLaurentTrack.laurentScalar (op B.obj.obj.right)) =
+      GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right) :=
+  GlobalSchemeLaurentTrack.laurentScalar_map g.hom.hom.right.op
+
+namespace InputUnit
+
+/-- Equality of actual pair arrows preserves the entire scalar track at every level. -/
+theorem unit_level_congr {X Y : Scheme.OpenPairs.{u}} {p q : X ⟶ Y}
+    (h : p = q) (r : (Γ(X.obj.right, ⊤))ˣ) (n : ℕ) :
+    (pullbackUnitHomotopy p r).level n = (pullbackUnitHomotopy q r).level n := by
+  cases h
+  rfl
+
+/-- The original source-fiber Laurent projection composition track. -/
+def oldComposition :=
+  compositionHomotopy
+    (InputGeometry.laurentMap g) (Geometry.laurentProjection B)
+
+/-- The original target-fiber track with its genuine pair-arrow-square endpoint transport. -/
+def newComposition :=
+  (compositionHomotopy (Geometry.laurentProjection A)
+    g.hom).cast
+    (congrArg rawMap
+      (InputGeometry.laurentProjection_naturality g)).symm rfl
+
+/-- The common actual pulled-back forward unit on the original composite map. -/
+def commonUnit :=
+  pullbackUnitHomotopy
+    (InputGeometry.laurentMap g ≫ Geometry.laurentProjection B)
+    (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right))
+
+/-- The original old unit loop followed by the actual Laurent pair-arrow map. -/
+def oldUnit :=
+  (unitHomotopy B).postcomp
+    (rawMap (InputGeometry.laurentMap g))
+
+/-- The original target unit loop preceded by the actual base pair-arrow map. -/
+def newUnit :=
+  Homotopy.precomp (rawMap g.hom)
+    (unitHomotopy A)
+
+/-- Exact scalar transport preserves the entire old projection-unit comparison. -/
+def oldComparison :
+    ((oldComposition g).trans (oldUnit g)).RelHomotopy
+      ((commonUnit g).trans (oldComposition g)) := by
+  have J := unitTrackPostcomp
+    (InputGeometry.laurentMap g) (Geometry.laurentProjection B)
+    (GlobalSchemeLaurentTrack.laurentScalar (op B.obj.obj.right))
+  simpa only [oldComposition, oldUnit, commonUnit, unitHomotopy,
+    laurentUnit_map] using J
+
+/-- The new projection-unit comparison keeps the actual scheme-square transport. -/
+def newComparison :
+    ((newComposition g).trans (newUnit g)).RelHomotopy
+      ((commonUnit g).trans (newComposition g)) := by
+  refine (unitTrackPrecomp (Geometry.laurentProjection A) g.hom
+    (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right))).ofLevels _ _ ?_ ?_
+  · intro n
+    apply Homotopy.trans_level_congr <;> rfl
+  · intro n
+    apply Homotopy.trans_level_congr
+    · exact unit_level_congr (InputGeometry.laurentProjection_naturality g)
+        (GlobalSchemeLaurentTrack.laurentScalar (op A.obj.obj.right)) n
+    · rfl
+
+/-- The two specified projection comparisons intertwine the unchanged forward unit loops. -/
+def squarePasting :
+    ((oldUnit g).trans ((oldComposition g).symm.trans (newComposition g))).RelHomotopy
+      (((oldComposition g).symm.trans (newComposition g)).trans (newUnit g)) :=
+  Homotopy.RelHomotopy.intertwine _ _ _ _ _ (oldComparison g) (newComparison g)
+
+end InputUnit
+
+/-- The actual supported forward-unit loops intertwine across the full input Laurent square. -/
+def laurentUnitPasting :
+    ((InputUnit.oldUnit g).trans (splitInput g).T).RelHomotopy
+      ((splitInput g).T.trans (InputUnit.newUnit g)) :=
+  InputUnit.squarePasting g
+
+end Quillen.PerfectComplexes.GlobalSupportedRawBass
