@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: kangxyz/aglib
-          ref: 3a4d549981ced306d89d3ed55418c9e6a25f86c4
+          ref: 0caa3a890c9cbeb7ade5e4f804203b31b5b0b3b1
           path: .cache-tooling
           persist-credentials: false
       - name: Exclude independent tooling checkout from project enrollment
@@ -170,7 +170,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: kangxyz/aglib
-          ref: 3a4d549981ced306d89d3ed55418c9e6a25f86c4
+          ref: 0caa3a890c9cbeb7ade5e4f804203b31b5b0b3b1
           path: .cache-tooling
           persist-credentials: false
       - name: Publish immutable public native cache asset

@@ -158,12 +158,13 @@ def binding(root, task, toolchain, reflection=None, observations=None):
     arguments = list(task['command'])
     if task.get('generated'):
         arguments[task['generated_argument_index']] = '<generated-input>'
-    paths = input_paths(root)
-    raw = [str(root / name) for name in paths if not (root / name).is_dir()]
     native = bool(task.get('check_kind'))
     if native and task.get('check_kind') != 'native-style':
         raw = [str(root / name) for name in POLICY]
         raw += [str(cwd / module_path(name)) for name in task['modules']]
+    else:
+        paths = input_paths(root)
+        raw = [str(root / name) for name in paths if not (root / name).is_dir()]
     runtime = RUNTIME_MODULES if task.get('check_kind') in ('scoped-lint', 'facade-text') else ()
     extra = [str(root / name) for name in DRIVERS] if native else []
     if task.get('check_kind') == 'native-lint':

@@ -63,7 +63,7 @@ checkout explicitly with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. The
 checkout supplies `ci/lean_ci`; it is independent of the mathematical Aglib pin
 in `lakefile.toml`. No ambient sibling checkout or mutable branch supplies tooling.
 The reviewed shared-tooling revision for this adapter and CI is
-`3a4d549981ced306d89d3ed55418c9e6a25f86c4`.
+`0caa3a890c9cbeb7ade5e4f804203b31b5b0b3b1`.
 
 The local entry compares tracked and untracked source bytes with `HEAD`.
 `--base REF` widens that comparison; `--base REF --head REF` selects a committed

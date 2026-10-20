@@ -10,7 +10,7 @@ LEGACY_HEAD = '69e542b48a1e7ba0a0a7648b5238b2a263cd22a6'
 CORE_ENTRYPOINTS = {
     'scripts/check.sh': '7ee991c40b55bb5107b99500588153895ec9e484913123cc506c10c0d3044eb4',
     'scripts/check_run.py': '02fd64f30350514627c0550196c917b884b5cdbd5535fb3f6405208324e296e3',
-    'scripts/ci_adapter.py': '3dbd6f1898679a76e145e3c0390edb3f05e46536ace8ebfc70d3e9c8638bce26',
+    'scripts/ci_adapter.py': '736f982756ab1beb9d99a1eae41df4402df50b10d1d5632a10af5ea7127e47b0',
     'scripts/check_scope.py': 'bd39c54c17e82867c5047c99f546914474907be0c4903c342ad354a3942c5469',
     'scripts/dependency_scope.py': '6f6ac5e0277865bd0918fd4d32992ec108d388e607b98bd826fedeab3a8a3740',
     'scripts/library_sources.py': 'f2bb28db1f9329a66cd3174584cf9e000a61c50466e6747df4f54d3aeafe6e86',
@@ -28,7 +28,7 @@ PROTOCOL = EvidenceProtocol(
     finalize_step='Finalize required check coverage',
     workflows={
         '6450d87a0f68bcb102396e39fbac2c0fcb648d8e4f71533606f71378705b144d': 'legacy',
-        '96f45a81944341f21c17ae001953dd7369f293357f86b654d0a812545116d43c': 'core',
+        'd22c0280491733fc1c9c5f6100efd56d60bc5f10c6128aa7805549824a2445c3': 'core',
     },
     legacy_recipes={'scripts/check.sh': 'b074b4b75bddf912987c0867a2d357b2296b9a9d4c281226061077b2682d1621'},
     legacy_heads=frozenset({LEGACY_HEAD}),
