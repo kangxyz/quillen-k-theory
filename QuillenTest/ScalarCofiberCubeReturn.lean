@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -52,7 +52,7 @@ theorem original_moving_endpoint :
   (perfectOpenScalarFineCubeTerminalWord j r q hq n p).target
 
 /-- The exact returned data identifies the whole inverse inclusion/projection word. -/
-def original_complete_homotopy :
+def originalCompleteHomotopy :
     (((perfectOpenScalarFineCubeReturn j r n p).map
       (perfectOpenScalarCubeChangeWeak j n).continuous).trans
         (perfectOpenScalarFineCubeTerminalWord j r q hq n p)).Homotopy

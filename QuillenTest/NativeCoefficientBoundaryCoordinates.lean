@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -88,7 +88,8 @@ theorem arbitrary_original_cone (R : CommRingCat.{u}) (n : ℕ) (a : PerfectK (S
       nativeTwoSummandKMap (affineBase R) n (a, a⁻¹) :=
   nativeCoefficientConeForget_phi R n a
 
-local instance (X : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK X n) :=
+/-- The perfect K-groups carry the commutative group structure used by these tests. -/
+local instance perfectKCommGroup (X : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK X n) :=
   Additivity.KCommGroup (perfectWaldhausen X) n
 
 /-- The full cone homomorphism uses the original signed diagonal. -/

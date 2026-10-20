@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
@@ -30,8 +30,10 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Consumer
 
 -- Upper-universe global K/G groups and canonical geometric restriction maps.
+/-- The public upper-universe K-group of a scheme. -/
 abbrev GlobalK (X : AlgebraicGeometry.Scheme.{u}) (n : ℕ) : Type (u + 1) :=
   AlgebraicGeometry.Scheme.K X n
+/-- The public upper-universe G-group of a locally Noetherian scheme. -/
 abbrev GlobalG (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
     Type (u + 1) := AlgebraicGeometry.Scheme.G X n
 
@@ -50,6 +52,7 @@ theorem geometric_G_map {U X : AlgebraicGeometry.Scheme.{u}}
   AlgebraicGeometry.Scheme.restrictG_eq_smallKMap j n
 
 -- The separately named lower-universe affine presentation and its proved LES.
+/-- The lower-universe affine G-group of a Noetherian coefficient ring. -/
 abbrev AffineG (R : CommRingCat.{u}) [IsNoetherianRing R] (n : ℕ) :
     Type u := AlgebraicGeometry.Scheme.Affine.G R n
 

@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -137,7 +137,7 @@ theorem original_cofibration_reflection {U X : Scheme.{u}} (j : U ⟶ X) [IsOpen
   inclusion_cof_iff j f
 
 /-- The original restriction arrow survives the full-subcategory corestriction literally. -/
-theorem original_restriction_triangle {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    [Fact (HasDerivedRoofs j)] : complexCorestrict j ⋙ inclusion j = perfectRestrict j := rfl
+theorem original_restriction_triangle {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
+    complexCorestrict j ⋙ inclusion j = perfectRestrict j := rfl
 
 end QuillenTest.OpenDerivedImage

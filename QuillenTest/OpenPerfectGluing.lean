@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -60,14 +60,14 @@ theorem actual_cone_perfect (hUV : U ⊔ V = ⊤)
   locallyPerfect_binary U V α β hUV hA hB
 
 /-- The local derived comparison is induced by the original constructed chain map. -/
-def actual_first_derived_iso [QuasiIso β] :
+def actualFirstDerivedIso [QuasiIso β] :
     (DerivedCategory.Q (C := U.toScheme.Modules)).obj A ≅
       (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj (binary U V α β)) := by
   let := binaryFirst_quasiIso U V α β
   exact asIso ((DerivedCategory.Q (C := U.toScheme.Modules)).map (binaryFirst U V α β))
 
 @[simp] theorem actual_first_derived_iso_hom [QuasiIso β] :
-    (actual_first_derived_iso U V α β).hom =
+    (actualFirstDerivedIso U V α β).hom =
       (DerivedCategory.Q (C := U.toScheme.Modules)).map (binaryFirst U V α β) := rfl
 
 variable (p : A ⟶ (restrict U.ι).obj L) (q : B ⟶ (restrict V.ι).obj L)

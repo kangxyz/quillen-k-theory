@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -27,7 +27,8 @@ local instance (R : CommRingCat.{u}) :
     CompactSpace (affineNativeChart R false ⁻¹ᵁ positiveOpen R).toScheme :=
   overlapOpen_compactSpace R
 
-local instance (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
+/-- The perfect K-groups carry the commutative group structure used by these tests. -/
+local instance perfectKCommGroup (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
   Quillen.Waldhausen.Additivity.KCommGroup (perfectWaldhausen Y) n
 
 /-- The full original composite is the inverse of the actual support-forgotten cone K-map. -/

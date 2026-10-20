@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -84,7 +84,7 @@ theorem original_fine_cone_image (t : unitInterval) (z : Fin (n + 1) → unitInt
   perfectOpenScalarConeThetaFineCubePath_changeWeak j r q hq n p t z
 
 /-- The actual unreversed square gives exactly Z then Theta1 versus Theta0 then canonical. -/
-def original_boundary_word :
+def originalBoundaryWord :
     ((perfectOpenScalarSumNormalizationOriginalPath j r q hq n p).trans
       (perfectOpenScalarSumNormalizationConeThetaPath j r q hq n p)).Homotopy
       ((perfectOpenScalarSumNormalizationZeroThetaPath j r q hq n p).trans
@@ -145,7 +145,7 @@ theorem original_compact_cone_time (t : unitInterval) (z : Fin (n + 1) → unitI
   perfectOpenScalarConeThetaCompactPath_apply j r q hq n p t z
 
 /-- The geometric Theta word is constructed from the original data, with no supplied comparison. -/
-def original_geometric_theta :
+def originalGeometricTheta :
     (perfectOpenScalarFineCubeSumPath j r q hq n p).symm.Homotopy
       ((CompactCoproductEndpoint.thetaOne V NW n
         (perfectOpenScalarConeThetaCompactPath j r q hq n p)).trans
@@ -208,7 +208,7 @@ theorem original_delta_naturality :
     (perfectOpenScalarConeThetaCompactPath j r q hq n p)
 
 /-- The full endpoint comparison needs only the original scalar/unit data and original cube. -/
-def original_constructed_endpoint :
+def originalConstructedEndpoint :
     (perfectOpenScalarNormalizedTerminalNull j r q hq n p).Homotopy
       (((perfectOpenScalarNormalizedFineDelta j r q hq n p).map (F).continuous).trans
         (perfectOpenScalarCanonicalNullPath j r q hq n p)) :=
@@ -234,7 +234,7 @@ theorem original_endpoint_whole_boundary (s t : unitInterval)
   perfectOpenScalarNormalizedEndpointHomotopy_boundary j r q hq n p s t z hz
 
 /-- Degree zero retains the same actual geometric Theta, complete null and both cancellations. -/
-def original_constructed_degree_zero (p0 : GenLoop (Fin 1)
+def originalConstructedDegreeZero (p0 : GenLoop (Fin 1)
     |TheoremA.diagonalSSet (OrdinalSubdivision.δ.op ⋙ bisimplicialSSet V)|
     (subdivisionBasepoint V)) :
     (perfectOpenScalarNormalizedTerminalNull j r q hq 0 p0).Homotopy

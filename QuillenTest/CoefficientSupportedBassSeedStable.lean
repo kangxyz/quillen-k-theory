@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -25,16 +25,14 @@ attribute [local irreducible] boundedFlatCoefficientSupportedModelFunctor
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q) [IsOpenImmersion f.left]
 
 theorem original_supported_seed (a : Under R) (d : ℤ) :
-    (stableHomotopyFunctor d).map ((boundedFlatCoefficientSupportedBassSeed f).app a) =
-      ((boundedFlatCoefficientSupportedLaurentAction f).track.homotopy a).stableOperation d ≫
-        (stableHomotopyFunctor (d + 1)).map
-          (mappingConeInclusion (StrictSquare.comparison
-            (LaurentSeed.square (boundedFlatCoefficientSupportedPrespectrumFunctor f) a))) ≫
-              (parameterStableHomotopyIso
-                (LaurentSeed.cone (boundedFlatCoefficientSupportedPrespectrumFunctor f) a) d).inv :=
+    LaurentSeed.Track.SeedStableFormula
+      (F := boundedFlatCoefficientSupportedPrespectrumFunctor f)
+      (boundedFlatCoefficientSupportedLaurentAction f).track
+      (boundedFlatCoefficientSupportedBassSeed f) a d :=
   boundedFlatCoefficientSupportedBassSeed_stableHomotopy_eq f a d
 
-theorem original_supported_stage (a : Under R) (d : ℤ) (n : ℕ) :
+/-- The original signed stage equation, with its geometric inputs fixed once. -/
+def SupportedSeedStageFormula (a : Under R) (d : ℤ) (n : ℕ) : Prop :=
     stableHomotopyι ((boundedFlatCoefficientSupportedPrespectrumFunctor f).obj a) d n ≫
       (stableHomotopyFunctor d).map ((boundedFlatCoefficientSupportedBassSeed f).app a) ≫
         (parameterStableHomotopyIso
@@ -48,17 +46,17 @@ theorem original_supported_stage (a : Under R) (d : ℤ) (n : ℕ) :
             ((laurentUnderFunctor R).obj a)) (d + 1) (parameterStableOffset d + n) ≫
               (stableHomotopyFunctor (d + 1)).map
                 (mappingConeInclusion (StrictSquare.comparison
-                  (LaurentSeed.square (boundedFlatCoefficientSupportedPrespectrumFunctor f) a))) :=
+                  (LaurentSeed.square (boundedFlatCoefficientSupportedPrespectrumFunctor f) a)))
+
+theorem original_supported_stage (a : Under R) (d : ℤ) (n : ℕ) :
+    SupportedSeedStageFormula f a d n :=
   (boundedFlatCoefficientSupportedLaurentAction f).track.seedMap_stableHomotopy_ι a d n
 
 theorem original_ambient_seed (Q : Over (Spec R)) (a : Under R) (d : ℤ) :
-    (stableHomotopyFunctor d).map ((boundedFlatCoefficientAmbientBassSeed Q).app a) =
-      ((boundedFlatCoefficientAmbientLaurentAction Q).track.homotopy a).stableOperation d ≫
-        (stableHomotopyFunctor (d + 1)).map
-          (mappingConeInclusion (StrictSquare.comparison
-            (LaurentSeed.square (boundedFlatCoefficientAmbientPrespectrumFunctor Q) a))) ≫
-              (parameterStableHomotopyIso
-                (LaurentSeed.cone (boundedFlatCoefficientAmbientPrespectrumFunctor Q) a) d).inv :=
+    LaurentSeed.Track.SeedStableFormula
+      (F := boundedFlatCoefficientAmbientPrespectrumFunctor Q)
+      (boundedFlatCoefficientAmbientLaurentAction Q).track
+      (boundedFlatCoefficientAmbientBassSeed Q) a d :=
   boundedFlatCoefficientAmbientBassSeed_stableHomotopy_eq Q a d
 
 end QuillenTest.CoefficientSupportedBassSeedStable

@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -67,7 +67,8 @@ theorem arbitrary_original_kzero (R : CommRingCat.{u}) (x : PerfectK (twoChartLi
           (tautologicalCoefficientTensorKMap R 0 x))⁻¹ :=
   nativeCoefficientConeForget_apply R 0 x
 
-local instance (R : CommRingCat.{u}) (n : ℕ) :
+/-- The native projective-line K-groups carry their canonical commutative group structure. -/
+local instance nativeLinePerfectKCommGroup (R : CommRingCat.{u}) (n : ℕ) :
     CommGroup (PerfectK (nativeLineFunctor.obj (affineBase R)).obj n) :=
   Quillen.Waldhausen.Additivity.KCommGroup
     (perfectWaldhausen (nativeLineFunctor.obj (affineBase R)).obj) n

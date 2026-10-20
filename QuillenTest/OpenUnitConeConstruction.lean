@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -32,6 +32,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.OpenUnitConeConstruction
+/-- Use the standard derived-category model in these comparison tests. -/
 local instance unitModelDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
 

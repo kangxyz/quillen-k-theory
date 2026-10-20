@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -117,7 +117,7 @@ theorem original_degree_zero
   perfectOpenScalarSequenceFineCubePath_changeWeak j r q hq 0 p₀ t
 
 /-- The actual typed boundary comparison is the input needed by the fine return construction. -/
-def original_typed_boundary :
+def originalTypedBoundary :
     ((perfectOpenScalarFineCubeInclusionPath j r q hq n p).trans
       ((perfectOpenScalarSequenceFineCubePath r n p).map
         (perfectOpenScalarCubeChangeWeak j n).continuous)).Homotopy

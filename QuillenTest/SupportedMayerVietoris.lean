@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
@@ -29,7 +29,9 @@ universe u
 attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.SupportedMayerVietoris
 open Quillen.PerfectComplexes.SupportedMayerVietoris
-local instance (Y : Scheme.{u}) (A : Y.Opens) (n : ℕ) : CommGroup (PerfectSupportedK A.ι n) :=
+/-- The supported K-groups carry the commutative group structure used by these tests. -/
+local instance perfectSupportedKCommGroup (Y : Scheme.{u}) (A : Y.Opens) (n : ℕ) :
+    CommGroup (PerfectSupportedK A.ι n) :=
   Quillen.Waldhausen.Additivity.KCommGroup (perfectSupportedWaldhausen A.ι) n
 variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V]
   (j : V ⟶ X) [IsOpenImmersion j] (T Z : X.Opens)

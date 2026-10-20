@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -79,7 +79,7 @@ theorem derived_map_formula {X Y : Scheme.{u}} (f : X ⟶ Y)
 
 /-- The computed derived pullback of every bounded representative is its actual geometric flat
   model. -/
-def actual_derived_object {X Y : Scheme.{u}} (f : X ⟶ Y)
+def actualDerivedObject {X Y : Scheme.{u}} (f : X ⟶ Y)
     [HasDerivedCategory.{w₁} Y.Modules] [HasDerivedCategory.{w₂} X.Modules]
     (K : _root_.CochainComplex.BoundedAboveComplex Y.Modules) :
     ((derivedPullbackMinus f).obj ((_root_.CochainComplex.boundedAboveQMinus Y.Modules).obj
@@ -97,7 +97,7 @@ theorem derived_identity_natural (X : Scheme.{u}) [HasDerivedCategory.{w} X.Modu
 
 /-- Two successive arbitrary derived pullbacks of a genuinely flat input agree with
 the original termwise pullback along the composite. -/
-def successive_pullbacks_on_flat_input {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+def successivePullbacksOnFlatInput {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
     [HasDerivedCategory.{w₁} Z.Modules] [HasDerivedCategory.{w₂} Y.Modules]
     [HasDerivedCategory.{w₃} X.Modules] (K : _root_.CochainComplex.BoundedAboveComplex Z.Modules)
     (hK : ∀ n, stalkwiseFlat Z (K.obj.X n)) :

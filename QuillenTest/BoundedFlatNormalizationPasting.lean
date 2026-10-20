@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -21,7 +21,7 @@ namespace QuillenTest.BoundedFlatNormalizationPasting
 open Quillen
 
 /-- Postwhisker the original composite-pullback comparison by the actual third pullback. -/
-def geometric_first_factor {X Y Z T : Scheme.{u}}
+def geometricFirstFactor {X Y Z T : Scheme.{u}}
     (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :=
   exactNormalizationLeftPasting (boundedFlatPerfectPullback_exact (g ≫ h))
     ((boundedFlatPerfectPullback_exact h).comp (boundedFlatPerfectPullback_exact g))
@@ -29,7 +29,7 @@ def geometric_first_factor {X Y Z T : Scheme.{u}}
     (fun _ ↦ (boundedFlatPerfectWaldhausen Y).weq_iso _ inferInstance)
 
 /-- Prewhisker the original composite-pullback comparison by the actual third pullback. -/
-def geometric_second_factor {X Y Z T : Scheme.{u}}
+def geometricSecondFactor {X Y Z T : Scheme.{u}}
     (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :=
   exactNormalizationRightPasting (boundedFlatPerfectPullback_exact h)
     (boundedFlatPerfectPullback_exact (f ≫ g))

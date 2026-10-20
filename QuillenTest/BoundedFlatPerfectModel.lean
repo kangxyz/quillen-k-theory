@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -56,7 +56,7 @@ theorem same_upper_bound {X Y : Scheme.{u}} (f : X ⟶ Y)
   exact (Scheme.Modules.pullback f).map_isZero (K.obj.isZero_of_isStrictlyLE b n hn)
 
 /-- The genuine cylinder is available without an input JointData premise. -/
-def actual_joint_data (X : Scheme.{u}) :
+def actualJointData (X : Scheme.{u}) :
     Quillen.Waldhausen.Fibration.RowFactorization.JointData
       (Quillen.Waldhausen.Fibration.NestedWeakEquivalences.refl
         (boundedFlatPerfectWaldhausen X)) := boundedFlatPerfectJointData X

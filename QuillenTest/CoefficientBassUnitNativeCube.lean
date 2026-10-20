@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -25,12 +25,13 @@ universe u
 namespace QuillenTest.CoefficientBassUnitNativeCube
 variable {R : CommRingCat.{u}} (P : Over (Spec R)) (a : Under R)
 
-def original_identity_cube : BoundedFlatCoefficientBassIdentityInteriorCube P a :=
+/-- The constructed identity cube retains all three original homotopy parameters. -/
+def originalIdentityCube : BoundedFlatCoefficientBassIdentityInteriorCube P a :=
   interiorCube P a
 
 theorem entire_cube_level_zero (r s t : unitInterval)
     (x : (originalPrespectrum (boundedFlatPerfectWaldhausen (space (op P, a)))).space 0) :
-    (original_identity_cube P a).level 0 (r, (s, (t, x))) =
+    (originalIdentityCube P a).level 0 (r, (s, (t, x))) =
       prespectrumSimplexFamily (simplex P a) 0 (scalarCube.{u} ![r, s, t], x) :=
   interiorCube_level_zero P a r s t x
 

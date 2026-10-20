@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -28,11 +28,12 @@ attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.AffineDerivedFiniteFlatPushforward
 
 open Quillen
+/-- Use the standard derived-category model in these comparison tests. -/
 local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
 
 lemma original_strict_image_model {R : CommRingCat.{u}} {X : Scheme.{u}}
-    (f : Spec R ⟶ X) [IsFinite f] [Flat f] [IsLocallyNoetherian X]
+    (f : Spec R ⟶ X) [IsFinite f]
     (K : DerivedCategory.Plus (Spec R).Modules)
     (hK : perfectDerivedObjects (Spec R) (DerivedCategory.Plus.ι.obj K)) :
     ∃ (P : StrictPerfect (Spec R)) (e : (strictToDerivedPlus (Spec R)).obj P ≅ K),

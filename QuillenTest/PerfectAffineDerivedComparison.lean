@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -34,9 +34,11 @@ namespace QuillenTest.PerfectAffineDerivedComparison
 
 open Quillen
 
+/-- Use the standard derived-category model in these comparison tests. -/
 local instance standardDerivedModules (R : Type u) [Ring R] :
     HasDerivedCategory.{u + 1} (ModuleCat.{u} R) := HasDerivedCategory.standard _
 
+/-- Use the standard derived-category model in these comparison tests. -/
 local instance standardDerivedSheaves (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -49,7 +51,7 @@ theorem affinePerfect_homology (R : CommRingCat.{u}) (K : Perfect (Spec R)) :
     locallyPerfect_homology_bounded K.property⟩
 
 /-- The homology comparison uses the unchanged perfect restriction functor. -/
-def principalPerfect_homology (R : CommRingCat.{u}) (r : R)
+def principalPerfectHomology (R : CommRingCat.{u}) (r : R)
     (K : Perfect (Spec R)) (i : ℤ) :
     ((perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
       K).obj.homology i ≅

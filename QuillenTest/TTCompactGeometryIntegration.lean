@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 public import QuillenTest.AdditivityBasedTransformationSquare
@@ -41,7 +41,7 @@ theorem original_unit_square
   coproductUnitCoherenceSquare_apply W n q s t
 
 /-- The actual suffix cancels through a displayed homotopy to the original zero-left unitor. -/
-def original_unit_coherence
+def originalUnitCoherence
     (q : GenLoop (Fin (n + 1)) W.Delooping W.kBasepoint) :
     ((coproductSeparationPath n W GenLoop.const q).trans
       (genLoopRightUnitPath n q)).Homotopy (coproductLeftUnitPath W n q) :=
@@ -56,7 +56,7 @@ theorem original_null_square
   coproductNullCoherenceSquare_apply W n N q s t
 
 /-- Both complete endpoint paths have a data-valued homotopy in the original cube space. -/
-def original_null_coherence
+def originalNullCoherence
     {c : GenLoop (Fin (n + 1)) W.Delooping W.kBasepoint}
     (N : Path c GenLoop.const) (q : GenLoop (Fin (n + 1)) W.Delooping W.kBasepoint) :
     ((coproductCubePath W n N (Path.refl q)).trans
@@ -75,7 +75,7 @@ theorem original_whole_boundary
   coproductSeparationNullCoherence_boundary W n N q s t z hz
 
 /-- Degree zero uses the same actual null path, with no commuting of the two spatial factors. -/
-def original_degree_zero
+def originalDegreeZero
     {c : GenLoop (Fin (0 + 1)) W.Delooping W.kBasepoint}
     (N : Path c GenLoop.const) (q : GenLoop (Fin (0 + 1)) W.Delooping W.kBasepoint) :
     ((coproductCubePath W 0 N (Path.refl q)).trans

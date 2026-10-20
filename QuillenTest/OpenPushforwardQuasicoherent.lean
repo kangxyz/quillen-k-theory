@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -31,7 +31,7 @@ universe u
 namespace QuillenTest.OpenPushforwardQuasicoherent
 
 /-- Actual scheme pullbacks supply the pointwise cartesian condition. -/
-def original_pullback {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
+def originalPullback {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] :
     pushforwardComplex j ⋙ restrict k ≅
       restrict (pullback.fst j k) ⋙ pushforwardComplex (pullback.snd j k) :=
@@ -43,10 +43,10 @@ def original_pullback {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
 /-- The actual base-change comparison keeps every original complex morphism. -/
 theorem original_map {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] {I J : CochainComplex U.Modules ℤ} (f : I ⟶ J) :
-    (restrict k).map ((pushforwardComplex j).map f) ≫ (original_pullback j k).hom.app J =
-      (original_pullback j k).hom.app I ≫
+    (restrict k).map ((pushforwardComplex j).map f) ≫ (originalPullback j k).hom.app J =
+      (originalPullback j k).hom.app I ≫
         (pushforwardComplex (pullback.snd j k)).map ((restrict (pullback.fst j k)).map f) :=
-  (original_pullback j k).hom.naturality f
+  (originalPullback j k).hom.naturality f
 
 /-- No ambient compactness, separation or upper cohomological bound is needed. -/
 theorem original_homology {U X : Scheme.{u}} (j : U ⟶ X)

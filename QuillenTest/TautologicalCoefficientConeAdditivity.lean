@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 public import
@@ -68,7 +68,8 @@ theorem original_support_forgetting_hom (n : ℕ) :
       KMap (tautologicalCoefficientForgottenConeFunctor_waldhausenExact R) n :=
   tautologicalCoefficientForgottenCone_KMap R n
 
-local instance (n : ℕ) : CommGroup (PerfectK (twoChartLine R) n) :=
+/-- The native projective-line K-groups carry their canonical commutative group structure. -/
+local instance nativeLinePerfectKCommGroup (n : ℕ) : CommGroup (PerfectK (twoChartLine R) n) :=
   Additivity.KCommGroup (perfectWaldhausen (twoChartLine R)) n
 
 /-- The equality is of the full original homomorphisms in every connective degree. -/

@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -38,7 +38,7 @@ theorem original_public_inverse_pullback {X Y : Scheme.{u}} [IsAffine X] [IsAffi
   (affineVectorBundleToPerfectKEquiv_symm_pullback f 0 x).symm
 
 /-- The inverse strict comparison retains composition of the actual pullback maps. -/
-theorem original_inverse_composite {X Y Z : Scheme.{u}} [IsAffine X] [IsAffine Y] [IsAffine Z]
+theorem original_inverse_composite {X Y Z : Scheme.{u}} [IsAffine X] [IsAffine Z]
     (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) (x : PerfectK Z n) :
     (affineStrictToPerfectKEquiv X n).symm (perfectKPullback (f ≫ g) n x) =
       strictKPullback f n (strictKPullback g n ((affineStrictToPerfectKEquiv Z n).symm x)) := by

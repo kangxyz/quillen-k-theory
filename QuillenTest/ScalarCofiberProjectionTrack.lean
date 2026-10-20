@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -59,7 +59,7 @@ theorem original_fine_projection_target (x : (perfectWaldhausen X).Delooping) :
   (perfectOpenScalarProjectionFineRealizationHomotopy j r).apply_one x
 
 /-- The raw scalar keeps the entire actual normalization prefix and original triangle. -/
-def original_raw_intertwining :
+def originalRawIntertwining :
     ((perfectOpenScalarOriginalHomotopy j r q hq).trans
       (perfectOpenChangeWeakNormalizationHomotopy j)).RelHomotopy
       ((perfectOpenChangeWeakNormalizationHomotopy j).trans

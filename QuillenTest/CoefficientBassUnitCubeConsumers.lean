@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -23,17 +23,19 @@ universe u
 namespace QuillenTest.CoefficientBassUnitCubeConsumers
 variable {R : CommRingCat.{u}} (P : Over (Spec R)) (a : Under R)
 
-def whole_original_cone_identity : Homotopy (boundedFlatCoefficientBassConeMap P (𝟙 a))
+/-- The original cone identity is a homotopy on the complete cone map. -/
+def wholeOriginalConeIdentity : Homotopy (boundedFlatCoefficientBassConeMap P (𝟙 a))
     (𝟙 (mappingCone (boundedFlatCoefficientBassSquareComparison P a))) := coneIdentity P a
 
-def whole_original_step_identity : Homotopy (boundedFlatCoefficientBassStepMap P (𝟙 a))
+/-- The original step identity retains the complete parameter-looped cone map. -/
+def wholeOriginalStepIdentity : Homotopy (boundedFlatCoefficientBassStepMap P (𝟙 a))
     (𝟙 (parameterLooping (mappingCone (boundedFlatCoefficientBassSquareComparison P a)))) :=
   stepIdentity P a
 
 theorem original_laurent_track_zero (r : unitInterval)
     (x : (originalPrespectrum (boundedFlatPerfectWaldhausen
       (space (op P, (laurentUnderFunctor R).obj a)))).space 0) :
-    (whole_original_cone_identity P a).level 0
+    (wholeOriginalConeIdentity P a).level 0
       (r, (mappingConeInclusion (boundedFlatCoefficientBassSquareComparison P a)).map 0 x) =
       (boundedFlatCoefficientBassConeIdentityInclusionHomotopy P a).level 0 (r, x) :=
   cone_inclusion P a 0 r x

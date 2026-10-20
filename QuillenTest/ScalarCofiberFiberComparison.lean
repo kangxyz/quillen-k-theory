@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -35,7 +35,7 @@ local notation "hiota" => HomotopyFiber.loopInclusion_refl f
   (Structure.kBasepoint W) (Structure.kBasepoint V) h
 
 /-- The whole fiber homotopy has only the original geometric inputs. -/
-def original_whole_fiber_homotopy :
+def originalWholeFiberHomotopy :
     (genLoopPostcomp iota hiota
       (loopCurry (perfectOpenScalarFiberNormalizedCube j r q hq n p))).val.HomotopyRel
       (genLoopPostcomp (canonicalFiberMap N) (canonicalFiberMap_basepoint N)
@@ -107,7 +107,7 @@ variable (p0 : GenLoop (Fin 1)
   (subdivisionBasepoint (perfectWaldhausen X)))
 
 /-- K₀ input retains the actual full fiber homotopy without a degree-one additivity premise. -/
-def original_kzero_fiber_homotopy :
+def originalKzeroFiberHomotopy :
     (genLoopPostcomp iota hiota
       (loopCurry (perfectOpenScalarFiberNormalizedCube j r q hq 0 p0))).val.HomotopyRel
       (genLoopPostcomp (canonicalFiberMap N) (canonicalFiberMap_basepoint N)

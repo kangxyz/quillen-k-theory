@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -25,7 +25,7 @@ open Quillen
 
 /-- These are two actual geometric pullback-composition isomorphisms, with all original
 normalizations retained and no supplied higher coherence hypothesis. -/
-def arbitrary_pullback_composition {X Y Z T : Scheme.{u}}
+def arbitraryPullbackComposition {X Y Z T : Scheme.{u}}
     (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T) :=
   exactOriginalPrespectrumIsoCompositionHomotopy (boundedFlatPerfectWaldhausen T)
     (boundedFlatPerfectWaldhausen X)

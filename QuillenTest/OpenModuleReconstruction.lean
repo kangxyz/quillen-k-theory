@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -78,7 +78,7 @@ lemma both_original_derived_equations (R : CommRingCat.{u}) (W : (Spec R).Opens)
   ⟨openModuleReconstructionIso_hom_comp R W q c, openModuleReconstructionIso_inv_comp R W q c⟩
 
 lemma reconstructed_source_is_locallyPerfect (R : CommRingCat.{u}) (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) [HasDerivedCategory.{v} W.toScheme.Modules]
+    (hW : IsCompact (W : Set (Spec R)))
     {E : CochainComplex W.toScheme.Modules ℤ} (hE : locallyPerfect W.toScheme E) :
     ∃ (P : ModuleComplex R) (a c : ℤ), P.IsStrictlyGE a ∧ P.IsStrictlyLE c ∧
       locallyPerfect W.toScheme ((restrict W.ι).obj ((associatedComplex R).obj P)) := by
