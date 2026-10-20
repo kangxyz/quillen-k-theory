@@ -35,18 +35,19 @@ RUNTIME_MODULES = ['Batteries.Tactic.Lint', 'Mathlib.Tactic.Linter.TextBased']
 def input_paths(root):
     """Enroll selector/source-check bytes, names and absent configuration candidates."""
     files = set(POLICY)
-    roots = ['Quillen', 'QuillenTest', 'Tools', 'scripts', 'examples/downstream/Consumer']
+    roots = ['Quillen', 'QuillenTest', 'Tools', 'scripts', 'examples/downstream']
     files.update(['Quillen.lean', 'QuillenTest.lean', 'examples/downstream/Consumer.lean',
                   'CONTRIBUTING.md', 'docs/DEVELOPMENT.md', 'docs/SCOPE.md'])
     directories = set(roots) | {'examples/downstream'}
     for name in roots:
         path = root / name
         if path.is_dir():
-            directories.update(p.relative_to(root).as_posix() for p in path.rglob('*')
-                               if p.is_dir() and '.lake' not in p.parts and '__pycache__' not in p.parts)
-            files.update(p.relative_to(root).as_posix() for p in path.rglob('*')
-                         if p.is_file() and p.suffix in ('.lean', '.py', '.sh', '.json', '.toml')
-                         and '.lake' not in p.parts and '__pycache__' not in p.parts)
+            for current, children, names in os.walk(path):
+                children[:] = sorted(n for n in children if n not in {'.lake', '.git', '__pycache__'})
+                current = Path(current)
+                directories.add(current.relative_to(root).as_posix())
+                files.update((current / name).relative_to(root).as_posix() for name in names
+                             if Path(name).suffix in ('.lean', '.py', '.sh', '.json', '.toml'))
     return sorted(files | directories)
 
 
@@ -197,7 +198,7 @@ def acquire_assessment_source(root, base, head, provided=None):
         return provided
     if not all(re.fullmatch('[0-9a-f]{40}', value) for value in (old, new)):
         raise ValueError('Assessed Aglib source acquisition requires exact commit pins')
-    source = Path(tempfile.mkdtemp(prefix='quillen-aglib-scope-'))
+    source = Path(tempfile.mkdtemp(prefix='quillen-aglib-scope-')).resolve()
     subprocess.run(['git', 'init', '-q', str(source)], check=True)
     subprocess.run(['git', '-C', str(source), 'fetch', '--no-tags', '--depth=1',
                     'https://github.com/kangxyz/aglib.git', old, new], check=True)

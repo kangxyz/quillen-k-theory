@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 """Check lossless client scope reduction and guarded independent scheduling."""
 import copy
+import hashlib
 import json
 import os
 from pathlib import Path
 import tempfile
 import sys
+import subprocess
 import types
 import unittest
 from unittest.mock import patch
 
 from check_run import client_check_scope, scoped_lint_source
 from ci_adapter import tasks, binding, QuillenAdapter, PROTOCOL, LEGACY_HEAD, prepare
+from ci_policy import CORE_ENTRYPOINTS
+from lean_ci.github import reviewed_recipe, workflow_kind
 from generate_imports import generated_files
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -193,10 +197,46 @@ class RecipeTests(ClientScopeTests):
         native = tasks(self.root, plan, 'native', self.directory)
         self.assertEqual(full, source + native)
 
-    def test_exact_historical_allowlist_does_not_self_admit_candidate(self):
+    def test_exact_reviewed_allowlist_rejects_unreviewed_producers(self):
         self.assertEqual(PROTOCOL.legacy_heads, frozenset({LEGACY_HEAD}))
-        self.assertEqual(PROTOCOL.core_recipes, frozenset())
-        self.assertEqual(set(PROTOCOL.workflows.values()), {'legacy'})
+        self.assertEqual(PROTOCOL.core_recipes, frozenset({tuple(CORE_ENTRYPOINTS.values())}))
+        self.assertEqual(set(PROTOCOL.workflows.values()), {'legacy', 'core'})
+        workflow = (ROOT / PROTOCOL.workflow_path).read_bytes()
+        self.assertEqual(workflow_kind(workflow, PROTOCOL), 'core')
+        self.assertIsNone(workflow_kind(workflow + b'\n# unreviewed change\n', PROTOCOL))
+        for name, expected in CORE_ENTRYPOINTS.items():
+            source = (ROOT / name).read_bytes()
+            self.assertEqual(hashlib.sha256(source).hexdigest(), expected, name)
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(source)
+        def commit():
+            subprocess.run(['git', 'add', '.'], cwd=self.root, check=True, capture_output=True)
+            subprocess.run(['git', '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                            'commit', '-qm', 'fixture producer'], cwd=self.root, check=True, capture_output=True)
+            return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=self.root).decode().strip()
+        subprocess.run(['git', 'init', '-q'], cwd=self.root, check=True, capture_output=True)
+        self.assertEqual(reviewed_recipe(self.root, commit(), 'core', PROTOCOL), CORE_ENTRYPOINTS)
+        with (self.root / 'scripts/check_run.py').open('a') as stream:
+            stream.write('\n# unreviewed producer\n')
+        self.assertIsNone(reviewed_recipe(self.root, commit(), 'core', PROTOCOL))
+
+    def test_source_binding_covers_downstream_files_outside_consumer(self):
+        task = next(t for t in self.recipe(lean=False) if t['id'] == 'source/placeholders')
+        before = binding(self.root, task, None)
+        extra = self.root / 'examples/downstream/Other/Unchecked.lean'
+        self.write(extra.relative_to(self.root), 'module\ndef datum := 1\n')
+        added = binding(self.root, task, None)
+        self.assertNotEqual(before, added)
+        self.assertIn(extra.relative_to(self.root).as_posix(), added['source_enrollment'])
+        extra.write_text('module\ndef datum := 2\n')
+        edited = binding(self.root, task, None)
+        self.assertNotEqual(added, edited)
+        extra.unlink()
+        removed = binding(self.root, task, None)
+        self.assertNotEqual(edited, removed)
+        self.write('examples/downstream/.lake/Unenrolled.lean', 'module\n')
+        self.assertEqual(removed, binding(self.root, task, None))
 
     def test_local_native_preparation_requires_containers_before_observation(self):
         with self.assertRaisesRegex(ValueError, 'before final checks'):

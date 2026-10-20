@@ -10,7 +10,7 @@ LEGACY_HEAD = '69e542b48a1e7ba0a0a7648b5238b2a263cd22a6'
 CORE_ENTRYPOINTS = {
     'scripts/check.sh': '7ee991c40b55bb5107b99500588153895ec9e484913123cc506c10c0d3044eb4',
     'scripts/check_run.py': '02fd64f30350514627c0550196c917b884b5cdbd5535fb3f6405208324e296e3',
-    'scripts/ci_adapter.py': '2a15a9cd94ef371596f753ea7358aa721dc66bf4b227f59b5326e3d86743aa94',
+    'scripts/ci_adapter.py': '3dbd6f1898679a76e145e3c0390edb3f05e46536ace8ebfc70d3e9c8638bce26',
     'scripts/check_scope.py': 'bd39c54c17e82867c5047c99f546914474907be0c4903c342ad354a3942c5469',
     'scripts/dependency_scope.py': '6f6ac5e0277865bd0918fd4d32992ec108d388e607b98bd826fedeab3a8a3740',
     'scripts/library_sources.py': 'f2bb28db1f9329a66cd3174584cf9e000a61c50466e6747df4f54d3aeafe6e86',
