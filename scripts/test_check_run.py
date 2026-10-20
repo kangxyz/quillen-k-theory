@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check lossless client scope reduction and guarded independent scheduling."""
 import copy
+from dataclasses import replace
 import hashlib
 import json
 import os
@@ -14,8 +15,10 @@ from unittest.mock import patch
 
 from check_run import client_check_scope, scoped_lint_source
 from ci_adapter import tasks, binding, QuillenAdapter, PROTOCOL, LEGACY_HEAD, prepare
-from ci_policy import CORE_ENTRYPOINTS
-from lean_ci.github import reviewed_recipe, workflow_kind
+from ci_policy import (CORE_ENTRYPOINTS, HISTORICAL_CORE_ENTRYPOINTS,
+                       HISTORICAL_CORE_HEAD, HISTORICAL_CORE_WORKFLOW)
+from lean_ci.github import (BaselineError, git_file, reviewed_recipe,
+                            select as select_baseline, workflow_kind)
 from generate_imports import generated_files
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -253,6 +256,68 @@ class RecipeTests(ClientScopeTests):
         self.assertIn('application.check(', source)
         for forbidden in ('def execute(', 'ThreadPoolExecutor', 'def merge_native_outputs(', 'def parallel_checks('):
             self.assertNotIn(forbidden, source)
+
+
+class HistoricalBaselineTests(unittest.TestCase):
+    """A tooling-only successor retains the last complete native witness."""
+    upgrade_head = '9e792b2bc1a6227e6e1acc67ae2fa63e823291c2'
+
+    def api(self):
+        repository = 'kangxyz/quillen-k-theory'
+        run_id = 39480751225
+        run = dict(id=run_id, run_attempt=1, status='completed', conclusion='success',
+                   head_sha=HISTORICAL_CORE_HEAD, head_branch='main', event='push',
+                   path=PROTOCOL.workflow_path, head_repository={'full_name': repository},
+                   html_url=f'https://github.com/{repository}/actions/runs/{run_id}')
+        job = dict(name='library', run_id=run_id, run_attempt=1,
+                   status='completed', conclusion='success', steps=[
+                       dict(name=name, status='completed', conclusion='success')
+                       for name in (PROTOCOL.native_step, PROTOCOL.finalize_step)])
+
+        def get(path, **query):
+            self.assertEqual(path, '')
+            return dict(full_name=repository, default_branch='main')
+
+        def pages(path, key, **query):
+            if key == 'workflow_runs':
+                self.assertEqual(path, '/actions/workflows/ci.yml/runs')
+                return [run]
+            self.assertEqual((path, key), (f'/actions/runs/{run_id}/attempts/1/jobs', 'jobs'))
+            return [job]
+
+        return types.SimpleNamespace(get=get, pages=pages)
+
+    def test_historical_recipe_is_literal_and_restricted_to_its_exact_head(self):
+        workflow = git_file(ROOT, HISTORICAL_CORE_HEAD, PROTOCOL.workflow_path)
+        self.assertEqual(hashlib.sha256(workflow).hexdigest(), HISTORICAL_CORE_WORKFLOW)
+        self.assertEqual(workflow_kind(workflow, PROTOCOL), 'core')
+        for name, expected in HISTORICAL_CORE_ENTRYPOINTS.items():
+            self.assertEqual(hashlib.sha256(git_file(ROOT, HISTORICAL_CORE_HEAD, name)).hexdigest(),
+                             expected, name)
+        self.assertEqual(reviewed_recipe(ROOT, HISTORICAL_CORE_HEAD, 'core', PROTOCOL),
+                         HISTORICAL_CORE_ENTRYPOINTS)
+        self.assertIsNone(reviewed_recipe(ROOT, '25387c653f01abc24bf25cc166dee33cc63b67a2',
+                                         'core', PROTOCOL))
+
+    def test_tooling_only_upgrade_uses_previous_native_success_without_lean_checks(self):
+        from check_scope import select as select_scope
+        baseline = select_baseline(ROOT, 'kangxyz/quillen-k-theory', 'main', self.upgrade_head,
+                                   api=self.api(), protocol=PROTOCOL)
+        self.assertEqual(baseline['verified_base'], HISTORICAL_CORE_HEAD)
+        scope = select_scope(ROOT, base=baseline['base'], head=self.upgrade_head)
+        self.assertFalse(scope['lean'])
+        for category in ('providers', 'tests', 'clients'):
+            self.assertEqual(scope[category], [])
+        self.assertTrue(scope['tooling_tests'])
+
+    def test_both_historical_workflow_and_recipe_are_required(self):
+        without_workflow = replace(PROTOCOL, workflows={key: value for key, value
+            in PROTOCOL.workflows.items() if key != HISTORICAL_CORE_WORKFLOW})
+        without_recipe = replace(PROTOCOL, historical_core_recipes=())
+        for protocol in (without_workflow, without_recipe):
+            with self.subTest(protocol=protocol), self.assertRaises(BaselineError):
+                select_baseline(ROOT, 'kangxyz/quillen-k-theory', 'main', self.upgrade_head,
+                                api=self.api(), protocol=protocol)
 
 
 if __name__ == '__main__':
