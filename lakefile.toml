@@ -14,6 +14,15 @@ restoreAllArtifacts = true
 
 [[lean_lib]]
 name = "Quillen"
+roots = []
+globs = ["Quillen"]
+# Native mk_all owns this import-only entry, like Mathlib.lean.
+leanOptions = {autoImplicit = false, weak.linter.mathlibStandardSet = true, weak.linter.style.longFile = 0, warningAsError = true}
+
+[[lean_lib]]
+name = "QuillenModules"
+roots = []
+globs = ["Quillen.+"]
 leanOptions = {autoImplicit = false, weak.linter.mathlibStandardSet = true, weak.linter.style.longFile = 1500, warningAsError = true}
 
 [[lean_lib]]
