@@ -42,7 +42,7 @@ aggregate import when adding or changing instance declarations.
 After adding or moving modules, regenerate imports:
 
 ```sh
-python3 -m lean_ci imports --config .github/lean-ci.toml --root . --write
+python3 scripts/generate_imports.py
 ```
 
 The generator discovers existing source modules and top-level subjects. It
@@ -71,67 +71,111 @@ Normal authoring, maintenance, documentation, review, merge, integration, and
 release must use incremental checks and reuse trusted build artifacts and
 compatible validation evidence. Reconcile the combined changes,
 then build only changed or missing required leaf modules and their affected
-consumers. The common checker selects affected modules through the union of
-old and new reverse-import graphs:
+consumers. The normal local and CI adapter selects the reverse import closure:
 
 ```sh
-python3 -m lean_ci check --config .github/lean-ci.toml --root .
-python3 -m lean_ci check --config .github/lean-ci.toml --root . --requested-base BASE_COMMIT
+bash scripts/check.sh
+bash scripts/check.sh --base BASE_COMMIT --head HEAD
 ```
 
-Use the shared tooling distribution selected by the reusable workflow, separately
-from the mathematical Aglib dependency. The second command may widen selection
-from a verified native ancestor; a previous push does not establish check coverage.
-See [development policy](docs/DEVELOPMENT.md#affected-check-scope) for preparation,
-coverage and recovery. During proof development, build a specific leaf:
+The first command compares tracked and untracked local sources with `HEAD`;
+the second compares the specified committed snapshots. Run the second command
+with its selected head checked out. Documentation and documentation-evidence
+JSON changes run static checks without Lean or cache work. See the
+[scope adapter](docs/DEVELOPMENT.md#affected-check-scope) for ordering, cache
+publication and unavailable-input behavior. For an explicit leaf while developing:
 
 ```sh
 lake build Quillen.KTheory.API
 ```
 
-At final validation, the common profile covers applicable source organization,
-placeholders, source style and budget checks; selected production compilation;
-builtin and exact defining-origin declaration lint; selected `QuillenTest` modules;
-the independent `Consumer` package; and selected-origin trust and axiom checks.
-Selected compile-time tests execute through their Lake build. They are not replayed
-as separate whole-test frontend commands. Import-only facades remain enrolled and
-compiled; only a conservative declaration-free certificate can omit empty
-declaration-lint work.
-
-The shared declaration checker uses a fixed isolated environment for each origin:
-`Batteries.Tactic.Lint` followed by that origin, private visibility and the pinned
-native linter's options and trust setting. This predicate differs from the former
-whole-library and target-first scoped lints; those older successes do not establish
-its new declaration-lint obligations. Axiom checks retain their separate kernel
-trust setting and include private and generated declarations. Allowed foundation
-axioms are `propext`, `Classical.choice`, and `Quot.sound`; see
-[the audit boundary](docs/ARCHITECTURE.md#trust-checks).
-
-Keep the same external state and progress paths after a failure:
+When changes select native validation, final checks run the configured
+full-library environment lint once and the whole-workspace native text lint once,
+before selected tests and downstream clients. Documentation-only scope retains
+the static checks described above. The shared runner builds selected providers,
+`Quillen`, tests and lint runtimes in one native Lake graph, preserving compatible
+cached artifacts. The full library import basis is required even when only one
+source changed; it does not select full diagnostics or replay every test.
+The standard commands are:
 
 ```sh
-python3 -m lean_ci check --config .github/lean-ci.toml --root . \
-  --state /absolute/scratch/quillen-state --progress /absolute/scratch/quillen-progress
+lake lint --no-build -- --no-build
+lake exe lint-style
 ```
 
-The common runner retains compatible individual successes immediately. Repair the
-failed input and repeat that entry; changed checker/source/import inputs invalidate
-only affected evidence. Root and downstream modules keep their distinct package
-coordinates. Source bytes, generated recovery programs, build artifacts and passed
-checker receipts provide different evidence; warm artifacts alone do not prove a
-checker passed.
+The first no-build option protects Lake's builtin checks; the option after `--`
+protects the configured Batteries driver. The default environment checks include
+slow checks and generated declarations. Selected tests and clients retain their
+scoped environment/text lint and complete selected trust audits. For a narrow
+repair after a full lint failure, the existing scoped runner remains available:
 
-A merge, commit, branch switch, checkout, version bump or publication does not by
-itself request a whole-library build, fresh dependency replay or full audit. Preserve
-matching artifacts and evidence. Missing coverage calls for currently uncovered
-obligations. Toolchain and dependency changes require explicit old/new input and
-import-graph assessment; they do not automatically invalidate every mathematical
-output. Missing or failed history lookup must not silently become a complete build.
+```sh
+lake env lean --run Tools/LintScoped.lean Quillen.KTheory.API
+```
 
-Whole-library rebuilding is exceptional fault recovery: first diagnose incompatible,
-corrupt or untrustworthy artifacts throughout that closure and the absence of a
-usable matching cache. A user may explicitly request a literal full rebuild or
-replay; honor that exact scope without assuming broader work.
+After a final-check repair, repeat the shared entry with the same external
+`--state PATH` to retain compatible completed checks. Its printed evidence
+directory contains the generated recovery programs. Direct scoped repair is also
+available; substitute that directory for `RUN` below. For example:
+
+```sh
+# Provider lint repair: compile the repaired source, then rerun its scoped lint.
+lake build Quillen.KTheory.API
+lake env lean --run RUN/LintScoped.lean Quillen.KTheory.API
+# A late test failure: compile and lint just that selected test.
+lake build QuillenTest.ActionTranslationNaturality
+lake env lean --run RUN/LintScoped.lean QuillenTest.ActionTranslationNaturality
+# A late client failure, from examples/downstream:
+cd examples/downstream
+lake build Consumer.AffineClosed
+lake env lean --run RUN/LintScoped.lean Consumer.AffineClosed
+# Rerun each failed or unrun audit chunk prepared for this scope.
+lake env lean RUN/client-audit-0.lean
+```
+
+Replace `RUN` and the examples with the actual selected paths and modules.
+Client audit batches are prepared as `client-audit-N.lean`. Replay only failed or unrun chunks, retaining completed
+compatible checks. Complete any still-affected trust/client checks from the existing selected
+commands; reselect when the import closure changes. The isolated lint runner
+also handles import-only facades and tests without named declarations.
+
+A merge, commit, branch switch, checkout, version bump, or publication does not
+by itself require a whole-target build, fresh dependency replay, full audit, or
+Python/source suite. Complete release coverage may combine compatible existing
+evidence with new checks of the affected scope, including trust checks when
+their inputs or coverage changed. Record the inputs and closure that each
+piece of evidence covers.
+
+Preserve caches. A missing artifact or receipt, or a different checkout, first
+calls for matching available artifacts and evidence. Compile the missing
+required closure only after checking for a usable matching cache. Toolchain,
+dependency-pin, and global-option changes require matching caches and an
+assessment of actual invalidation; they do not automatically assign a complete
+library recompile. Missing coverage calls for checks of the uncovered affected
+scope, not a blanket rebuild. Whole-library rebuilding is fault recovery outside
+the normal workflow: diagnose incompatible, corrupt, or untrustworthy artifacts
+throughout that closure and the absence of a usable matching cache first. A user
+may explicitly request a literal full rebuild or replay; honor its exact scope
+without assuming broader work.
+
+The complete pipeline below remains available for explicitly requested comprehensive
+diagnostics. It is not a normal local acceptance step
+and does not itself request a clean rebuild:
+
+```sh
+bash scripts/check.sh --full --rehash
+```
+
+The pipeline checks generated imports, module boundaries, placeholders, and
+script tests; builds selected production/test modules and lint runtimes in one
+native graph and runs the full library environment lint and whole-workspace text
+lint before downstream clients. It replays test assertions and both
+axiom audits, and includes Batteries environment lint and native mathlib text
+lint. Normal CI keeps selected test/build/audit scopes without comprehensive
+test replay. Library compilation
+uses `autoImplicit = false`, the mathlib standard linter set, and warnings as
+errors. The allowed foundation axioms are `propext`, `Classical.choice`, and
+`Quot.sound`; see [the audit boundary](docs/ARCHITECTURE.md#trust-checks).
 
 ## Typechecking performance
 
@@ -224,12 +268,19 @@ Explain affected interfaces and theorem hypotheses. A pin or toolchain change
 alone does not require fresh compilation of unaffected libraries; normal local
 acceptance remains incremental.
 
-The common selector assesses changed dependency pins against exact old and new
-source identities and their import graphs. Keep the source objects and matching
-runtime dependencies available for that assessment. An unchecked plan or a warm
-cache does not supply the assessment. Unknown global invalidation fails visibly;
-it does not select a blanket rebuild. Runtime mathematical sources and configuration
-must match the selected pins; a separate tooling pin provides no exception to
-mathematical source drift.
+For the narrowly supported Aglib-only revision transition, select with
+`python3 scripts/check_scope.py --aglib-source /absolute/path/to/aglib --output scope.json`.
+The source path must be a real Git worktree root containing both exact pinned
+commit objects; selection reads their blobs without network, Lean, or checkout
+mutation. All three root/downstream pin owners must change together solely in
+Aglib's `rev`/`inputRev`; other global changes still require separate assessment.
+The selector recomputes old/new dependency closure and emits a portable assessment,
+which the normal runner recomputes before accepting a plan:
+`bash scripts/check.sh --aglib-source /absolute/path/to/aglib --plan scope.json`.
+CI fetches exact source objects before selection and sets `QUILLEN_AGLIB_SOURCE`
+for the source-only and execution consumers. An unchecked plan
+is not a pin assessment. Actual runtime mathematical sources and configuration
+must match the new pin; independently guarded runtime helper overlays confer no
+exception to mathematical source drift.
 
 Contributions are licensed under Apache-2.0.

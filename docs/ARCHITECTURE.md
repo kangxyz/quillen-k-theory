@@ -90,12 +90,13 @@ extension rules.
 
 ## Trust checks
 
-The common config entry
-`python3 -m lean_ci check --config .github/lean-ci.toml --root .` selects affected
-and uncovered checks. CI delegates the shared plan/source/native/finalize lifecycle
-to one pinned reusable workflow. Root and downstream packages keep distinct native
-build and check identities. Selected-origin axiom checks include private/generated
-declarations; cached compiled modules do not re-execute their audit commands.
+`bash scripts/check.sh` selects affected local checks; `--full` explicitly
+requests comprehensive diagnostics. CI uses the shared plan/source/native/finalize
+lifecycle in [development policy](DEVELOPMENT.md#affected-check-scope), building
+the required library/test graph and separate downstream package when native
+checks are selected. Root and client axiom checks use generated scoped versions
+of `QuillenTest/Axioms.lean` and the downstream `Audit.lean`: cached compiled
+modules do not re-execute their audit commands.
 
 Incremental validation includes applicable compilation, declaration/text-style
 lint, affected `QuillenTest` and client tests, and source/trust checks. Cover the
@@ -119,27 +120,36 @@ Missing coverage alone calls for the uncovered affected checks. Outside fault
 recovery, a literal full rebuild or replay requires an explicit user request
 with that exact scope.
 
-The reusable workflow restores compatible dependency, compiled-output and
-per-check progress caches. Its tooling revision is pinned independently of the
-mathematical Aglib dependency. The common implementation owns cache identities,
-resource limits, old/new affected-scope graphs and check bindings; this repository
-provides only [declarative roles](../.github/lean-ci.toml) and mathematical content.
-A cache-key change selects matching inputs and actual invalidation; it does not
-instruct local users to recompile every library.
+CI restores root, downstream, and pinned Aglib build outputs and shared native
+Lake artifacts. Versioned keys distinguish platform, toolchains, manifests, and
+normalized Lake configurations. The configuration hash (`scripts/cache_key.py`,
+Python 3.11+) omits only the top-level `version`, `enableArtifactCache`, and
+`restoreAllArtifacts` fields of each TOML package configuration. Compiler
+options, targets, metadata, and nested dependency versions remain part of it.
+Toolchains, manifests, and optional executable Lake configurations are hashed
+raw; invalid or missing required configuration fails visibly. A configuration
+key change selects matching artifacts and actual invalidation; it is not a
+local instruction to recompile every library.
 
-The common source/native phases consume one admitted plan. Lake incrementally
-builds stale or missing required targets. Check receipts retain compatible
-per-origin successes immediately, including across failed invocations. Publication
-requires qualified coverage; artifacts alone do not invent a passed lint or audit.
-Finalization aggregates results without executing native checkers again.
+Project source hashes and source-independent prefixes permit restoration after
+source changes. The configured CI job calls
+`python3 scripts/check_run.py plan`, then `source`, `native` when selected, and
+`finalize`, sharing its external state directory. The native Lake graphs rehash
+restored traces against current content and incrementally build missing or stale
+modules and affected dependents. Required lints and scoped audits retain their
+check coverage on exact build-cache hits; matching check evidence may be reused. This CI coverage does
+not make that command the local merge or publication default. CI saves partial
+build progress, while publishing checked native artifacts only after successful
+checks. Publication of the native cache consumes those checked artifacts rather
+than requiring a fresh proof build.
 
-Declaration lint uses an isolated canonical environment per origin with the
-runtime imported before that origin. It cannot reuse the former whole-library or
-target-first lint predicate as equivalent coverage. Import-only facade certificates
-may omit empty declaration work while preserving source/build coverage. Trust
-checks have separate visibility/trust rules, discover selected defining origins,
-include private and generated declarations, and reject axioms outside `propext`,
-`Classical.choice`, and `Quot.sound`.
+The exhaustive library audit uses legacy imports to expose transitive private
+module declarations. It discovers imported module inventories and local
+environment declarations, selects every declaration defined in a `Quillen`
+module or in the `Quillen` namespace, deduplicates names, and rechecks defining
+origin. Private helpers are included. `collectAxioms` follows transitive
+dependencies and rejects any axiom outside `propext`, `Classical.choice`, and
+`Quot.sound`.
 
 This audit covers the selected kernel declarations and foundation dependencies.
 It does not establish a definition's mathematical interpretation, correspondence

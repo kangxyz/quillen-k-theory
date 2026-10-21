@@ -34,13 +34,14 @@ From the library checkout, fetch matching Mathlib artifacts when needed, then
 build the required leaf and its affected consumers:
 
 ```sh
-python3 -m lean_ci prepare --config .github/lean-ci.toml --root .
+bash scripts/cache.sh
 lake build Quillen.KTheory.API
 ```
 
 [Contributing](CONTRIBUTING.md#tests-and-checks) explains incremental validation
-for development, merge, and publication. `python3 -m lean_ci check --config .github/lean-ci.toml --root .` selects
-affected and uncovered checks using the shared tooling distribution. CI uses the shared plan/source/native/finalize
+for development, merge, and publication. `bash scripts/check.sh` selects
+affected checks; `bash scripts/check.sh --full --rehash` explicitly requests
+comprehensive diagnostics. CI uses the shared plan/source/native/finalize
 lifecycle described in [development policy](docs/DEVELOPMENT.md#affected-check-scope).
 All normal workflows must use incremental checks, including applicable
 compilation, lint, affected library/client tests and source/trust checks.
