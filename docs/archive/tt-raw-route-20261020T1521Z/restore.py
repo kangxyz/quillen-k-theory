@@ -15,4 +15,4 @@ for x in files:
  if not d.exists():shutil.copy2(s,d)
 print(f'Restored {len(files)} sources (staging mode: {args.staging}).')
 if not args.staging:
- print('Run python3 scripts/generate_imports.py in the repository, then validate affected imports. Historical doc snapshots are preserved separately, not automatically overwritten.')
+ print('Run python3 -P -m lean_ci imports --root . --config .github/lean-ci.toml --write in the repository, then validate affected imports. Historical doc snapshots are preserved separately, not automatically overwritten.')

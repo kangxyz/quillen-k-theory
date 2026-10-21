@@ -6,7 +6,7 @@ Keep this directory at `archives/tt-raw-route-20261020T1521Z/` alongside the rep
 
 `MANIFEST.json` records every original relative source path, archived path and SHA-256. `CANDIDATES.json` records the static scope and protected modules. `documentation-snapshots/` retains all five affected original guides byte-for-byte. Historical acceptance remains historical: it is not rewritten to count archived files as active.
 
-To restore the source group, run `python3 archives/tt-raw-route-20261020T1521Z/restore.py /absolute/path/to/repository` from the common parent. The script verifies every member before copying and refuses to overwrite differing live files. Then run `python3 scripts/generate_imports.py` inside the repository and validate affected imports/tests. Review documentation snapshots manually if reverting the API transition; they are not automatically overwritten. Package version and current documentation are not reverted by source restoration.
+To restore the source group, run `python3 archives/tt-raw-route-20261020T1521Z/restore.py /absolute/path/to/repository` from the common parent. The script verifies every member before copying and refuses to overwrite differing live files. Then run `python3 -P -m lean_ci imports --root . --config .github/lean-ci.toml --write` inside the repository and validate affected imports/tests. Review documentation snapshots manually if reverting the API transition; they are not automatically overwritten. Package version and current documentation are not reverted by source restoration.
 
 `DUPLICATE-STAGING-CANDIDATES.json` is only an independent proposal, not evidence of completed staging cleanup. Its status must be consulted separately.
 

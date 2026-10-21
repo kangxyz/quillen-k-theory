@@ -2,7 +2,7 @@
 
 [CONTRIBUTING](../CONTRIBUTING.md) remains the authority for setup, general
 authoring, incremental checks and dependency changes. This page owns the
-candidate-specific authoring and admission workflow and the affected-check adapter.
+candidate-specific authoring and admission workflow and the affected-check configuration.
 
 ## Normal task
 
@@ -14,9 +14,9 @@ lake build Quillen.KTheory.Functor
 ```
 
 At meaningful final delivery, run the selected check once:
-`bash scripts/check.sh --base ACCEPTED_COMMIT`. Use a consumer only for a concrete
+`python3 -m lean_ci check --config .github/lean-ci.toml --root . --requested-base ACCEPTED_COMMIT`. Use a consumer only for a concrete
 interface question. After a failure, keep completed categories and use the
-[direct scoped repair commands](../CONTRIBUTING.md#tests-and-checks). Consult
+[incremental recovery](../CONTRIBUTING.md#tests-and-checks). Consult
 setup, dependency/cache or environment guidance only for an actual missing or
 invalid input; preserve the prepared workspace and matching evidence.
 
@@ -57,76 +57,72 @@ accepted local implementation together with its old imports.
 
 ## Affected check scope
 
-`bash scripts/check.sh` is a thin launcher for the independently pinned
-`lean-incremental-ci` package. Install that distribution or select its tooling
-checkout explicitly with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. The
-checkout supplies `ci/lean_ci`; it is independent of the mathematical Aglib pin
-in `lakefile.toml`. No ambient sibling checkout or mutable branch supplies tooling.
-The reviewed shared-tooling revision for this adapter and CI is
-`0caa3a890c9cbeb7ade5e4f804203b31b5b0b3b1`.
+[`.github/lean-ci.toml`](../.github/lean-ci.toml) is this library's declarative input
+to the common `lean_ci` implementation. It identifies root production `Quillen`,
+positive tests `QuillenTest`, support sources and the separately built downstream
+package `examples/downstream`, whose Lake library is `Consumer`. Package identity,
+source root and namespace are distinct. This repository supplies no Python
+adapter, selector, binding callback or CI bootstrap implementation.
 
-The local entry compares tracked and untracked source bytes with `HEAD`.
-`--base REF` widens that comparison; `--base REF --head REF` selects a committed
-comparison with its head checked out. `--source-only` runs generated-import,
-layout, placeholder and selected Python checks without Lean or dependency setup.
-Source enrollment and absent configuration candidates are observed before
-selection. Global pin/configuration or checker changes still require the existing
-explicit invalidation assessment; missing history or caches never imply full
-scope. `--aglib-source PATH` retains the exact Git-object assessment of a changed
-Aglib pin. `--plan PATH` verifies a previously selected scope against current
-inputs. `--full` is an explicit comprehensive diagnostic and replays selected
-test sources; normal final checks use their selected build evidence.
+Install the compatible `lean-incremental-ci` distribution from the immutable Aglib
+tooling revision pinned by the reusable workflow. That revision is independent of
+the mathematical Aglib pin. For an already obtained tooling checkout, install its
+`ci/` package with Python 3.11 or later. Do not discover tooling from ambient sibling
+checkouts or mutable branches. The consumer workflow delegates setup, cache restore,
+checks, finalization and qualified publication to that same shared release.
 
-Both local and committed entries declare the same shared native recipe. It runs
-cheap source checks, deterministic preparation, one root Lake graph, root checks,
-then one downstream graph and its accepted check groups. The root graph includes
-selected providers, `Quillen`, tests and the required lint runtimes. The production
-lint commands remain `lake lint --no-build -- --no-build` and
-`lake exe lint-style`, once each. Selected tests retain the scoped Lean driver.
-The scoped audit programs replace only their template import lists; origin,
-checked-kernel and allowed-axiom predicates remain unchanged. No normal invocation
-elaborates a selected compile-time test twice.
+The local entry is:
 
-Client declaration checks retain batches of at most eight defining modules with
-their real dependency environment. Import-only client surfaces retain source
-certificates and native text checks; the generated `Consumer` facade must match
-the maintained generator. Client audits cover the complete reachable union of
-defining Consumer origins, including private and generated declarations. The
-shared runner owns execution and resource limits; Quillen does not maintain a
-second process scheduler. Existing remote wrapper profiles and Aglib resource
-variable aliases pass through the shared runtime.
+```sh
+python3 -m lean_ci check --config .github/lean-ci.toml --root .
+```
 
-Native local checks use a prepared workspace. Resolve the pinned root dependencies
-using the normal setup guide, and create the fixed ignored client container with
-`mkdir -p examples/downstream/.lake` before starting the final check. This keeps
-source-enrollment and absent-configuration guards intact; checking does not weaken
-them to create a cold workspace. The remaining package link setup is idempotent.
-A missing prerequisite stops with an actionable diagnostic. Source-only checks
-create no cache directory.
+Use `--requested-base REF` to widen the accepted comparison, `--target MODULE` for
+an explicitly selected module, and external `--state PATH` / `--progress PATH` to
+retain compatible successes after repair. The common selector includes affected
+production, Test and client consumers through old/new reverse-import edges,
+including deleted/renamed identities. It builds only modules present in the current
+source. Import-only facades remain enrolled; they are not a reason to build an
+unrelated umbrella or omit a reachable defining origin.
 
-The shared entry prints its evidence directory. Set `--state /absolute/scratch/path`
-(or `LEAN_CI_STATE`) to retain it across retries; state, progress and exported
-mappings live outside the source checkout. Repeat the same entry after repair:
-Lake keeps valid artifacts and the shared progress store reuses checks with
-matching source, imports, checker, generated program, runtime and environment.
-`--progress PATH` may select an existing compatible progress store. Source/style
-checks explicitly bind their complete input boundary. Changed inputs invalidate
-the affected evidence; local success remains working-tree evidence.
-`scope.json`, `client-scope.json` and generated audit recovery files are retained
-with the invocation. These source files exist before native checks can fail;
-their presence does not mean that an audit ran. Direct scoped repair commands in
-[CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks) remain available.
+Source checks run before native work and need no Lean for documentation-only scope.
+Native checking requires the pinned toolchain, dependencies and compatible caches.
+Prepare only the selected dependency/cache closure when needed:
 
-CI uses the shared `EvidenceProtocol` to select an actual successful native
-ancestor from exact reviewed workflow/recipe identities. It never uses
-`event.before`, a previous push, or a full-build fallback. A requested comparison
-may only widen that verified ancestor. Exact old/new Aglib source objects are
-acquired before pin assessment when needed. The source and native phases consume
-the same plan, require clean committed HEAD and bind the independently pinned
-tooling implementation. Finalization reconstructs every required task and receipt
-before native publication. Root and client mapping groups retain their workspace
-identity and native JSONL format; exporting them never rebuilds targets.
+```sh
+python3 -m lean_ci prepare --config .github/lean-ci.toml --root .
+```
 
-A newly authored workflow/recipe is not admitted as successful historical evidence
-merely by generating its own hashes. Its source identity requires actual owner
-review. Historical receipts retain their original policy and source meaning.
+The preparation entry accepts the same `--requested-base` and `--target` selection.
+It restores compatible artifacts; it does not supply passed checker evidence.
+The common runtime owns setup/resource limits and admitted remote profiles. Source
+style and budgets use source inputs; declaration/builtin and axiom checks retain
+their own environment-dependent predicates. Selected tests execute through Lake.
+Client checks use their own cwd and package identity, with exact defining-origin
+coverage, including private and generated declarations.
+`QuillenTest.lean`, `QuillenTest/Axioms.lean` and
+`examples/downstream/Audit.lean` remain enrolled as `formal_only` exhaustive audit
+entrypoints for explicit mathematical adoption work. They are not expected-failure
+fixtures or ordinary selected positive tests. Ordinary checks
+use the common selected-origin axiom and private/generated inventory predicates;
+that does not claim equivalence with an older whole-library audit. Mathematical
+audit/support sources remain available; common drivers own ordinary execution.
+
+Every successful individual checker result is retained under its actual input key.
+A new common predicate does not inherit incompatible old checker success. Until
+all required obligations close, initialization remains explicitly incomplete across
+subsequent heads; failed/interrupted work does not erase compatible successes.
+Missing coverage requires uncovered checks, not cleaning or recompiling compatible
+artifacts. API failure remains an error rather than invented empty history.
+
+Hosted CI uses the common `plan`, `source`, `native`, `finalize` lifecycle with the
+same config and external state. Source/preflight is independent of long native
+work. Only qualified completed coverage can become a native baseline or publish
+complete-coverage cache evidence. Finalization aggregates existing results and
+input correspondence; it does not execute checkers again. Native artifact exports
+retain the root and downstream workspace identities and use the common cache action.
+
+Historical receipts retain their actual source and predicate. The former umbrella
+and target-first declaration checks are not the new runtime-first exact-origin
+predicate. The shared compatibility policy may import only genuinely matching old
+coverage; there is no hardcoded initial or repair-parent commit in this consumer.
