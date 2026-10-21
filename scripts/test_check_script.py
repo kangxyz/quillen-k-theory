@@ -37,15 +37,10 @@ class LauncherTests(unittest.TestCase):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
         self.assertNotIn('github.event.before', workflow)
         self.assertNotIn('BASE_SHA', workflow)
-        self.assertIn('check_run.py plan --state', workflow)
-        self.assertIn('check_run.py source --state', workflow)
-        self.assertIn('check_run.py native --state', workflow)
-        self.assertIn('check_run.py finalize --state', workflow)
-        self.assertIn("steps.finalize.outcome == 'success'", workflow)
-        self.assertLess(workflow.index('Finalize required check coverage'),
-                        workflow.index('Publish native artifacts for downstream dependencies'))
-        self.assertIn("LAKE_ARTIFACT_CACHE: 'true'", workflow)
-        self.assertIn("coverage: ${{ runner.temp }}/native-outputs.jsonl.coverage.json", workflow)
+        self.assertIn('kangxyz/aglib/.github/workflows/lean-ci.yml@', workflow)
+        self.assertIn('build-targets: Quillen', workflow)
+        self.assertNotIn('check_run.py ', workflow)
+
 
     def test_local_selector_enrollment_precedes_selection(self):
         adapter = QuillenAdapter()

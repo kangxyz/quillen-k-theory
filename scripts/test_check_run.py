@@ -142,7 +142,7 @@ class RecipeTests(ClientScopeTests):
     def setUp(self):
         super().setUp()
         self.write('Tools/LintScoped.lean', (ROOT / 'Tools/LintScoped.lean').read_text())
-        self.write('QuillenTest/Axioms.lean', 'import Quillen\n-- unchanged audit body\n')
+        self.write('Audits/Quillen.lean', 'import Quillen\n-- unchanged audit body\n')
         self.write('examples/downstream/Audit.lean', 'import Consumer\n-- unchanged client body\n')
         self.scope = dict(lean=True, full=False, providers=['Quillen.A'],
                           tests=['QuillenTest.T'], clients=['Consumer', 'Consumer.Use'],
@@ -153,39 +153,36 @@ class RecipeTests(ClientScopeTests):
         scope = dict(self.scope, **changes)
         return tasks(self.root, {'scope': scope}, 'check', self.directory)
 
-    def test_single_root_and_client_graph_preserve_lint_and_audit_predicates(self):
+    def test_single_root_graph_preserves_native_lint_style_and_axiom_predicates(self):
+        # Legacy/manual client selections must not re-enable ordinary client work.
         required = self.recipe()
         graphs = [task for task in required if task['kind'] in ('build', 'graph-build')]
-        self.assertEqual([task['id'] for task in graphs], ['root/build', 'client/build'])
+        self.assertEqual([task['id'] for task in graphs], ['root/build'])
         self.assertEqual(graphs[0]['command'][:-2],
                          ['lake', '--rehash', 'build', 'Quillen.A', 'Quillen', 'QuillenTest.T',
                           'Batteries.Tactic.Lint', 'Mathlib.Tactic.Linter.TextBased',
                           'batteries/runLinter', 'lint-style'])
-        self.assertEqual(graphs[1]['command'][3:-2], ['Consumer', 'Consumer.Use'])
         self.assertEqual(sum(task['id'] == 'full-native-lint' for task in required), 1)
         self.assertEqual(next(t for t in required if t['id'] == 'full-native-lint')['command'],
                          ['lake', 'lint', '--no-build', '--', '--no-build'])
         self.assertEqual(next(t for t in required if t['id'] == 'full-native-style')['command'],
                          ['lake', 'exe', 'lint-style'])
-        self.assertFalse(any(t['id'].startswith('diagnostic/') for t in required))
         audit = next(t for t in required if t['id'] == 'axioms')
         self.assertEqual(audit['generated'], 'import Quillen.A\n-- unchanged audit body\n')
         self.assertEqual(audit['command'][audit['generated_argument_index']], audit['generated_path'])
-        client_scope = client_check_scope(self.root, self.scope['clients'])
-        audits = [task for task in required if task['id'].startswith('client-audit/')]
-        self.assertTrue(all('import ' + name + '\n' in ''.join(t['generated'] for t in audits)
-                            for name in client_scope['audit_origin_union']))
-        # Recovery inputs exist even before native build/lint can fail.
         self.assertEqual((self.directory / 'axioms.lean').read_text(), audit['generated'])
-        self.assertEqual(json.loads((self.directory / 'client-scope.json').read_text()), client_scope)
-        self.assertTrue(all(t['kind'] == 'check' for t in required if
-                            t['id'].startswith(('source/', 'client-lint/', 'client-audit/'))))
+        self.assertFalse((self.directory / 'client-scope.json').exists())
+        self.assertFalse(any(t['id'].startswith(('diagnostic/', 'client')) for t in required))
+        self.assertEqual([t['export_label'] for t in required if t.get('mapping')], ['root'])
+        self.assertTrue(all(t['cwd'] == str(self.root.resolve()) for t in required))
 
-    def test_full_diagnostic_only_replays_test_source(self):
+    def test_full_scope_keeps_graph_tests_without_reelaboration(self):
         required = self.recipe(full=True)
-        replay = [task for task in required if task['id'].startswith('diagnostic/')]
-        self.assertEqual([task['command'] for task in replay],
-                         [['lake', 'env', 'lean', '-j2', 'QuillenTest/T.lean']])
+        self.assertFalse(any(task['id'].startswith('diagnostic/') for task in required))
+        self.assertEqual(sum(task['id'] == 'axioms' for task in required), 1)
+        self.assertTrue(any('QuillenTest.T' in task.get('modules', []) and
+                            task['kind'] == 'graph-build' for task in required))
+        self.assertFalse(any('QuillenTest/T.lean' in task['command'] for task in required))
 
     def test_static_source_only_recipe_needs_no_environment_or_native_work(self):
         required = self.recipe(lean=False)
@@ -204,11 +201,13 @@ class RecipeTests(ClientScopeTests):
         self.assertEqual(PROTOCOL.legacy_heads, frozenset({LEGACY_HEAD}))
         self.assertEqual(PROTOCOL.core_recipes, frozenset({tuple(CORE_ENTRYPOINTS.values())}))
         self.assertEqual(set(PROTOCOL.workflows.values()), {'legacy', 'core'})
-        workflow = (ROOT / PROTOCOL.workflow_path).read_bytes()
+        # Test the already admitted source, not an evolving working checkout.
+        admitted_head = '9e792b2bc1a6227e6e1acc67ae2fa63e823291c2'
+        workflow = git_file(ROOT, admitted_head, PROTOCOL.workflow_path)
         self.assertEqual(workflow_kind(workflow, PROTOCOL), 'core')
         self.assertIsNone(workflow_kind(workflow + b'\n# unreviewed change\n', PROTOCOL))
         for name, expected in CORE_ENTRYPOINTS.items():
-            source = (ROOT / name).read_bytes()
+            source = git_file(ROOT, admitted_head, name)
             self.assertEqual(hashlib.sha256(source).hexdigest(), expected, name)
             path = self.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -241,15 +240,15 @@ class RecipeTests(ClientScopeTests):
         self.write('examples/downstream/.lake/Unenrolled.lean', 'module\n')
         self.assertEqual(removed, binding(self.root, task, None))
 
-    def test_local_native_preparation_requires_containers_before_observation(self):
+    def test_local_native_preparation_requires_only_root_dependencies(self):
         with self.assertRaisesRegex(ValueError, 'before final checks'):
             prepare(self.root, mode='local')
         self.assertFalse((self.root / 'examples/downstream/.lake').exists())
         (self.root / '.lake/packages').mkdir(parents=True)
-        (self.root / 'examples/downstream/.lake').mkdir()
         prepare(self.root, mode='local')
-        self.assertEqual((self.root / 'examples/downstream/.lake/packages').resolve(),
-                         (self.root / '.lake/packages').resolve())
+        self.assertFalse((self.root / 'examples/downstream/.lake').exists())
+        prepare(self.root, mode='ci')
+        self.assertFalse((self.root / 'examples/downstream/.lake').exists())
 
     def test_shared_execution_is_the_only_runner(self):
         source = (ROOT / 'scripts/check_run.py').read_text()

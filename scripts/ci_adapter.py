@@ -10,7 +10,7 @@ import tomllib
 import sys
 
 from check_scope import GLOBAL_INPUTS, git, select
-from check_run import client_check_scope, scoped_lint_source, verify_assessed_inputs, load_tooling
+from check_run import scoped_lint_source, verify_assessed_inputs, load_tooling
 load_tooling(Path(__file__).resolve().parents[1])
 from library_sources import module_path
 from lean_ci.engine import Application, implementation_identity
@@ -100,40 +100,10 @@ def tasks(root, plan, phase, directory):
         root_checks.append(check_task('test-lint', ['lake', 'env', 'lean', '--run', lint_path, *scope['tests']],
                            modules=scope['tests'], check_kind='scoped-lint',
                            generated=lint_program, generated_index=4))
-    if scope['full']:
-        root_checks += [check_task('diagnostic/test-' + str(index),
-                         ['lake', 'env', 'lean', '-j2', str(module_path(name))],
-                         modules=[name], check_kind='diagnostic')
-                        for index, name in enumerate(scope['tests'])]
     modules = list(dict.fromkeys([*scope['providers'], 'Quillen', *scope['tests'], *RUNTIME_MODULES]))
     root_group = {'id': 'root', 'modules': modules, 'checks': root_checks,
                   'build_task': {'id': 'root/build', 'kind': 'graph-build', 'modules': modules, 'capped': True,
                       'command': ['lake', '--rehash', 'build', *modules, 'batteries/runLinter', 'lint-style']}}
-    clients = []
-    if scope['clients']:
-        client_scope = client_check_scope(root, scope['clients'])
-        checks = []
-        for index, batch in enumerate(client_scope['environment_batches']):
-            checks.append(check_task('client-lint/' + str(index),
-                          ['lake', 'env', 'lean', '--run', lint_path, *batch],
-                          modules=batch, check_kind='scoped-lint',
-                          generated=lint_program, generated_index=4))
-        if client_scope['facade_text_modules']:
-            path = directory / 'LintFacadeText.lean'
-            checks.append(check_task('client-facade-text',
-                          ['lake', 'env', 'lean', '--run', path, *client_scope['facade_text_modules']],
-                          modules=client_scope['facade_text_modules'], check_kind='facade-text',
-                          certificates=client_scope['facade_certificates'],
-                          generated=scoped_lint_source(lint_text, text_only=True), generated_index=4))
-        if scope['client_trust']:
-            for index, batch in enumerate(client_scope['audit_batches']):
-                path = directory / f'client-audit-{index}.lean'
-                checks.append(check_task('client-audit/' + str(index),
-                              ['lake', 'env', 'lean', '-j2', path], modules=batch, check_kind='audit',
-                              generated=audit_source(root, 'examples/downstream/Audit.lean', 'Consumer', batch),
-                              generated_index=4))
-        clients = [{'id': 'client', 'cwd': 'examples/downstream', 'modules': scope['clients'],
-                    'selection': 'library', 'checks': checks}]
     prepare = [{'id': 'prepare', 'kind': 'process', 'command': [sys.executable, 'scripts/ci_adapter.py', '--prepare',
                   scope.get('dependency_assessment', {}).get('new', ''),
                   'local' if plan.get('source_basis', {}).get('kind') == 'working-tree' else 'ci'],
@@ -142,14 +112,11 @@ def tasks(root, plan, phase, directory):
     # Materializing declarations is deterministic; it never executes the audit.
     directory.mkdir(parents=True, exist_ok=True)
     (directory / 'scope.json').write_text(json.dumps(scope, indent=2) + '\n')
-    if scope['clients']:
-        (directory / 'client-scope.json').write_text(json.dumps(client_scope, indent=2) + '\n')
-    for task in [*root_checks, *(t for client in clients for t in client['checks'])]:
+    for task in root_checks:
         if task.get('generated'):
             Path(task['generated_path']).write_text(task['generated'])
     return native_recipe(root, directory, source_checks=source, prepare=prepare,
-                         root_workspace=root_group, clients=clients,
-                         exports=['root', *(['client'] if clients else [])], phase=phase)
+                         root_workspace=root_group, exports=['root'], phase=phase)
 
 
 def binding(root, task, toolchain, reflection=None, observations=None):
@@ -295,7 +262,6 @@ class QuillenAdapter:
     def observe_inputs(self, root, observations):
         for name in DRIVERS:
             observations.optional_hash(root / name)
-        observations.observe_resolution(root / 'examples/downstream/.lake/packages')
 
 
 def create_application(root, *, committed=False, **options):
@@ -306,16 +272,9 @@ def create_application(root, *, committed=False, **options):
 
 
 def prepare(root, assessed_revision='', mode='ci'):
-    client = root / 'examples/downstream'
-    if mode == 'local' and (not (root / '.lake/packages').is_dir() or not (client / '.lake').is_dir()):
-        raise ValueError('Prepare the pinned root dependencies and examples/downstream/.lake before final checks; '
+    if mode == 'local' and not (root / '.lake/packages').is_dir():
+        raise ValueError('Prepare the pinned root dependencies before final checks; '
                          'then retry with the existing state/progress. Source-only checks require no cache setup.')
-    (client / '.lake').mkdir(exist_ok=True)
-    packages = client / '.lake/packages'
-    if not packages.exists():
-        packages.symlink_to(root / '.lake/packages', target_is_directory=True)
-    if not packages.is_dir():
-        raise ValueError('Downstream package resolution is unavailable')
     if assessed_revision:
         from dependency_scope import verify_runtime
         verify_runtime(root / '.lake/packages/Aglib', assessed_revision)

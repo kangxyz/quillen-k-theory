@@ -32,7 +32,7 @@ class AssessedAglibTests(unittest.TestCase):
                  'Quillen/U.lean':'import Aglib.U\ndef u := 1\n',
                  'Quillen.lean':'import Quillen.P Quillen.C Quillen.U\n',
                  'QuillenTest/T.lean':'import Quillen.C\nexample : True := trivial\n',
-                 'QuillenTest/Axioms.lean':'import Quillen\n',
+                 'Audits/Quillen.lean':'import Quillen\n',
                  'examples/downstream/Audit.lean':'import Consumer\n',
                  'examples/downstream/Consumer/Use.lean':'import Quillen.C\ndef use := c\n',
                  'examples/downstream/Consumer/PublicLibraries.lean':'import Aglib\n',
@@ -66,10 +66,46 @@ class AssessedAglibTests(unittest.TestCase):
         self.assertEqual(p['providers'],['Quillen.C','Quillen.P'])
         self.assertEqual(p['provider_batches'],[['Quillen.P'],['Quillen.C']])
         self.assertEqual(p['tests'],['QuillenTest.T'])
-        self.assertEqual(p['clients'],['Consumer.FacadeUse','Consumer.Use'])
-        self.assertFalse(p['full']);self.assertTrue(p['trust']);self.assertTrue(p['client_trust'])
+        self.assertEqual(p['clients'],[])
+        self.assertFalse(p['full']);self.assertTrue(p['trust']);self.assertFalse(p['client_trust'])
         d=p['dependency_assessment'];self.assertEqual(d['old'],self.old);self.assertEqual(d['new'],self.new)
         self.assertIn('Aglib.B',d['changed_production_modules']);self.assertNotIn(str(self.directory),json.dumps(d))
+    def test_client_only_changes_are_static_even_for_manifest_and_audit(self):
+        self.write_pins(self.old)
+        for path, text in [
+            ('examples/downstream/Consumer/Use.lean', 'import Quillen.C\ndef use := 2\n'),
+            ('examples/downstream/Audit.lean', 'import Consumer\n-- changed diagnostic\n'),
+            ('examples/downstream/lake-manifest.json', '{}\n')]:
+            with self.subTest(path=path):
+                original = (self.root / path).read_text()
+                self.write(self.root, path, text)
+                scope = select(self.root)
+                self.assertFalse(scope['lean'])
+                self.assertFalse(scope['trust'])
+                self.assertFalse(scope['client_trust'])
+                self.assertEqual(scope['clients'], [])
+                self.assertEqual(scope['providers'], [])
+                self.assertIn(path, scope['changed'])
+                self.write(self.root, path, original)
+
+    def test_full_selection_keeps_in_package_tests_and_excludes_clients(self):
+        self.write_pins(self.old)
+        scope = select(self.root, full=True)
+        self.assertIn('QuillenTest.T', scope['tests'])
+        self.assertIn('Quillen.P', scope['providers'])
+        self.assertEqual(scope['clients'], [])
+        self.assertFalse(scope['client_trust'])
+        self.assertTrue(scope['trust'])
+        self.assertNotIn('Audits.Quillen', scope['providers'] + scope['tests'])
+
+    def test_changed_current_audit_template_selects_production_trust(self):
+        self.write_pins(self.old)
+        self.write(self.root, 'Audits/Quillen.lean', 'import Quillen\n-- changed policy\n')
+        scope = select(self.root)
+        self.assertTrue(scope['trust'])
+        self.assertEqual(scope['providers'], ['Quillen.C', 'Quillen.P', 'Quillen.U'])
+        self.assertEqual(scope['clients'], [])
+
     def test_ordinary_pin_guard_stays_closed(self):
         with self.assertRaisesRegex(ValueError,'global validation inputs'): select(self.root)
     def test_other_global_and_dependency_changes_reject(self):

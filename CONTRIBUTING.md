@@ -91,7 +91,7 @@ lake build Quillen.KTheory.API
 
 When changes select native validation, final checks run the configured
 full-library environment lint once and the whole-workspace native text lint once,
-before selected tests and downstream clients. Documentation-only scope retains
+before selected in-package tests. Documentation-only scope retains
 the static checks described above. The shared runner builds selected providers,
 `Quillen`, tests and lint runtimes in one native Lake graph, preserving compatible
 cached artifacts. The full library import basis is required even when only one
@@ -105,45 +105,31 @@ lake exe lint-style
 
 The first no-build option protects Lake's builtin checks; the option after `--`
 protects the configured Batteries driver. The default environment checks include
-slow checks and generated declarations. Selected tests and clients retain their
-scoped environment/text lint and complete selected trust audits. For a narrow
+slow checks and generated declarations. Selected in-package tests retain their
+applicable lint and existing selected-origin transitive axiom coverage. For a narrow
 repair after a full lint failure, the existing scoped runner remains available:
 
 ```sh
 lake env lean --run Tools/LintScoped.lean Quillen.KTheory.API
 ```
 
-After a final-check repair, repeat the shared entry with the same external
-`--state PATH` to retain compatible completed checks. Its printed evidence
-directory contains the generated recovery programs. Direct scoped repair is also
-available; substitute that directory for `RUN` below. For example:
+After a repair, repeat the shared entry with the same external `--state PATH`
+to retain compatible completed checks. Its printed evidence directory contains
+`scope.json` and the selected lint program. Reuse completed categories and
+reselect only when the affected import closure changes.
 
-```sh
-# Provider lint repair: compile the repaired source, then rerun its scoped lint.
-lake build Quillen.KTheory.API
-lake env lean --run RUN/LintScoped.lean Quillen.KTheory.API
-# A late test failure: compile and lint just that selected test.
-lake build QuillenTest.ActionTranslationNaturality
-lake env lean --run RUN/LintScoped.lean QuillenTest.ActionTranslationNaturality
-# A late client failure, from examples/downstream:
-cd examples/downstream
-lake build Consumer.AffineClosed
-lake env lean --run RUN/LintScoped.lean Consumer.AffineClosed
-# Rerun each failed or unrun audit chunk prepared for this scope.
-lake env lean RUN/client-audit-0.lean
-```
-
-Replace `RUN` and the examples with the actual selected paths and modules.
-Client audit batches are prepared as `client-audit-N.lean`. Replay only failed or unrun chunks, retaining completed
-compatible checks. Complete any still-affected trust/client checks from the existing selected
-commands; reselect when the import closure changes. The isolated lint runner
-also handles import-only facades and tests without named declarations.
+Routine formalization does not set up, build, lint or audit the separate
+downstream package, replay the kernel, or add inventory or negative-control
+acceptance chains. This applies to ordinary validation, full scope, merge,
+publication and adoption. A client-only source change receives the basic static
+source checks without triggering a root build. Independent mathematical review
+and writing acceptance retain their own governing requirements.
 
 A merge, commit, branch switch, checkout, version bump, or publication does not
 by itself require a whole-target build, fresh dependency replay, full audit, or
 Python/source suite. Complete release coverage may combine compatible existing
-evidence with new checks of the affected scope, including trust checks when
-their inputs or coverage changed. Record the inputs and closure that each
+evidence with new native compilation, batch lint and relevant in-package tests
+of the affected scope. Record the inputs and closure that each
 piece of evidence covers.
 
 Preserve caches. A missing artifact or receipt, or a different checkout, first
@@ -158,24 +144,22 @@ throughout that closure and the absence of a usable matching cache first. A user
 may explicitly request a literal full rebuild or replay; honor its exact scope
 without assuming broader work.
 
-The complete pipeline below remains available for explicitly requested comprehensive
-diagnostics. It is not a normal local acceptance step
-and does not itself request a clean rebuild:
+An explicitly requested full in-package scope remains available;
+it does not itself request a clean rebuild:
 
 ```sh
 bash scripts/check.sh --full --rehash
 ```
 
-The pipeline checks generated imports, module boundaries, placeholders, and
-script tests; builds selected production/test modules and lint runtimes in one
-native graph and runs the full library environment lint and whole-workspace text
-lint before downstream clients. It replays test assertions and both
-axiom audits, and includes Batteries environment lint and native mathlib text
-lint. Normal CI keeps selected test/build/audit scopes without comprehensive
-test replay. Library compilation
-uses `autoImplicit = false`, the mathlib standard linter set, and warnings as
-errors. The allowed foundation axioms are `propext`, `Classical.choice`, and
-`Quot.sound`; see [the audit boundary](docs/ARCHITECTURE.md#trust-checks).
+This checks generated imports, module boundaries, placeholders and selected
+script tests, builds the selected package modules and lint runtime in one native
+graph, and runs batch lint. `--full` widens selection without re-elaborating
+already-built tests or appending an acceptance chain. It never adds downstream
+checks or kernel replay. Existing production transitive axiom auditing remains
+ordinary final-validation coverage, reusing compatible evidence. A test aggregate
+may be excluded to avoid replay, but its production axiom predicate must remain
+covered under [mathematical trust](docs/DEVELOPMENT.md#mathematical-trust). Library compilation uses `autoImplicit = false`, the
+mathlib standard linter set and warnings as errors.
 
 ## Typechecking performance
 

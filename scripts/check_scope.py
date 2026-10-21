@@ -88,7 +88,7 @@ def snapshot(root, revision=None):
     result = {}
     for path in lean_paths:
         if not (path.startswith(('Quillen/', 'QuillenTest/', 'Tools/', CLIENT)) or
-                path in {'Quillen.lean', 'QuillenTest.lean'}):
+                path in {'Quillen.lean', 'QuillenTest.lean'} or path in AUDITS):
             raise ValueError(f'Unclassified Lean source: {path}; assign an explicit scope')
         if revision:
             header = contents.readline().decode().split()
@@ -150,13 +150,16 @@ def select(root, base=None, head=None, full=False, *, aglib_source=None):
     paths = sorted(set(paths))
     assessment = None
     external_roots, external_graph = [], {}
-    if aglib_source is not None and any(path in GLOBAL_INPUTS for path in paths):
+    if aglib_source is not None and any(path in GLOBAL_INPUTS and not path.startswith(CLIENT)
+                                       for path in paths):
         if full or initial:
             raise ValueError('Assessed Aglib mode requires an actual incremental comparison base')
         from dependency_scope import assess
         external_roots, external_graph, assessment = assess(
             root, base or revision, head, GLOBAL_INPUTS, aglib_source)
     for path in paths:
+        if path.startswith(CLIENT):
+            continue  # Client-only inputs receive static guards, never native preparation.
         if path in GLOBAL_INPUTS:
             if not full and not initial and assessment is None:
                 raise ValueError(f'{path} changes global validation inputs; assess invalidation and '
@@ -166,7 +169,7 @@ def select(root, base=None, head=None, full=False, *, aglib_source=None):
                   path in {'LICENSE', '.gitignore', 'AGENTS.md'}):
             raise ValueError(f'Unclassified changed path: {path}; assign an explicit scope')
     regressions = tooling_tests(root, paths, full)
-    if not full and assessment is None and not any(path.endswith('.lean') for path in paths):
+    if not full and assessment is None and not any(path.endswith('.lean') and not path.startswith(CLIENT) for path in paths):
         return dict(schema=1, revision=revision, base=base, head=head, full=False,
                     changed=paths, tooling_tests=regressions,
                     providers=[], tests=[], clients=[], provider_batches=[],
@@ -199,28 +202,25 @@ def select(root, base=None, head=None, full=False, *, aglib_source=None):
     # Generated import-only roots enroll sources statically; do not use them as
     # blanket build targets. A real consumer importing a facade retains that import.
     selected = {path for path in selected if path not in AUDITS and
-                not path.startswith('Tools/') and
+                not path.startswith(('Tools/', CLIENT)) and
                 (full or path in changed or not is_import_surface(current[path]))}
     providers = sorted(module_name(path) for path in selected if
                        path.startswith('Quillen/') or path == 'Quillen.lean')
     tests = sorted(module_name(path) for path in selected if
                    path.startswith('QuillenTest/') or path == 'QuillenTest.lean')
-    clients = sorted(module_name(path[len(CLIENT):]) for path in selected if path.startswith(CLIENT))
+    clients = []  # Separate client validation is an explicitly requested diagnostic.
     trust = bool(providers or 'Audits/Quillen.lean' in changed or full)
-    client_trust = bool(clients or CLIENT + 'Audit.lean' in changed or full)
+    client_trust = False
     # An audit-template-only edit replays its existing coverage explicitly.
     if trust and not providers:
         providers = sorted(module_name(path) for path in current if path.startswith('Quillen/')
                            and not is_import_surface(current[path]))
-    if client_trust and not clients:
-        clients = sorted(module_name(path[len(CLIENT):]) for path in current if
-                         path.startswith(CLIENT + 'Consumer/') and not is_import_surface(current[path]))
     result = dict(schema=1, revision=revision, base=base, head=head, full=full,
                 changed=sorted(set(paths) | changed), tooling_tests=regressions,
                 providers=providers, tests=tests, clients=clients,
                 provider_batches=provider_batches(providers, current),
                 trust=trust, client_trust=client_trust,
-                lean=bool(providers or tests or clients))
+                lean=bool(providers or tests))
     if assessment is not None:
         assessment['local_lean_sha256'] = hashlib.sha256(json.dumps(
             {p: hashlib.sha256(text.encode()).hexdigest() for p, text in sorted(current.items())},
