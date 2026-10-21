@@ -63,7 +63,7 @@ def check_layout(root: Path) -> tuple[list[str], int]:
             errors.append(f'Generator-owned facade has no corresponding directory: {facade}')
     # Legacy import level loads every transitive private declaration for the
     # exhaustive inventories. A modern auditor may silently omit unused helpers.
-    for auditor in (Path('QuillenTest/Axioms.lean'), Path('examples/downstream/Audit.lean')):
+    for auditor in (Path('Audits/Quillen.lean'), Path('examples/downstream/Audit.lean')):
         path = root / auditor
         if path.exists() and uses_module_system(path.read_text()):
             errors.append(f'Exhaustive axiom auditor must retain legacy private imports: {auditor}')

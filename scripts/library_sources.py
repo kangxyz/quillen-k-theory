@@ -137,10 +137,8 @@ def source_modules(root: Path) -> set[Path]:
 
 
 def test_modules(root: Path) -> set[Path]:
-    """Positive trust tests have a separate generated integration root."""
-    if not (root / 'QuillenTest').exists() and not (root / 'QuillenTest.lean').exists():
-        return set()
-    return {Path('QuillenTest.lean')} | {
+    """Test sources are discovered without a generated Test umbrella."""
+    return {
         path.relative_to(root) for path in (root / 'QuillenTest').rglob('*.lean')}
 
 

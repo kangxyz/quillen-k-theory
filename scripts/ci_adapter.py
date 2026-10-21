@@ -25,7 +25,7 @@ from ci_policy import LEGACY_HEAD, PROTOCOL
 POLICY = ['scripts/check.sh', 'scripts/check_run.py', 'scripts/ci_adapter.py',
           'scripts/check_scope.py', 'scripts/ci_policy.py', 'scripts/dependency_scope.py', 'scripts/library_sources.py',
           'scripts/generate_imports.py', 'Tools/LintScoped.lean', 'Tools/LintStyle.lean',
-          'QuillenTest/Axioms.lean', 'examples/downstream/Audit.lean',
+          'Audits/Quillen.lean', 'examples/downstream/Audit.lean',
           '.github/workflows/ci.yml', *sorted(GLOBAL_INPUTS)]
 DRIVERS = ['.lake/packages/batteries/scripts/runLinter.lean',
            '.lake/packages/mathlib/scripts/lint-style.lean']
@@ -94,7 +94,7 @@ def tasks(root, plan, phase, directory):
         path = directory / 'axioms.lean'
         root_checks.append(check_task('axioms', ['lake', 'env', 'lean', '-j2', path],
                            modules=scope['providers'], check_kind='audit',
-                           generated=audit_source(root, 'QuillenTest/Axioms.lean', 'Quillen', scope['providers']),
+                           generated=audit_source(root, 'Audits/Quillen.lean', 'Quillen', scope['providers']),
                            generated_index=4))
     if scope['tests']:
         root_checks.append(check_task('test-lint', ['lake', 'env', 'lean', '--run', lint_path, *scope['tests']],

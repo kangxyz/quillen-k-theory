@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate exhaustive library, test and downstream roots and thematic facades."""
+"""Generate thematic facades and the downstream root; native tools own library/Test discovery."""
 import argparse
 from pathlib import Path
 import sys
@@ -111,26 +111,12 @@ def generated_files(root: Path, modern_library: bool | None = None) -> dict[Path
             {name for path, names in authors.items() if directory in path.parents
              for name in names})
         modules.add(facade)
-    outputs[Path('Quillen.lean')] = render_imports(
-        [module_name(path) for path in modules],
-        '# Quillen library\n\nThe exhaustive import surface for all project source modules.\n'
-        'Use thematic facades or individual module imports for smaller dependencies.', modern_library,
-        {name for names in authors.values() for name in names})
     if modern_library:
         legacy = sorted(path for path in modules if path not in outputs
                         and not uses_module_system((root / path).read_text()))
         if legacy:
             raise ValueError('Modern library facades cannot import legacy sources: '
                              + ', '.join(map(str, legacy)))
-    tests = test_modules(root) - {Path('QuillenTest.lean')}
-    if test_modules(root):
-        outputs[Path('QuillenTest.lean')] = render_imports(
-            [module_name(path) for path in tests],
-            '# Quillen trust tests\n\nAll positive trust tests for the production library.\n'
-            'Tests are compiled separately and are never imported by production modules.',
-            authors={name for path in tests
-                     if not generator_owned(source := (root / path).read_text())
-                     for name in source_authors(source)})
     client_root = Path('examples/downstream/Consumer.lean')
     client_directory = client_root.with_suffix('')
     clients = {path for path in downstream_sources(root)
@@ -181,8 +167,7 @@ def main() -> int:
     else:
         # Recheck ownership before any writes: another editor may have created
         # or taken over a family facade after discovery.
-        exhaustive_roots = {Path('Quillen.lean'), Path('QuillenTest.lean'),
-                            Path('examples/downstream/Consumer.lean')}
+        exhaustive_roots = {Path('examples/downstream/Consumer.lean')}
         conflicts = [path for path in outputs if path not in exhaustive_roots
                      and (args.root / path).exists()
                      and not generator_owned((args.root / path).read_text())]

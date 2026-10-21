@@ -11,7 +11,7 @@ import sys
 from library_sources import is_import_surface, lean_imports, module_name
 
 CLIENT = 'examples/downstream/'
-AUDITS = {'QuillenTest/Axioms.lean', CLIENT + 'Audit.lean'}
+AUDITS = {'Audits/Quillen.lean', CLIENT + 'Audit.lean'}
 GLOBAL_INPUTS = {'lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lakefile.lean',
                  CLIENT + 'lean-toolchain', CLIENT + 'lake-manifest.json',
                  CLIENT + 'lakefile.toml', CLIENT + 'lakefile.lean', 'scripts/nolints.json'}
@@ -206,7 +206,7 @@ def select(root, base=None, head=None, full=False, *, aglib_source=None):
     tests = sorted(module_name(path) for path in selected if
                    path.startswith('QuillenTest/') or path == 'QuillenTest.lean')
     clients = sorted(module_name(path[len(CLIENT):]) for path in selected if path.startswith(CLIENT))
-    trust = bool(providers or 'QuillenTest/Axioms.lean' in changed or full)
+    trust = bool(providers or 'Audits/Quillen.lean' in changed or full)
     client_trust = bool(clients or CLIENT + 'Audit.lean' in changed or full)
     # An audit-template-only edit replays its existing coverage explicitly.
     if trust and not providers:

@@ -95,7 +95,7 @@ requests comprehensive diagnostics. CI uses the shared plan/source/native/finali
 lifecycle in [development policy](DEVELOPMENT.md#affected-check-scope), building
 the required library/test graph and separate downstream package when native
 checks are selected. Root and client axiom checks use generated scoped versions
-of `QuillenTest/Axioms.lean` and the downstream `Audit.lean`: cached compiled
+of `Audits/Quillen.lean` and the downstream `Audit.lean`: cached compiled
 modules do not re-execute their audit commands.
 
 Incremental validation includes applicable compilation, declaration/text-style

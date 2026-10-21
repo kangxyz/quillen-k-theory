@@ -127,6 +127,24 @@ class ImportGenerationTests(unittest.TestCase):
         for path, content in generated_files(self.root).items():
             (self.root / path).write_text(content)
 
+    def test_native_roots_are_untouched_while_thematic_and_client_generation_remains(self):
+        native = 'import Quillen.Algebra\n'
+        (self.root / 'Quillen.lean').write_text(native)
+        tests = self.root / 'QuillenTest'
+        tests.mkdir()
+        (tests / 'Positive.lean').write_text('import Quillen.Algebra.A\n')
+        client = self.root / 'examples/downstream/Consumer'
+        client.mkdir(parents=True)
+        (client / 'Leaf.lean').write_text('module\npublic import Quillen.Algebra.A\n')
+        outputs = generated_files(self.root)
+        self.assertNotIn(Path('Quillen.lean'), outputs)
+        self.assertNotIn(Path('QuillenTest.lean'), outputs)
+        self.assertIn(Path('Quillen/Algebra.lean'), outputs)
+        self.assertIn(Path('examples/downstream/Consumer.lean'), outputs)
+        self.generate()
+        self.assertEqual((self.root / 'Quillen.lean').read_text(), native)
+        self.assertFalse((self.root / 'QuillenTest.lean').exists())
+
     def test_deterministic_exhaustive_root_including_manual_facades(self):
         self.generate()
         actual = project_imports((self.root / 'Quillen.lean').read_text())
