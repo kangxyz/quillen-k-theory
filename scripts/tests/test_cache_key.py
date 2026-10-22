@@ -158,7 +158,7 @@ class CacheKeyTests(unittest.TestCase):
                     path.write_text(CONFIG)
 
     def test_cli_digest_and_visible_failure(self):
-        script = Path(__file__).with_name('cache_key.py')
+        script = (Path(__file__).resolve().parents[1] / 'cache_key.py')
         result = subprocess.run([sys.executable, str(script), str(self.root)],
                                 capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)

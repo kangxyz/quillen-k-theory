@@ -50,7 +50,7 @@ class ReceiptProjectionTests(unittest.TestCase):
             path.write_text(json.dumps(dict(state='running', command=['lake', 'env', 'lean'])))
             cache = Path(str(root) + '-cache.json')
             cache.write_text(json.dumps(dict(state='completed', exit_code=0)))
-            result = subprocess.run([sys.executable, str(Path(__file__).with_name('check_receipts.py')),
+            result = subprocess.run([sys.executable, str((Path(__file__).resolve().parents[1] / 'check_receipts.py')),
                                      str(root)], text=True, capture_output=True, check=True)
             records = [json.loads(line) for line in result.stdout.splitlines()]
             self.assertEqual(records.pop(0)['receipt_counts'], dict(total=2, emitted=2, omitted=0))
@@ -71,7 +71,7 @@ class ReceiptProjectionTests(unittest.TestCase):
             (root / 'scope.json').write_text(json.dumps(dict(providers=['Quillen.P'])))
             environment = dict(os.environ, GITHUB_RUN_ID='42', GITHUB_RUN_ATTEMPT='2',
                                GITHUB_REPOSITORY='fixture/quillen', GITHUB_SERVER_URL='https://github.example')
-            result = subprocess.run([sys.executable, str(Path(__file__).with_name('check_receipts.py')),
+            result = subprocess.run([sys.executable, str((Path(__file__).resolve().parents[1] / 'check_receipts.py')),
                                      str(root), '--limit', '3'], env=environment,
                                     text=True, capture_output=True, check=True)
             header, *records = [json.loads(line) for line in result.stdout.splitlines()]

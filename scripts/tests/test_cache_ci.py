@@ -14,7 +14,7 @@ import unittest
 
 from cache_ci import guarded_cache, serialized_frontend
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 METADATA = {'--print-prefix': b'/fake prefix\n', '--githash': b'abc123\n'}
 
 

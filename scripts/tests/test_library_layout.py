@@ -10,7 +10,7 @@ from check_library_layout import check_layout, import_cycles
 from generate_imports import generated_files, stale_files
 from library_sources import lean_imports, uses_module_system
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class LayoutGuardTests(unittest.TestCase):
@@ -208,7 +208,7 @@ def s := "import QuillenTest.Bad"
         original = (self.root / 'examples/downstream/Consumer.lean').read_bytes()
         for arguments in ([], ['--check']):
             result = subprocess.run(
-                [sys.executable, str(Path(__file__).with_name('generate_imports.py')),
+                [sys.executable, str((Path(__file__).resolve().parents[1] / 'generate_imports.py')),
                  '--root', str(self.root), *arguments], capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn('Consumer/NewClient.lean', result.stderr)

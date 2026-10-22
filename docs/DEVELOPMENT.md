@@ -98,3 +98,10 @@ Build/Test/Publish split. Local checking has no GitHub baseline, committed-phase
 frozen-plan or recipe-admission lifecycle. Source and compiler success do not
 establish mathematical correspondence. Retain the mathematical trust conditions
 and independent review described above.
+
+Python tooling tests live in `scripts/tests/`. With the selected shared tooling
+on `PYTHONPATH`, run them from the package root:
+
+```sh
+PYTHONPATH="scripts${PYTHONPATH:+:$PYTHONPATH}" python3 -m unittest discover -s scripts/tests
+```

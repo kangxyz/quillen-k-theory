@@ -258,7 +258,7 @@ class ImportGenerationTests(unittest.TestCase):
         # A marker mentioned elsewhere does not transfer ownership.
         facade.write_bytes(original + ('-- ' + GENERATED_MARKER).encode())
         original = facade.read_bytes()
-        script = Path(__file__).with_name('generate_imports.py')
+        script = (Path(__file__).resolve().parents[1] / 'generate_imports.py')
         result = subprocess.run([sys.executable, str(script), '--root', str(self.root)],
                                 capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
