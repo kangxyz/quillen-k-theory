@@ -2,7 +2,7 @@
 
 [CONTRIBUTING](../CONTRIBUTING.md) remains the authority for setup, general
 authoring, incremental checks and dependency changes. This page owns the
-candidate-specific authoring and admission workflow and the affected-check adapter.
+candidate-specific authoring and the native local-check entry.
 
 ## Mathematical trust
 
@@ -11,8 +11,8 @@ foundation inputs, no transitive `sorry`, and axiom dependencies limited to
 `propext`, `Classical.choice`, and `Quot.sound`. Custom and native-computation
 axioms cannot discharge a proof. Preserve production dependency boundaries and
 identify the source, pinned toolchain/dependencies and successful build. Retain
-the existing selected-origin transitive axiom audit in ordinary final validation;
-reuse compatible unchanged evidence and check changed or uncovered closure.
+production transitive axiom coverage through the pinned upstream auditor in
+ordinary native final validation; reuse compatible command evidence for unchanged closure.
 Source token checks and ordinary lint do not supply transitive axiom coverage.
 This is an existing mathematical trust predicate, not kernel replay or an added
 acceptance stage. Independent mathematical review and writing acceptance retain
@@ -71,71 +71,30 @@ accepted local implementation together with its old imports.
 
 ## Affected check scope
 
-`bash scripts/check.sh` is a thin launcher for the independently pinned
-`lean-incremental-ci` package. Install that distribution or select its tooling
-checkout explicitly with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. The
-checkout supplies `ci/lean_ci`; it is independent of the mathematical Aglib pin
-in `lakefile.toml`. No ambient sibling checkout or mutable branch supplies tooling.
-The reviewed shared-tooling revision for this adapter and CI is
-`2fa27fe14c4df3b0fd8bc02d3e80181ad7f1bf95`.
+[CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks) owns the native local commands.
+`scripts/check.sh` forwards through the thin `check_run.py` entry to the installed
+shared `lean_ci.cli`, with `Quillen` as the explicit production root. Its
+checkout package is `scripts/lean_ci`, installed from `scripts/pyproject.toml`. Set
+`LEAN_CI_TOOLING_ROOT` only to select an explicit tooling checkout; no ambient
+sibling, mathematical dependency pin or whole-package Git recipe hash selects
+that executable. Existing installed older tool versions are separate installations.
 
-The local entry compares tracked and untracked source bytes with `HEAD`.
-`--base REF` widens that comparison; `--base REF --head REF` selects a committed
-comparison with its head checked out. `--source-only` runs generated-import,
-layout, placeholder and selected Python checks without Lean or dependency setup.
-Source enrollment and absent configuration candidates are observed before
-selection. Global pin/configuration or checker changes still require the existing
-explicit invalidation assessment; missing history or caches never imply full
-scope. `--aglib-source PATH` retains the exact Git-object assessment of a changed
-Aglib pin. `--plan PATH` verifies a previously selected scope against current
-inputs. `--full` explicitly selects the full in-package scope; it does not
-re-elaborate already-built tests or append an acceptance chain.
+Use `lake --rehash build +MODULE` during proof iteration. The final entry uses
+CI's native production build, checker preparation, in-package `lake test`,
+generated-entry check, text style, native lint and pinned upstream axiom audit.
+A final whole-root command can still reuse all compatible native outputs; it is
+not a clean rebuild. `--full` adds no replay, client or audit chain.
 
-Both local and committed entries declare the same shared native recipe. It runs
-basic source/no-placeholder checks, root dependency preparation, one incremental
-root Lake graph for selected production modules and affected in-package tests,
-and selected declaration/text-style batch lint. The graph includes only those
-modules and the required lint runtimes; it does not unconditionally build the
-`Quillen` facade. No normal invocation elaborates a selected compile-time test
-twice. The shared runner owns execution and resource limits; existing remote
-wrapper profiles and Aglib resource aliases pass through its runtime.
+A nonempty docs-only comparison runs the retained source checks without Lean.
+Clean/no-change checks remain native. `--source-only` records only static
+coverage. `--list` displays commands without executing them. Use external
+`--state`/`--receipt-dir`, `--progress` and `--outputs` paths where applicable.
+Successful command reuse binds actual source/native/checker inputs and toolchain;
+partial, failed or changed commands cannot supply a pass. Delivered native
+mappings retain their compilation/recovery meaning and add no proof coverage.
 
-Routine checks, including full scope, never add separate downstream setup,
-builds, lint or audits, kernel replay, inventory or negative-control chains.
-The `QuillenTest` aggregate that imports the optional kernel audit is excluded
-from native selection; excluding replay must not remove existing production
-transitive axiom coverage. Client-only edits receive static source checks without a
-root build. Independent mathematical review and writing acceptance remain governed
-by their own contracts.
-
-Native local checks require the pinned root dependencies in the prepared workspace.
-They do not create or require a downstream `.lake` container or package link.
-Missing root prerequisites stop with an actionable diagnostic. Source-only checks
-create no cache directory.
-
-The shared entry prints its evidence directory. Set `--state /absolute/scratch/path`
-(or `LEAN_CI_STATE`) to retain it across retries; state, progress and exported
-mappings live outside the source checkout. Repeat the same entry after repair:
-Lake keeps valid artifacts and the shared progress store reuses checks with
-matching source, imports, checker, generated program, runtime and environment.
-`--progress PATH` may select an existing compatible progress store. Source/style
-checks explicitly bind their complete input boundary. Changed inputs invalidate
-the affected evidence; local success remains working-tree evidence.
-`scope.json` and the generated selected lint program are retained with native
-invocations. Their presence records preparation, not successful lint coverage.
-Direct scoped repair commands in
-[CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks) remain available.
-
-CI uses the shared `EvidenceProtocol` to select an actual successful native
-ancestor from exact reviewed workflow/recipe identities. It never uses
-`event.before`, a previous push, or a full-build fallback. A requested comparison
-may only widen that verified ancestor. Exact old/new Aglib source objects are
-acquired before pin assessment when needed. The source and native phases consume
-the same plan, require clean committed HEAD and bind the independently pinned
-tooling implementation. Finalization reconstructs every required task and receipt
-before native publication. Root mappings retain their workspace
-identity and native JSONL format; exporting them never rebuilds targets.
-
-A newly authored workflow/recipe is not admitted as successful historical evidence
-merely by generating its own hashes. Its source identity requires actual owner
-review. Historical receipts retain their original policy and source meaning.
+Public CI uses the separately pinned shared native workflow and its existing
+Build/Test/Publish split. Local checking has no GitHub baseline, committed-phase,
+frozen-plan or recipe-admission lifecycle. Source and compiler success do not
+establish mathematical correspondence. Retain the mathematical trust conditions
+and independent review described above.

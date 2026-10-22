@@ -1,25 +1,24 @@
 #!/usr/bin/env python3
 """Collect Mathlib cache roots through the reachable pinned Aglib sources."""
 import argparse
-import json
 from pathlib import Path
 import subprocess
 import sys
 
 from library_sources import (
     downstream_sources, lean_imports, module_path, source_modules,
-    test_modules, tool_sources,
+    test_modules,
 )
 
 
-def workspace_imports(root: Path, plan: dict | None = None) -> set[str]:
-    if plan is not None:
-        if not plan.get('lean'):
-            raise ValueError('Static scope does not request dependency cache work')
-        client = Path('examples/downstream')
-        pending = ([module_path(name) for name in plan['providers'] + plan['tests']] +
-                   [client / module_path(name) for name in plan['clients']] +
-                   [Path('Tools/LintScoped.lean')])
+def workspace_imports(root: Path, targets: list[str] | None = None) -> set[str]:
+    if targets:
+        pending = []
+        for name in targets:
+            path = module_path(name)
+            if name.split('.')[0] not in {'Quillen', 'QuillenTest'} or not (root / path).is_file():
+                raise ValueError('Expected existing local Quillen/QuillenTest cache target: ' + name)
+            pending.append(path)
         seen, imports = set(), set()
         while pending:
             path = pending.pop()
@@ -29,13 +28,11 @@ def workspace_imports(root: Path, plan: dict | None = None) -> set[str]:
             for name in lean_imports((root / path).read_text()):
                 imports.add(name)
                 local = module_path(name)
-                if name.split('.')[0] == 'Consumer':
-                    local = client / local
                 if (root / local).is_file():
                     pending.append(local)
         return imports
     sources = (source_modules(root) | test_modules(root) |
-               downstream_sources(root) | tool_sources(root))
+               downstream_sources(root))
     return {name for path in sources for name in lean_imports((root / path).read_text())}
 
 
@@ -68,12 +65,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--resolve-deps', action='store_true')
-    parser.add_argument('--plan', type=Path)
+    parser.add_argument('targets', nargs='*', help='optional explicit local module cache roots')
     args = parser.parse_args()
     try:
         # Invalid local source inputs fail before dependency resolution/download.
-        plan = json.loads(args.plan.read_text()) if args.plan else None
-        imports = workspace_imports(args.root, plan)
+        imports = workspace_imports(args.root, args.targets)
         if args.resolve_deps:
             subprocess.run(['lake', 'resolve-deps'], cwd=args.root, check=True,
                            stdout=sys.stderr)

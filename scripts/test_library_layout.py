@@ -33,6 +33,11 @@ class LayoutGuardTests(unittest.TestCase):
     def generate(self):
         for path, content in generated_files(self.root).items():
             self.write(path, content)
+        # Fixture input supplied as native mk_all would; the Python generator
+        # under test owns only thematic/client facades.
+        names = sorted('.'.join(path.relative_to(self.root).with_suffix('').parts)
+                       for path in (self.root / 'Quillen').rglob('*.lean'))
+        self.write('Quillen.lean', ''.join('import ' + name + '\n' for name in names))
 
     def rejected(self, phrase):
         errors, _ = check_layout(self.root)
@@ -48,9 +53,9 @@ class LayoutGuardTests(unittest.TestCase):
         self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
 
-    def test_root_cannot_substitute_a_transitive_closure_for_direct_enrollment(self):
+    def test_native_root_enrollment_is_left_to_mk_all(self):
         self.write('Quillen.lean', 'import Quillen.Library\n')
-        self.rejected('Stale generated imports')
+        self.assertEqual(check_layout(self.root)[0], [])
 
     def test_library_test_import_bypasses_are_rejected(self):
         for imported in ('Consumer.Bad', 'Tests.Bad', '«Tests».Bad', 'Quillen.Tests.Bad',
@@ -69,21 +74,12 @@ class LayoutGuardTests(unittest.TestCase):
         self.rejected('Unresolved local import')
 
     def test_library_cannot_depend_on_workspace_tooling(self):
-        for imported in ('Tools.LintStyle', '«Tools».Helper', 'scripts.Helper'):
+        for imported in ('Tools.Helper', '«Tools».Helper', 'scripts.Helper'):
             with self.subTest(imported=imported):
                 self.write('Quillen/Algebra/A.lean', 'module\npublic meta import ' + imported + '\n')
                 self.rejected('Forbidden library import')
         self.write('Quillen/Algebra/A.lean', 'import Mathlib.Tools.Helper\n')
         self.assertEqual(check_layout(self.root)[0], [])
-
-    def test_exhaustive_auditors_cannot_silently_switch_import_level(self):
-        for path in ('QuillenTest/Axioms.lean', 'examples/downstream/Audit.lean'):
-            with self.subTest(path=path):
-                self.write(path, '/- a comment before the header -/\nmodule\nimport Quillen\n')
-                self.generate()
-                self.rejected('must retain legacy private imports')
-                self.write(path, '/-! The word module is documentation. -/\nimport Quillen\n')
-                self.assertEqual(check_layout(self.root)[0], [])
 
     def test_fake_imports_in_comments_and_strings_do_not_create_failures(self):
         self.write('Quillen/Algebra/A.lean', '''/- import Consumer.Bad /- nested -/ -/
@@ -166,7 +162,7 @@ def s := "import QuillenTest.Bad"
         self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
         self.write('QuillenTest/NewPositiveTest.lean', 'import Quillen.Algebra.A\n')
-        self.rejected('missing enrollment')
+        self.assertEqual(check_layout(self.root)[0], [])  # Test globs enroll it.
         self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
 
@@ -226,22 +222,20 @@ def s := "import QuillenTest.Bad"
         self.write('examples/downstream/Consumer/Existing.lean', 'module\n')
         self.generate()
         self.write('examples/downstream/Consumer/New/Nested.lean', 'module\n')
-        self.write('examples/downstream/Audit.lean', 'import Consumer\n')
+        # A mathematical example's filename is not an audit-implementation flag.
+        self.write('examples/downstream/Consumer/Audit.lean', 'module\npublic import Quillen.Library\n')
         self.write('examples/downstream/.lake/Consumer/Cached.lean', '')
-        self.write('examples/downstream/Consumer/Audit.lean', '')
         self.rejected('missing enrollment')
         self.generate()
         self.assertEqual(lean_imports((self.root / facade).read_text()),
-                         ['Consumer.Existing', 'Consumer.New.Nested'])
+                         ['Consumer.Audit', 'Consumer.Existing', 'Consumer.New.Nested'])
         self.assertEqual(check_layout(self.root)[0], [])
         (self.root / 'examples/downstream/Consumer/Existing.lean').unlink()
         self.rejected('missing enrollment')
         self.generate()
         self.assertEqual(lean_imports((self.root / facade).read_text()),
-                         ['Consumer.New.Nested'])
+                         ['Consumer.Audit', 'Consumer.New.Nested'])
         self.assertEqual(check_layout(self.root)[0], [])
-        self.assertFalse(uses_module_system(
-            (self.root / 'examples/downstream/Audit.lean').read_text()))
 
     def test_manual_future_facade_and_leaf_both_enrolled(self):
         self.write('Quillen/Future/A.lean', '')

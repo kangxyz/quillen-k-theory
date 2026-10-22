@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reject proof placeholders and custom axioms in library, tests and client.
 
-Audits/Quillen.lean performs the authoritative kernel dependency audit.
+The shared native entry checks transitive axiom dependencies separately.
 """
 import argparse
 from pathlib import Path

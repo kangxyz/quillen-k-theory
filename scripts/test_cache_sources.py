@@ -39,32 +39,27 @@ class CacheSourceTests(unittest.TestCase):
         self.assertEqual(mathlib_cache_roots(self.root),
                          ['Mathlib.Direct', 'Mathlib.First', 'Mathlib.Second'])
 
-    def test_native_tool_test_and_client_sources_are_included(self):
-        self.write('Tools/LintStyle.lean', 'import Mathlib.Style\n')
-        self.write('QuillenTest.lean', 'import Mathlib.Trust\n')
+    def test_in_package_tests_and_explicit_client_sources_are_included(self):
+        self.write('QuillenTest/Positive.lean', 'import Mathlib.Trust\n')
         self.write('examples/downstream/Consumer.lean', 'import Mathlib.Client\n')
         self.write('examples/downstream/.lake/packages/Bad.lean', 'import Mathlib.Ignored\n')
         self.assertEqual(mathlib_cache_roots(self.root),
-                         ['Mathlib.Client', 'Mathlib.Direct', 'Mathlib.Style', 'Mathlib.Trust'])
+                         ['Mathlib.Client', 'Mathlib.Direct', 'Mathlib.Trust'])
 
     def test_missing_reachable_dependency_fails_closed(self):
         self.write('Quillen.lean', 'import Aglib.Missing\n')
         with self.assertRaisesRegex(ValueError, 'Missing reachable pinned Aglib source'):
             mathlib_cache_roots(self.root)
 
-    def test_plan_fetches_only_selected_import_closure_and_linter_runtime(self):
+    def test_explicit_cache_targets_follow_only_their_actual_import_closure(self):
         self.write('Quillen/P.lean', 'import Aglib.P\n')
         self.write('Quillen/Unrelated.lean', 'import Mathlib.Unrelated\n')
         self.write('QuillenTest/T.lean', 'import Quillen.P\nimport Mathlib.Test\n')
-        self.write('examples/downstream/Consumer/Use.lean', 'import Quillen.P\n')
-        self.write('Tools/LintScoped.lean', 'import Mathlib.Tactic.Linter.TextBased\n')
         self.write('.lake/packages/Aglib/Aglib/P.lean', 'import Mathlib.Provider\n')
-        plan = dict(lean=True, providers=['Quillen.P'], tests=['QuillenTest.T'],
-                    clients=['Consumer.Use'])
-        self.assertEqual(mathlib_cache_roots(self.root, workspace_imports(self.root, plan)),
-                         ['Mathlib.Provider', 'Mathlib.Tactic.Linter.TextBased', 'Mathlib.Test'])
-        with self.assertRaisesRegex(ValueError, 'Static scope'):
-            workspace_imports(self.root, dict(lean=False))
+        self.assertEqual(mathlib_cache_roots(self.root, workspace_imports(self.root, ['QuillenTest.T'])),
+                         ['Mathlib.Provider', 'Mathlib.Test'])
+        with self.assertRaisesRegex(ValueError, 'existing local'):
+            workspace_imports(self.root, ['Consumer.Use'])
 
     def test_root_import_uses_the_pinned_aglib_root(self):
         self.write('Quillen.lean', 'import Aglib\n')
@@ -153,94 +148,6 @@ def run(command, *, env, receipt):
                           'Mathlib.Direct', 'Mathlib.Resolved'])
         self.assertEqual(commands[2],
                          ['exe', 'cache', 'get', 'Mathlib.Direct', 'Mathlib.Resolved'])
-
-
-class SharedResourcePolicyTests(unittest.TestCase):
-    def test_adapter_retains_remote_profile_and_resource_aliases(self):
-        from ci_adapter import create_application
-        runtime = create_application(ROOT).runtime
-        config = runtime.resource_config
-        self.assertIn('R5_LEAN_REMOTE_PROFILE', config.names('profile'))
-        self.assertIn('AGLIB_BUILD_THREADS', config.names('build_thread'))
-        self.assertIn('AGLIB_LEAN_MEMORY_MB', config.names('memory'))
-        self.assertIn('AGLIB_RSS_LIMIT_MB', config.names('rss'))
-        self.assertEqual(type(runtime).__module__, 'lean_ci.runtime')
-
-    def test_emitted_r5_remote_profile_preserves_managed_wrapper_and_caps(self):
-        from ci_adapter import create_application
-        from lean_ci.build import capped_toolchain, build_threads
-        from lean_ci.resources import limits, capped_command, frontend_args
-        from unittest.mock import patch
-        with tempfile.TemporaryDirectory(prefix='quillen-r5-profile-') as temporary:
-            sysroot = Path(temporary).resolve()
-            (sysroot / 'bin').mkdir()
-            wrapper = sysroot / 'bin/lean'
-            wrapper.write_text('#!/bin/sh\nexit 99\n')
-            wrapper.chmod(0o755)
-            profile = {'schema_version': 1, 'jobs': 3, 'threads': 5,
-                       'lean_memory_mib': 8192, 'rss_limit_mib': 12288,
-                       'lean': str(wrapper)}
-            environment = {'PATH': os.environ.get('PATH', ''),
-                           'R5_LEAN_REMOTE_PROFILE': json.dumps(profile),
-                           'LEAN': str(wrapper), 'LEAN_SYSROOT': str(sysroot),
-                           'AGLIB_BUILD_THREADS': '1', 'AGLIB_LEAN_MEMORY_MB': '64',
-                           'AGLIB_RSS_LIMIT_MB': '128'}
-            with patch.dict(os.environ, environment, clear=True):
-                runtime = create_application(ROOT).runtime
-            config = runtime.resource_config
-            budget = limits(runtime.environment, physical_bytes=64 * 1024**3, config=config)
-            self.assertEqual(budget['remote_profile'], profile)
-            self.assertEqual((budget['lake_jobs'], budget['max_active_lean'],
-                              budget['lean_threads'], budget['native_build_threads'],
-                              budget['lean_memory_mb'], budget['rss_limit_mb']),
-                             (3, 3, 5, 5, 8192, 12288))
-            self.assertEqual(build_threads(runtime.environment, config), 5)
-            with patch('lean_ci.build.subprocess.check_output',
-                       side_effect=AssertionError('managed profile queried Elan')):
-                with capped_toolchain(ROOT, threads=1, environment=runtime.environment, config=config) as inherited:
-                    self.assertEqual(inherited['LEAN'], str(wrapper))
-                    self.assertEqual(inherited['LEAN_SYSROOT'], str(sysroot))
-                    self.assertEqual(inherited['LAKE_OVERRIDE_LEAN'], 'true')
-                    self.assertEqual(inherited['LEAN_NUM_THREADS'], '3')
-                    self.assertEqual(inherited['PATH'].split(os.pathsep)[0], str(wrapper.parent))
-                    self.assertEqual(capped_command(['lake', 'env', 'lean', '--run', 'Tool.lean'],
-                                                     inherited, config),
-                                     ['lake', 'env', str(wrapper), '--run', 'Tool.lean'])
-                    self.assertEqual(frontend_args(environment=inherited, config=config),
-                                     [str(wrapper), '-j5', '-M8192'])
-
-    def test_source_only_shared_execution_needs_no_lean_or_dependency(self):
-        from ci_adapter import create_application
-        from unittest.mock import patch
-        from lean_ci.resources import run as guarded_run
-        from functools import partial
-        with tempfile.TemporaryDirectory(prefix='quillen-shared-static-') as temporary:
-            directory = Path(temporary)
-            root = directory / 'project';root.mkdir()
-            (root/'scripts').mkdir()
-            for name in ('generate_imports.py','check_library_layout.py','check_placeholders.py'):
-                (root/'scripts'/name).write_text('pass\n')
-            (root/'.gitignore').write_text('__pycache__/\n')
-            def git(*arguments):
-                return subprocess.check_output(['git',*arguments],cwd=root)
-            git('init','-q');git('add','.')
-            git('-c','user.name=Fixture','-c','user.email=fixture@example.invalid',
-                'commit','-qm','source-only fixture')
-            application = create_application(root,source_only=True)
-            with patch.object(application.runtime,'compiler_identity',side_effect=AssertionError('Lean queried')), \
-                 patch.dict(os.environ,{'PYTHONDONTWRITEBYTECODE':'1'}), \
-                 patch('lean_ci.runtime.resources.run', side_effect=partial(guarded_run, sampler=lambda group: [])):
-                result = application.check(state=directory/'state')
-            self.assertEqual(result['status'],'complete')
-            self.assertEqual(result['performed_checks'],
-                             ['source/imports','source/layout','source/placeholders'])
-            self.assertFalse((root/'.lake').exists())
-            # Compatible continuation reuses the individual source checks.
-            with patch.object(application.runtime,'compiler_identity',side_effect=AssertionError('Lean queried')), \
-                 patch.dict(os.environ,{'PYTHONDONTWRITEBYTECODE':'1'}), \
-                 patch('lean_ci.runtime.resources.run', side_effect=partial(guarded_run, sampler=lambda group: [])):
-                resumed = application.check(state=directory/'state')
-            self.assertEqual(resumed['reused_checks'],result['performed_checks'])
 
 
 if __name__ == '__main__':

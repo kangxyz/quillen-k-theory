@@ -13,9 +13,9 @@ reader guides and references.
 | `Quillen/Aglib/` | General-theory candidates prepared for later upstream admission |
 | `Quillen.lean` | Generated complete import surface |
 | `Quillen/<Subject>.lean` and owned nested facades | Whole-topic or selected public imports |
-| `QuillenTest/` | Maintained tests and exhaustive library axiom audit |
-| `examples/downstream/` | Independently configured client package and audit |
-| `Tools/` and `scripts/` | Lint, source discovery, generation, cache, and checks |
+| `QuillenTest/` | In-package mathematical and interface tests |
+| `examples/downstream/` | Independent mathematical example package; explicit diagnostics only |
+| `scripts/` | Thin native entry, source discovery, thematic generation and explicit cache setup |
 | `Quillen/**/README.md` and focused family guides | Mathematical results, API/interfaces, exact hypotheses, consumers and remaining inputs at source owners |
 | `docs/` | Global summaries, navigation, compatibility/history, workflow, evidence/provenance and operations |
 | `docs/ARCHITECTURE.md`, `docs/PERFORMANCE.md` | Architecture, trust operations and performance; setup/checks remain in `CONTRIBUTING.md` and candidate workflow in `docs/DEVELOPMENT.md` |
@@ -74,83 +74,82 @@ their own canonical namespaces. See the [source-family guides](../Quillen/README
 
 ## Import generation and extension
 
-The generator discovers the source graph and creates the complete root and
-whole-topic facades. It preserves manually maintained selected entrypoints,
+Mathlib's native `mk_all --lib Quillen` owns the complete production root.
+The Python generator discovers the source graph and creates whole-topic facades. It preserves manually maintained selected entrypoints,
 including `Quillen.AlgebraicGeometry.Scheme` and `Quillen.Resolution`.
 An existing nested facade opts into generation through its ownership marker;
 nested directories alone do not request a facade. New subjects with actual
 source are discovered without editing a registry.
 
-The generated root imports every library module. Clients can use a smaller
-individual module or topic import. The generator wraps long import lines and
+The generated production root imports every library module. The native entry
+library and disjoint `QuillenModules` library use explicit globs and empty
+`roots`; final commands therefore pass `Quillen` explicitly. In-package tests
+use `QuillenTest.+` globs without a generated Test umbrella. Clients can use a
+smaller individual module or topic import. The Python generator wraps long import lines and
 gives oversized import-only facades a local long-file bound derived from their
 generated size; the other style linters remain enabled. CI checks generation
 against the current source graph. See [CONTRIBUTING.md](../CONTRIBUTING.md) for
 extension rules.
 
-## Trust checks
+## Native local and CI checks
 
-`bash scripts/check.sh` selects affected local checks; `--full` explicitly
-requests comprehensive diagnostics. CI uses the shared plan/source/native/finalize
-lifecycle in [development policy](DEVELOPMENT.md#affected-check-scope), building
-the required library/test graph and separate downstream package when native
-checks are selected. Root and client axiom checks use generated scoped versions
-of `Audits/Quillen.lean` and the downstream `Audit.lean`: cached compiled
-modules do not re-execute their audit commands.
+During proof iteration use `lake --rehash build +MODULE` in the prepared
+workspace. At final validation, `bash scripts/check.sh` forwards to the shared
+native CLI with production root `Quillen` and the existing layout/placeholder
+source checks. Install the current `lean-incremental-ci` package or explicitly
+select an Aglib tooling checkout using `LEAN_CI_TOOLING_ROOT`. Tooling is
+independent of mathematical Lake dependency pins. There is no local adapter,
+plan/source/native/finalize protocol, hosted-baseline lookup or recipe-hash gate.
 
-Incremental validation includes applicable compilation, declaration/text-style
-lint, affected `QuillenTest` and client tests, and source/trust checks. Cover the
-relevant categories in the task's final validation before delivery, reusing
-compatible evidence. During development use incremental compilation and its
-diagnostics; independent lint and tests run only at final validation.
-Helper returns, internal commits and merges do not trigger them. After repairs,
-rerun only failed or newly affected checks. Compilation alone does not supply
-separate lint or test coverage.
+The local native sequence matches public CI: incrementally build production,
+prepare native checkers, run the configured `lake test`, check generated entries
+with Mathlib `mk_all`, run Mathlib text style and native lint with explicit
+production roots, and invoke the pinned upstream production axiom auditor.
+The duplicate local Lean linter and audit implementations are removed. Builtin
+lint and the configured Batteries driver retain their native argument and
+package scopes; text style reads the production entry's import list.
 
-Normal authoring, maintenance, documentation, review, merge, integration, and
-publication must use incremental checks, reusing trusted caches and compatible
-existing evidence with new checks for changed or missing required
-modules, affected consumers, and changed trust-check inputs. Reconcile combined
-changes before reusing coverage. The phase, commit identity, a missing receipt,
-or a different checkout alone does not require complete compilation, fresh
-dependency replay, or rerunning every audit and source suite. See
-[the validation policy](../CONTRIBUTING.md#tests-and-checks) for cache recovery
-and the exceptional fault-recovery conditions for a whole-library rebuild.
-Missing coverage alone calls for the uncovered affected checks. Outside fault
-recovery, a literal full rebuild or replay requires an explicit user request
-with that exact scope.
+A nonempty documentation-only source comparison runs static checks without Lean
+setup. Clean/no-change checks still request native final validation.
+`--source-only` explicitly requests static coverage; `--list` prints commands
+without execution. `--full` uses the same incremental graph and predicates, with
+no forced recompilation, kernel replay or additional acceptance stages.
+Independent downstream examples remain available only as explicitly requested
+separate diagnostics; ordinary checks never prepare or build that package.
+[CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks) owns exact local commands.
 
-CI restores root, downstream, and pinned Aglib build outputs and shared native
-Lake artifacts. Versioned keys distinguish platform, toolchains, manifests, and
-normalized Lake configurations. The configuration hash (`scripts/cache_key.py`,
-Python 3.11+) omits only the top-level `version`, `enableArtifactCache`, and
-`restoreAllArtifacts` fields of each TOML package configuration. Compiler
-options, targets, metadata, and nested dependency versions remain part of it.
-Toolchains, manifests, and optional executable Lake configurations are hashed
-raw; invalid or missing required configuration fails visibly. A configuration
-key change selects matching artifacts and actual invalidation; it is not a
-local instruction to recompile every library.
+Public CI retains three jobs. Build compiles only mathematical production
+outputs and saves/stages them independently of checks. Test restores that run's
+production artifact, verifies it without compilation, prepares its own checker
+tools and performs all required tests/lint/generated-entry/axiom checks. Publish
+requires successful Build and Test on a trusted default-branch push. Both jobs
+retain completed native compilation on failure; a cache artifact alone is not a
+check pass. Local runs have no job-transport or publication lifecycle.
 
-Project source hashes and source-independent prefixes permit restoration after
-source changes. The configured CI job calls
-`python3 scripts/check_run.py plan`, then `source`, `native` when selected, and
-`finalize`, sharing its external state directory. The native Lake graphs rehash
-restored traces against current content and incrementally build missing or stale
-modules and affected dependents. Required lints and scoped audits retain their
-check coverage on exact build-cache hits; matching check evidence may be reused. This CI coverage does
-not make that command the local merge or publication default. CI saves partial
-build progress, while publishing checked native artifacts only after successful
-checks. Publication of the native cache consumes those checked artifacts rather
-than requiring a fresh proof build.
+Native Lake traces and artifact caches decide what needs rebuilding. Preserve
+matching artifacts and compatible per-command successes after repairs. A merge,
+commit, missing receipt or different checkout does not itself require a clean
+build, dependency replay or a new audit chain. Local command reuse binds actual
+source/native/checker inputs, imports and toolchain; changed, failed or partial
+work cannot supply a pass. `--outputs` delivers mappings from the native build
+without compiling again. Mapping delivery describes compilation/recovery and
+adds no lint, audit or mathematical coverage.
 
-The exhaustive library audit uses legacy imports to expose transitive private
-module declarations. It discovers imported module inventories and local
-environment declarations, selects every declaration defined in a `Quillen`
-module or in the `Quillen` namespace, deduplicates names, and rechecks defining
-origin. Private helpers are included. `collectAxioms` follows transitive
-dependencies and rejects any axiom outside `propext`, `Classical.choice`, and
-`Quot.sound`.
+## Mathematical trust
 
-This audit covers the selected kernel declarations and foundation dependencies.
-It does not establish a definition's mathematical interpretation, correspondence
-with an external source, or a comparison theorem absent from the library.
+The shared entry uses the pinned upstream `axiom-audit` on built production
+roots. It loads their import environment and selects declarations by defining
+module under `Quillen`, including loaded private/generated declarations and
+those with a different mathematical namespace. It follows axiom dependencies
+and allows only `propext`, `Classical.choice` and `Quot.sound`; `sorryAx`, custom
+assumptions and native-computation axioms are outside this allowlist. A root
+that imports no auditable declarations fails. In-package deliberate negative
+fixtures are not production audit roots.
+
+The auditor relies on the prior successful build and trusted compatible
+artifacts. It does not recheck imported proofs, establish source correspondence
+or certify mathematical interpretation. Source checks retain production/test
+separation, local imports/cycles, thematic facade enrollment and placeholders;
+native `mk_all` checks complete production-root enrollment. Independent
+mathematical review and writing acceptance retain their governing requirements,
+and conditional theorems retain their explicit premises.

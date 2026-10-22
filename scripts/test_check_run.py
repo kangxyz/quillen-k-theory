@@ -1,322 +1,93 @@
-#!/usr/bin/env python3
-"""Check lossless client scope reduction and guarded independent scheduling."""
-import copy
-from dataclasses import replace
-import hashlib
-import json
+"""Native entry forwarding fixtures; no Lean, cache mutation or hosted lifecycle."""
+from contextlib import redirect_stderr
+import io
 import os
 from pathlib import Path
-import tempfile
-import sys
 import subprocess
-import types
+import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
-from check_run import client_check_scope, scoped_lint_source
-from ci_adapter import tasks, binding, QuillenAdapter, PROTOCOL, LEGACY_HEAD, prepare
-from ci_policy import (CORE_ENTRYPOINTS, HISTORICAL_CORE_ENTRYPOINTS,
-                       HISTORICAL_CORE_HEAD, HISTORICAL_CORE_WORKFLOW)
-from lean_ci.github import (BaselineError, git_file, reviewed_recipe,
-                            select as select_baseline, workflow_kind)
-from generate_imports import generated_files
-
-ROOT = Path(__file__).resolve().parents[1]
+import check_run as entry
+import check_run as controls
 
 
-class ClientScopeTests(unittest.TestCase):
-    def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory(prefix='quillen-client-scope-')
-        self.root = Path(self.tmp.name)
-        (self.root / 'Quillen').mkdir()
-        self.write('Quillen.lean', '')
-        self.write('examples/downstream/Consumer/Shared.lean',
-                   'module\npublic import Quillen\nprivate def hidden := 1\n')
-        self.write('examples/downstream/Consumer/Use.lean',
-                   'module\npublic import Consumer.Shared\ntheorem result : True := by trivial\n')
-        self.write('examples/downstream/Consumer/PublicLibraries.lean',
-                   'module\npublic import Aglib\npublic import Quillen\n@[expose] public section\n')
-        self.regenerate()
+class NativeEntryTests(unittest.TestCase):
+    def test_native_options_are_forwarded_once_without_an_adapter_or_plan(self):
+        options = ['--base', 'base', '--head', 'head', '--full', '--source-only',
+                   '--progress', '/tmp/progress', '--state', '/tmp/state',
+                   '--outputs', '/tmp/outputs.jsonl', '--list']
+        with patch('check_run.load_tooling'), \
+                patch('lean_ci.cli.main', return_value=7) as native:
+            self.assertEqual(entry.main(options), 7)
+        native.assert_called_once()
+        self.assertEqual(native.call_args.args, (['check', *options],))
+        options = native.call_args.kwargs
+        self.assertEqual(options['root'], entry.ROOT)
+        self.assertEqual(options['production'], ('Quillen',))
+        self.assertNotIn('adapter', options)
+        self.assertNotIn('check_targets', options)
+        self.assertTrue(options['source_checks'])
+        self.assertTrue(all(command[0] == sys.executable for command in options['source_checks']))
+        self.assertTrue(all(Path(command[1]).is_file() for command in options['source_checks']))
+        self.assertTrue(all('downstream' not in ' '.join(command) for command in options['source_checks']))
 
-    def tearDown(self):
-        self.tmp.cleanup()
+    def test_no_arguments_request_native_final_check_without_a_fake_source_baseline(self):
+        with patch('check_run.load_tooling'), patch('lean_ci.cli.main', return_value=0) as native:
+            self.assertEqual(entry.main([]), 0)
+        self.assertEqual(native.call_args.args, (['check'],))
 
-    def write(self, name, source):
-        path = self.root / name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(source)
+    def test_explicit_tooling_checkout_uses_scripts_package(self):
+        with tempfile.TemporaryDirectory() as directory:
+            checkout = Path(directory).resolve()
+            package = checkout / 'scripts/lean_ci'
+            package.mkdir(parents=True)
+            (package / '__init__.py').write_text('')
+            with patch.object(sys, 'path', sys.path.copy()), \
+                    patch.dict(sys.modules, {'lean_ci': 'selected-package'}), patch.dict(os.environ):
+                self.assertEqual(entry.load_tooling(entry.ROOT, checkout), 'selected-package')
+                self.assertEqual(sys.path[0], str(checkout / 'scripts'))
+                self.assertEqual(os.environ['LEAN_CI_TOOLING_ROOT'], str(checkout))
 
-    def regenerate(self):
-        path = Path('examples/downstream/Consumer.lean')
-        self.write(path, generated_files(self.root)[path])
+    def test_old_ci_directory_is_not_an_implicit_tooling_fallback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            checkout = Path(directory).resolve()
+            (checkout / 'ci/lean_ci').mkdir(parents=True)
+            (checkout / 'ci/lean_ci/__init__.py').write_text('')
+            with self.assertRaisesRegex(ValueError, 'scripts/lean_ci'):
+                entry.load_tooling(entry.ROOT, checkout)
 
-    def test_generated_facade_certification_keeps_all_selected_text_and_origin_union(self):
-        scope = client_check_scope(self.root, ['Consumer', 'Consumer.Use'], batch_size=1)
-        self.assertEqual(scope['environment_batches'], [['Consumer.Use']])
-        self.assertEqual(scope['facade_text_modules'], ['Consumer'])
-        self.assertEqual(scope['audit_defining_origin_modules'],
-                         ['Consumer.Shared', 'Consumer.Use'])
-        self.assertEqual(scope['audit_origin_union'], ['Consumer.Shared', 'Consumer.Use'])
-        self.assertEqual(scope['audit_origin_overlaps'], {'Consumer.Shared': [0, 1]})
-        self.assertEqual(set(scope['facade_certificates']),
-                         {'Consumer', 'Consumer.PublicLibraries'})
-        self.assertEqual(scope['facade_certificates']['Consumer']['kind'],
-                         'generator-and-source-certified-import-only')
-        self.assertEqual(set(scope['selected_lint_modules']),
-                         set(sum(scope['environment_batches'], []) + scope['facade_text_modules']))
+    def test_configuration_and_command_failures_do_not_become_success(self):
+        with patch('check_run.load_tooling', side_effect=ValueError('missing tooling')), \
+                patch('lean_ci.cli.main') as native, redirect_stderr(io.StringIO()):
+            self.assertEqual(entry.main([]), 2)
+        native.assert_not_called()
+        with patch('check_run.load_tooling'), \
+                patch('lean_ci.cli.main', side_effect=subprocess.CalledProcessError(3, ['lake'])), \
+                redirect_stderr(io.StringIO()):
+            self.assertEqual(entry.main([]), 2)
 
-    def test_dependency_generator_shadow_cannot_replace_trusted_generator(self):
-        shadow = types.ModuleType('generate_imports')
-        shadow.generated_files = lambda root: {}
-        shadow.generator_owned = lambda source: True
-        with patch.dict(sys.modules, {'generate_imports': shadow}):
-            scope = client_check_scope(self.root, ['Consumer'])
-        self.assertEqual(scope['facade_certificates']['Consumer']['kind'],
-                         'generator-and-source-certified-import-only')
-        self.assertEqual(scope['audit_origin_union'], ['Consumer.Shared', 'Consumer.Use'])
+    def test_resource_overrides_and_existing_remote_profile_are_preserved(self):
+        config = controls.resource_config()
+        self.assertIn('R5_LEAN_REMOTE_PROFILE', config.names('profile'))
+        self.assertIn('AGLIB_BUILD_THREADS', config.names('build_thread'))
+        self.assertIn('AGLIB_LEAN_MEMORY_MB', config.names('memory'))
+        self.assertIn('AGLIB_RSS_LIMIT_MB', config.names('rss'))
 
-    def test_stale_generated_root_cannot_hide_an_origin(self):
-        path = self.root / 'examples/downstream/Consumer.lean'
-        path.write_text(path.read_text().replace('public import Consumer.Shared\n', ''))
-        with self.assertRaisesRegex(ValueError, 'differs from current generator'):
-            client_check_scope(self.root, ['Consumer'])
+    def test_native_checkers_replace_duplicate_lean_tools_and_executable(self):
+        import tomllib
+        config = tomllib.loads((entry.ROOT / 'lakefile.toml').read_text())
+        self.assertNotIn('lint-style', [row['name'] for row in config.get('lean_exe', [])])
+        for path in ('Audits/Quillen.lean', 'Tools/LintScoped.lean', 'Tools/LintStyle.lean',
+                     'examples/downstream/Audit.lean'):
+            self.assertFalse((entry.ROOT / path).exists(), path)
+        self.assertTrue((entry.ROOT / 'examples/downstream/Consumer.lean').is_file())
 
-    def test_commands_cannot_be_misclassified_as_vacuous_imports(self):
-        for command in ['private def datum := 1', 'export Quillen (datum)',
-                        'initialize pure ()', '#eval 1', 'theorem fact : True := by trivial']:
-            with self.subTest(command=command):
-                self.write('examples/downstream/Consumer/Manual.lean',
-                           'module\nimport Quillen\n' + command + '\n')
-                scope = client_check_scope(self.root, ['Consumer.Manual'])
-                self.assertEqual(scope['environment_batches'], [['Consumer.Manual']])
-                self.assertEqual(scope['facade_text_modules'], [])
-                self.assertEqual(scope['audit_origin_union'], ['Consumer.Manual'])
-
-    def test_quoted_or_documented_marker_is_not_a_generator_certificate(self):
-        self.write('examples/downstream/Consumer.lean',
-                   '/- -- Generated by scripts/generate_imports.py; do not edit by hand. -/\n'
-                   'import Consumer.Use\n')
-        with self.assertRaisesRegex(ValueError, 'Untrusted generated'):
-            client_check_scope(self.root, ['Consumer'])
-
-    def test_missing_source_cycle_and_redirect_fail_closed(self):
-        self.write('examples/downstream/Consumer/Bad.lean', 'import Consumer.Missing\n')
-        with self.assertRaisesRegex(ValueError, 'Missing or redirected'):
-            client_check_scope(self.root, ['Consumer.Bad'])
-        self.write('examples/downstream/Consumer/Bad.lean', 'import Consumer.Other\n')
-        self.write('examples/downstream/Consumer/Other.lean', 'import Consumer.Bad\n')
-        with self.assertRaisesRegex(ValueError, 'Cyclic'):
-            client_check_scope(self.root, ['Consumer.Bad'])
-        outside = self.root / 'outside.lean'
-        outside.write_text('def hidden := 1\n')
-        (self.root / 'examples/downstream/Consumer/Redirect.lean').symlink_to(outside)
-        with self.assertRaisesRegex(ValueError, 'redirected'):
-            client_check_scope(self.root, ['Consumer.Redirect'])
-
-    def test_bounded_audit_batches_cover_unselected_reachable_private_modules(self):
-        for index in range(19):
-            self.write(f'examples/downstream/Consumer/Extra{index}.lean',
-                       f'module\nimport Consumer.Shared\nprivate def extra{index} := 1\n')
-        self.regenerate()
-        scope = client_check_scope(self.root, ['Consumer'], batch_size=4)
-        self.assertTrue(all(len(batch) <= 4 for batch in scope['audit_batches']))
-        self.assertEqual(len(scope['audit_origin_union']), 21)
-        self.assertIn('Consumer.Extra18', scope['audit_origin_union'])
-        self.assertIn('Consumer.Shared', scope['audit_origin_overlaps'])
-        with self.assertRaises(ValueError):
-            client_check_scope(self.root, ['Consumer'], batch_size=0)
-
-    def test_text_adaptation_keeps_native_text_predicates_and_exclusions(self):
-        original = (ROOT / 'Tools/LintScoped.lean').read_text()
-        adapted = scoped_lint_source(original, text_only=True)
-        self.assertNotIn('(modules.push `Batteries.Tactic.Lint', adapted)
-        marker = '  let styleOptions : Lean.Linter.LinterOptions'
-        self.assertEqual(original[original.index(marker):], adapted[adapted.index(marker):])
-        self.assertIn('getChecks (slow := true) (runOnly := none) (runAlways := none)', adapted)
-        self.assertIn('let exclusions ← readExclusions', adapted)
-        with self.assertRaisesRegex(ValueError, 'interface changed'):
-            scoped_lint_source(original.replace('if decls.isEmpty then', 'if false then'))
-
-
-class RecipeTests(ClientScopeTests):
-    def setUp(self):
-        super().setUp()
-        self.write('Tools/LintScoped.lean', (ROOT / 'Tools/LintScoped.lean').read_text())
-        self.write('Audits/Quillen.lean', 'import Quillen\n-- unchanged audit body\n')
-        self.write('examples/downstream/Audit.lean', 'import Consumer\n-- unchanged client body\n')
-        self.scope = dict(lean=True, full=False, providers=['Quillen.A'],
-                          tests=['QuillenTest.T'], clients=['Consumer', 'Consumer.Use'],
-                          trust=True, client_trust=True, tooling_tests=[])
-        self.directory = self.root / 'verification'
-
-    def recipe(self, **changes):
-        scope = dict(self.scope, **changes)
-        return tasks(self.root, {'scope': scope}, 'check', self.directory)
-
-    def test_single_root_graph_preserves_native_lint_style_and_axiom_predicates(self):
-        # Legacy/manual client selections must not re-enable ordinary client work.
-        required = self.recipe()
-        graphs = [task for task in required if task['kind'] in ('build', 'graph-build')]
-        self.assertEqual([task['id'] for task in graphs], ['root/build'])
-        self.assertEqual(graphs[0]['command'][:-2],
-                         ['lake', '--rehash', 'build', 'Quillen.A', 'Quillen', 'QuillenTest.T',
-                          'Batteries.Tactic.Lint', 'Mathlib.Tactic.Linter.TextBased',
-                          'batteries/runLinter', 'lint-style'])
-        self.assertEqual(sum(task['id'] == 'full-native-lint' for task in required), 1)
-        self.assertEqual(next(t for t in required if t['id'] == 'full-native-lint')['command'],
-                         ['lake', 'lint', '--no-build', '--', '--no-build'])
-        self.assertEqual(next(t for t in required if t['id'] == 'full-native-style')['command'],
-                         ['lake', 'exe', 'lint-style'])
-        audit = next(t for t in required if t['id'] == 'axioms')
-        self.assertEqual(audit['generated'], 'import Quillen.A\n-- unchanged audit body\n')
-        self.assertEqual(audit['command'][audit['generated_argument_index']], audit['generated_path'])
-        self.assertEqual((self.directory / 'axioms.lean').read_text(), audit['generated'])
-        self.assertFalse((self.directory / 'client-scope.json').exists())
-        self.assertFalse(any(t['id'].startswith(('diagnostic/', 'client')) for t in required))
-        self.assertEqual([t['export_label'] for t in required if t.get('mapping')], ['root'])
-        self.assertTrue(all(t['cwd'] == str(self.root.resolve()) for t in required))
-
-    def test_full_scope_keeps_graph_tests_without_reelaboration(self):
-        required = self.recipe(full=True)
-        self.assertFalse(any(task['id'].startswith('diagnostic/') for task in required))
-        self.assertEqual(sum(task['id'] == 'axioms' for task in required), 1)
-        self.assertTrue(any('QuillenTest.T' in task.get('modules', []) and
-                            task['kind'] == 'graph-build' for task in required))
-        self.assertFalse(any('QuillenTest/T.lean' in task['command'] for task in required))
-
-    def test_static_source_only_recipe_needs_no_environment_or_native_work(self):
-        required = self.recipe(lean=False)
-        self.assertEqual([task['id'] for task in required],
-                         ['source/imports', 'source/layout', 'source/placeholders'])
-        self.assertTrue(all(t['input_boundary'] for t in required))
-
-    def test_source_and_native_phases_are_the_same_recipe_partition(self):
-        plan = {'scope': self.scope}
-        full = tasks(self.root, plan, 'check', self.directory)
-        source = tasks(self.root, plan, 'source', self.directory)
-        native = tasks(self.root, plan, 'native', self.directory)
-        self.assertEqual(full, source + native)
-
-    def test_exact_reviewed_allowlist_rejects_unreviewed_producers(self):
-        self.assertEqual(PROTOCOL.legacy_heads, frozenset({LEGACY_HEAD}))
-        self.assertEqual(PROTOCOL.core_recipes, frozenset({tuple(CORE_ENTRYPOINTS.values())}))
-        self.assertEqual(set(PROTOCOL.workflows.values()), {'legacy', 'core'})
-        # Test the already admitted source, not an evolving working checkout.
-        admitted_head = '9e792b2bc1a6227e6e1acc67ae2fa63e823291c2'
-        workflow = git_file(ROOT, admitted_head, PROTOCOL.workflow_path)
-        self.assertEqual(workflow_kind(workflow, PROTOCOL), 'core')
-        self.assertIsNone(workflow_kind(workflow + b'\n# unreviewed change\n', PROTOCOL))
-        for name, expected in CORE_ENTRYPOINTS.items():
-            source = git_file(ROOT, admitted_head, name)
-            self.assertEqual(hashlib.sha256(source).hexdigest(), expected, name)
-            path = self.root / name
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(source)
-        def commit():
-            subprocess.run(['git', 'add', '.'], cwd=self.root, check=True, capture_output=True)
-            subprocess.run(['git', '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
-                            'commit', '-qm', 'fixture producer'], cwd=self.root, check=True, capture_output=True)
-            return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=self.root).decode().strip()
-        subprocess.run(['git', 'init', '-q'], cwd=self.root, check=True, capture_output=True)
-        self.assertEqual(reviewed_recipe(self.root, commit(), 'core', PROTOCOL), CORE_ENTRYPOINTS)
-        with (self.root / 'scripts/check_run.py').open('a') as stream:
-            stream.write('\n# unreviewed producer\n')
-        self.assertIsNone(reviewed_recipe(self.root, commit(), 'core', PROTOCOL))
-
-    def test_source_binding_covers_downstream_files_outside_consumer(self):
-        task = next(t for t in self.recipe(lean=False) if t['id'] == 'source/placeholders')
-        before = binding(self.root, task, None)
-        extra = self.root / 'examples/downstream/Other/Unchecked.lean'
-        self.write(extra.relative_to(self.root), 'module\ndef datum := 1\n')
-        added = binding(self.root, task, None)
-        self.assertNotEqual(before, added)
-        self.assertIn(extra.relative_to(self.root).as_posix(), added['source_enrollment'])
-        extra.write_text('module\ndef datum := 2\n')
-        edited = binding(self.root, task, None)
-        self.assertNotEqual(added, edited)
-        extra.unlink()
-        removed = binding(self.root, task, None)
-        self.assertNotEqual(edited, removed)
-        self.write('examples/downstream/.lake/Unenrolled.lean', 'module\n')
-        self.assertEqual(removed, binding(self.root, task, None))
-
-    def test_local_native_preparation_requires_only_root_dependencies(self):
-        with self.assertRaisesRegex(ValueError, 'before final checks'):
-            prepare(self.root, mode='local')
-        self.assertFalse((self.root / 'examples/downstream/.lake').exists())
-        (self.root / '.lake/packages').mkdir(parents=True)
-        prepare(self.root, mode='local')
-        self.assertFalse((self.root / 'examples/downstream/.lake').exists())
-        prepare(self.root, mode='ci')
-        self.assertFalse((self.root / 'examples/downstream/.lake').exists())
-
-    def test_shared_execution_is_the_only_runner(self):
-        source = (ROOT / 'scripts/check_run.py').read_text()
-        self.assertIn('application.check(', source)
-        for forbidden in ('def execute(', 'ThreadPoolExecutor', 'def merge_native_outputs(', 'def parallel_checks('):
-            self.assertNotIn(forbidden, source)
-
-
-class HistoricalBaselineTests(unittest.TestCase):
-    """A tooling-only successor retains the last complete native witness."""
-    upgrade_head = '9e792b2bc1a6227e6e1acc67ae2fa63e823291c2'
-
-    def api(self):
-        repository = 'kangxyz/quillen-k-theory'
-        run_id = 39480751225
-        run = dict(id=run_id, run_attempt=1, status='completed', conclusion='success',
-                   head_sha=HISTORICAL_CORE_HEAD, head_branch='main', event='push',
-                   path=PROTOCOL.workflow_path, head_repository={'full_name': repository},
-                   html_url=f'https://github.com/{repository}/actions/runs/{run_id}')
-        job = dict(name='library', run_id=run_id, run_attempt=1,
-                   status='completed', conclusion='success', steps=[
-                       dict(name=name, status='completed', conclusion='success')
-                       for name in (PROTOCOL.native_step, PROTOCOL.finalize_step)])
-
-        def get(path, **query):
-            self.assertEqual(path, '')
-            return dict(full_name=repository, default_branch='main')
-
-        def pages(path, key, **query):
-            if key == 'workflow_runs':
-                self.assertEqual(path, '/actions/workflows/ci.yml/runs')
-                return [run]
-            self.assertEqual((path, key), (f'/actions/runs/{run_id}/attempts/1/jobs', 'jobs'))
-            return [job]
-
-        return types.SimpleNamespace(get=get, pages=pages)
-
-    def test_historical_recipe_is_literal_and_restricted_to_its_exact_head(self):
-        workflow = git_file(ROOT, HISTORICAL_CORE_HEAD, PROTOCOL.workflow_path)
-        self.assertEqual(hashlib.sha256(workflow).hexdigest(), HISTORICAL_CORE_WORKFLOW)
-        self.assertEqual(workflow_kind(workflow, PROTOCOL), 'core')
-        for name, expected in HISTORICAL_CORE_ENTRYPOINTS.items():
-            self.assertEqual(hashlib.sha256(git_file(ROOT, HISTORICAL_CORE_HEAD, name)).hexdigest(),
-                             expected, name)
-        self.assertEqual(reviewed_recipe(ROOT, HISTORICAL_CORE_HEAD, 'core', PROTOCOL),
-                         HISTORICAL_CORE_ENTRYPOINTS)
-        self.assertIsNone(reviewed_recipe(ROOT, '25387c653f01abc24bf25cc166dee33cc63b67a2',
-                                         'core', PROTOCOL))
-
-    def test_tooling_only_upgrade_uses_previous_native_success_without_lean_checks(self):
-        from check_scope import select as select_scope
-        baseline = select_baseline(ROOT, 'kangxyz/quillen-k-theory', 'main', self.upgrade_head,
-                                   api=self.api(), protocol=PROTOCOL)
-        self.assertEqual(baseline['verified_base'], HISTORICAL_CORE_HEAD)
-        scope = select_scope(ROOT, base=baseline['base'], head=self.upgrade_head)
-        self.assertFalse(scope['lean'])
-        for category in ('providers', 'tests', 'clients'):
-            self.assertEqual(scope[category], [])
-        self.assertTrue(scope['tooling_tests'])
-
-    def test_both_historical_workflow_and_recipe_are_required(self):
-        without_workflow = replace(PROTOCOL, workflows={key: value for key, value
-            in PROTOCOL.workflows.items() if key != HISTORICAL_CORE_WORKFLOW})
-        without_recipe = replace(PROTOCOL, historical_core_recipes=())
-        for protocol in (without_workflow, without_recipe):
-            with self.subTest(protocol=protocol), self.assertRaises(BaselineError):
-                select_baseline(ROOT, 'kangxyz/quillen-k-theory', 'main', self.upgrade_head,
-                                api=self.api(), protocol=protocol)
+    def test_removed_protocol_and_custom_checker_files_are_absent(self):
+        obsolete = ['ci_adapter.py', 'ci_policy.py', 'check_scope.py', 'dependency_scope.py']
+        for name in obsolete:
+            self.assertFalse((entry.ROOT / 'scripts' / name).exists(), name)
 
 
 if __name__ == '__main__':

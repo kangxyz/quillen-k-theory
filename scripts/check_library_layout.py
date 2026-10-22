@@ -6,7 +6,7 @@ import sys
 
 from generate_imports import generator_owned, stale_files
 from library_sources import (downstream_sources, lean_imports, module_name,
-                             module_path, source_modules, test_modules, uses_module_system,
+                             module_path, source_modules, test_modules,
                              is_import_surface)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,12 +61,6 @@ def check_layout(root: Path) -> tuple[list[str], int]:
         path = root / facade
         if path.exists() and generator_owned(path.read_text()) and not path.with_suffix('').is_dir():
             errors.append(f'Generator-owned facade has no corresponding directory: {facade}')
-    # Legacy import level loads every transitive private declaration for the
-    # exhaustive inventories. A modern auditor may silently omit unused helpers.
-    for auditor in (Path('Audits/Quillen.lean'), Path('examples/downstream/Audit.lean')):
-        path = root / auditor
-        if path.exists() and uses_module_system(path.read_text()):
-            errors.append(f'Exhaustive axiom auditor must retain legacy private imports: {auditor}')
     for relative in sorted(paths):
         path = root / relative
         if not path.is_file():
@@ -113,7 +107,7 @@ def main() -> int:
         print('\n'.join(errors), file=sys.stderr)
         return 1
     print(f'Library layout checked: {count} production modules; '
-          f'{len(test_modules(args.root))} trust-test modules; exhaustive generated roots; '
+          f'{len(test_modules(args.root))} test modules; thematic facade enrollment; '
           'no forbidden or unresolved local imports or cycles.')
     return 0
 

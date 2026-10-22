@@ -120,7 +120,7 @@ def generated_files(root: Path, modern_library: bool | None = None) -> dict[Path
     client_root = Path('examples/downstream/Consumer.lean')
     client_directory = client_root.with_suffix('')
     clients = {path for path in downstream_sources(root)
-               if client_directory in path.parents and path.name != 'Audit.lean'}
+               if client_directory in path.parents}
     if clients or (root / client_root).exists():
         modern_client = (not (root / client_root).exists()
                          or uses_module_system((root / client_root).read_text()))

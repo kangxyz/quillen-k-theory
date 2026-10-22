@@ -29,11 +29,6 @@ leanOptions = {autoImplicit = false, weak.linter.mathlibStandardSet = true, weak
 name = "QuillenTest"
 globs = ["QuillenTest.+"]
 
-[[lean_exe]]
-name = "lint-style"
-root = "Tools.LintStyle"
-supportInterpreter = true
-
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"

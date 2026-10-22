@@ -62,104 +62,71 @@ placeholders and new axioms do not discharge a missing proof.
 
 ## Tests and checks
 
-Use `QuillenTest/` for interface, mathematical-property, and regression tests.
-Use `examples/downstream/Consumer/` for client proofs compiled in a separate Lake
-package. Choose a meaningful property or public use rather than a list of
-names or a test that merely repeats its implementation.
+Use `QuillenTest/` for mathematical-property, interface and regression tests.
+Choose a meaningful public use, sign, universe or edge case. Production cannot
+import tests, tools or independent downstream packages.
 
-Normal authoring, maintenance, documentation, review, merge, integration, and
-release must use incremental checks and reuse trusted build artifacts and
-compatible validation evidence. Reconcile the combined changes,
-then build only changed or missing required leaf modules and their affected
-consumers. The normal local and CI adapter selects the reverse import closure:
+During proof iteration, build the changed module in the prepared workspace:
+
+```sh
+lake --rehash build +Quillen.KTheory.API
+```
+
+At final validation use the same native commands as public CI through the shared
+entry:
 
 ```sh
 bash scripts/check.sh
 bash scripts/check.sh --base BASE_COMMIT --head HEAD
+bash scripts/check.sh --source-only
+bash scripts/check.sh --list
 ```
 
-The first command compares tracked and untracked local sources with `HEAD`;
-the second compares the specified committed snapshots. Run the second command
-with its selected head checked out. Documentation and documentation-evidence
-JSON changes run static checks without Lean or cache work. See the
-[scope adapter](docs/DEVELOPMENT.md#affected-check-scope) for ordering, cache
-publication and unavailable-input behavior. For an explicit leaf while developing:
+Install the current `lean-incremental-ci` package or explicitly select its Aglib
+tooling checkout with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. Its
+package lives at `scripts/lean_ci`; install from `/absolute/path/to/aglib/scripts`. This is
+independent of the mathematical Aglib dependency. The entry forwards to
+`lean_ci.cli.main` with production root `Quillen` and the existing layout and
+placeholder source checks; it owns no second scheduler, adapter or hosted policy.
 
-```sh
-lake build Quillen.KTheory.API
-```
+The final native graph uses `lake --rehash build Quillen`, preserving valid
+Lake artifacts, then prepares native checker tools, runs `lake test`, checks
+production entries with `mathlib/mk_all --lib Quillen --check`, and runs native
+text style, `lake --no-build lint Quillen -- --trace` and the pinned upstream
+production axiom auditor. Test libraries use `QuillenTest.+` globs; no generated
+`QuillenTest.lean` is required. No explicit module list is passed to `lake test`:
+its configured library driver accepts no arguments. The split `Quillen` and
+`QuillenModules` libraries have empty `roots`; final commands always pass the
+production root explicitly instead of relying on root inference.
 
-When changes select native validation, final checks run the configured
-full-library environment lint once and the whole-workspace native text lint once,
-before selected in-package tests. Documentation-only scope retains
-the static checks described above. The shared runner builds selected providers,
-`Quillen`, tests and lint runtimes in one native Lake graph, preserving compatible
-cached artifacts. The full library import basis is required even when only one
-source changed; it does not select full diagnostics or replay every test.
-The standard commands are:
+`--base` and `--head` describe the source comparison, with the selected head
+checked out. A nonempty documentation-only difference runs static checks without
+Lean setup; a clean/no-change invocation still requests the native final check.
+`--source-only` is explicit static coverage. `--full` uses the same incremental
+native graph and predicates; it does not force recompilation, kernel replay,
+separate clients or extra acceptance stages. Native Lake traces decide rebuilds.
 
-```sh
-lake lint --no-build -- --no-build
-lake exe lint-style
-```
+Use external `--state`/`--receipt-dir` and `--progress` paths for diagnostics and
+compatible per-command successes. After repair, repeat the same entry; only
+changed or missing command evidence reruns. `--outputs PATH` delivers native
+mappings from the selected successful build without another compilation. Those
+mappings describe compilation, not mathematical correspondence or check success.
 
-The first no-build option protects Lake's builtin checks; the option after `--`
-protects the configured Batteries driver. The default environment checks include
-slow checks and generated declarations. Selected in-package tests retain their
-applicable lint and existing selected-origin transitive axiom coverage. For a narrow
-repair after a full lint failure, the existing scoped runner remains available:
+Source checks retain import direction, local-source existence, DAG, thematic
+facade and placeholder checks. Mathlib owns production-root generation; the
+Python generator owns only enrolled thematic facades and the explicit example
+client facade. Text style reads production-root import lists, without a custom
+injected checker. The upstream axiom auditor loads built production module
+origins and enforces `propext`, `Classical.choice` and `Quot.sound`; it does not
+replay proofs or claim source correspondence. Keep independent mathematical
+review and writing acceptance under their governing requirements.
 
-```sh
-lake env lean --run Tools/LintScoped.lean Quillen.KTheory.API
-```
-
-After a repair, repeat the shared entry with the same external `--state PATH`
-to retain compatible completed checks. Its printed evidence directory contains
-`scope.json` and the selected lint program. Reuse completed categories and
-reselect only when the affected import closure changes.
-
-Routine formalization does not set up, build, lint or audit the separate
-downstream package, replay the kernel, or add inventory or negative-control
-acceptance chains. This applies to ordinary validation, full scope, merge,
-publication and adoption. A client-only source change receives the basic static
-source checks without triggering a root build. Independent mathematical review
-and writing acceptance retain their own governing requirements.
-
-A merge, commit, branch switch, checkout, version bump, or publication does not
-by itself require a whole-target build, fresh dependency replay, full audit, or
-Python/source suite. Complete release coverage may combine compatible existing
-evidence with new native compilation, batch lint and relevant in-package tests
-of the affected scope. Record the inputs and closure that each
-piece of evidence covers.
-
-Preserve caches. A missing artifact or receipt, or a different checkout, first
-calls for matching available artifacts and evidence. Compile the missing
-required closure only after checking for a usable matching cache. Toolchain,
-dependency-pin, and global-option changes require matching caches and an
-assessment of actual invalidation; they do not automatically assign a complete
-library recompile. Missing coverage calls for checks of the uncovered affected
-scope, not a blanket rebuild. Whole-library rebuilding is fault recovery outside
-the normal workflow: diagnose incompatible, corrupt, or untrustworthy artifacts
-throughout that closure and the absence of a usable matching cache first. A user
-may explicitly request a literal full rebuild or replay; honor its exact scope
-without assuming broader work.
-
-An explicitly requested full in-package scope remains available;
-it does not itself request a clean rebuild:
-
-```sh
-bash scripts/check.sh --full --rehash
-```
-
-This checks generated imports, module boundaries, placeholders and selected
-script tests, builds the selected package modules and lint runtime in one native
-graph, and runs batch lint. `--full` widens selection without re-elaborating
-already-built tests or appending an acceptance chain. It never adds downstream
-checks or kernel replay. Existing production transitive axiom auditing remains
-ordinary final-validation coverage, reusing compatible evidence. A test aggregate
-may be excluded to avoid replay, but its production axiom predicate must remain
-covered under [mathematical trust](docs/DEVELOPMENT.md#mathematical-trust). Library compilation uses `autoImplicit = false`, the
-mathlib standard linter set and warnings as errors.
+Cache setup is separate from ordinary checking. Recover matching pinned
+artifacts before compiling missing required closure. `bash scripts/cache.sh
+Quillen.KTheory.API` fetches explicit reachable Mathlib inputs; omit targets only
+for an explicitly intended workspace cache setup. `--ci` retains the existing
+resource-guarded cache bootstrap. The entry does not update mathematical pins,
+require downstream setup or use GitHub history as local acceptance.
 
 ## Typechecking performance
 
@@ -252,19 +219,11 @@ Explain affected interfaces and theorem hypotheses. A pin or toolchain change
 alone does not require fresh compilation of unaffected libraries; normal local
 acceptance remains incremental.
 
-For the narrowly supported Aglib-only revision transition, select with
-`python3 scripts/check_scope.py --aglib-source /absolute/path/to/aglib --output scope.json`.
-The source path must be a real Git worktree root containing both exact pinned
-commit objects; selection reads their blobs without network, Lean, or checkout
-mutation. All three root/downstream pin owners must change together solely in
-Aglib's `rev`/`inputRev`; other global changes still require separate assessment.
-The selector recomputes old/new dependency closure and emits a portable assessment,
-which the normal runner recomputes before accepting a plan:
-`bash scripts/check.sh --aglib-source /absolute/path/to/aglib --plan scope.json`.
-CI fetches exact source objects before selection and sets `QUILLEN_AGLIB_SOURCE`
-for the source-only and execution consumers. An unchecked plan
-is not a pin assessment. Actual runtime mathematical sources and configuration
-must match the new pin; independently guarded runtime helper overlays confer no
-exception to mathematical source drift.
+Dependency changes require a mathematical assessment of the affected interfaces
+and hypotheses. Obtain matching dependency caches, build the actual changed
+leaves during iteration and run the native final entry on the integrated
+snapshot. Local validation does not synthesize or admit an old/new pin scope
+certificate. The root and any independently requested client keep their own
+manifests and output ownership.
 
 Contributions are licensed under Apache-2.0.
