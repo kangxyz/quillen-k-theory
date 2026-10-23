@@ -1,5 +1,7 @@
 # Quillen K-theory
 
+[![CI](https://github.com/kangxyz/quillen-k-theory/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/kangxyz/quillen-k-theory/actions/workflows/ci.yml?query=branch%3Amain)
+
 A Lean library for algebraic K-theory, including Quillen's Q-construction,
 Waldhausen's S-construction and scheme K/G-theory, built on Mathlib and
 [Aglib](https://github.com/kangxyz/aglib).
