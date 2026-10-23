@@ -12,4 +12,5 @@
   results, API/interfaces, exact hypotheses and remaining inputs. Maintain one
   authority and update inbound links when moving content.
 
+- For serious compilation trouble, first consult the relevant [performance findings](docs/PERFORMANCE.md#repair-workflow); when they do not cover the failure, use the documented upstream reference search. After validating a fix, summarize its conditions, method and existing evidence in `docs/PERFORMANCE.md`.
 - Preserve [mathematical trust](docs/DEVELOPMENT.md#mathematical-trust): source correspondence, no transitive `sorry`, approved axiom closure, dependency boundaries and compatible audit evidence remain required. The pinned upstream production axiom audit is ordinary native final-check coverage, distinct from replay, client or control chains; it does not establish source correspondence.
