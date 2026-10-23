@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -14,7 +14,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorToUnitCharts
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
-public import Quillen.Aglib.Algebra.Homology.MappingCone.Iso
+public import Aglib.Algebra.Homology.MappingCone.Iso
 
 /-!
 # The original tautological coordinate with arbitrary perfect coefficients

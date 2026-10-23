@@ -53,7 +53,7 @@ finite-module applications underlying these geometric sequences.
 ## Finite direct image
 
 For an actual finite map `f : Z ⟶ X`, Aglib's
-[finite-type quasicoherent pushforward](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Modules/QuasiCoherent/FiniteType/Pushforward.lean)
+[finite-type quasicoherent pushforward](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Modules/QuasiCoherent/FiniteType/Pushforward.lean)
 preserves affine-local finite-type quasicoherent sheaves without noetherian
 assumptions. On locally noetherian source and target, the
 [Quillen G-map construction](Finite/GeneralPushforward.lean)

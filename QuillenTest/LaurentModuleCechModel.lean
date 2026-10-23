@@ -1,12 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
-public import Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech
+public import Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Original finite-projective Laurent chart complexes
@@ -21,12 +21,11 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits HomologicalComplex ModuleCat
-open Polynomial LaurentPolynomial Quillen.LaurentProjector Quillen.ModuleComplex
+open Polynomial LaurentPolynomial LaurentPolynomial.Projector ModuleCat.LaurentCech ModuleCat
 open scoped ChangeOfRings LaurentPolynomial
 universe u
 namespace QuillenTest.LaurentModuleCechModel
 
-open Quillen
 variable {R : Type u} [CommRing R]
 
 /-- The free chart fixture uses the actual polynomial module. -/
@@ -93,9 +92,9 @@ theorem original_coordinate_square (M N : ModuleCat.{u} R[X]) {m n : ℕ}
     (b : (restrictScalars (Polynomial.C : R →+* R[X])).obj N) :
     extendScalarsInclusion (Polynomial.toLaurent (R := R)) i
         (moduleDifference (R := R) M N e (a,b)) =
-      Quillen.LaurentCutoff.plusEmbedding (i a) - action
+      LaurentPolynomial.Cutoff.plusEmbedding (i a) - action
         (extensionTransitionMatrix (Polynomial.toLaurent (R := R)) (negativeScalarMap R) i s e)
-        (Quillen.LaurentCutoff.minusEmbedding (j b)) :=
+        (LaurentPolynomial.Cutoff.minusEmbedding (j b)) :=
   moduleDifference_coordinates M N i j s hs e a b
 
 /-- Actual forward and reverse chain maps have both homotopies, with no chart-freeness premise. -/

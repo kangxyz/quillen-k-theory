@@ -2,18 +2,20 @@
 
 `FiniteCoefficientRetract` constructs the actual retraction onto a finite
 coefficient window when the split inclusion lands there; finite support alone
-is insufficient over an arbitrary ring. `FiniteParametrix` constructs a finite
+is insufficient over an arbitrary ring. [`Aglib.Algebra.Module.FiniteParametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/FiniteParametrix.lean) constructs a finite
 projective split kernel from the displayed finite defect factorizations and
 projectivity hypotheses, without assuming Noetherianity.
 
-`MatrixPresentation` realizes finite projective modules as actual idempotent
-matrix images. `MatrixBaseChange` retains their original splittings and the
+[`Aglib.Algebra.Module.MatrixPresentation`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/MatrixPresentation.lean) realizes finite projective modules as actual idempotent
+matrix images. [`Aglib.Algebra.Module.MatrixBaseChange`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/MatrixBaseChange.lean) retains their original splittings and the
 coefficientwise matrix map, without a flatness hypothesis. `RightScalarExtension`
 constructs balanced tensor extension for arbitrary unital rings using its
 balanced biadditive universal property, preserving the order of multiplication.
 
 These are ordinary module interfaces. Stable matrix classes and K-theory maps
-remain downstream. The source modules retain their existing namespaces.
+remain downstream. The native finite-parametrix namespace is `Module`; matrix presentations and
+base change use `Module.Projective`. Remaining local module extensions retain
+their existing namespaces.
 
 ## Imports
 

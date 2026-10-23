@@ -141,20 +141,20 @@ quasicoherence rather than coherence over a possibly noncoherent R.
 
 ## Flasque K-model and geometric inverse
 
-The native [first Godement functor](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/First.lean) constructs the actual first Godement
+The native [first Godement functor](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Cohomology/Godement/First.lean) constructs the actual first Godement
 functor on all scheme module sheaves: the product of stalk skyscrapers, with
 its natural monic germ unit, flasque values and exactness. Its explicit sections
 are pointwise stalk products, and their exactness is proved directly rather
-than inferred from arbitrary sheaf products. The native [resolution](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/Resolution.lean) constructs
+than inferred from arbitrary sheaf products. The native [resolution](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Cohomology/Godement/Resolution.lean) constructs
 the exact natural cokernel functor, its iterates, the augmented flasque sheaf
 resolution and the original germ augmentation quasi-isomorphism. The resolution
 functor preserves short exact sequences. The totalization sources supply
 the actual natural totalization on all lower-bounded complexes
-of arbitrary module sheaves on every scheme. The native [total complex](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Basic.lean) retains the
-same lower bound and has flasque terms; its [exactness theorem](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Exactness.lean) preserves
+of arbitrary module sheaves on every scheme. The native [total complex](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Basic.lean) retains the
+same lower bound and has flasque terms; its [exactness theorem](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Exactness.lean) preserves
 short exact sequences and degreewise monomorphisms. The original signed
 stalk contraction and joint homology reflection prove the actual total
-augmentation [quasi-isomorphism](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/QuasiIso.lean), whose naturality
+augmentation [quasi-isomorphism](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/QuasiIso.lean), whose naturality
 also proves preservation of genuine weak arrows.
 The same native total-complex owner constructs the natural installed-unit
 comparison Q(f_*T(K))≅Rf_*(Q(K)) for every scheme map and every Plus input.
@@ -165,7 +165,7 @@ inclusion and exact Godement total functor, and both forward natural weak
 units. `FlasqueBoundedBelowComparison` proves the two original K-map inverse
 laws in every nonnegative degree, including zero, on every scheme; its literal
 comparison to all perfect complexes requires quasi-compactness.
-Native [flasque pushforward exactness](https://github.com/kangxyz/aglib/blob/52e09db47998f139064acf48a2d3a64494d0dd9a/Aglib/AlgebraicGeometry/Cohomology/Flasque/PushforwardExactness.lean) proves actual sheaf and complex short-exact
+Native [flasque pushforward exactness](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Cohomology/Flasque/PushforwardExactness.lean) proves actual sheaf and complex short-exact
 preservation with flasque first terms, without bounds. These source results
 supply the exact model and a pushforward foundation;
 `FlasqueCoefficientZero`, `FlasqueCoefficientOperations` and

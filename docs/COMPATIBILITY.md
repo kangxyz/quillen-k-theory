@@ -1,5 +1,62 @@
 # Compatibility and integration history
 
+## Native Aglib adoption in 0.10.0
+
+The current source integration pins Aglib to
+`2c34f185fa859e862661f939cd216b07bcccfb26`. Replace each retired import below directly
+with its native owner; no forwarding modules or compatibility aliases remain.
+The links identify exact source files at that pin.
+
+| Removed import | Native import and pinned source |
+| --- | --- |
+| `Quillen.Aglib.Algebra.Module.MatrixPresentation` | [`Aglib.Algebra.Module.MatrixPresentation`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/MatrixPresentation.lean) |
+| `Quillen.Aglib.Algebra.Module.FiniteParametrix` | [`Aglib.Algebra.Module.FiniteParametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/FiniteParametrix.lean) |
+| `Quillen.Aglib.Algebra.Module.MatrixBaseChange` | [`Aglib.Algebra.Module.MatrixBaseChange`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/MatrixBaseChange.lean) |
+| `Quillen.Aglib.Algebra.Homology.ShortComplex.ProductSequence` | [`Aglib.Algebra.Homology.ShortComplex.ProductSequence`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ShortComplex/ProductSequence.lean) |
+| `Quillen.Aglib.Algebra.Homology.MappingCone.Parametrix` | [`Aglib.Algebra.Homology.MappingCone.Parametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/MappingCone/Parametrix.lean) |
+| `Quillen.Aglib.Algebra.Homology.MappingCone.Iso` | [`Aglib.Algebra.Homology.MappingCone.Iso`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/MappingCone/Iso.lean) |
+| `Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteParametrix` | [`Aglib.Algebra.Homology.ModuleCat.FiniteParametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/FiniteParametrix.lean) |
+| `Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentProjectorCech` | [`Aglib.Algebra.Homology.ModuleCat.LaurentProjectorCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LaurentProjectorCech.lean) |
+| `Quillen.Aglib.Algebra.Homology.ModuleCat.LinearMapConeShift` | [`Aglib.Algebra.Homology.ModuleCat.LinearMapConeShift`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LinearMapConeShift.lean) |
+| `Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech` | [`Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LaurentModuleCech.lean) |
+| `Quillen.Aglib.Algebra.Homology.ModuleCat.LinearMapConeIso` | [`Aglib.Algebra.Homology.ModuleCat.LinearMapConeIso`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LinearMapConeIso.lean) |
+| `Quillen.Aglib.Algebra.Polynomial.Laurent.MatrixProjector` | [`Aglib.Algebra.Polynomial.Laurent.MatrixProjector`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/MatrixProjector.lean) |
+| `Quillen.Aglib.Algebra.Polynomial.Laurent.MatrixCech` | [`Aglib.Algebra.Polynomial.Laurent.MatrixCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/MatrixCech.lean) |
+| `Quillen.Aglib.Algebra.Polynomial.Laurent.MatrixCutoff` | [`Aglib.Algebra.Polynomial.Laurent.MatrixCutoff`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/MatrixCutoff.lean) |
+| `Quillen.Aglib.Algebra.Polynomial.Laurent.ProjectorCech` | [`Aglib.Algebra.Polynomial.Laurent.ProjectorCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/ProjectorCech.lean) |
+| `Quillen.Aglib.Algebra.Polynomial.Laurent.ProjectorFiniteDefects` | [`Aglib.Algebra.Polynomial.Laurent.ProjectorFiniteDefects`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/ProjectorFiniteDefects.lean) |
+| `Quillen.Aglib.Algebra.Polynomial.Laurent.Cutoff` | [`Aglib.Algebra.Polynomial.Laurent.Cutoff`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/Cutoff.lean) |
+| `Quillen.Aglib.Algebra.Polynomial.Laurent.ModuleCech` | [`Aglib.Algebra.Polynomial.Laurent.ModuleCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/ModuleCech.lean) |
+| `Quillen.Aglib.Algebra.Category.ModuleCat.FiniteMatrixBaseChange` | [`Aglib.Algebra.Category.ModuleCat.FiniteMatrixBaseChange`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Category/ModuleCat/FiniteMatrixBaseChange.lean) |
+
+Transferred declarations use these native namespaces: `Quillen.Module` becomes
+`Module`, `Quillen.ModuleComplex` becomes `ModuleCat`, and
+`Quillen.LaurentCutoff` becomes `LaurentPolynomial.Cutoff`. Projector
+declarations from `Quillen.LaurentProjector` become
+`LaurentPolynomial.Projector`, except the declarations in the two
+`ModuleCech`/`LaurentModuleCech` leaves, which become `ModuleCat.LaurentCech`.
+The retained local homological `LaurentCech` extension also uses
+`LaurentPolynomial.Cutoff`. Other local module and module-complex extensions
+retain their existing namespaces; do not apply these replacements globally.
+
+The upstream shift instances are
+`CategoryTheory.NatTrans.mapCochainComplexPlus_commShift` and
+`CategoryTheory.Functor.mapCochainComplexPlusCompIso_commShift`. Use
+`FGModuleCat.linearAutToFGAut` in place of `FGModuleCat.linearAutToAut`.
+The affine `AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialZero` and its
+projection lemmas become `polynomialZeroSection` and its projection lemmas;
+the arbitrary-scheme `AlgebraicGeometry.Scheme.Bass` zero sections remain local.
+
+Eight local same-path extensions remain, as described in the
+[candidate guide](../Quillen/Aglib/README.md#extensions-of-native-leaves).
+In particular, local matrix automorphisms retain the commutative-ring
+hypothesis, the generic cokernel-pushout theorem retains `HasZeroMorphisms`,
+and locally-perfect restriction remains distinct from native strict-perfect
+restriction. Pi exactness helpers, the Plus quasi-isomorphism shift instance,
+regular-local proofs and arbitrary-scheme Bass zero sections retain their
+additional local interfaces. This entry records source/API correspondence;
+compilation and native final checks are reported separately.
+
 ## Tensor construction checkpoint and terminal-chart aliases
 
 The 2026-10-21 integration adds the tensor-generated construction, generic

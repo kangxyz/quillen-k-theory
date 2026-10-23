@@ -1,13 +1,15 @@
 # Aglib candidate interfaces
 
 `Quillen.Aglib` is the current import prefix for local general-theory candidates;
-declaration namespaces describe the native mathematical objects. Existing names,
-objects, hypotheses and chosen comparison maps are preserved. The prefix records
-local ownership and does not assert upstream admission. Q/K/G/S, Waldhausen,
+declaration namespaces describe the native mathematical objects. Native
+extractions use the mathematical namespaces documented in the family guides;
+local extensions preserve their stated objects, hypotheses and chosen comparison
+maps. The prefix records local ownership and does not assert upstream admission.
+Q/K/G/S, Waldhausen,
 spectra and specialized projective-line constructions retain their application owners.
 
 Native imports use the mathematical Aglib revision
-`52e09db47998f139064acf48a2d3a64494d0dd9a` pinned in
+`2c34f185fa859e862661f939cd216b07bcccfb26` pinned in
 [`lake-manifest.json`](../../lake-manifest.json). Focused `Aglib.*` imports own
 interfaces already supplied there; local `Quillen.Aglib.*` leaves retain the
 additional candidates described below.
@@ -33,8 +35,10 @@ Candidate authoring follows the
 | [Polynomial/Laurent spectra](AlgebraicGeometry/Spec/PolynomialLaurent/README.md) | Canonical affine schemes, ring maps, coordinates, base-change squares, open immersions, the arbitrary-scheme index square and its integral Spec-row/unit comparisons |
 
 Public import entry: `Quillen.Aglib`. Prefer the focused leaves described in the
-family guides for implementation dependencies. Existing public mathematical
-namespaces are preserved; original Q/K/G/S, Waldhausen, spectrum and specialized
+family guides for implementation dependencies. The 0.10.0 native namespace
+migrations are recorded in
+[compatibility notes](../../docs/COMPATIBILITY.md#native-aglib-adoption-in-0100);
+original Q/K/G/S, Waldhausen, spectrum and specialized
 curve/projective-line constructions remain in their application owners.
 
 Current affine/derived interfaces are in the
@@ -42,3 +46,21 @@ Current affine/derived interfaces are in the
 [derived base change](AlgebraicGeometry/Modules/BaseChange/Derived/README.md),
 [coherent/finite-type interfaces](../AlgebraicGeometry/Scheme/Coherent/README.md),
 and [scalar base change](Algebra/Category/ModuleCat/README.md).
+
+## Extensions of native leaves
+
+Nineteen extracted implementations now use precise native `Aglib.*` leaves;
+their retired `Quillen.Aglib.*` imports have no compatibility facade. The
+[compatibility mapping](../../docs/COMPATIBILITY.md#native-aglib-adoption-in-0100)
+lists every replacement. Eight same-path local leaves retain additional APIs:
+
+| Local leaf | Retained interface |
+| --- | --- |
+| `CategoryTheory/Pi/Abelian` | `CategoryTheory.Pi.shortExact_pi_iff` and `exactEvaluation`, extending [`Aglib.CategoryTheory.Pi.Abelian`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/CategoryTheory/Pi/Abelian.lean) |
+| `CategoryTheory/Pi/FiniteSupport` | Exact-structure abbreviation, exact inclusion and evaluation object/map simp lemmas, extending [`Aglib.CategoryTheory.Pi.FiniteSupport`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/CategoryTheory/Pi/FiniteSupport.lean); the native leaf supplies evaluation and its Abelian instance |
+| `Algebra/Homology/CochainComplexPlus/Shift` | `CochainComplex.Plus.quasiIsoCompatibleWithShift`, extending [`Aglib.Algebra.Homology.CochainComplexPlus.Shift`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/CochainComplexPlus/Shift.lean) |
+| `Algebra/Category/FGModuleCat/ScalarMatrices` | Commutative-ring `matrixToAut` and application formula, using native `linearAutToFGAut` from [`Aglib.Algebra.Category.FGModuleCat.ScalarMatrices`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Category/FGModuleCat/ScalarMatrices.lean) |
+| `AlgebraicGeometry/Spec/PolynomialLaurent/ZeroSection` | Arbitrary-scheme Bass zero-section constructions, using native affine `polynomialZeroSection` from [`Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.ZeroSection`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/ZeroSection.lean) |
+| `RingTheory/RegularLocalRing/ProjectiveDimension` | Existing `Quillen.RegularLocal` finite-module projective-dimension bounds and resolution proof |
+| `AlgebraicGeometry/Modules/PerfectComplexes/Restriction` | Existing locally-perfect restriction and exactness APIs; native strict-perfect restriction has a different scope |
+| `CategoryTheory/Limits/Shapes/CokernelPushout` | Existing `HasZeroMorphisms` cokernel-pushout theorem; native theorem assumes preadditivity |

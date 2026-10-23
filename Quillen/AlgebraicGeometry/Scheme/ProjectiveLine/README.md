@@ -96,10 +96,10 @@ rings are included, with no noetherian, regular, nonzero, or reduced hypothesis.
 
 The finite model comes from Laurent cutoff bounds, finite-free retractions
 of the polynomial chart modules, and rectangular projector transition matrices.
-[`LaurentProjectorFiniteDefects`](../../../Aglib/Algebra/Polynomial/Laurent/ProjectorFiniteDefects.lean)
+[`LaurentProjectorFiniteDefects`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Polynomial/Laurent/ProjectorFiniteDefects.lean)
 factors both parametrix defects through actual finite coefficient modules.
 The algebraic step in
-[`FiniteParametrix`](../../../Aglib/Algebra/Module/FiniteParametrix.lean)
+[`FiniteParametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/FiniteParametrix.lean)
 takes `d : A → B` and `s : B → A` with factorizations
 `d s + t r = id_B` through `F` and `s d + u v = id_A` through `G`.
 If `A` and `F` are projective and `F` and `G` finite, the enlarged split map

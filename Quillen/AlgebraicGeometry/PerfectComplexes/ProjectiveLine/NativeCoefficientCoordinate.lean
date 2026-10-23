@@ -9,7 +9,7 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeCoordinate
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeBassCharts
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorToUnitCharts
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
-public import Quillen.Aglib.Algebra.Homology.MappingCone.Iso
+public import Aglib.Algebra.Homology.MappingCone.Iso
 /-!
 # Native coefficient coordinate cones
 

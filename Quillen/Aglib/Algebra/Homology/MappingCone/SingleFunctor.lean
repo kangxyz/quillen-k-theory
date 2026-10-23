@@ -1,12 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
-public import Quillen.Aglib.Algebra.Homology.MappingCone.Iso
+public import Aglib.Algebra.Homology.MappingCone.Iso
 public import Mathlib.Algebra.Homology.HomotopyCategory.MappingCone
 
 /-! # Additive functors on cones of single maps

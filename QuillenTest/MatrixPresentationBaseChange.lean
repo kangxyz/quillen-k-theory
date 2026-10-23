@@ -1,13 +1,13 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
-public import Quillen.Aglib.Algebra.Module.MatrixBaseChange
-public import Quillen.Aglib.Algebra.Polynomial.Laurent.MatrixProjector
+public import Aglib.Algebra.Module.MatrixBaseChange
+public import Aglib.Algebra.Polynomial.Laurent.MatrixProjector
 
 /-! # Original matrix presentations and the two Laurent scalar maps
 
@@ -27,7 +27,6 @@ open scoped TensorProduct LaurentPolynomial Matrix
 universe u v
 namespace QuillenTest.MatrixPresentationBaseChange
 
-open Quillen
 variable {R : Type u} [CommRing R]
 
 /-- The actual image equivalence retains the specified inclusion and retraction on both sides. -/
@@ -70,7 +69,7 @@ theorem positive_variable :
 theorem positive_projector_matrix {M : Type v} [AddCommGroup M] [Module R[X] M] {n : ℕ}
     (i : M →ₗ[R[X]] Fin n → R[X]) (r : (Fin n → R[X]) →ₗ[R[X]] M) :
     retractMatrix (baseChangeInclusion R[T;T⁻¹] i) (baseChangeRetraction R[T;T⁻¹] r) =
-      Quillen.LaurentProjector.plusMatrix (retractMatrix i r) :=
+      LaurentPolynomial.Projector.plusMatrix (retractMatrix i r) :=
   baseChange_retractMatrix R[T;T⁻¹] i r
 end Positive
 
@@ -106,7 +105,7 @@ theorem negative_variable :
 theorem negative_projector_matrix {M : Type v} [AddCommGroup M] [Module R[X] M] {n : ℕ}
     (i : M →ₗ[R[X]] Fin n → R[X]) (r : (Fin n → R[X]) →ₗ[R[X]] M) :
     retractMatrix (baseChangeInclusion R[T;T⁻¹] i) (baseChangeRetraction R[T;T⁻¹] r) =
-      Quillen.LaurentProjector.minusMatrix (retractMatrix i r) :=
+      LaurentPolynomial.Projector.minusMatrix (retractMatrix i r) :=
   baseChange_retractMatrix R[T;T⁻¹] i r
 end Negative
 

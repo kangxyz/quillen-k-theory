@@ -1,13 +1,13 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
-public import Quillen.Aglib.Algebra.Polynomial.Laurent.MatrixCech
-public import Quillen.Aglib.Algebra.Homology.ModuleCat.LinearMapConeShift
+public import Aglib.Algebra.Polynomial.Laurent.MatrixCech
+public import Aglib.Algebra.Homology.ModuleCat.LinearMapConeShift
 public import Mathlib.LinearAlgebra.Finsupp.VectorSpace
 
 /-! # Finite-projective models of actual finite Laurent-matrix Cech complexes
@@ -28,8 +28,8 @@ open CategoryTheory CategoryTheory.Limits HomologicalComplex
 open Polynomial LaurentPolynomial
 open scoped LaurentPolynomial Matrix
 universe u v
-namespace Quillen.LaurentCutoff
-open Quillen.ModuleComplex
+namespace LaurentPolynomial.Cutoff
+open ModuleCat
 variable {R : Type u} [CommRing R] {ι : Type v} [Fintype ι] [DecidableEq ι]
 
 /-- An actual invertible finite Laurent matrix gives a finite-projective model
@@ -51,10 +51,10 @@ theorem exists_matrix_finite_projective_model
   · rw [left_window_defect_factorization]
     exact matrix_left_defect g h hhg
 
-end Quillen.LaurentCutoff
+end LaurentPolynomial.Cutoff
 
-namespace Quillen.LaurentCutoff
-open Quillen.ModuleComplex
+namespace LaurentPolynomial.Cutoff
+open ModuleCat
 variable {R : Type u} [CommRing R] {ι : Type v} [Fintype ι] [DecidableEq ι]
 
 /-- The genuine signed matrix Cech differential has a finite-projective model
@@ -83,4 +83,4 @@ theorem exists_matrix_cech_finite_projective_model
         CategoryTheory.Functor.map_id]
         using e.homotopyInvHomId.shift (-1)
 
-end Quillen.LaurentCutoff
+end LaurentPolynomial.Cutoff

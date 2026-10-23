@@ -735,8 +735,8 @@ These additional names use the same objects, hypotheses, and original maps as th
 | `modelDiagramIterateCofiberDesc_isStableEquivalence` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
 | `strictDiagramIterateNull_transition` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
 | `Telescope.coneDesc_isStableEquivalence` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
-| `Algebra.Module.FiniteParametrix`, `Quillen.Module.finite_projective_parametrixKernel` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
-| `Algebra.ModuleComplex.LaurentModuleCech` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
+| [`Aglib.Algebra.Module.FiniteParametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Module/FiniteParametrix.lean), `Module.finite_projective_parametrixKernel` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
+| [`Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LaurentModuleCech.lean) | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
 | `Affine.FullOpenSectionBassRestrictionCofiber` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
 | `Affine.FullOpenSectionBassLocalization` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
 | `BoundedFlat.CoefficientOpenBassTower`, `BoundedFlat.CoefficientOpenBassTelescope` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |

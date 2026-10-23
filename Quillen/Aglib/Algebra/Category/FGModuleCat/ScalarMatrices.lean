@@ -1,19 +1,19 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
-public import Mathlib.Algebra.Category.FGModuleCat.Basic
+public import Aglib.Algebra.Category.FGModuleCat.ScalarMatrices
 public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 
 /-!
 # Matrix automorphisms of the actual finite-module category
 
 Intended upstream owner: `Aglib.Algebra.Category.FGModuleCat.ScalarMatrices`.
-Linear automorphisms of finite modules over any ring give their actual
-finite-module automorphisms. Over a commutative ring, finite general linear
+Use the native conversion of linear automorphisms to finite-module isomorphisms.
+Over a commutative ring, finite general linear
 matrices act by ordinary multiplication on column vectors. The definitions
 retain the expressions migrated from R5's `FGModuleCat/ScalarMatrices` source.
 The current consumer is `Quillen.KTheory.Field.MatrixTransport`, which compares
@@ -27,17 +27,10 @@ open CategoryTheory
 
 namespace FGModuleCat
 
-/-- A linear automorphism gives the original finite-module isomorphism on the same carrier. -/
-def linearAutToAut (R : Type u) [Ring R] (V : Type v) [AddCommGroup V]
-    [Module R V] [Module.Finite R V] : (V ≃ₗ[R] V) →* Aut (FGModuleCat.of R V) where
-  toFun e := e.toFGModuleCatIso
-  map_one' := by apply Iso.ext; rfl
-  map_mul' e f := by apply Iso.ext; rfl
-
 /-- A finite invertible matrix acts on the original standard finite module. -/
 def matrixToAut (R : Type u) [CommRing R] (n : ℕ) :
     Matrix.GeneralLinearGroup (Fin n) R →* Aut (FGModuleCat.of R (Fin n → R)) :=
-  (linearAutToAut R (Fin n → R)).comp
+  (linearAutToFGAut R (Fin n → R)).comp
     ((LinearMap.GeneralLinearGroup.generalLinearEquiv R (Fin n → R)).toMonoidHom.comp
       Matrix.GeneralLinearGroup.toLin.toMonoidHom)
 

@@ -35,9 +35,12 @@ equivalences refer to the same original categories; they do not identify
 different-universe K-groups. Native K-assembly and residue dévissage remain
 in `Quillen.GTheory.Dedekind`.
 
-`ScalarMatrices` sends linear automorphisms to actual finite-module
-isomorphisms. Its commutative-ring matrix action is the original ordinary
-`g.val.mulVec`, used by the field matrix-transport comparison.
+Local `ScalarMatrices` retains `FGModuleCat.matrixToAut` and its application
+formula over arbitrary commutative rings, built from native
+`FGModuleCat.linearAutToFGAut` in [`Aglib.Algebra.Category.FGModuleCat.ScalarMatrices`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Category/FGModuleCat/ScalarMatrices.lean).
+The native `matrixToFGAut` requires a field; the local extension preserves the
+weaker commutative-ring hypothesis and ordinary `g.val.mulVec` action used by
+the field matrix-transport comparison.
 
 `PrincipalRankOne` retains the literal `Fin 1 → R` multiplication-to-principal-quotient
 sequence and its categorical cokernel, together with the actual localization

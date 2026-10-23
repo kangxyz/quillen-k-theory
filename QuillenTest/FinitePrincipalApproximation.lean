@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -27,7 +27,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open AlgebraicGeometry HomologicalComplex
-open Quillen.ModuleComplex Quillen.ModuleComplex.PrincipalLocalization
+open ModuleCat Quillen.ModuleComplex Quillen.ModuleComplex.PrincipalLocalization
 open Quillen.PerfectComplexes.Affine
 attribute [local instance] HasDerivedCategory.standard
 namespace QuillenTest.FinitePrincipalApproximation

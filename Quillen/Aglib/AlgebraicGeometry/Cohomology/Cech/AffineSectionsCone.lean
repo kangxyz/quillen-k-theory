@@ -1,13 +1,13 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
 public import Quillen.Aglib.Algebra.Homology.MappingCone.SingleFunctor
-public import Quillen.Aglib.Algebra.Homology.ModuleCat.LinearMapConeShift
+public import Aglib.Algebra.Homology.ModuleCat.LinearMapConeShift
 public import Mathlib.AlgebraicGeometry.Modules.Tilde
 
 /-! # Affine sections and the original shifted single-map cone
@@ -17,7 +17,6 @@ module cone with the original sheaf cone. The arrow square is counit naturality.
 -/
 
 @[expose] public section
-open Quillen
 
 section
 
@@ -35,7 +34,7 @@ variable [M.IsQuasicoherent] [N.IsQuasicoherent] (f : M ⟶ N)
 /-- The original affine counits identify the associated section cone with the sheaf cone. -/
 def affineSectionsCechIso :
     ((tilde.functor R).mapHomologicalComplex (.up ℤ)).obj
-        (Quillen.ModuleComplex.linearMapCechComplex (moduleSpecΓFunctor.map f).hom) ≅
+        (ModuleCat.linearMapCechComplex (moduleSpecΓFunctor.map f).hom) ≅
       (CochainComplex.mappingCone
         ((single (Spec R).Modules (.up ℤ) 0).map f))⟦(-1 : ℤ)⟧ := by
   refine CochainComplex.mappingCone.shiftedSingleFunctorIso

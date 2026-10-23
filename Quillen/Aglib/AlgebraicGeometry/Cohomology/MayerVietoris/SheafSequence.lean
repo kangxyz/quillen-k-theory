@@ -1,13 +1,13 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
 public import Quillen.Aglib.AlgebraicGeometry.Modules.Restriction.OpenLocalization
 public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
-public import Quillen.Aglib.Algebra.Homology.ShortComplex.ProductSequence
+public import Aglib.Algebra.Homology.ShortComplex.ProductSequence
 
 /-!
 # The original signed two-open Čech sheaf sequence

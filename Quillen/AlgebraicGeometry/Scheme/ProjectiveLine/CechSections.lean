@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
@@ -20,9 +20,8 @@ Both signs and the negative-chart overlap identification are retained.
 
 @[expose] public section
 
-open Quillen.LaurentProjector
+open LaurentPolynomial.Projector ModuleCat.LaurentCech
 
-open Quillen
 
 
 section
@@ -33,7 +32,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
-  Quillen.LaurentProjector
+  LaurentPolynomial.Projector ModuleCat.LaurentCech
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
@@ -111,7 +110,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
-  Quillen.LaurentProjector
+  LaurentPolynomial.Projector ModuleCat.LaurentCech
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
@@ -208,7 +207,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
-  Quillen.LaurentProjector
+  LaurentPolynomial.Projector ModuleCat.LaurentCech
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
@@ -255,7 +254,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
-  Quillen.LaurentProjector
+  LaurentPolynomial.Projector ModuleCat.LaurentCech
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 

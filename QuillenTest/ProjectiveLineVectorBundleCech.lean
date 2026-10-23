@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
@@ -21,8 +21,8 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat HomologicalComplex
-open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine Quillen.ModuleComplex
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.LaurentProjector
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine ModuleCat
+open AlgebraicGeometry.Scheme.PolynomialLaurent LaurentPolynomial.Projector ModuleCat.LaurentCech
 universe u
 namespace QuillenTest.ProjectiveLineVectorBundleCech
 

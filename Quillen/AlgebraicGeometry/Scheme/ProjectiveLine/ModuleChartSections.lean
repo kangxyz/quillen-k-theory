@@ -1,14 +1,14 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.RestrictionCoefficients
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
-public import Quillen.Aglib.Algebra.Polynomial.Laurent.ModuleCech
+public import Aglib.Algebra.Polynomial.Laurent.ModuleCech
 public import Quillen.Aglib.LinearAlgebra.Prod
 
 /-! # Actual chart modules and their signed restriction maps
@@ -19,9 +19,8 @@ Quasicoherence supplies the original overlap comparison; no chart freeness is as
 
 @[expose] public section
 
-open Quillen.LaurentProjector
+open LaurentPolynomial.Projector ModuleCat.LaurentCech
 
-open Quillen
 
 
 section
@@ -53,16 +52,16 @@ def overlapRestrictionIso :
 
 /-- The original overlap transition with distinct negative and positive scalar structures. -/
 def chartModuleOverlapIso [M.IsQuasicoherent] :
-    (ModuleCat.extendScalars (Quillen.LaurentProjector.negativeScalarMap R)).obj
+    (ModuleCat.extendScalars (ModuleCat.LaurentCech.negativeScalarMap R)).obj
         (minusChartModule R M) ≅
       (ModuleCat.extendScalars (Polynomial.toLaurent (R := R))).obj (plusChartModule R M) := by
   letI : IsOpenImmersion (Spec.map (CommRingCat.ofHom
-      (Quillen.LaurentProjector.negativeScalarMap R))) :=
+      (ModuleCat.LaurentCech.negativeScalarMap R))) :=
     inferInstanceAs (IsOpenImmersion (laurentMinus R))
   letI : IsOpenImmersion (Spec.map (CommRingCat.ofHom (Polynomial.toLaurent (R := R)))) :=
     inferInstanceAs (IsOpenImmersion (laurentPlus R))
   exact affineRestrictGlobalSectionsIso (CommRingCat.ofHom
-      (Quillen.LaurentProjector.negativeScalarMap R)) (M.restrict (minusChart R)) ≪≫
+      (ModuleCat.LaurentCech.negativeScalarMap R)) (M.restrict (minusChart R)) ≪≫
     moduleSpecΓFunctor.mapIso (overlapRestrictionIso R M) ≪≫
     (affineRestrictGlobalSectionsIso (CommRingCat.ofHom (Polynomial.toLaurent (R := R)))
       (M.restrict (plusChart R))).symm
@@ -80,7 +79,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
-  Quillen.LaurentProjector
+  LaurentPolynomial.Projector ModuleCat.LaurentCech
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 

@@ -1,5 +1,5 @@
 name = "quillen-k-theory"
-version = "0.9.0"
+version = "0.10.0"
 description = "A Lean library for Quillen K-theory and related mathematics."
 keywords = ["math", "algebraic-k-theory", "category-theory", "topology"]
 homepage = "https://github.com/kangxyz/quillen-k-theory"
@@ -37,4 +37,4 @@ rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
 [[require]]
 name = "Aglib"
 git = "https://github.com/kangxyz/aglib.git"
-rev = "52e09db47998f139064acf48a2d3a64494d0dd9a"
+rev = "2c34f185fa859e862661f939cd216b07bcccfb26"

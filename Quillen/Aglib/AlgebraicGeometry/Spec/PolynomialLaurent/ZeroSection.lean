@@ -1,11 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
 public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Relative
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.ZeroSection
 
 /-!
 # Zero sections of the original polynomial products
@@ -27,33 +28,12 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 
-namespace AlgebraicGeometry.Scheme.PolynomialLaurent
-
-/-- The actual affine zero section induced by polynomial evaluation at zero. -/
-def polynomialZero (R : CommRingCat.{u}) : Spec R ⟶ Spec (.of (Polynomial R)) :=
-  Spec.map (CommRingCat.ofHom (Polynomial.evalRingHom (0 : R)))
-
-@[reassoc (attr := simp)]
-theorem polynomialZero_projection (R : CommRingCat.{u}) :
-    polynomialZero R ≫ polynomialProjection R = 𝟙 (Spec R) := by
-  change Spec.map _ ≫ Spec.map _ = _
-  rw [← Spec.map_comp]
-  have h : CommRingCat.ofHom (Polynomial.C : R →+* Polynomial R) ≫
-      CommRingCat.ofHom (Polynomial.evalRingHom (0 : R)) = 𝟙 R := by
-    apply CommRingCat.hom_ext
-    ext r
-    change Polynomial.eval 0 (Polynomial.C r) = r
-    simp
-  rw [h, Spec.map_id]
-
-end AlgebraicGeometry.Scheme.PolynomialLaurent
-
 namespace AlgebraicGeometry.Scheme.Bass
 
 /-- Zero evaluation on the same native polynomial product over an arbitrary scheme. -/
 def nativePolynomialZero (X : AlgebraicGeometry.Scheme.{u}) :
     X ⟶ (baseProductFunctor (PolynomialLaurent.polynomialProjection integerRing)).obj X :=
-  pullback.lift (𝟙 X) (toIntegerBase X ≫ PolynomialLaurent.polynomialZero integerRing)
+  pullback.lift (𝟙 X) (toIntegerBase X ≫ PolynomialLaurent.polynomialZeroSection integerRing)
     (by simp)
 
 @[reassoc (attr := simp)]

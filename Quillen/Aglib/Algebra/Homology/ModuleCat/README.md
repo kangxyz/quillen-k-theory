@@ -1,9 +1,9 @@
 # Complexes of modules
 
-These local candidates retain the original complexes, linear maps, chosen bounds
-and chain homotopies. `FiniteParametrix`, the two `LinearMapCone` files, `SplitPivot`,
-and the finite-domination files give actual finite-projective replacements and
-their signed degree coordinates. `ProjectiveStabilization` constructs the stated
+Native Aglib interfaces and local extensions retain the original complexes,
+linear maps, chosen bounds and chain homotopies. Native finite-parametrix and
+linear-map cone files, local `SplitPivot`, and the finite-domination files give
+actual finite-projective replacements and their signed degree coordinates. `ProjectiveStabilization` constructs the stated
 finite-free model of a complex plus its shift; it does not remove the shifted
 summand.
 
@@ -28,3 +28,21 @@ with projective-dimension bounds or the stated PID specialization.
 
 The current finite-projective resolution interface is
 [`FiniteProjectiveResolution`](FiniteProjectiveResolution.lean).
+
+## Native finite-model owners
+
+- [`Aglib.Algebra.Homology.ModuleCat.FiniteParametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/FiniteParametrix.lean)
+- [`Aglib.Algebra.Homology.ModuleCat.LinearMapConeShift`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LinearMapConeShift.lean)
+- [`Aglib.Algebra.Homology.ModuleCat.LinearMapConeIso`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LinearMapConeIso.lean)
+- [`Aglib.Algebra.Homology.ModuleCat.LaurentProjectorCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LaurentProjectorCech.lean)
+- [`Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ModuleCat/LaurentModuleCech.lean)
+
+The finite-parametrix and linear-map cone declarations use `ModuleCat`.
+Projector chart existence uses `LaurentPolynomial.Projector`; module chart
+existence uses `ModuleCat.LaurentCech`. The retained local `LaurentCech`
+extension now uses `LaurentPolynomial.Cutoff`; other local module-complex
+extensions retain `Quillen.ModuleComplex`. Scalar coordinate comparisons use
+[`Aglib.Algebra.Category.ModuleCat.FiniteMatrixBaseChange`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Category/ModuleCat/FiniteMatrixBaseChange.lean).
+The native cone prerequisites are [`Aglib.Algebra.Homology.MappingCone.Parametrix`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/MappingCone/Parametrix.lean)
+and [`Aglib.Algebra.Homology.MappingCone.Iso`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/MappingCone/Iso.lean); split product exactness is in
+[`Aglib.Algebra.Homology.ShortComplex.ProductSequence`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/Algebra/Homology/ShortComplex/ProductSequence.lean).

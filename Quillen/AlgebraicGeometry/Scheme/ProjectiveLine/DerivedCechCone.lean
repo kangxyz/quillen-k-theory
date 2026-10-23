@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -16,7 +16,6 @@ quasicoherent sheaf with its original signed sheaf Cech cone. Both ordinary vert
 fixed by identity maps, the original connecting square is retained, and the minus-one
 shift is explicit. No coefficient perfection is assumed. -/
 @[expose] public section
-open Quillen
 
 
 noncomputable section

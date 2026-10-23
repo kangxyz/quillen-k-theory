@@ -1,12 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
-public import Quillen.Aglib.Algebra.Module.FiniteParametrix
+public import Aglib.Algebra.Module.FiniteParametrix
 public import Mathlib.Algebra.Homology.Homotopy
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
 public import Mathlib.Algebra.Category.ModuleCat.Projective
@@ -34,7 +34,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits HomologicalComplex
-open Quillen.Module
+open Module
 universe u v
 namespace Quillen.ModuleComplex.SplitPivot
 variable {R : Type u} [CommRing R] (C : CochainComplex (ModuleCat.{v} R) ℤ)

@@ -14,8 +14,9 @@ surjectivity and induced closed immersions over an arbitrary commutative ring.
 category of quasi-compact schemes. `UnitImage` records the original unit-image
 identities; `Flat` retains coefficient flatness. `OpenPairs` and
 `OpenPairZeroSection` retain arbitrary open-pair product geometry and its actual
-zero-section interfaces. `ZeroSection` retains genuine zero-section projection
-triangles. Their original additional hypotheses remain at the declarations.
+zero-section interfaces. Local `ZeroSection` retains the arbitrary-scheme Bass zero section, its
+projection triangle and naturality, using native `polynomialZeroSection` from
+[`Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.ZeroSection`](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/ZeroSection.lean). Their original additional hypotheses remain at the declarations.
 
 `OpenPairInterchange` lifts the literal independent-variable swap to both entries
 of the original open pair. It preserves the actual product projection and maps

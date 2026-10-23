@@ -1,12 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
-public import Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentProjectorCech
+public import Aglib.Algebra.Homology.ModuleCat.LaurentProjectorCech
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of actual projector-image Laurent Cech models
@@ -27,8 +27,7 @@ open scoped LaurentPolynomial Matrix
 universe u
 namespace QuillenTest.LaurentProjectorModel
 
-open Quillen
-open Quillen.LaurentProjector Quillen.ModuleComplex
+open LaurentPolynomial.Projector ModuleCat
 variable {R : Type u} [CommRing R]
 
 /-- The original constant rank-one polynomial projector. -/
@@ -104,8 +103,8 @@ theorem original_range_difference (p : Matrix ι ι R[X]) (q : Matrix κ κ R[X]
     (g : Matrix ι κ R[T;T⁻¹]) (hp : p * p = p) (hpg : plusMatrix p * g = g)
     (x : LinearMap.range (polynomialAction p) × LinearMap.range (polynomialAction q)) :
     (rangeDifference p q g hp hpg x).val =
-      Quillen.LaurentCutoff.plusEmbedding x.1.val -
-        action g (Quillen.LaurentCutoff.minusEmbedding x.2.val) := rfl
+      LaurentPolynomial.Cutoff.plusEmbedding x.1.val -
+        action g (LaurentPolynomial.Cutoff.minusEmbedding x.2.val) := rfl
 
 /-- The original polynomial inclusion and projector give the actual chart-module retraction. -/
 theorem original_chart_retraction (p : Matrix ι ι R[X]) (hp : p * p = p) :
@@ -120,8 +119,8 @@ theorem original_chart_retraction (p : Matrix ι ι R[X]) (hp : p * p = p) :
 theorem original_parametrix_negative (p : Matrix ι ι R[X]) (q : Matrix κ κ R[X])
     (h : Matrix κ ι R[T;T⁻¹]) (x : LinearMap.range (action (plusMatrix p))) :
     (rangeParametrix p q h x).2.val = -polynomialAction q
-      (Quillen.LaurentCutoff.minusCutoff
-        (action h (Quillen.LaurentCutoff.negativeRemainder x.val))) := rfl
+      (LaurentPolynomial.Cutoff.minusCutoff
+        (action h (LaurentPolynomial.Cutoff.negativeRemainder x.val))) := rfl
 
 /-- The shifted source and target isomorphisms retain the original restricted differential. -/
 theorem original_shifted_difference (p : Matrix ι ι R[X]) (q : Matrix κ κ R[X])

@@ -1,12 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
 
-public import Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteParametrix
+public import Aglib.Algebra.Homology.ModuleCat.FiniteParametrix
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of the original finite-parametrix replacement
@@ -22,11 +22,10 @@ noncomputable section
 universe u v
 
 open CategoryTheory CategoryTheory.Limits HomologicalComplex
-open Quillen.Module Quillen.ModuleComplex
+open Module ModuleCat
 
 namespace QuillenTest.FiniteParametrix
 
-open Quillen
 
 variable {R : Type u} [CommRing R]
   {A B F G : Type v} [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]

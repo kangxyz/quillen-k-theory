@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 module
 
@@ -17,7 +17,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.ModuleComplex Quillen.PerfectComplexes.Affine
+open ModuleCat Quillen.ModuleComplex Quillen.PerfectComplexes.Affine
 attribute [local instance] HasDerivedCategory.standard
 namespace QuillenTest.ConcentratedPerfectHomology
 

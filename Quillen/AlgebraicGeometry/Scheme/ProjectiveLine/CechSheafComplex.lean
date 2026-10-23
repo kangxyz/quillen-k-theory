@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
@@ -17,7 +17,6 @@ terms and their naturality square; no homology of sections is assumed.
 -/
 
 @[expose] public section
-open Quillen
 
 
 section
@@ -42,7 +41,7 @@ def originalSheafCechComplex : CochainComplex (Spec R).Modules ℤ :=
 /-- The actual associated section cone reconstructs the original sheaf Cech cone. -/
 def originalSheafCechSectionsIso [M.IsQuasicoherent] :
     ((tilde.functor R).mapHomologicalComplex (.up ℤ)).obj
-      (Quillen.ModuleComplex.linearMapCechComplex
+      (ModuleCat.linearMapCechComplex
         (moduleSpecΓFunctor.map ((Scheme.Modules.pushforward (projection R)).map
           (TwoOpen.sheafDifference (laurentPlus R) (laurentMinus R)
             (plusChart R) (minusChart R) (overlap_equation R) M))).hom) ≅

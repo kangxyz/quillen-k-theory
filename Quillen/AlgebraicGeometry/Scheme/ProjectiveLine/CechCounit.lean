@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: kangxyz
+Authors: kangxyz, OpenAI
 -/
 
 module
@@ -19,7 +19,6 @@ of the input sheaf.
 -/
 
 @[expose] public section
-open Quillen
 
 
 section
@@ -76,7 +75,7 @@ theorem isIso_cechOverlapCounit :
     (laurentPlus R ≫ plusChart R) (projection R)
     (nestedProjection (CommRingCat.ofHom Polynomial.C)
       (CommRingCat.ofHom (Polynomial.toLaurent (R := R)))
-      (CommRingCat.ofHom LaurentPolynomial.C) (Quillen.LaurentProjector.positive_constants R)
+      (CommRingCat.ofHom LaurentPolynomial.C) (ModuleCat.LaurentCech.positive_constants R)
       (plusChart R) (projection R) (plusChart_projection R))
     (M.restrict (laurentPlus R ≫ plusChart R))
 
