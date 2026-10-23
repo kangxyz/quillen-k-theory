@@ -213,4 +213,7 @@ public import Consumer.WeakZeroProductConeComparison
 Independently compiled downstream consumers of the public library.
 -/
 
+-- The import-only facade follows the discovered source graph.
+set_option linter.style.longFile 0
+
 @[expose] public section

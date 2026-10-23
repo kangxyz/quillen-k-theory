@@ -77,12 +77,9 @@ def render_imports(modules: list[str], description: str, modern: bool = False,
             + ('module\n\n' if modern else '')
             + '\n'.join(imports)
             + '\n\n/-!\n' + description + '\n-/\n')
-    if len(source.splitlines()) > 1500:
-        # Import surfaces grow with the discovered graph, independently of proof size.
-        suffix = ('\n-- The import-only facade follows the discovered source graph.\n'
-                  'set_option linter.style.longFile {limit}\n')
-        final_line = (source + suffix).count('\n') + 1
-        source += suffix.format(limit=(final_line // 100) * 100 + 200)
+    # Import surfaces grow with the discovered graph, independently of proof size.
+    source += ('\n-- The import-only facade follows the discovered source graph.\n'
+               'set_option linter.style.longFile 0\n')
     return source
 
 

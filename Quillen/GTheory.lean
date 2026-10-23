@@ -34,3 +34,6 @@ public import Quillen.GTheory.SmallModelLocalization
 All modules in the `Quillen.GTheory` family.
 Use an individual module import for a smaller dependency closure.
 -/
+
+-- The import-only facade follows the discovered source graph.
+set_option linter.style.longFile 0

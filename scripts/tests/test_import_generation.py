@@ -76,14 +76,14 @@ class ImportGenerationTests(unittest.TestCase):
             with self.subTest(source=source):
                 self.assertEqual(source_authors(source), set())
 
-    def test_large_facade_keeps_complete_imports_and_computed_size_bound(self):
+    def test_facade_size_exemption_survives_growth_without_losing_imports(self):
         modules = [f'Quillen.Future.M{i:04d}' for i in range(1600)]
-        source = render_imports(modules, '# Future import surface', modern=True)
-        self.assertEqual(lean_imports(source), modules)
-        self.assertIn('set_option linter.style.longFile 1800', source)
-        self.assertTrue(is_import_surface(source))
-        self.assertFalse(is_import_surface(source + '\ndef datum : Nat := 0\n'))
-        self.assertNotIn('longFile', render_imports(modules[:1], '# Small', modern=True))
+        for size in (1, 1600):
+            source = render_imports(modules[:size], '# Future import surface', modern=True)
+            self.assertEqual(lean_imports(source), modules[:size])
+            self.assertEqual(source.count('set_option linter.style.longFile 0'), 1)
+            self.assertTrue(is_import_surface(source))
+            self.assertFalse(is_import_surface(source + '\ndef datum : Nat := 0\n'))
 
     def test_long_import_wraps_without_disabling_line_lint(self):
         name = 'Quillen.' + '.'.join(['LongSubject'] * 7)
@@ -169,8 +169,9 @@ class ImportGenerationTests(unittest.TestCase):
                          {Path('Quillen/Future.lean')})
         self.generate()
         self.assertEqual(stale_files(self.root), [])
-        self.assertIn('Quillen.Future.Deep.New', project_imports(
-            (self.root / 'Quillen/Future.lean').read_text()))
+        source = (self.root / 'Quillen/Future.lean').read_text()
+        self.assertIn('Quillen.Future.Deep.New', project_imports(source))
+        self.assertIn('set_option linter.style.longFile 0', source)
 
     def test_new_leaf_and_removed_leaf_stale(self):
         self.generate()

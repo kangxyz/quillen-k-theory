@@ -971,3 +971,6 @@ public import Quillen.Aglib.Topology.Path.TwoSheetConjugation
 All modules in the `Quillen.Aglib` family.
 Use an individual module import for a smaller dependency closure.
 -/
+
+-- The import-only facade follows the discovered source graph.
+set_option linter.style.longFile 0

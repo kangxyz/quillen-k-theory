@@ -85,9 +85,11 @@ The generated production root imports every library module. The native entry
 library and disjoint `QuillenModules` library use explicit globs and empty
 `roots`; final commands therefore pass `Quillen` explicitly. In-package tests
 use `QuillenTest.+` globs without a generated Test umbrella. Clients can use a
-smaller individual module or topic import. The Python generator wraps long import lines and
-gives oversized import-only facades a local long-file bound derived from their
-generated size; the other style linters remain enabled. CI checks generation
+smaller individual module or topic import. The Python generator wraps long import
+lines and always writes `set_option linter.style.longFile 0` in import-only
+facades, including newly discovered subjects. Growing imports therefore need no
+recalculated line allowance; implementation limits and other style linters
+remain enabled. CI checks generation
 against the current source graph. See [CONTRIBUTING.md](../CONTRIBUTING.md) for
 extension rules.
 

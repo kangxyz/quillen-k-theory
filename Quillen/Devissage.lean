@@ -24,3 +24,6 @@ public import Quillen.Devissage.SpanLayers
 All modules in the `Quillen.Devissage` family.
 Use an individual module import for a smaller dependency closure.
 -/
+
+-- The import-only facade follows the discovered source graph.
+set_option linter.style.longFile 0

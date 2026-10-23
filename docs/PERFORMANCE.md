@@ -25,6 +25,15 @@ existing validation evidence, source links and remaining limits. Separate
 observations from a proposed cause. Reuse existing measurements and compatible
 checks; this adds no per-edit diary, mandatory benchmark or acceptance cycle.
 
+## Generated import entries
+
+A fixed line allowance on an import-only entry can expire as the source graph
+grows; see the [Aglib failure and pinned-linter reproduction](https://github.com/kangxyz/aglib/blob/main/docs/PERFORMANCE.md#generated-import-entries-and-file-length-limits).
+The existing generator now always writes `set_option linter.style.longFile 0`
+for its import-only outputs, including new subjects. Generator fixtures cover
+small and 1600-import entries, source growth and unchanged implementation files.
+Ordinary implementation limits and native CI commands are unchanged.
+
 ## Vector-bundle instance inference
 
 An October 2026 profile of the former `VectorBundle.Basic` module

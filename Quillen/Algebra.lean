@@ -73,3 +73,6 @@ public import Quillen.Algebra.Matrix.IdempotentSplitExtension
 All modules in the `Quillen.Algebra` family.
 Use an individual module import for a smaller dependency closure.
 -/
+
+-- The import-only facade follows the discovered source graph.
+set_option linter.style.longFile 0
