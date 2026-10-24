@@ -1,37 +1,37 @@
 # Lean performance findings
 
-Use the shared Aglib methods and this library's
-[local cases](performance/local-cases.md). Current commands and finite-budget
-policy belong to [CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks)
-and [development](DEVELOPMENT.md#affected-check-scope). Preserve the
-[standard-budget and finite-local-allowance policy](../CONTRIBUTING.md#typechecking-performance).
+Keep key guidance here and full records in the [case folder](performance/README.md).
+The folder preserves every earlier section, its measurements, failed approaches,
+source identities and [original conditions](performance/original-context.md).
 
-| Problem | Read |
+| Problem | Original records |
 | --- | --- |
-| Concrete equality, homotopy, dependent-node or structure-field conversion | [Shared conversion methods](https://github.com/kangxyz/aglib/blob/main/docs/performance/conversion-boundaries.md), [local examples](performance/local-cases.md#evaluation-and-node-transports) |
-| Repeated instances or a generic theorem that becomes expensive on application | [Instances](https://github.com/kangxyz/aglib/blob/main/docs/performance/instances-and-universes.md), [shared constructions](https://github.com/kangxyz/aglib/blob/main/docs/performance/shared-constructions.md), [vector-bundle case](performance/local-cases.md#vector-bundle-instance-inference) |
-| No accepted default-budget repair | [Recorded finite allowances](performance/local-cases.md#retained-finite-allowances) |
-| Rebuild, input metadata or checker setup | [Common build/check lessons](https://github.com/kangxyz/aglib/blob/main/docs/performance/build-and-check-costs.md), [older-pin workaround](performance/local-cases.md#historical-hardlink-workaround) |
-| Explicitly requested timing or cause investigation | [Diagnosis and evidence](https://github.com/kangxyz/aglib/blob/main/docs/performance/diagnosis-and-evidence.md) |
+| Repeated instance inference | [Vector-bundle case](performance/vector-bundle-instance-inference.md) |
+| Expensive concrete types or homotopy/evaluation comparisons | [Seed-factorization types](performance/stable-seed-factorization-types.md), [evaluation-unit cases](performance/evaluation-unit-comparison-proofs.md) |
+| Dependent-node transport | [Full-node overlap](performance/full-node-overlap-reanchoring.md) |
+| Necessary finite local allowance | [Mixed-cylinder cases](performance/mixed-cylinder-naturality.md) |
+| Shared cache metadata | [Historical old-pin workaround](performance/shared-cache-metadata-during-final-checks.md) |
 
-Keep the original mathematical interfaces and actual source/dependency basis.
-A passing module establishes its recorded scope; it does not automatically
-establish a speedup, consumer success or a compiler cause.
+Keep original maps, clocks, universes and hypotheses. A passing case retains
+its actual scope; a finite allowance is not itself a performance improvement.
+Common key guidance is in [Aglib](https://github.com/kangxyz/aglib/blob/main/docs/PERFORMANCE.md).
 
 ## Repair workflow
 
-For serious compilation trouble, use the lookup and read the matching case
-before further experiments or budget changes. When its conditions do not
-cover the failure, use the shared
-[upstream reference search](https://github.com/kangxyz/aglib/blob/main/docs/performance/diagnosis-and-evidence.md#search-upstream-references)
-and check the pinned implementation. Ordinary repair uses incremental
-compilation and compatible retained evidence; profiling is an explicitly
-requested diagnostic.
+For serious compilation trouble, read the relevant case before further experiments
+or budget changes. Check the source/pin conditions and the dependency's cases when
+needed. Current commands and finite-budget policy remain in
+[CONTRIBUTING](../CONTRIBUTING.md#typechecking-performance)
+and [development](DEVELOPMENT.md#affected-check-scope), not historical stage lists.
 
-When a validated repair adds new reusable knowledge, update the relevant
-`docs/performance/` topic. Merge repeated experience; keep its symptom and
-conditions, effective change, important failed alternative or limit, and
-existing evidence. Another run or pass of a known method needs no entry.
-Common methods have one Aglib owner; retain Quillen-specific cases here and
-keep this entry page short. Documentation creates no new benchmark or
-acceptance cycle.
+When no case applies, use upstream reference search by diagnostic, symbol, phase
+and version, then check the pinned implementation. Profiling and timing comparisons
+remain explicitly requested investigations; ordinary repair is incremental.
+
+## Preserve cases
+
+Save a reusable repair as a case file under `docs/performance/`, retaining its
+conditions, failed attempts, effective change and existing evidence. Update the
+same case for follow-ups and its folder-index link. Keep the original case details
+when refining key guidance; a summary or Git link is not their replacement.
+Recording experience adds no new benchmark, build or acceptance cycle.
