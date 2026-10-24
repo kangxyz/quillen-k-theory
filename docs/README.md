@@ -6,7 +6,7 @@
 - [Development policy](DEVELOPMENT.md): normal task recipe, candidate admission and affected-check execution.
 - [Recorded evidence](evidence/README.md): source, runtime, validation and provenance records.
 - [Architecture](ARCHITECTURE.md): ownership, dependency direction and trust boundaries.
-- [Performance](PERFORMANCE.md): key guidance and complete case records under `performance/`.
+- [Performance](PERFORMANCE.md): methods, decision process and complete case records under `performance/`.
 - [Research archive](RESEARCH_ARCHIVE.md): recoverable research sources and compatibility snapshots.
 - [Contributing](../CONTRIBUTING.md): setup, general authoring, checks and dependencies.
 
