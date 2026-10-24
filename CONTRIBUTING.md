@@ -86,8 +86,11 @@ Install the current `lean-incremental-ci` package or explicitly select its Aglib
 tooling checkout with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. Its
 package lives at `scripts/lean_ci`; install from `/absolute/path/to/aglib/scripts`. This is
 independent of the mathematical Aglib dependency. The entry forwards to
-`lean_ci.cli.main` with production root `Quillen` and the existing layout and
-placeholder source checks; it owns no second scheduler, adapter or hosted policy.
+`lean_ci.cli.main`; `lean_ci.quillen` supplies production root `Quillen`, layout
+and placeholder policy, thematic import generation and cache-root discovery.
+The checkout retains only bootstrap wrappers for current commands. With the
+toolkit installed, use `lean-ci check --root /path/to/quillen-k-theory` or
+`lean-ci quillen imports --root /path/to/quillen-k-theory` directly.
 
 The final native graph uses `lake --rehash build Quillen`, preserving valid
 Lake artifacts, then prepares native checker tools, runs `lake test`, checks
@@ -124,8 +127,9 @@ review and writing acceptance under their governing requirements.
 Cache setup is separate from ordinary checking. Recover matching pinned
 artifacts before compiling missing required closure. `bash scripts/cache.sh
 Quillen.KTheory.API` fetches explicit reachable Mathlib inputs; omit targets only
-for an explicitly intended workspace cache setup. `--ci` retains the existing
-resource-guarded cache bootstrap. The entry does not update mathematical pins,
+for an explicitly intended workspace cache setup. `--ci` runs the scoped
+`lake exe cache get` through the installed toolkit's guarded `run --bootstrap-cache`;
+it does not load tools from the mathematical dependency checkout. The entry does not update mathematical pins,
 require downstream setup or use GitHub history as local acceptance.
 
 ## Typechecking performance
