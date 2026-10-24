@@ -17,9 +17,9 @@ def main(argv=None, action=('check',)):
         sys.path.insert(0, str(package))
     try:
         from lean_tools.cli import main as native_main
-        from lean_tools.quillen import options as required_library_policy
+        from lean_tools.policy import check_repository as required_source_policy
     except ImportError:
-        print('Install lean-incremental-ci 0.3.1 or newer, or select its checkout with LEAN_CI_TOOLING_ROOT', file=sys.stderr)
+        print('Install lean-incremental-ci 0.4 or newer, or select its checkout with LEAN_CI_TOOLING_ROOT', file=sys.stderr)
         return 2
     arguments = list(sys.argv[1:] if argv is None else argv)
     return native_main([*action, *arguments], root=ROOT)

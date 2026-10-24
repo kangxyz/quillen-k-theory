@@ -87,11 +87,12 @@ tooling checkout with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. Its
 package lives at `scripts/lean_tools`; install from `/absolute/path/to/aglib/scripts`. This is
 independent of the mathematical Aglib dependency. The entry forwards to
 `lean_tools.cli.main`. Shared library data selects production root `Quillen`;
-`lean_tools.quillen` retains layout, placeholders and thematic import generation.
+Source boundaries, placeholders and thematic imports use the same
+`lean_tools.policy` and `lean_tools.imports` implementations as the other libraries.
 Cache-root discovery and recovery use the common `lean_tools.cache` module.
 The checkout retains only bootstrap wrappers for current commands. With the
 toolkit installed, use `lean-tools check --root /path/to/quillen-k-theory` or
-`lean-tools quillen imports --root /path/to/quillen-k-theory` directly.
+`lean-tools imports --root /path/to/quillen-k-theory` directly.
 
 The final native graph uses `lake --rehash build Quillen`, preserving valid
 Lake artifacts, then prepares native checker tools, runs `lake test`, checks

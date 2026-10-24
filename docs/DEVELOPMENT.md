@@ -74,7 +74,8 @@ accepted local implementation together with its old imports.
 [CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks) owns the native local commands.
 `scripts/check.sh` forwards through the thin `check_run.py` entry to the installed
 shared `lean_tools.cli`. The shared library configuration selects production root `Quillen`;
-`lean_tools.quillen` owns its source boundaries and thematic import generation.
+Source boundaries and thematic import generation use the common
+`lean_tools.policy` and `lean_tools.imports` engines.
 Its Aglib tooling checkout package is `scripts/lean_tools`, installed from
 `scripts/pyproject.toml`. Set
 `LEAN_CI_TOOLING_ROOT` only to select an explicit tooling checkout; no ambient
@@ -109,11 +110,9 @@ PYTHONPATH=scripts python3 -m unittest discover -s scripts/tests/quillen
 ```
 
 The Quillen checkout retains only bootstrap entries for current callers.
-With the toolkit installed, `lean-tools quillen layout --root /path/to/quillen-k-theory`
-and `lean-tools quillen placeholders --root /path/to/quillen-k-theory` run source
-checks directly. `lean-tools quillen imports --root /path/to/quillen-k-theory`
-regenerates enrolled facades; the existing `scripts/generate_imports.py` entry
-forwards to that same implementation. Cache fetching uses the common `lean-tools cache --root PACKAGE [MODULE...]`;
-the old `quillen cache` command forwards to it. Use `--resolve-deps` only when
-dependencies need resolution and `--guarded` for the shared guarded
-`run --bootstrap-cache` command (`--ci` remains an alias).
+With the toolkit installed, `lean-tools source --root /path/to/quillen-k-theory`
+runs the existing source checks. `lean-tools imports --root /path/to/quillen-k-theory`
+regenerates enrolled facades; `scripts/generate_imports.py` forwards to that
+same generator. Cache fetching uses `lean-tools cache --root PACKAGE [MODULE...]`.
+Use `--resolve-deps` only when dependencies need resolution and `--guarded`
+for the shared `run --bootstrap-cache` command (`--ci` remains an alias).
