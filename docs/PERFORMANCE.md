@@ -49,6 +49,9 @@ native content for ctime-only link metadata changes.
 
 1. Identify the phase from existing feedback and use the relevant method and
    case, checking its compiler, source, structures, universes and budget basis.
+   At a bottleneck, actively use targeted compiler diagnostics, scoped traces,
+   profiling or scratch probes when feedback cannot guide the next repair.
+   Normal troubleshooting and targeted diagnosis need no separate user approval.
 2. Preserve original seeds, clocks, maps, hypotheses and the needed reduction
    interface; make a bounded repair at the actual comparison/search boundary.
 3. Compile the affected module incrementally and include actual in-package
@@ -56,7 +59,6 @@ native content for ctime-only link metadata changes.
    categories instead of restarting the library.
 4. If no known case applies, use Aglib's
    [upstream reference-search method](https://github.com/kangxyz/aglib/blob/main/docs/PERFORMANCE.md#search-upstream-references).
-   Profiling and matched timing investigations remain explicitly requested work.
 5. When a validated repair adds new reusable knowledge, save or update its
    complete case under `docs/performance/` and refine the applicable method here.
 
