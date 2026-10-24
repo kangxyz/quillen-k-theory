@@ -84,13 +84,14 @@ bash scripts/check.sh --list
 
 Install the current `lean-incremental-ci` package or explicitly select its Aglib
 tooling checkout with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. Its
-package lives at `scripts/lean_ci`; install from `/absolute/path/to/aglib/scripts`. This is
+package lives at `scripts/lean_tools`; install from `/absolute/path/to/aglib/scripts`. This is
 independent of the mathematical Aglib dependency. The entry forwards to
-`lean_ci.cli.main`; `lean_ci.quillen` supplies production root `Quillen`, layout
-and placeholder policy, thematic import generation and cache-root discovery.
+`lean_tools.cli.main`. Shared library data selects production root `Quillen`;
+`lean_tools.quillen` retains layout, placeholders and thematic import generation.
+Cache-root discovery and recovery use the common `lean_tools.cache` module.
 The checkout retains only bootstrap wrappers for current commands. With the
-toolkit installed, use `lean-ci check --root /path/to/quillen-k-theory` or
-`lean-ci quillen imports --root /path/to/quillen-k-theory` directly.
+toolkit installed, use `lean-tools check --root /path/to/quillen-k-theory` or
+`lean-tools quillen imports --root /path/to/quillen-k-theory` directly.
 
 The final native graph uses `lake --rehash build Quillen`, preserving valid
 Lake artifacts, then prepares native checker tools, runs `lake test`, checks

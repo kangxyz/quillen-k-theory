@@ -73,9 +73,9 @@ accepted local implementation together with its old imports.
 
 [CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks) owns the native local commands.
 `scripts/check.sh` forwards through the thin `check_run.py` entry to the installed
-shared `lean_ci.cli`. The installed `lean_ci.quillen` policy selects `Quillen`
-and owns layout, placeholders, thematic import generation and cache-root collection.
-Its Aglib tooling checkout package is `scripts/lean_ci`, installed from
+shared `lean_tools.cli`. The shared library configuration selects production root `Quillen`;
+`lean_tools.quillen` owns its source boundaries and thematic import generation.
+Its Aglib tooling checkout package is `scripts/lean_tools`, installed from
 `scripts/pyproject.toml`. Set
 `LEAN_CI_TOOLING_ROOT` only to select an explicit tooling checkout; no ambient
 sibling, mathematical dependency pin or whole-package Git recipe hash selects
@@ -109,9 +109,11 @@ PYTHONPATH=scripts python3 -m unittest discover -s scripts/tests/quillen
 ```
 
 The Quillen checkout retains only bootstrap entries for current callers.
-With the toolkit installed, `lean-ci quillen layout --root /path/to/quillen-k-theory`
-and `lean-ci quillen placeholders --root /path/to/quillen-k-theory` run source
-checks directly. `lean-ci quillen imports --root /path/to/quillen-k-theory`
+With the toolkit installed, `lean-tools quillen layout --root /path/to/quillen-k-theory`
+and `lean-tools quillen placeholders --root /path/to/quillen-k-theory` run source
+checks directly. `lean-tools quillen imports --root /path/to/quillen-k-theory`
 regenerates enrolled facades; the existing `scripts/generate_imports.py` entry
-forwards to that same implementation. Cache fetching uses `lean-ci quillen cache`;
-`--ci` delegates the scoped cache command to the shared guarded `run --bootstrap-cache`.
+forwards to that same implementation. Cache fetching uses the common `lean-tools cache --root PACKAGE [MODULE...]`;
+the old `quillen cache` command forwards to it. Use `--resolve-deps` only when
+dependencies need resolution and `--guarded` for the shared guarded
+`run --bootstrap-cache` command (`--ci` remains an alias).
