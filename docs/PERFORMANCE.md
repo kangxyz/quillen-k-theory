@@ -1,246 +1,37 @@
-# Typechecking performance
+# Lean performance findings
 
-Use focused imports and explicit mathematical interfaces when extending the
-library. Proof iteration may use a temporary finite declaration-local budget
-to establish correctness. Before adopting the proof, restore the standard
-200,000 budget or settle a necessary finite local increase with an adjacent
-explanation, then recompile the module. Keep package defaults unchanged and
-retain a finite limit. Targeted profiling helps settle the retained budget;
-the [contributor guide](../CONTRIBUTING.md) gives the pinned profiling command.
-This development reference records measurements and resource requirements;
-mathematical interfaces and hypotheses belong to the [source-family guides](../Quillen/README.md).
+Use the shared Aglib methods and this library's
+[local cases](performance/local-cases.md). Current commands and finite-budget
+policy belong to [CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks)
+and [development](DEVELOPMENT.md#affected-check-scope). Preserve the
+[standard-budget and finite-local-allowance policy](../CONTRIBUTING.md#typechecking-performance).
+
+| Problem | Read |
+| --- | --- |
+| Concrete equality, homotopy, dependent-node or structure-field conversion | [Shared conversion methods](https://github.com/kangxyz/aglib/blob/main/docs/performance/conversion-boundaries.md), [local examples](performance/local-cases.md#evaluation-and-node-transports) |
+| Repeated instances or a generic theorem that becomes expensive on application | [Instances](https://github.com/kangxyz/aglib/blob/main/docs/performance/instances-and-universes.md), [shared constructions](https://github.com/kangxyz/aglib/blob/main/docs/performance/shared-constructions.md), [vector-bundle case](performance/local-cases.md#vector-bundle-instance-inference) |
+| No accepted default-budget repair | [Recorded finite allowances](performance/local-cases.md#retained-finite-allowances) |
+| Rebuild, input metadata or checker setup | [Common build/check lessons](https://github.com/kangxyz/aglib/blob/main/docs/performance/build-and-check-costs.md), [older-pin workaround](performance/local-cases.md#historical-hardlink-workaround) |
+| Explicitly requested timing or cause investigation | [Diagnosis and evidence](https://github.com/kangxyz/aglib/blob/main/docs/performance/diagnosis-and-evidence.md) |
+
+Keep the original mathematical interfaces and actual source/dependency basis.
+A passing module establishes its recorded scope; it does not automatically
+establish a speedup, consumer success or a compiler cause.
 
 ## Repair workflow
 
-For serious compilation trouble, consult the relevant findings here before
-further experiments or budget changes. When they do not cover the failure, use
-the shared [reference-search method](https://github.com/kangxyz/aglib/blob/main/docs/PERFORMANCE.md#repair-workflow):
-search the corresponding GitHub issues, PRs, discussions and official documents
-by diagnostic, public symbol and version, then check the pinned source and
-applicability of the proposed repair.
+For serious compilation trouble, use the lookup and read the matching case
+before further experiments or budget changes. When its conditions do not
+cover the failure, use the shared
+[upstream reference search](https://github.com/kangxyz/aglib/blob/main/docs/performance/diagnosis-and-evidence.md#search-upstream-references)
+and check the pinned implementation. Ordinary repair uses incremental
+compilation and compatible retained evidence; profiling is an explicitly
+requested diagnostic.
 
-After a fix passes its relevant incremental check, add the reusable lesson here:
-symptom, affected declarations and versions/conditions, effective change,
-existing validation evidence, source links and remaining limits. Separate
-observations from a proposed cause. Reuse existing measurements and compatible
-checks; this adds no per-edit diary, mandatory benchmark or acceptance cycle.
-
-## CI dependency handoff and native resource limits
-
-The shared workflow now transfers Build's native dependency snapshot when
-Test's optional Actions restore misses or fails. This includes unpublished
-upstream leaves compiled by Build, before the mandatory current-run root
-overlay and unchanged no-build verification. The [shared repair and bounded
-native evidence](https://github.com/kangxyz/aglib/blob/main/docs/PERFORMANCE.md#test-dependency-handoff-and-native-resource-limits)
-record the failure, successful transport, hosted startup and remaining full-CI
-validation.
-The mathematical dependency pins are unchanged. This package retains weak
-`-M12800 -j4` frontend arguments without changing native artifact traces;
-Lake retains `LEAN_NUM_THREADS=1`. Existing dependency packages retain their
-own flags, while the workflow's aggregate memory scope also bounds them. No CPU-utilization improvement or
-cause of the earlier runner shutdown is claimed.
-
-## Generated import entries
-
-A fixed line allowance on an import-only entry can expire as the source graph
-grows; see the [Aglib failure and pinned-linter reproduction](https://github.com/kangxyz/aglib/blob/main/docs/PERFORMANCE.md#generated-import-entries-and-file-length-limits).
-The existing generator now always writes `set_option linter.style.longFile 0`
-for its import-only outputs, including new subjects. Generator fixtures cover
-small and 1600-import entries, source growth and unchanged implementation files.
-Ordinary implementation limits and native CI commands are unchanged.
-
-## Vector-bundle instance inference
-
-An October 2026 profile of the former `VectorBundle.Basic` module
-identified repeated inference of sheafification and locally bijective classes
-on over-sites. Finite-type transport through an isomorphism also reconstructed
-the finiteness of an unchanged generator index.
-
-The profiled change bound the existing universal proof instances locally
-and passed the existing finite-index witness directly. The transported local
-basis, its cover and generators agreed with the previous construction by `rfl`.
-Declaration types, maps and mathematical hypotheses are unchanged.
-
-Three matched unprofiled compilations used Lean 4.34.1, the committed mathlib
-revision, identical strict options and the same compiled dependencies:
-
-| Complete module | Before | After |
-| --- | --- | --- |
-| Run 1 | 17.790 s | 11.470 s |
-| Run 2 | 16.455 s | 11.820 s |
-| Run 3 | 17.084 s | 11.155 s |
-| Median | 17.084 s | 11.470 s |
-
-The observed median reduction is 32.9% for this module. These elapsed times
-include imports and output serialization. Background contention and machine
-state affect timings; they do not establish a whole-library speedup.
-
-Separate instrumented runs located the finite-type proof body at 4.797 s
-before and 0.049 s after the change, and the finite-free proof at 1.487 s and
-0.170 s. The data construction itself did not improve. Instrumented timings
-include profiler overhead and are not interchangeable with plain runs.
-
-Strict source checks and a semantic comparison passed. The comparison used
-unchanged source, setup and dependency hashes throughout the measured batch.
-Future changes should repeat a matched comparison rather than treating these
-numbers as a performance requirement.
-
-## Mixed-cylinder naturality
-
-The outer naturality proof of
-[`mixedDeformationMap`](../Quillen/Waldhausen/Additivity/DeformationMap.lean)
-normalizes nested interval and grid reindexings. Under the pinned compiler,
-the unchanged declaration exhausts both 200,000 and 400,000 heartbeats and
-passes strict compilation with its local 800,000-heartbeat allowance.
-The allowance applies to this declaration; its construction and proofs are
-unchanged. This records a compilation resource requirement. A speed improvement
-for this declaration remains open.
-
-The chosen-zero variant
-[`normalizedMixedMap`](../Quillen/Waldhausen/Additivity/NormalizedDeformationMap.lean)
-also retains its original construction and proofs. Its outer naturality
-requires a declaration-local 550,000-heartbeat allowance: strict compilation
-fails at 540,000 and passes at 550,000. This is the smallest tested passing
-allowance. Factoring the naturality proof did not produce an accepted
-default-budget optimization; no speed improvement is claimed for this change.
-
-## Stable seed factorization types
-
-The four supported and ambient seed-factorization theorems in
-[`CoefficientSupportedBassSeedStable`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedBassSeedStable.lean)
-compiled at the earlier `adbfc33d` snapshot, while the pinned declaration
-linter's `checkType` exhausted the default 200,000 heartbeats on their types.
-That checker uses complete transparency when revalidating stored types, so
-local irreducibility does not shield the concrete expressions.
-
-Their statements now instantiate the shared transparent properties
-`LaurentSeed.Track.SeedStableFactorization` and `SeedStableFormula`, defined
-for an arbitrary functor, actual Laurent track and supplied natural seed.
-The original supported and ambient seeds, cone inclusions, parameter shifts
-and hypotheses are retained. All four original propositions, their direct
-consumers and the original functor/seed data pass kernel reduction checks.
-The four application types and five generic interfaces pass the pinned
-`checkType` at the unchanged default budget. This is a bounded checker result;
-no whole-module timing improvement is claimed.
-
-At the `f521b87e` checkpoint, the complete local native
-`bash scripts/check.sh --ci --rehash` route passed:
-91 script tests, the library/test build, declaration and text-style lint,
-58,560 project declarations in the root axiom audit, and the independent
-client build and its 462-declaration audit. That run reused native cache artifacts.
-CI axiom audits select the capped Lean executable explicitly because Lake can
-prepend its native toolchain directory to `PATH`; the observed audit command
-retains `-j2 -M12800`, the 13824 MiB group RSS cutoff and one frontend.
-Additional independent local kernel replays are outside this CI route.
-
-## Evaluation-unit comparison proofs
-
-The `original_level` proof in
-[`GlobalBassEvaluationInputSeedEvaluationUnitNative`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedEvaluationUnitNative.lean)
-compares the complete level maps of the original evaluation-unit pasting and
-its inner relative homotopy. With Lean 4.34.1 and the pinned dependencies,
-the incoming proof exhausted the kernel's default 200,000-heartbeat budget.
-Direct and pointwise reflexivity encountered the same failure. Merely naming
-the inner homotopy's endpoint type did not resolve it.
-
-The retained proof first establishes equality of the whole relative
-homotopies, then applies a generic equality transport before taking the level
-map. The inner constructor body, public statements, maps and independent
-clocks are unchanged. Its explicit endpoint type is definitionally equivalent
-to the inferred type. A fresh module compilation passed at the default
-200,000 budget and the unchanged 12,800 MiB frontend limit.
-
-The `evaluation_unit` proof in
-[`GlobalBassEvaluationInputSeedRawUnit`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedRawUnit.lean)
-separately exhausted the default budget during elaboration of a nested
-isomorphism congruence. Naming the inner equalities alone moved the timeout to
-the outer congruence. Explicitly typing the existing comparison isomorphism
-before composing those equalities restored default-budget compilation. This
-also preserves every public statement and data construction.
-
-The private `pre_total_anchor` in
-[`GlobalBassEvaluationInputSeedCornerNodes`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedCornerNodes.lean)
-joins the original complete corner anchors. Its proof now isolates the source
-transport equality, propagates it by congruence, and supplies the original
-Model arrows to generic reassociation. The whole prefix and suffix equalities
-retain the specified scheme-square and strict-composition transports.
-
-The remaining conversion between the Model-arrow and functor presentations
-uses a documented, declaration-local 400,000-heartbeat allowance. The tested
-200,000 budget failed and 400,000 passed; this is a settled finite allowance,
-without a claim of minimality. Native compilation and the unchanged default
-environment and text checks passed. All seven public declarations, including
-their proofs, remain byte-identical to the incoming source.
-
-These observations support factoring a large concrete equality before
-projecting its data and giving a large comparison an explicit local type.
-They do not establish a general cause for expensive conversion or a measured
-speedup. The [integration evidence record](evidence/TTCheckpointIntegration20261019.json)
-identifies the incoming sources,
-repaired sources and successful native runs. Reproduce with the pinned
-environment and the linked modules as build targets.
-
-## Full-node overlap reanchoring
-
-The concrete `overlap_reanchor` proof in
-[`BassProjectionFourEdgeTargetOverlapReanchor`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetOverlapReanchor.lean)
-compares the original complete 31-node carrier surfaces. Directly specializing
-finite-parameter naturality exhausted the default 200,000-heartbeat budget
-during weak-head normalization. A declaration-local 400,000 trial also failed.
-
-The retained proof first states the transport over abstract Model arrows and
-whole dependent-node families. Its concrete application unfolds only the
-outer overlap composite, fixes the finite index to 31 nodes, and supplies the
-original `nodes_reanchor` equations before evaluation. All four public
-statements, canonical data, two clocks and external parameter conditions are
-unchanged. Compilation and the selected environment/text checks pass at the
-default 200,000 budget and 12,800 MiB frontend limit; this module retains no
-heartbeat override.
-
-The [continuation record](evidence/TTCheckpointContinuation20261019.json)
-identifies the source and validation scope. This is a successful proof-typing
-repair, without a claim of general or measured speedup.
-
-The polynomial anchor in
-[`GlobalRawBassInputCompositionTerminalColumns`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalRawBassInputCompositionTerminalColumns.lean)
-exhausted the same default budget when
-converting an 18-node projection reference. Its retained proof applies a
-private whole-functor transport lemma to the original equality transports and
-composition isomorphism. All five public statements, canonical nodes, normalized
-pullbacks, anchors and clocks are unchanged; this proof also compiles with no
-heartbeat override. The continuation record distinguishes both repairs and
-their actual dependency and validation bases.
-
-The associativity proof in
-[`SupportedRawPullbackCoherence`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SupportedRawPullbackCoherence.lean)
-uses the original ambient pullback comparison after applying the faithful
-forgetful functor. A private reflexive object equation and explicit functor
-and arrow projection simplifications make that same comparison available to
-the elaborator. The associator, transports, hypotheses and public statements
-are unchanged. The evidence record keeps its original targeted dependency
-basis separate from the final dependency upgrade.
-
-## Shared cache metadata during final checks
-
-During the 0.10.0 upgrade with Lean 4.34.1 and Aglib `2c34f185`, the native
-entry reported `Reflective input changed during this attempt` on shared `.ilean`
-artifacts after successful checker commands. The
-[pinned input observer](https://github.com/kangxyz/aglib/blob/2c34f185fa859e862661f939cd216b07bcccfb26/scripts/lean_ci/state.py)
-includes inode identity and `ctime` in its stability checks.
-[Linux inode metadata](https://man7.org/linux/man-pages/man7/inode.7.html)
-changes when hard-link counts change, even with unchanged bytes and `mtime`.
-Read-only artifact sharing therefore needs a stable metadata interval too.
-
-The successful preparation replaced hardlinked native artifacts in an idle,
-task-owned workspace's root and dependency `.lake/build` trees with private
-reflink inodes. Every file retained its bytes, permissions, ownership and
-modification time; Lake hashes and traces, sources, pins and checking rules
-were preserved. The observed input families include generated C files.
-Check quota headroom before preparing reflinks, which still consume allocation
-allowance in the measured XFS project quota.
-
-The unchanged native final entry then passed the library and in-package tests,
-entry and text checks, declaration lint and the 89,314-declaration axiom audit.
-Its retained compilation artifacts required no new Lean frontend invocations.
-This addresses repeated input invalidation; further declaration-elaboration
-optimization remains open.
+When a validated repair adds new reusable knowledge, update the relevant
+`docs/performance/` topic. Merge repeated experience; keep its symptom and
+conditions, effective change, important failed alternative or limit, and
+existing evidence. Another run or pass of a known method needs no entry.
+Common methods have one Aglib owner; retain Quillen-specific cases here and
+keep this entry page short. Documentation creates no new benchmark or
+acceptance cycle.

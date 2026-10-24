@@ -136,8 +136,15 @@ require downstream setup or use GitHub history as local acceptance.
 
 ## Typechecking performance
 
-Measure a fixed module before changing proofs or import structure. Use the
-pinned Lean compiler and retain the selected source's actual build-command
+Keep the standard 200,000-heartbeat package default. A necessary finite
+increase stays declaration-local with an adjacent explanation; restore the
+standard budget when the retained repair permits it, and compile the affected
+module. Selecting that allowance does not require profiling.
+
+For an explicitly requested performance investigation, start from a fixed module
+and its retained evidence. Ordinary proof or import changes do not require
+measurement. For a requested profile, use the pinned Lean compiler and retain
+the selected source's actual build-command
 `LEAN_PATH`, matching `--setup` JSON, and options. Redirect its `-o`, `-i`, and
 `-c` outputs to fresh scratch paths. Add these supported profiling options:
 
@@ -155,9 +162,11 @@ and logs with the measurement. A thresholded trace omits smaller frames;
 frontend remainder also includes imports and untraced work. Inclusive frame
 weights overlap and should not be summed or labelled whole-module CPU time.
 
-Use profiles to select a bounded change, then compare matched unprofiled runs
-with the same threads, options, outputs, and cache treatment. Alternate variants
-and record durations; profiling overhead is not a production speed comparison.
+For a requested speed comparison, use profiles to select a bounded change and
+compare matched unprofiled runs with the same threads, options, outputs and cache
+treatment. Profiling overhead is not a production speed comparison. These
+procedures add no benchmark requirement to ordinary repair or finite-budget
+selection.
 Current measurements and their scope are recorded in
 [Performance.md](docs/PERFORMANCE.md).
 
