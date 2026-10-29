@@ -18,7 +18,7 @@ jobs:
   lean:
     permissions:
       contents: write
-    uses: kangxyz/aglib/.github/workflows/lean-ci.yml@3372a344fc9a300a86216a75853933a592f879d8
+    uses: kangxyz/aglib/.github/workflows/lean-ci.yml@6d1613532357f7943b462876f99dd769049329a4
     with:
       package-directory: .
       build-targets: Quillen
